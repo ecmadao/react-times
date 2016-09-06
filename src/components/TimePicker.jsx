@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 
 import OutsideClickHandler from './OutsideClickHandler';
-import TimePickerModal from './TimePickerModal/index';
+import TimePickerModal from './TimePickerModal';
 
 class TimePicker extends React.Component {
   constructor(props) {
