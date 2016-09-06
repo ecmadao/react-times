@@ -60,10 +60,5 @@
     "safe-publish-latest": "^1.0.1",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.2"
-  },
-  "peerDependencies": {
-    "moment": ">=2.10",
-    "react": ">=0.14",
-    "react-dom": ">=0.14"
   }
 }

@@ -33,10 +33,11 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
+        exclude: /(node_modules)/,
         include: path.join(__dirname, 'src'),
         loader: ["babel-loader"],
         query: {
-          presets: ["airbnb"]
+          presets: ["react", "es2015"]
         }
       },
     ],
