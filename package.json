@@ -1,0 +1,29 @@
+{
+  "name": "react-times",
+  "version": "1.0.0",
+  "description": "A react time picker component, no jquery-rely",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecmadao/react-times.git"
+  },
+  "keywords": [
+    "react",
+    "timepicker"
+  ],
+  "author": "ecmadao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ecmadao/react-times/issues"
+  },
+  "homepage": "https://github.com/ecmadao/react-times#readme",
+  "dependencies": {
+    "moment": "^2.14.1"
+  }
+}
