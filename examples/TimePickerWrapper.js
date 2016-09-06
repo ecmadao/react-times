@@ -1,5 +1,5 @@
 import React from 'react';
-import TimePicker from '../src/TimePicker.js';
+import TimePicker from '../src/components/TimePicker';
 
 class TimePickerWrapper extends React.Component {
   onHourChange(hour) {
