@@ -4,6 +4,16 @@
 
 ![react-times](./intro_src/react-times.gif)
 
+## Have a try
+
+```bash
+$ git clone git@github.com:ecmadao/react-times.git
+
+$ npm install
+
+$ npm run storybook
+```
+
 ## Install
 
 dependencies:
