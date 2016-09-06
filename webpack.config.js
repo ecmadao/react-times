@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+
 const path = require('path');
 const fs = require('fs');
 const srcFolder = path.join(__dirname, 'src', 'components');
@@ -32,11 +33,10 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
-        exclude: /(node_modules)/,
         include: path.join(__dirname, 'src'),
         loader: ["babel-loader"],
         query: {
-          presets: ["react", "es2015"]
+          presets: ["airbnb"]
         }
       },
     ],
