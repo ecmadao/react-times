@@ -7,14 +7,14 @@ import {
   MAX_ABSOLUTE_POSITION,
   MIN_ABSOLUTE_POSITION,
   POINTER_RADIUS
-} from '../ConstValue.js';
+} from '../../ConstValue.js';
 import {
   degree2Radian,
   mousePosition,
   disableMouseDown,
   getInlineRotateStyle,
   getInitialPointerStyle
-} from '../utils.js';
+} from '../../utils.js';
 
 class HourPicker extends React.Component {
   constructor(props) {

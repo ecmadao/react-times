@@ -6,14 +6,14 @@ import {
   PICKER_RADIUS,
   MAX_ABSOLUTE_POSITION,
   POINTER_RADIUS
-} from '../ConstValue.js';
+} from '../../ConstValue.js';
 import {
   degree2Radian,
   mousePosition,
   disableMouseDown,
   getInlineRotateStyle,
   getInitialPointerStyle
-} from '../utils.js';
+} from '../../utils.js';
 
 class MinutePicker extends React.Component {
   constructor(props) {
