@@ -8,9 +8,11 @@ const files = [];
 const entries = {};
 components.forEach(component => {
   const name = component.split('.')[0];
-  const file = `./src/components/${name}`;
-  files.push(file);
-  entries[name] = file;
+  if (name) {
+    const file = `./src/components/${name}`;
+    files.push(file);
+    entries[name] = file;
+  }
 });
 
 module.exports = {
@@ -48,7 +50,6 @@ module.exports = {
         warnings: false
       }
     }),
-    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"'
     }),
