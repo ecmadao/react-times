@@ -7,15 +7,18 @@ import TimePickerModal from './TimePickerModal';
 class TimePicker extends React.Component {
   constructor(props) {
     super(props);
-    let {defaultTime} = props;
+    let {defaultTime, focused} = props;
     let [hour, minute] = moment().format("HH:mm").split(':');
     if (defaultTime) {
       [hour, minute] = defaultTime.split(':');
     }
+    if (typeof focused === 'undefined') {
+      focused = false;
+    }
     this.state = {
       hour: hour,
       minute: minute,
-      focused: false
+      focused: focused
     }
     this.onFocus = this.onFocus.bind(this);
     this.onClearFocus = this.onClearFocus.bind(this);
@@ -61,11 +64,12 @@ class TimePicker extends React.Component {
     let {placeholder} = this.props;
     let {hour, minute, focused} = this.state;
     let times = `${hour} : ${minute}`;
+    let pickerPreviewClass = focused ? "time_picker_preview active" : "time_picker_preview";
     return (
       <div className="time_picker_container">
         <div
           onClick={this.onFocus}
-          className="time_picker_preview">{placeholder || times}</div>
+          className={pickerPreviewClass}>{placeholder || times}</div>
         <OutsideClickHandler onOutsideClick={this.onClearFocus}>
           <TimePickerModal
             hour={hour}

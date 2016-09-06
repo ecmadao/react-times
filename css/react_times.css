@@ -4,21 +4,29 @@
 
 .time_picker_preview {
   cursor: pointer;
-  padding: 7px 14px;
+  padding: 14px 14px;
   color: #343434;
+  text-align: center;
   border-radius: 2px;
-  border: 1px solid #343434;
+  background-color: #fff;
   transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
   -ms-transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
   -moz-transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
   -o-transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
   -webkit-transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.12), 0 0 4px 0 rgba(0, 0, 0, 0.08);
+  -moz-box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.12), 0 0 4px 0 rgba(0, 0, 0, 0.08);
+  -webkit-box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.12), 0 0 4px 0 rgba(0, 0, 0, 0.08);
 }
-
+.time_picker_preview.active,
 .time_picker_preview:hover {
+  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.12), 0 0 8px 0 rgba(0, 0, 0, 0.08);
+  -moz-box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.12), 0 0 8px 0 rgba(0, 0, 0, 0.08);
+  -webkit-box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.12), 0 0 8px 0 rgba(0, 0, 0, 0.08);
+}
+.time_picker_preview.active {
   color: #fff;
   background-color: #3498db;
-  border: 1px solid #3498db;
 }
 
 .time_picker_modal_container {

@@ -10,4 +10,9 @@ storiesOf('TimePicker', module)
     <TimePickerWrapper
       defaultTime="11:11"
     />
+  ))
+  .add('focused at setup', () => (
+    <TimePickerWrapper
+      focused={true}
+    />
   ));

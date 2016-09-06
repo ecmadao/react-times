@@ -43,6 +43,26 @@ class MinutePicker extends React.Component {
     this.handleMouseUp = this.handleMouseUp.bind(this);
   }
 
+  componentDidMount() {
+    if (document.addEventListener) {
+      document.addEventListener('mousemove', this.handleMouseMove, true);
+      document.addEventListener('mouseup', this.handleMouseUp, true);
+    } else {
+      document.attachEvent('onmousemove', this.handleMouseMove);
+      document.attachEvent('onmouseup', this.handleMouseUp);
+    }
+  }
+
+  componentWillUnmount() {
+    if (document.removeEventListener) {
+      document.removeEventListener('mousemove', this.handleMouseMove, true);
+      document.removeEventListener('mouseup', this.handleMouseUp, true);
+    } else {
+      document.detachEvent('onmousemove', this.handleMouseMove);
+      document.detachEvent('onmouseup', this.handleMouseUp);
+    }
+  }
+
   handleMinuteChange(minute, angle) {
     let {handleMinuteChange} = this.props;
     handleMinuteChange && handleMinuteChange(minute);
@@ -150,9 +170,7 @@ class MinutePicker extends React.Component {
 
     return (
       <div
-        className="picker_container minute_picker_container"
-        onMouseMove={this.handleMouseMove}
-        onMouseUp={this.handleMouseUp}>
+        className="picker_container minute_picker_container">
         {this.renderMinutePointes()}
         <div
           ref="dragPointer"

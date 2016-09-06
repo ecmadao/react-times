@@ -46,6 +46,26 @@ class HourPicker extends React.Component {
     this.handleMouseUp = this.handleMouseUp.bind(this);
   }
 
+  componentDidMount() {
+    if (document.addEventListener) {
+      document.addEventListener('mousemove', this.handleMouseMove, true);
+      document.addEventListener('mouseup', this.handleMouseUp, true);
+    } else {
+      document.attachEvent('onmousemove', this.handleMouseMove);
+      document.attachEvent('onmouseup', this.handleMouseUp);
+    }
+  }
+
+  componentWillUnmount() {
+    if (document.removeEventListener) {
+      document.removeEventListener('mousemove', this.handleMouseMove, true);
+      document.removeEventListener('mouseup', this.handleMouseUp, true);
+    } else {
+      document.detachEvent('onmousemove', this.handleMouseMove);
+      document.detachEvent('onmouseup', this.handleMouseUp);
+    }
+  }
+
   handleHourChange(hour, angle) {
     let {handleHourChange} = this.props;
     handleHourChange && handleHourChange(hour);
@@ -193,9 +213,7 @@ class HourPicker extends React.Component {
 
     return (
       <div
-        className="picker_container hour_picker_container"
-        onMouseMove={this.handleMouseMove}
-        onMouseUp={this.handleMouseUp}>
+        className="picker_container hour_picker_container">
         {this.renderHourPointes()}
         <div
           ref="dragPointer"
