@@ -1,0 +1,31 @@
+@import "./base.css";
+
+.dark .time_picker_preview {
+  background-color: #4a4a4a;
+  color: #fff;
+}
+
+.dark .time_picker_preview.active {
+  background-color: #343434;
+}
+
+.dark .time_picker_modal_container {
+  background-color: #4a4a4a;
+}
+
+.dark .time_picker_modal_header .time_picker_header.active,
+.dark .time_picker_modal_header .time_picker_header:hover {
+  color: #fff;
+}
+
+.dark .picker_container {
+  background-color: #4a4a4a;
+}
+
+.dark .picker_minute_point,
+.dark .picker_point.point_outter {
+  color: #fff;
+}
+.dark .picker_point.point_inner {
+  color: #D0D0D0;
+}

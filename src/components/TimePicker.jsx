@@ -61,12 +61,14 @@ class TimePicker extends React.Component {
   }
 
   render() {
-    let {placeholder} = this.props;
+    let {placeholder, theme} = this.props;
     let {hour, minute, focused} = this.state;
     let times = `${hour} : ${minute}`;
     let pickerPreviewClass = focused ? "time_picker_preview active" : "time_picker_preview";
+    let containerClass = theme === 'dark' ? "time_picker_container dark" : "time_picker_container";
+
     return (
-      <div className="time_picker_container">
+      <div className={containerClass}>
         <div
           onClick={this.onFocus}
           className={pickerPreviewClass}>{placeholder || times}</div>
