@@ -116,6 +116,7 @@ onMinuteChange(minute) {
 - Test
 - Color Palette
 - Themes
+- Animations
 
 ## Thanks
 
