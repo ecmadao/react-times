@@ -1,14 +1,17 @@
 {
   "name": "react-times",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "A react time picker component, no jquery-rely",
   "main": "index.js",
-  "directories": {
-    "example": "examples"
-  },
   "scripts": {
+    "build": "npm run clean && npm run build:js && webpack",
+    "build:js": "babel src/ -d lib/ --ignore src/components",
+    "clean": "rimraf lib",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "storybook": "start-storybook -p 9001 -c .storybook"
+    "storybook": "start-storybook -p 9001 -c .storybook",
+    "tag": "git tag v$npm_package_version",
+    "postversion": "git commit package.json CHANGELOG.md -m \"Version $npm_package_version\" && npm run tag && git push && git push --tags && npm publish",
+    "prepublish": "in-publish && safe-publish-latest && npm run build || not-in-publish"
   },
   "repository": {
     "type": "git",
@@ -31,10 +34,10 @@
   },
   "homepage": "https://github.com/ecmadao/react-times#readme",
   "dependencies": {
-    "@kadira/storybook": "^2.11.0",
     "moment": "^2.14.1"
   },
   "devDependencies": {
+    "@kadira/storybook": "^2.11.0",
     "babel-cli": "^6.14.0",
     "babel-core": "^6.14.0",
     "babel-eslint": "^6.1.2",
@@ -50,9 +53,16 @@
     "eslint-plugin-promise": "^2.0.1",
     "eslint-plugin-react": "^6.2.0",
     "eslint-plugin-standard": "^2.0.0",
+    "in-publish": "^2.0.0",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
+    "safe-publish-latest": "^1.0.1",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.2"
+  },
+  "peerDependencies": {
+    "moment": ">=2.10",
+    "react": ">=0.14",
+    "react-dom": ">=0.14"
   }
 }
