@@ -3,7 +3,6 @@ import moment from 'moment';
 
 import OutsideClickHandler from './OutsideClickHandler';
 import TimePickerModal from './TimePickerModal/index';
-require('../css/react_times.css');
 
 class TimePicker extends React.Component {
   constructor(props) {
@@ -66,7 +65,7 @@ class TimePicker extends React.Component {
       <div className="time_picker_container">
         <div
           onClick={this.onFocus}
-          className="time_picker_preview">{placeholder && times}</div>
+          className="time_picker_preview">{placeholder || times}</div>
         <OutsideClickHandler onOutsideClick={this.onClearFocus}>
           <TimePickerModal
             hour={hour}
