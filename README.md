@@ -1,6 +1,6 @@
 # React-Times
 
-> A time picker react-component, no jquery-rely.
+> A time picker react-component, no jquery-rely, writing in es6 standrad style.
 
 ![react-times](./intro_src/react-times.gif)
 

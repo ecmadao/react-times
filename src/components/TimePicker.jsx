@@ -1,17 +1,17 @@
 import React from 'react';
-import moment from 'moment';
 
 import OutsideClickHandler from './OutsideClickHandler';
 import TimePickerModal from './TimePickerModal';
+
+import {
+  initialTime
+} from '../utils.js';
 
 class TimePicker extends React.Component {
   constructor(props) {
     super(props);
     let {defaultTime, focused} = props;
-    let [hour, minute] = moment().format("HH:mm").split(':');
-    if (defaultTime) {
-      [hour, minute] = defaultTime.split(':');
-    }
+    let [hour, minute] = initialTime(defaultTime);
     if (typeof focused === 'undefined') {
       focused = false;
     }

@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const mousePosition = (e) => {
   let xPos, yPos;
   e = e || window.event;
@@ -44,4 +46,21 @@ export const getInitialPointerStyle = (height, top, degree) => {
 
 export const degree2Radian = (degree) => {
   return degree * (2 * Math.PI) / 360;
+};
+
+export const initialTime = (defaultTime) => {
+  let [hour, minute] = moment().format("HH:mm").split(':');
+  if (defaultTime) {
+    [hour, minute] = `${defaultTime}`.split(':');
+    hour = getValidateTime(hour);
+    minute = getValidateTime(minute);
+  }
+  return [hour, minute];
+}
+
+export const getValidateTime = (time) => {
+  if (typeof time === 'undefined') { time = 0 }
+  if (isNaN(parseInt(time))) { time = 0 }
+  if (parseInt(time) < 10) { time = `0${time}` }
+  return time;
 };
