@@ -18,8 +18,14 @@
     "react",
     "timepicker"
   ],
+  "maintainers": [
+    {
+      "email": "wlec@outlook.com",
+      "name": "ecmadao"
+    }
+  ],
   "author": "ecmadao",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/ecmadao/react-times/issues"
   },
