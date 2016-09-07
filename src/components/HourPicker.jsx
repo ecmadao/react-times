@@ -14,7 +14,8 @@ import {
   disableMouseDown,
   getRotateStyle,
   getInlineRotateStyle,
-  getInitialPointerStyle
+  getInitialPointerStyle,
+  getStandardAbsolutePosition
 } from '../utils.js';
 
 class HourPicker extends React.Component {
@@ -91,16 +92,6 @@ class HourPicker extends React.Component {
     return Math.sqrt(Math.pow((x - this.originX), 2) + Math.pow((y - this.originY), 2));
   }
 
-  getStandardAbsolutePosition(absolutePosition) {
-    if (absolutePosition < MIN_ABSOLUTE_POSITION) {
-      absolutePosition = MIN_ABSOLUTE_POSITION;
-    }
-    if (absolutePosition > MAX_ABSOLUTE_POSITION) {
-      absolutePosition = MAX_ABSOLUTE_POSITION;
-    }
-    return absolutePosition;
-  }
-
   handleMouseDown(e) {
     let event = e || window.event;
     event.preventDefault();
@@ -129,7 +120,7 @@ class HourPicker extends React.Component {
         let degree = sRad * (360 / (2 * Math.PI));
 
         let absolutePosition = this.getAbsolutePosition(dragX, dragY);
-        absolutePosition = this.getStandardAbsolutePosition(absolutePosition);
+        absolutePosition = getStandardAbsolutePosition(absolutePosition, MIN_ABSOLUTE_POSITION / 2);
         let height = absolutePosition - POINTER_RADIUS;
         let top = PICKER_RADIUS - height;
         this.setState({
@@ -158,16 +149,16 @@ class HourPicker extends React.Component {
 
       let absolutePosition = this.getAbsolutePosition(endX, endY);
       let {height, top} = this.state;
-      absolutePosition = this.getStandardAbsolutePosition(absolutePosition);
+      absolutePosition = getStandardAbsolutePosition(absolutePosition, MIN_ABSOLUTE_POSITION);
       if (MIN_ABSOLUTE_POSITION < absolutePosition && absolutePosition < MAX_ABSOLUTE_POSITION) {
         if ((absolutePosition - MIN_ABSOLUTE_POSITION) > (MAX_ABSOLUTE_POSITION - MIN_ABSOLUTE_POSITION) / 2) {
           absolutePosition = MAX_ABSOLUTE_POSITION;
         } else {
           absolutePosition = MIN_ABSOLUTE_POSITION;
         }
-        height = absolutePosition - POINTER_RADIUS;
-        top = PICKER_RADIUS - height;
       }
+      height = absolutePosition - POINTER_RADIUS;
+      top = PICKER_RADIUS - height;
 
       this.setState({
         top,

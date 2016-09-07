@@ -13,7 +13,8 @@ import {
   disableMouseDown,
   getRotateStyle,
   getInlineRotateStyle,
-  getInitialPointerStyle
+  getInitialPointerStyle,
+  getStandardAbsolutePosition
 } from '../utils.js';
 
 class MinutePicker extends React.Component {
@@ -80,6 +81,10 @@ class MinutePicker extends React.Component {
     return sRad;
   }
 
+  getAbsolutePosition(x, y) {
+    return Math.sqrt(Math.pow((x - this.originX), 2) + Math.pow((y - this.originY), 2));
+  }
+
   handleMouseDown(e) {
     let event = e || window.event;
     event.preventDefault();
@@ -106,7 +111,14 @@ class MinutePicker extends React.Component {
       if (this.originX !== dragX && this.originY !== dragY) {
         let sRad = this.getRadian(dragX, dragY);
         let degree = sRad * (360 / (2 * Math.PI));
+
+        let absolutePosition = this.getAbsolutePosition(dragX, dragY);
+        absolutePosition = getStandardAbsolutePosition(absolutePosition, MAX_ABSOLUTE_POSITION / 2);
+        let height = absolutePosition - POINTER_RADIUS;
+        let top = PICKER_RADIUS - height;
         this.setState({
+          top,
+          height,
           pointerRotate: degree
         });
       }
@@ -128,7 +140,15 @@ class MinutePicker extends React.Component {
       let minute = Math.round(degree / (360 / 12));
       let pointerRotate = minute * (360 / 12);
 
+      let absolutePosition = this.getAbsolutePosition(endX, endY);
+      let {height, top} = this.state;
+      absolutePosition = getStandardAbsolutePosition(absolutePosition, MAX_ABSOLUTE_POSITION);
+      height = absolutePosition - POINTER_RADIUS;
+      top = PICKER_RADIUS - height;
+
       this.setState({
+        top,
+        height,
         pointerRotate,
         draging: false,
         radian: degree2Radian(pointerRotate)

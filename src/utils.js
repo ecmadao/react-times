@@ -1,4 +1,7 @@
 import moment from 'moment';
+import {
+  MAX_ABSOLUTE_POSITION
+} from './ConstValue';
 
 export const mousePosition = (e) => {
   let xPos, yPos;
@@ -54,6 +57,23 @@ export const getInitialPointerStyle = (height, top, degree) => {
   }
 };
 
+export const getValidateTime = (time) => {
+  if (typeof time === 'undefined') { time = 0 }
+  if (isNaN(parseInt(time))) { time = 0 }
+  if (parseInt(time) < 10) { time = `0${time}` }
+  return time;
+};
+
+export const getStandardAbsolutePosition = (position, minPosition) => {
+  if (position < minPosition) {
+    position = minPosition;
+  }
+  if (position > MAX_ABSOLUTE_POSITION) {
+    position = MAX_ABSOLUTE_POSITION;
+  }
+  return position;
+}
+
 export const degree2Radian = (degree) => {
   return degree * (2 * Math.PI) / 360;
 };
@@ -66,11 +86,4 @@ export const initialTime = (defaultTime) => {
     minute = getValidateTime(minute);
   }
   return [hour, minute];
-}
-
-export const getValidateTime = (time) => {
-  if (typeof time === 'undefined') { time = 0 }
-  if (isNaN(parseInt(time))) { time = 0 }
-  if (parseInt(time) < 10) { time = `0${time}` }
-  return time;
 };
