@@ -15,4 +15,10 @@ storiesOf('TimePicker', module)
     <TimePickerWrapper
       focused={true}
     />
+  ))
+  .add('focused at setup', () => (
+    <TimePickerWrapper
+      withoutIcon={true}
+      focused={true}
+    />
   ));

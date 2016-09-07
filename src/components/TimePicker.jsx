@@ -2,6 +2,7 @@ import React from 'react';
 
 import OutsideClickHandler from './OutsideClickHandler';
 import TimePickerModal from './TimePickerModal';
+import TimeIcon from '../svg/time.svg';
 
 import {
   initialTime
@@ -61,17 +62,23 @@ class TimePicker extends React.Component {
   }
 
   render() {
-    let {placeholder, theme} = this.props;
+    let {placeholder, theme, withoutIcon} = this.props;
     let {hour, minute, focused} = this.state;
     let times = `${hour} : ${minute}`;
     let pickerPreviewClass = focused ? "time_picker_preview active" : "time_picker_preview";
     let containerClass = theme === 'dark' ? "time_picker_container dark" : "time_picker_container";
+    let previewContainerClass = withoutIcon ? "preview_container without_icon" : "preview_container";
 
     return (
       <div className={containerClass}>
         <div
           onClick={this.onFocus}
-          className={pickerPreviewClass}>{placeholder || times}</div>
+          className={pickerPreviewClass}>
+          <div className={previewContainerClass}>
+            {withoutIcon ? '' : <TimeIcon />}
+            {placeholder || times}
+          </div>
+        </div>
         <OutsideClickHandler onOutsideClick={this.onClearFocus}>
           <TimePickerModal
             hour={hour}

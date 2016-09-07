@@ -17,4 +17,11 @@ storiesOf('DrakTheme', module)
       theme="dark"
       focused={true}
     />
+  ))
+  .add('without icon', () => (
+    <TimePickerWrapper
+      withoutIcon={true}
+      theme="dark"
+      focused={true}
+    />
   ));

@@ -27,6 +27,9 @@ module.exports = {
     if (files.indexOf(request) > -1) {
       return callback(null, false);
     }
+    if (/svg$/.test(request)) {
+      return callback(null, false);
+    }
     return callback(null, true);
   },
   module: {
@@ -40,6 +43,11 @@ module.exports = {
           presets: ["react", "es2015"]
         }
       },
+      {
+        test: /\.svg$/,
+        loader: 'babel!react-svg',
+        include: path.join(__dirname, 'src')
+      }
     ],
   },
   resolve: {
