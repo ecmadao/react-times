@@ -1,7 +1,13 @@
 import React from 'react';
 
-import HourPicker from './HourPicker';
-import MinutePicker from './MinutePicker';
+import {
+  HOURS,
+  MINUTES,
+  MAX_ABSOLUTE_POSITION,
+  MIN_ABSOLUTE_POSITION
+} from '../ConstValue.js';
+
+import PickerDargHandler from './PickerDargHandler';
 
 class TimePickerModal extends React.Component {
   constructor(props) {
@@ -9,7 +15,7 @@ class TimePickerModal extends React.Component {
     this.state = {
       step: 0
     }
-    this.handleHourChange = this.handleHourChange.bind(this);
+    this.handleTimeChange = this.handleTimeChange.bind(this);
   }
 
   handleStepChange(step) {
@@ -19,18 +25,21 @@ class TimePickerModal extends React.Component {
     }
   }
 
-  handleHourChange(hour) {
-    let {handleHourChange} = this.props;
-    handleHourChange && handleHourChange(hour);
-    // this.handleStepChange(1);
+  handleTimeChange(time) {
+    let {step} = this.state;
+    let {handleHourChange, handleMinuteChange} = this.props;
+    if (step === 0) {
+      handleHourChange && handleHourChange(time);
+    } else {
+      handleMinuteChange && handleMinuteChange(time * 5);
+    }
   }
 
   render() {
     let {
       hour,
       minute,
-      focused,
-      handleMinuteChange
+      focused
     } = this.props;
     let {step} = this.state;
 
@@ -46,7 +55,14 @@ class TimePickerModal extends React.Component {
             onClick={this.handleStepChange.bind(this, 0)}>{hour}</span> : <span className={activeMinuteClass}
             onClick={this.handleStepChange.bind(this, 1)}>{minute}</span>
         </div>
-        {step === 0 ? <HourPicker handleHourChange={this.handleHourChange} hour={parseInt(hour)} /> : <MinutePicker handleMinuteChange={handleMinuteChange.bind(this)} minute={parseInt(minute)} />}
+        <PickerDargHandler
+          step={step}
+          data={step === 0 ? parseInt(hour) : parseInt(minute)}
+          datas={step === 0 ? HOURS : MINUTES}
+          minLength={step === 0 ? MIN_ABSOLUTE_POSITION : MAX_ABSOLUTE_POSITION}
+          splitNum={step === 0 ? 12 : 60}
+          handleTimeChange={this.handleTimeChange}>
+        </PickerDargHandler>
       </div>
     )
   }
