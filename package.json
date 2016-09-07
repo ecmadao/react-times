@@ -1,6 +1,6 @@
 {
   "name": "react-times",
-  "version": "1.0.900",
+  "version": "1.1.0",
   "description": "A react time picker component, no jquery-rely",
   "main": "index.js",
   "scripts": {

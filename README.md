@@ -24,7 +24,7 @@ dependencies:
 
 > NO JQUERT RELY 😤😤😤
 
-So generally speaking, you should have `react` & `react-dom` in your project. If not:
+So generally speaking, you should already have `react` & `react-dom` dependencies in your project. If not:
 
 ```bash
 $ npm install react react-dom --save-dev
@@ -72,7 +72,7 @@ export default class SomeComponent extends React.Component {
 }
 ```
 
-## API
+## APIS
 
 ### Props
 
@@ -80,7 +80,7 @@ export default class SomeComponent extends React.Component {
 
 Must be a string, with `${hour}:${minute}` format, default now(by using `moment()`):
 
-```
+```javascript
 defaultTime="11:11"
 defaultTime="11:01"
 defaultTime="1:01"
@@ -91,9 +91,17 @@ defaultTime="1:1"
 
 Whether the timepicker pannel is focused or not when it did mount. Default `false`
 
-```
+```javascript
 focused={false}
 focused={true}
+```
+
+- `withoutIcon`
+
+Whether the timepicker has a svg icon. Default `false`.
+
+```javascript
+withoutIcon={true}
 ```
 
 - `onFocusChange`
@@ -128,7 +136,7 @@ onMinuteChange(minute) {
 - Themes
 - Animations
 
-## Thanks
+## Thank
 
 Thanks to the Airbnb's open source project: [react-dates](https://github.com/airbnb/react-dates), I have learn a lot from that. Thanks.
 
