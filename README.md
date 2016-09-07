@@ -130,9 +130,8 @@ onMinuteChange(minute) {
 
 ## TODOS
 
-- Hight Order Component
 - Test
-- Color Palette
+- Color Palette (Now It has white and dark color)
 - Themes
 - Animations
 
