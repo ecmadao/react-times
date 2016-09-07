@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+  - "6"
+  - "5"
+  - "4.2"
+before_script:
+  - npm install -g mocha
+  - npm install -g eslint
+script: npm test
+env:
+  - REACT=0.14
+bundler_args: --retry 2
+matrix:
+  fast_finish: true
