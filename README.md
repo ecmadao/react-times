@@ -104,6 +104,15 @@ Whether the timepicker has a svg icon. Default `false`.
 withoutIcon={true}
 ```
 
+- `colorPalette`
+
+The main color palette of picker pannel. Default `light`.
+
+```javascript
+colorPalette="dark"
+colorPalette="light"
+```
+
 - `onFocusChange`
 
 The callback func when component `focused` state is changed.
@@ -131,8 +140,18 @@ onMinuteChange(minute) {
 ## TODOS
 
 - Test
-- Color Palette (Now It has white and dark color)
+- Color Palette (Now It has light and dark color)
+
+  - [x] light
+  - [x] dark
+  - [ ] colorful
+
 - Themes
+
+  - [x] Material Theme
+  - [ ] Classical Theme
+  - [ ] AM/PM Theme
+
 - Animations
 
 ## Thank
