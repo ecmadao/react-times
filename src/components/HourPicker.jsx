@@ -12,6 +12,7 @@ import {
   degree2Radian,
   mousePosition,
   disableMouseDown,
+  getRotateStyle,
   getInlineRotateStyle,
   getInitialPointerStyle
 } from '../utils.js';
@@ -190,6 +191,7 @@ class HourPicker extends React.Component {
       let pointClass = index < 12 ? "picker_point point_inner" : "picker_point point_outter";
       let angle = index < 12 ? 360 * (index + 1) / 12 : 360 * (index + 1 - 12) / 12;
       let inlineStyle = getInlineRotateStyle(angle);
+      let wrapperStyle = getRotateStyle(-angle);
       return (
         <div
           key={index}
@@ -197,7 +199,9 @@ class HourPicker extends React.Component {
           style={inlineStyle}
           onClick={this.handleHourChange.bind(this, index + 1, angle)}
           onMouseDown={disableMouseDown}>
-          {index + 1}
+          <div className="point_wrapper" style={wrapperStyle}>
+            {index + 1}
+          </div>
         </div>
       )
     });
@@ -221,6 +225,7 @@ class HourPicker extends React.Component {
           style={getInitialPointerStyle(height, top, pointerRotate)}>
           <div
             className="pointer_drag"
+            style={getRotateStyle(-pointerRotate)}
             onMouseDown={this.handleMouseDown}>{hour}</div>
         </div>
         <div

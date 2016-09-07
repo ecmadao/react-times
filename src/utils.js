@@ -22,6 +22,16 @@ export const disableMouseDown = (e) => {
   event.stopPropagation();
 };
 
+export const getRotateStyle = (degree) => {
+  return {
+    'transform': `rotate(${degree}deg)`,
+    'OTransform': `rotate(${degree}deg)`,
+    'MozTransform': `rotate(${degree}deg)`,
+    'Mstransform': `rotate(${degree}deg)`,
+    'WebkitTransform': `rotate(${degree}deg)`
+  }
+};
+
 export const getInlineRotateStyle = (degree) => {
   return {
     'transform': `translateX(-50%) rotate(${degree}deg)`,

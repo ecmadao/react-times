@@ -11,6 +11,7 @@ import {
   degree2Radian,
   mousePosition,
   disableMouseDown,
+  getRotateStyle,
   getInlineRotateStyle,
   getInitialPointerStyle
 } from '../utils.js';
@@ -145,6 +146,7 @@ class MinutePicker extends React.Component {
     return MINUTES.map((m, index) => {
       let angle = 360 * index / 60;
       let inlineStyle = getInlineRotateStyle(angle);
+      let wrapperStyle = getRotateStyle(-angle);
       if (index % 5 === 0) {
         return (
           <div
@@ -153,7 +155,9 @@ class MinutePicker extends React.Component {
             style={inlineStyle}
             onClick={this.handleMinuteChange.bind(this, index, angle)}
             onMouseDown={disableMouseDown}>
-            {index}
+            <div className="point_wrapper" style={wrapperStyle}>
+              {index}
+            </div>
           </div>
         )
       }
@@ -178,6 +182,7 @@ class MinutePicker extends React.Component {
           style={getInitialPointerStyle(height, top, pointerRotate)}>
           <div
             className="pointer_drag"
+            style={getRotateStyle(-pointerRotate)}
             onMouseDown={this.handleMouseDown}>{minute}</div>
         </div>
         <div
