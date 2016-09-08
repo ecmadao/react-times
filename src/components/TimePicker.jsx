@@ -2,7 +2,8 @@ import React, {PropTypes} from 'react';
 import moment from 'moment';
 
 import OutsideClickHandler from './OutsideClickHandler';
-import TimePickerModal from './TimePickerModal';
+import MaterialTheme from './MaterialTheme/index';
+import TwelveHoursTheme from './TwelveHoursTheme/index';
 import TimeIcon from '../svg/time.svg';
 
 import {
@@ -15,6 +16,7 @@ const propTypes = {
   focused: PropTypes.bool,
   placeholder: PropTypes.string,
   colorPalette: PropTypes.string,
+  theme: PropTypes.string,
   withoutIcon: PropTypes.bool,
   onFocusChange: PropTypes.func,
   onHourChange: PropTypes.func,
@@ -25,7 +27,8 @@ const defaultProps = {
   defaultTime: moment().format("HH:mm"),
   focused: false,
   placeholder: '',
-  colorPalette: 'light',
+  colorPalette: "light",
+  theme: "material",
   withoutIcon: false,
   onFocusChange: () => {},
   onHourChange: () => {},
@@ -78,8 +81,34 @@ class TimePicker extends React.Component {
     onMinuteChange && onMinuteChange(minute);
   }
 
+  renderMaterialTheme() {
+    let {hour, minute, focused} = this.state;
+    return (
+      <MaterialTheme
+        hour={hour}
+        minute={minute}
+        focused={focused}
+        handleHourChange={this.handleHourChange}
+        handleMinuteChange={this.handleMinuteChange}
+      />
+    )
+  }
+
+  renderTwelveHoursTheme() {
+    let {hour, minute, focused} = this.state;
+    return (
+      <TwelveHoursTheme
+        hour={hour}
+        minute={minute}
+        focused={focused}
+        handleHourChange={this.handleHourChange}
+        handleMinuteChange={this.handleMinuteChange}
+      />
+    )
+  }
+
   render() {
-    let {placeholder, colorPalette, withoutIcon} = this.props;
+    let {placeholder, colorPalette, withoutIcon, theme} = this.props;
     let {hour, minute, focused} = this.state;
     let times = `${hour} : ${minute}`;
     let pickerPreviewClass = focused ? "time_picker_preview active" : "time_picker_preview";
@@ -97,13 +126,7 @@ class TimePicker extends React.Component {
           </div>
         </div>
         <OutsideClickHandler onOutsideClick={this.onClearFocus}>
-          <TimePickerModal
-            hour={hour}
-            minute={minute}
-            focused={focused}
-            handleHourChange={this.handleHourChange}
-            handleMinuteChange={this.handleMinuteChange}
-          />
+          {theme.toLowerCase() === 'material' ? this.renderMaterialTheme() : this.renderTwelveHoursTheme()}
         </OutsideClickHandler>
       </div>
     )
