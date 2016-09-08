@@ -58,9 +58,9 @@ export const getInitialPointerStyle = (height, top, degree) => {
 };
 
 export const getValidateTime = (time) => {
-  if (typeof time === 'undefined') { time = 0 }
-  if (isNaN(parseInt(time))) { time = 0 }
-  if (parseInt(time) < 10) { time = `0${time}` }
+  if (typeof time === 'undefined') { time = '00' }
+  if (isNaN(parseInt(time))) { time = '00' }
+  if (parseInt(time) < 10) { time = `0${parseInt(time)}` }
   return time;
 };
 

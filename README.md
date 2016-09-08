@@ -1,5 +1,7 @@
 # React-Times
 
+[![Build Status](https://travis-ci.org/ecmadao/react-times.svg?branch=master)](https://travis-ci.org/ecmadao/react-times) [![Coverage Status](https://coveralls.io/repos/github/ecmadao/react-times/badge.svg?branch=master)](https://coveralls.io/github/ecmadao/react-times?branch=master) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
+
 > A time picker react-component, no jquery-rely, writing in es6 standrad style.
 
 ![react-times](./intro_src/react-times.gif)
