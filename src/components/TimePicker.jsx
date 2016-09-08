@@ -5,7 +5,8 @@ import TimePickerModal from './TimePickerModal';
 import TimeIcon from '../svg/time.svg';
 
 import {
-  initialTime
+  initialTime,
+  getValidateTime
 } from '../utils.js';
 
 class TimePicker extends React.Component {
@@ -44,18 +45,14 @@ class TimePicker extends React.Component {
   }
 
   handleHourChange(hour) {
-    if (hour < 10) {
-      hour = `0${hour}`;
-    }
+    hour = getValidateTime(hour);
     this.setState({hour});
     let {onHourChange} = this.props;
     onHourChange && onHourChange(hour);
   }
 
   handleMinuteChange(minute) {
-    if (minute < 10) {
-      minute = `0${minute}`;
-    }
+    minute = getValidateTime(minute);
     this.setState({minute});
     let {onMinuteChange} = this.props;
     onMinuteChange && onMinuteChange(minute);
