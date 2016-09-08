@@ -3,15 +3,15 @@ import {storiesOf} from '@kadira/storybook';
 import TimePickerWrapper from '../examples/TimePickerWrapper';
 
 storiesOf('TwelveHoursTheme', module)
-  .add('basical', () => (
-    <TimePickerWrapper
-      theme="twelveHours"
-    />
-  ))
   .add('with default time', () => (
     <TimePickerWrapper
       theme="twelveHours"
-      defaultTime="11:11"
+      defaultTime="3:15"
+    />
+  ))
+  .add('basical', () => (
+    <TimePickerWrapper
+      theme="twelveHours"
     />
   ))
   .add('focused at setup', () => (

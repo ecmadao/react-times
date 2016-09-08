@@ -1,19 +1,19 @@
 import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
-import PickerPoint from '../PickerPoint';
+import PickerPoint from './PickerPoint';
 
 import {
   PICKER_RADIUS,
   MAX_ABSOLUTE_POSITION,
   POINTER_RADIUS
-} from '../../ConstValue.js';
+} from '../ConstValue.js';
 import {
   degree2Radian,
   mousePosition,
   getRotateStyle,
   getInitialPointerStyle,
   getStandardAbsolutePosition
-} from '../../utils.js';
+} from '../utils.js';
 
 const propTypes = {
   data: PropTypes.number,
@@ -135,7 +135,7 @@ class PickerDargHandler extends React.Component {
       let dragY = pos.y;
       if (this.originX !== dragX && this.originY !== dragY) {
         let sRad = this.getRadian(dragX, dragY);
-        let degree = sRad * (360 / (2 * Math.PI));
+        let pointerRotate = sRad * (360 / (2 * Math.PI));
 
         let absolutePosition = this.getAbsolutePosition(dragX, dragY);
         absolutePosition = getStandardAbsolutePosition(absolutePosition, MAX_ABSOLUTE_POSITION / 2);
@@ -144,7 +144,7 @@ class PickerDargHandler extends React.Component {
         this.setState({
           top,
           height,
-          pointerRotate: degree
+          pointerRotate
         });
       }
     }
@@ -246,7 +246,7 @@ class PickerDargHandler extends React.Component {
   }
 
   render() {
-    let {data, step, children} = this.props;
+    let {data, step} = this.props;
     let {pointerRotate, draging, height, top} = this.state;
     let pickerPointerClass = 'picker_pointer';
     if (!draging) {
@@ -256,7 +256,7 @@ class PickerDargHandler extends React.Component {
     return (
       <div
         className="picker_container hour_picker_container">
-        {children}
+        {step === 0 ? this.renderHourPointes() : this.renderMinutePointes()}
         <div
           ref="dragPointer"
           className={pickerPointerClass}
