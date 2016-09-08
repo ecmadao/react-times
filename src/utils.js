@@ -61,7 +61,7 @@ export const getValidateTime = (time) => {
   if (typeof time === 'undefined') { time = '00' }
   if (isNaN(parseInt(time))) { time = '00' }
   if (parseInt(time) < 10) { time = `0${parseInt(time)}` }
-  return time;
+  return `${time}`;
 };
 
 export const getStandardAbsolutePosition = (position, minPosition) => {

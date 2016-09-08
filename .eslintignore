@@ -2,3 +2,4 @@ node_modules/
 lib/
 .storybook/
 webpack.config.js
+index.js

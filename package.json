@@ -1,14 +1,14 @@
 {
   "name": "react-times",
-  "version": "1.1.1",
-  "description": "A react time picker component, no jquery-rely",
+  "version": "1.1.21",
+  "description": "A react time-picker component, no jquery-rely",
   "main": "index.js",
   "scripts": {
     "build": "npm run clean && npm run build:js && webpack",
     "build:js": "babel src/ -d lib/ --ignore src/components",
     "clean": "rimraf lib",
     "eslint": "./node_modules/eslint/bin/eslint.js src",
-    "mocha": "mocha --recursive ./test/_helpers --compilers js:babel-register,jsx:babel-register",
+    "mocha": "./node_modules/mocha/bin/mocha --recursive ./test/_helpers --compilers js:babel-register,jsx:babel-register",
     "pretest": "npm run --silent eslint",
     "test": "npm run mocha --silent test",
     "coveralls": "cat ./coverage/lcov/lcov.info | ./node_modules/.bin/coveralls",
@@ -16,7 +16,7 @@
     "storybook-pro": "build-storybook -c .storybook -o .out",
     "deploy-storybook": "storybook-to-ghpages",
     "tag": "git tag v$npm_package_version",
-    "postversion": "git commit package.json CHANGELOG.md -m \"Version $npm_package_version\" && npm run tag && git push && git push --tags && npm publish",
+    "postversion": "git commit package.json -m \"Version $npm_package_version\" && npm run tag && git push && git push --tags && npm publish",
     "prepublish": "in-publish && safe-publish-latest && npm run build || not-in-publish"
   },
   "repository": {
@@ -25,6 +25,9 @@
   },
   "keywords": [
     "react",
+    "reactjs",
+    "time picker",
+    "time-picker",
     "timepicker"
   ],
   "maintainers": [
@@ -65,6 +68,7 @@
     "eslint-plugin-standard": "^2.0.0",
     "in-publish": "^2.0.0",
     "mocha": "^3.0.2",
+    "mocha-lcov-reporter": "^1.2.0",
     "react": "^15.3.1",
     "react-addons-test-utils": "^15.3.1",
     "react-dom": "^15.3.1",

@@ -52,17 +52,28 @@ describe('TimePicker initial', () => {
       expect(wrapper.find('.preview_container.without_icon')).to.have.lengthOf(1);
     });
 
-    it('should rendered with default time', () => {
+    it('should rendered with default time in child props', () => {
       const wrapper = shallow(<TimePicker defaultTime="22:23" />);
       expect(wrapper.find(TimePickerModal).props().hour).to.equal("22");
       expect(wrapper.find(TimePickerModal).props().minute).to.equal("23");
     });
 
-    it('should rendered with current time', () => {
+    it('should rendered with default time in DOM', () => {
+      const wrapper = shallow(<TimePicker defaultTime="22:23" withoutIcon={true} />);
+      expect(wrapper.find('.preview_container').text()).to.equal("22 : 23");
+    });
+
+    it('should rendered with current time in child props', () => {
       const wrapper = shallow(<TimePicker />);
-      let [hour, minute] = moment().format("HH:mm").split(':');
+      const [hour, minute] = moment().format("HH:mm").split(':');
       expect(wrapper.find(TimePickerModal).props().hour).to.equal(hour);
       expect(wrapper.find(TimePickerModal).props().minute).to.equal(minute);
+    });
+
+    it('should rendered with current time in DOM', () => {
+      const wrapper = shallow(<TimePicker withoutIcon={true} />);
+      const [hour, minute] = moment().format("HH:mm").split(':');
+      expect(wrapper.find('.preview_container').text()).to.equal(`${hour} : ${minute}`);
     });
   });
 });

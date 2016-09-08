@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
+import PickerPoint from './PickerPoint';
 
 import {
   PICKER_RADIUS,
@@ -9,12 +10,28 @@ import {
 import {
   degree2Radian,
   mousePosition,
-  disableMouseDown,
   getRotateStyle,
-  getInlineRotateStyle,
   getInitialPointerStyle,
   getStandardAbsolutePosition
 } from '../utils.js';
+
+const propTypes = {
+  data: PropTypes.number,
+  step: PropTypes.number,
+  minLength: PropTypes.number,
+  splitNum: PropTypes.number,
+  datas: React.PropTypes.array,
+  handleTimeChange: PropTypes.func
+};
+
+const defaultProps = {
+  data: 0,
+  step: 0,
+  datas: [],
+  minLength: MAX_ABSOLUTE_POSITION,
+  splitNum: 60,
+  handleTimeChange: () => {}
+};
 
 class PickerDargHandler extends React.Component {
   constructor(props) {
@@ -28,6 +45,7 @@ class PickerDargHandler extends React.Component {
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
+    this.handleTimeChange = this.handleTimeChange.bind(this);
   }
 
   initialRotationAndLength() {
@@ -174,8 +192,8 @@ class PickerDargHandler extends React.Component {
         roundSeg = roundSeg - 12;
       }
       let data = absolutePosition === minLength ? roundSeg : roundSeg + 12;
-
-      let {handleTimeChange} = this.props;
+      let {step, handleTimeChange} = this.props;
+      data = step === 0 ? data : data * 5;
       handleTimeChange && handleTimeChange(data);
     }
   }
@@ -197,20 +215,14 @@ class PickerDargHandler extends React.Component {
     let {datas} = this.props;
     return datas.map((m, index) => {
       let angle = 360 * index / 60;
-      let inlineStyle = getInlineRotateStyle(angle);
-      let wrapperStyle = getRotateStyle(-angle);
       if (index % 5 === 0) {
         return (
-          <div
+          <PickerPoint
+            index={index}
             key={index}
-            className="picker_point point_outter"
-            style={inlineStyle}
-            onClick={this.handleTimeChange.bind(this, index / 5, angle)}
-            onMouseDown={disableMouseDown}>
-            <div className="point_wrapper" style={wrapperStyle}>
-              {index}
-            </div>
-          </div>
+            angle={angle}
+            handleTimeChange={this.handleTimeChange}
+          />
         )
       }
     });
@@ -221,19 +233,14 @@ class PickerDargHandler extends React.Component {
     return datas.map((h, index) => {
       let pointClass = index < 12 ? "picker_point point_inner" : "picker_point point_outter";
       let angle = index < 12 ? 360 * (index + 1) / 12 : 360 * (index + 1 - 12) / 12;
-      let inlineStyle = getInlineRotateStyle(angle);
-      let wrapperStyle = getRotateStyle(-angle);
       return (
-        <div
+        <PickerPoint
+          index={index + 1}
           key={index}
-          className={pointClass}
-          style={inlineStyle}
-          onClick={this.handleTimeChange.bind(this, index + 1, angle)}
-          onMouseDown={disableMouseDown}>
-          <div className="point_wrapper" style={wrapperStyle}>
-            {index + 1}
-          </div>
-        </div>
+          angle={angle}
+          pointClass={pointClass}
+          handleTimeChange={this.handleTimeChange}
+        />
       )
     });
   }
@@ -266,5 +273,8 @@ class PickerDargHandler extends React.Component {
     )
   }
 }
+
+PickerDargHandler.propTypes = propTypes;
+PickerDargHandler.defaultProps = defaultProps;
 
 export default PickerDargHandler;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 
 import {
   HOURS,
@@ -6,6 +6,22 @@ import {
   MAX_ABSOLUTE_POSITION,
   MIN_ABSOLUTE_POSITION
 } from '../ConstValue.js';
+
+const propTypes = {
+  hour: PropTypes.string,
+  minute: PropTypes.string,
+  focused: PropTypes.bool,
+  handleHourChange: PropTypes.func,
+  handleMinuteChange: PropTypes.func
+};
+
+const defaultProps = {
+  hour: '00',
+  minute: '00',
+  focused: false,
+  handleHourChange: () => {},
+  handleMinuteChange: () => {}
+};
 
 import PickerDargHandler from './PickerDargHandler';
 
@@ -26,12 +42,13 @@ class TimePickerModal extends React.Component {
   }
 
   handleTimeChange(time) {
+    time = parseInt(time);
     let {step} = this.state;
     let {handleHourChange, handleMinuteChange} = this.props;
     if (step === 0) {
       handleHourChange && handleHourChange(time);
     } else {
-      handleMinuteChange && handleMinuteChange(time * 5);
+      handleMinuteChange && handleMinuteChange(time);
     }
   }
 
@@ -67,5 +84,8 @@ class TimePickerModal extends React.Component {
     )
   }
 }
+
+TimePickerModal.propTypes = propTypes;
+TimePickerModal.defaultProps = defaultProps;
 
 export default TimePickerModal;
