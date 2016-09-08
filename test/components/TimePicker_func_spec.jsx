@@ -38,7 +38,7 @@ describe('TimePicker func', () => {
     it('should change hour', () => {
       const wrapper = shallow(<TimePicker />);
       wrapper.instance().handleHourChange(11);
-      expect(wrapper.state().hour).to.equal(11);
+      expect(wrapper.state().hour).to.equal('11');
     });
 
     it('should change to validate hour', () => {
@@ -59,7 +59,7 @@ describe('TimePicker func', () => {
     it('should change minute', () => {
       const wrapper = shallow(<TimePicker />);
       wrapper.instance().handleMinuteChange(59);
-      expect(wrapper.state().minute).to.equal(59);
+      expect(wrapper.state().minute).to.equal('59');
     });
 
     it('should change to validate minute', () => {

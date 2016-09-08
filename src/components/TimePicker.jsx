@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
+import moment from 'moment';
 
 import OutsideClickHandler from './OutsideClickHandler';
 import TimePickerModal from './TimePickerModal';
@@ -9,14 +10,33 @@ import {
   getValidateTime
 } from '../utils.js';
 
+const propTypes = {
+  defaultTime: PropTypes.string,
+  focused: PropTypes.bool,
+  placeholder: PropTypes.string,
+  colorPalette: PropTypes.string,
+  withoutIcon: PropTypes.bool,
+  onFocusChange: PropTypes.func,
+  onHourChange: PropTypes.func,
+  onMinuteChange: PropTypes.func
+};
+
+const defaultProps = {
+  defaultTime: moment().format("HH:mm"),
+  focused: false,
+  placeholder: '',
+  colorPalette: 'light',
+  withoutIcon: false,
+  onFocusChange: () => {},
+  onHourChange: () => {},
+  onMinuteChange: () => {}
+};
+
 class TimePicker extends React.Component {
   constructor(props) {
     super(props);
     let {defaultTime, focused} = props;
     let [hour, minute] = initialTime(defaultTime);
-    if (typeof focused === 'undefined') {
-      focused = false;
-    }
     this.state = {
       hour: hour,
       minute: minute,
@@ -89,5 +109,8 @@ class TimePicker extends React.Component {
     )
   }
 }
+
+TimePicker.propTypes = propTypes;
+TimePicker.defaultProps = defaultProps;
 
 export default TimePicker;

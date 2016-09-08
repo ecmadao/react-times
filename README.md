@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/ecmadao/react-times.svg?branch=master)](https://travis-ci.org/ecmadao/react-times) [![Coverage Status](https://coveralls.io/repos/github/ecmadao/react-times/badge.svg?branch=master)](https://coveralls.io/github/ecmadao/react-times?branch=master) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
 
+[![NPM](https://nodei.co/npm/react-times.png)](https://nodei.co/npm/react-times?downloads=true&downloadRank=true&stars=true)
+
 > A time picker react-component, no jquery-rely, writing in es6 standrad style.
 
 ![react-times](./intro_src/react-times.gif)
@@ -78,7 +80,9 @@ export default class SomeComponent extends React.Component {
 
 ### Props
 
-- `defaultTime`:
+- `defaultTime`
+
+`React.PropTypes.string`
 
 Must be a string, with `${hour}:${minute}` format, default now(by using `moment()`):
 
@@ -91,6 +95,8 @@ defaultTime="1:1"
 
 - `focused`
 
+`React.PropTypes.bool`
+
 Whether the timepicker pannel is focused or not when it did mount. Default `false`
 
 ```javascript
@@ -100,6 +106,8 @@ focused={true}
 
 - `withoutIcon`
 
+`React.PropTypes.bool`
+
 Whether the timepicker has a svg icon. Default `false`.
 
 ```javascript
@@ -107,6 +115,8 @@ withoutIcon={true}
 ```
 
 - `colorPalette`
+
+`React.PropTypes.string`
 
 The main color palette of picker pannel. Default `light`.
 
@@ -117,9 +127,13 @@ colorPalette="light"
 
 - `onFocusChange`
 
+`React.PropTypes.func`
+
 The callback func when component `focused` state is changed.
 
 - `onHourChange`
+
+`React.PropTypes.func`
 
 The callback func when component `hour` state is changed.
 
@@ -130,6 +144,8 @@ onHourChange(hour) {
 ```
 
 - `onMinuteChange`
+
+`React.PropTypes.func`
 
 The callback func when component `minute` state is changed.
 
@@ -142,6 +158,17 @@ onMinuteChange(minute) {
 ## TODOS
 
 - Test
+
+  - [ ] react component test
+
+    - [x] TimePicker Component
+    - [x] PickerDragHandler Component
+    - [ ] OutsideClickHandler Component
+    - [x] TimePickerModal Component
+    - [ ] PickerPoint Component
+
+  - [x] utils test
+
 - Color Palette (Now It has light and dark color)
 
   - [x] light
