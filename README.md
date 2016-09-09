@@ -50,7 +50,7 @@ Until now, this Component has only one theme -- The Material Design Theme. I'll 
 // in some react component
 import React from 'react';
 import TimePicker from 'react-times';
-require('react-times/css/react_times.css');
+require('react-times/css/material/default.css');
 
 export default class SomeComponent extends React.Component {
   // do some work
