@@ -8,7 +8,7 @@
 
 ![react-times](./intro_src/react-times.gif)
 
-## Have a try
+## HAVE A TRY
 
 ```bash
 $ git clone git@github.com:ecmadao/react-times.git
@@ -18,7 +18,7 @@ $ npm install
 $ npm run storybook
 ```
 
-## Install
+## INSTALL
 
 dependencies:
 
@@ -40,7 +40,7 @@ and:
 $ npm install react-times --save-dev
 ```
 
-## Usage
+## USAGE
 
 Until now, this Component has only one theme -- The Material Design Theme. I'll working on more themes later.
 
@@ -62,6 +62,10 @@ export default class SomeComponent extends React.Component {
     // do something
   }
 
+  onTimeChange(time) {
+    // do something
+  }
+
   onFocusChange(focusStatue) {
     // do something
   }
@@ -71,10 +75,27 @@ export default class SomeComponent extends React.Component {
       onFocusChange={this.onFocusChange.bind(this)}
       onHourChange={this.onHourChange.bind(this)}
       onMinuteChange={this.onMinuteChange.bind(this)}
+      onTimeChange={this.onTimeChange.bind(this)}
     />
   }
 }
 ```
+
+> For more detail usage, you can visit [example](https://github.com/ecmadao/react-times/tree/master/examples) or see the source code.
+
+## SHOW
+
+> 24HoursMode, with light color as default
+
+![24HoursMode](./intro_src/24HoursMode.png)
+
+> 12HoursMode, with light color as default
+
+![12HoursMode](./intro_src/12HoursMode.png)
+
+> 24HoursMode, with dark color
+
+![DarkColor](./intro_src/DarkColor.png)
 
 ## APIS
 
@@ -168,6 +189,18 @@ onMinuteChange(minute) {
 }
 ```
 
+- `onTimeChange`
+
+`React.PropTypes.func`
+
+The callback func when component `hour` or `minute` or `AM/PM` state is changed.
+
+```javascript
+onTimeChange(time) {
+  // ...
+}
+```
+
 ## TODOS
 
 - Test
@@ -200,11 +233,11 @@ onMinuteChange(minute) {
 
 - Animations
 
-## Thank
+## THANK
 
 Thanks to the Airbnb's open source project: [react-dates](https://github.com/airbnb/react-dates), I have learn a lot from that. Thanks.
 
-## License
+## LICENSE
 
 ```
 MIT License

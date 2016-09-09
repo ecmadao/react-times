@@ -82,7 +82,7 @@ class TimePicker extends React.Component {
     this.setState({hour});
     let {onHourChange} = this.props;
     onHourChange && onHourChange(hour);
-    this.handleTimeChange();
+    this.handleTimeChange({hour});
   }
 
   handleMinuteChange(minute) {
@@ -90,16 +90,20 @@ class TimePicker extends React.Component {
     this.setState({minute});
     let {onMinuteChange} = this.props;
     onMinuteChange && onMinuteChange(minute);
-    this.handleTimeChange();
+    this.handleTimeChange({minute});
   }
 
   handleTimeIntervalChange(timeInterval) {
     this.setState({timeInterval});
-    this.handleTimeChange();
+    this.handleTimeChange({timeInterval});
   }
 
-  handleTimeChange() {
+  handleTimeChange(timeObject) {
     let {timeInterval, hour, minute} = this.state;
+    timeInterval = timeObject["timeInterval"] ? timeObject["timeInterval"] : timeInterval;
+    hour = timeObject["hour"] ? timeObject["hour"] : hour;
+    minute = timeObject["minute"] ? timeObject["minute"] : minute;
+
     let {onTimeChange} = this.props;
     if (timeInterval) {
       return onTimeChange && onTimeChange(`${hour}:${minute} ${timeInterval}`);
