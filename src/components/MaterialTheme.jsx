@@ -26,7 +26,7 @@ const defaultProps = {
 };
 
 import PickerDargHandler from './PickerDargHandler';
-import PickerPoint from './PickerPoint.jsx';
+import PickerPoint from './PickerPoint';
 
 class MaterialTheme extends React.Component {
   constructor(props) {
