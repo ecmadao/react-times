@@ -10,6 +10,10 @@ class TimePickerWrapper extends React.Component {
     console.log(minute);
   }
 
+  onTimeChange(time) {
+    console.log(time);
+  }
+
   render() {
     return (
       <div className="time_picker_wrapper">
@@ -17,6 +21,7 @@ class TimePickerWrapper extends React.Component {
           {...this.props}
           onHourChange={this.onHourChange.bind(this)}
           onMinuteChange={this.onMinuteChange.bind(this)}
+          onTimeChange={this.onTimeChange.bind(this)}
         />
       </div>
     )

@@ -1,6 +1,6 @@
 {
   "name": "react-times",
-  "version": "1.1.21",
+  "version": "1.2.0",
   "description": "A react time-picker component, no jquery-rely",
   "main": "index.js",
   "scripts": {
@@ -15,8 +15,6 @@
     "storybook": "start-storybook -p 9001 -c .storybook",
     "storybook-pro": "build-storybook -c .storybook -o .out",
     "deploy-storybook": "storybook-to-ghpages",
-    "tag": "git tag v$npm_package_version",
-    "postversion": "git commit package.json -m \"Version $npm_package_version\" && npm run tag && git push && git push --tags && npm publish",
     "prepublish": "in-publish && safe-publish-latest && npm run build || not-in-publish"
   },
   "repository": {

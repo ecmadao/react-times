@@ -1,14 +1,14 @@
 # React-Times
 
-[![Build Status](https://travis-ci.org/ecmadao/react-times.svg?branch=master)](https://travis-ci.org/ecmadao/react-times) [![Coverage Status](https://coveralls.io/repos/github/ecmadao/react-times/badge.svg?branch=master)](https://coveralls.io/github/ecmadao/react-times?branch=master) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
+[![Build Status](https://travis-ci.org/ecmadao/react-times.svg?branch=master)](https://travis-ci.org/ecmadao/react-times) [![Coverage Status](https://coveralls.io/repos/github/ecmadao/react-times/badge.svg?branch=master)](https://coveralls.io/github/ecmadao/react-times?branch=master) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![react-times](http://img.shields.io/npm/dm/react-times.svg)](https://www.npmjs.com/package/react-times) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/ecmadao/react-times/master/LICENSE)
 
-[![NPM](https://nodei.co/npm/react-times.png)](https://nodei.co/npm/react-times?downloads=true&downloadRank=true&stars=true)
+[![NPM](https://nodei.co/npm/react-times.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/react-times)
 
 > A time picker react-component, no jquery-rely, writing in es6 standrad style.
 
 ![react-times](./intro_src/react-times.gif)
 
-## Have a try
+## HAVE A TRY
 
 ```bash
 $ git clone git@github.com:ecmadao/react-times.git
@@ -18,7 +18,7 @@ $ npm install
 $ npm run storybook
 ```
 
-## Install
+## INSTALL
 
 dependencies:
 
@@ -40,7 +40,7 @@ and:
 $ npm install react-times --save-dev
 ```
 
-## Usage
+## USAGE
 
 Until now, this Component has only one theme -- The Material Design Theme. I'll working on more themes later.
 
@@ -62,6 +62,10 @@ export default class SomeComponent extends React.Component {
     // do something
   }
 
+  onTimeChange(time) {
+    // do something
+  }
+
   onFocusChange(focusStatue) {
     // do something
   }
@@ -71,10 +75,27 @@ export default class SomeComponent extends React.Component {
       onFocusChange={this.onFocusChange.bind(this)}
       onHourChange={this.onHourChange.bind(this)}
       onMinuteChange={this.onMinuteChange.bind(this)}
+      onTimeChange={this.onTimeChange.bind(this)}
     />
   }
 }
 ```
+
+> For more detail usage, you can visit [example](https://github.com/ecmadao/react-times/tree/master/examples) or see the source code.
+
+## SHOW
+
+> 24HoursMode, with light color as default
+
+![24HoursMode](./intro_src/24HoursMode.png)
+
+> 12HoursMode, with light color as default
+
+![12HoursMode](./intro_src/12HoursMode.png)
+
+> 24HoursMode, with dark color
+
+![DarkColor](./intro_src/DarkColor.png)
 
 ## APIS
 
@@ -125,6 +146,19 @@ colorPalette="dark"
 colorPalette="light"
 ```
 
+- `timeMode`
+
+`React.PropTypes.string` or `React.PropTypes.number`
+
+Support "12" or "24" hours mode.
+
+```javascript
+timeMode="24"
+timeMode=24
+timeMode="12"
+timeMode=12
+```
+
 - `onFocusChange`
 
 `React.PropTypes.func`
@@ -155,6 +189,18 @@ onMinuteChange(minute) {
 }
 ```
 
+- `onTimeChange`
+
+`React.PropTypes.func`
+
+The callback func when component `hour` or `minute` or `AM/PM` state is changed.
+
+```javascript
+onTimeChange(time) {
+  // ...
+}
+```
+
 ## TODOS
 
 - Test
@@ -179,15 +225,19 @@ onMinuteChange(minute) {
 
   - [x] Material Theme
   - [ ] Classical Theme
-  - [ ] AM/PM Theme
+
+- Mode
+
+  - [x] 12h mode
+  - [x] 24h mode
 
 - Animations
 
-## Thank
+## THANK
 
 Thanks to the Airbnb's open source project: [react-dates](https://github.com/airbnb/react-dates), I have learn a lot from that. Thanks.
 
-## License
+## LICENSE
 
 ```
 MIT License

@@ -1,7 +1,4 @@
 import moment from 'moment';
-import {
-  MAX_ABSOLUTE_POSITION
-} from './ConstValue';
 
 export const mousePosition = (e) => {
   let xPos, yPos;
@@ -64,12 +61,12 @@ export const getValidateTime = (time) => {
   return `${time}`;
 };
 
-export const getStandardAbsolutePosition = (position, minPosition) => {
+export const getStandardAbsolutePosition = (position, minPosition, maxPosition) => {
   if (position < minPosition) {
     position = minPosition;
   }
-  if (position > MAX_ABSOLUTE_POSITION) {
-    position = MAX_ABSOLUTE_POSITION;
+  if (position > maxPosition) {
+    position = maxPosition;
   }
   return position;
 }
@@ -78,12 +75,28 @@ export const degree2Radian = (degree) => {
   return degree * (2 * Math.PI) / 360;
 };
 
-export const initialTime = (defaultTime) => {
+export const initialTime = (defaultTime, mode = 24) => {
   let [hour, minute] = moment().format("HH:mm").split(':');
   if (defaultTime) {
     [hour, minute] = `${defaultTime}`.split(':');
     hour = getValidateTime(hour);
     minute = getValidateTime(minute);
   }
-  return [hour, minute];
+  let timeInterval = null;
+  if (mode === 12) {
+    timeInterval = hour > 12 ? "PM" : "AM";
+    hour = hour > 12 ? getValidateTime(hour - 12) : hour;
+  }
+  return [hour, minute, timeInterval];
+};
+
+export const getValidateTimeMode = (timeMode) => {
+  let mode = parseInt(timeMode);
+  if (isNaN(mode)) {
+    return 24;
+  }
+  if (mode !== 24 && mode !== 12) {
+    return 24;
+  }
+  return mode;
 };

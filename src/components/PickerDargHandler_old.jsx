@@ -1,9 +1,9 @@
 import React, {PropTypes} from 'react';
 import ReactDOM from 'react-dom';
+import PickerPoint from './PickerPoint';
 
 import {
   PICKER_RADIUS,
-  MIN_ABSOLUTE_POSITION,
   MAX_ABSOLUTE_POSITION,
   POINTER_RADIUS
 } from '../ConstValue.js';
@@ -16,33 +16,21 @@ import {
 } from '../utils.js';
 
 const propTypes = {
-  time: PropTypes.number,
+  data: PropTypes.number,
   step: PropTypes.number,
-  pointerRotate: PropTypes.number,
   minLength: PropTypes.number,
-  maxLength: PropTypes.number,
-  rotateState: PropTypes.shape({
-    top: PropTypes.number,
-    height: PropTypes.number,
-    pointerRotate: PropTypes.number
-  }),
-  handleTimeChange: PropTypes.func,
-  handleDegreeChange: PropTypes.func
+  splitNum: PropTypes.number,
+  datas: React.PropTypes.array,
+  handleTimeChange: PropTypes.func
 };
 
 const defaultProps = {
-  time: 0,
+  data: 0,
   step: 0,
-  pointerRotate: 0,
-  rotateState: {
-    top: 0,
-    height: 0,
-    pointerRotate: 0
-  },
-  minLength: MIN_ABSOLUTE_POSITION,
-  maxLength: MAX_ABSOLUTE_POSITION,
-  handleTimeChange: () => {},
-  handleDegreeChange: () => {}
+  datas: [],
+  minLength: MAX_ABSOLUTE_POSITION,
+  splitNum: 60,
+  handleTimeChange: () => {}
 };
 
 class PickerDargHandler extends React.Component {
@@ -57,21 +45,25 @@ class PickerDargHandler extends React.Component {
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
+    this.handleTimeChange = this.handleTimeChange.bind(this);
   }
 
   initialRotationAndLength() {
-    let {rotateState} = this.props;
-    let {
-      top,
-      height,
-      pointerRotate
-    } = rotateState;
-
+    let {data, minLength, splitNum, datas} = this.props;
+    let pointerRotate = 0;
+    datas.map((d, index) => {
+      if (data === index + 1) {
+        pointerRotate = index < splitNum ? 360 * (index + 1) / splitNum : 360 * (index + 1 - splitNum) / splitNum;
+      }
+    });
+    let height = data < splitNum ? minLength - POINTER_RADIUS : MAX_ABSOLUTE_POSITION - POINTER_RADIUS
+    let top = data < splitNum ? PICKER_RADIUS - minLength + POINTER_RADIUS : PICKER_RADIUS - MAX_ABSOLUTE_POSITION + POINTER_RADIUS;
     return {
       top,
       height,
       pointerRotate,
-      draging: false
+      draging: false,
+      radian: degree2Radian(pointerRotate)
     }
   }
 
@@ -100,11 +92,9 @@ class PickerDargHandler extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    let {step, time, rotateState} = this.props;
+    let {step} = this.props;
     let prevStep = prevProps.step;
-    let prevTime = prevProps.time;
-    let PrevRotateState = prevProps.rotateState
-    if (step !== prevStep || time !== prevTime || rotateState.pointerRotate !== PrevRotateState.pointerRotate) {
+    if (step !== prevStep) {
       this.resetState();
     }
   }
@@ -112,7 +102,7 @@ class PickerDargHandler extends React.Component {
   getRadian(x, y) {
     let sRad = Math.atan2(y - this.originY, x - this.originX);
     sRad -= Math.atan2(this.startY - this.originY, this.startX - this.originX);
-    sRad += degree2Radian(this.props.rotateState.pointerRotate);
+    sRad += this.state.radian;
     return sRad;
   }
 
@@ -140,15 +130,15 @@ class PickerDargHandler extends React.Component {
 
   handleMouseMove(e) {
     if (this.state.draging) {
-      let {minLength, maxLength} = this.props;
       let pos = mousePosition(e);
       let dragX = pos.x;
       let dragY = pos.y;
       if (this.originX !== dragX && this.originY !== dragY) {
         let sRad = this.getRadian(dragX, dragY);
         let pointerRotate = sRad * (360 / (2 * Math.PI));
+
         let absolutePosition = this.getAbsolutePosition(dragX, dragY);
-        absolutePosition = getStandardAbsolutePosition(absolutePosition, minLength / 2, maxLength);
+        absolutePosition = getStandardAbsolutePosition(absolutePosition, MAX_ABSOLUTE_POSITION / 2);
         let height = absolutePosition - POINTER_RADIUS;
         let top = PICKER_RADIUS - height;
         this.setState({
@@ -162,17 +152,7 @@ class PickerDargHandler extends React.Component {
 
   handleMouseUp(e) {
     if (this.state.draging) {
-      this.setState({
-        draging: false
-      });
-
-      let {
-        minLength,
-        maxLength,
-        step,
-        handleTimeChange,
-        handleDegreeChange
-      } = this.props;
+      let {minLength} = this.props;
 
       let pos = mousePosition(e);
       let endX = pos.x;
@@ -188,32 +168,95 @@ class PickerDargHandler extends React.Component {
       let pointerRotate = roundSeg * (360 / 12);
 
       let absolutePosition = this.getAbsolutePosition(endX, endY);
-
-      absolutePosition = getStandardAbsolutePosition(absolutePosition, minLength, maxLength);
-      if (minLength < absolutePosition && absolutePosition < maxLength) {
-        if ((absolutePosition - minLength) > (maxLength - minLength) / 2) {
-          absolutePosition = maxLength;
+      let {height, top} = this.state;
+      absolutePosition = getStandardAbsolutePosition(absolutePosition, minLength);
+      if (minLength < absolutePosition && absolutePosition < MAX_ABSOLUTE_POSITION) {
+        if ((absolutePosition - minLength) > (MAX_ABSOLUTE_POSITION - minLength) / 2) {
+          absolutePosition = MAX_ABSOLUTE_POSITION;
         } else {
           absolutePosition = minLength;
         }
       }
+      height = absolutePosition - POINTER_RADIUS;
+      top = PICKER_RADIUS - height;
+
+      this.setState({
+        top,
+        height,
+        pointerRotate,
+        draging: false,
+        radian: degree2Radian(pointerRotate)
+      });
+
       if (roundSeg > 12) {
         roundSeg = roundSeg - 12;
       }
-      let time = absolutePosition === minLength ? roundSeg : roundSeg + 12;
-      time = step === 0 ? time : time * 5;
-      handleTimeChange && handleTimeChange(time);
-      handleDegreeChange && handleDegreeChange(pointerRotate);
+      let data = absolutePosition === minLength ? roundSeg : roundSeg + 12;
+      let {step, handleTimeChange} = this.props;
+      data = step === 0 ? data : data * 5;
+      handleTimeChange && handleTimeChange(data);
     }
   }
 
+  handleTimeChange(time, angle) {
+    let {handleTimeChange, minLength, splitNum} = this.props;
+    handleTimeChange && handleTimeChange(time);
+    let height = time > splitNum ? MAX_ABSOLUTE_POSITION - POINTER_RADIUS : minLength - POINTER_RADIUS;
+    let top = time > splitNum ? PICKER_RADIUS - MAX_ABSOLUTE_POSITION + POINTER_RADIUS : PICKER_RADIUS - minLength + POINTER_RADIUS
+    this.setState({
+      height,
+      top,
+      pointerRotate: angle,
+      radian: degree2Radian(angle)
+    });
+  }
+
+  renderMinutePointes() {
+    let {datas} = this.props;
+    return datas.map((m, index) => {
+      let angle = 360 * index / 60;
+      if (index % 5 === 0) {
+        return (
+          <PickerPoint
+            index={index}
+            key={index}
+            angle={angle}
+            handleTimeChange={this.handleTimeChange}
+          />
+        )
+      }
+    });
+  }
+
+  renderHourPointes() {
+    let {datas} = this.props;
+    return datas.map((h, index) => {
+      let pointClass = index < 12 ? "picker_point point_inner" : "picker_point point_outter";
+      let angle = index < 12 ? 360 * (index + 1) / 12 : 360 * (index + 1 - 12) / 12;
+      return (
+        <PickerPoint
+          index={index + 1}
+          key={index}
+          angle={angle}
+          pointClass={pointClass}
+          handleTimeChange={this.handleTimeChange}
+        />
+      )
+    });
+  }
+
   render() {
-    let {time} = this.props;
-    let {draging, height, top, pointerRotate} = this.state;
-    let pickerPointerClass = draging ? "picker_pointer" : "picker_pointer animation";
+    let {data, step} = this.props;
+    let {pointerRotate, draging, height, top} = this.state;
+    let pickerPointerClass = 'picker_pointer';
+    if (!draging) {
+      pickerPointerClass = `${pickerPointerClass} animation`;
+    }
 
     return (
-      <div className="picker_handler">
+      <div
+        className="picker_container hour_picker_container">
+        {step === 0 ? this.renderHourPointes() : this.renderMinutePointes()}
         <div
           ref="dragPointer"
           className={pickerPointerClass}
@@ -221,7 +264,7 @@ class PickerDargHandler extends React.Component {
           <div
             className="pointer_drag"
             style={getRotateStyle(-pointerRotate)}
-            onMouseDown={this.handleMouseDown}>{time}</div>
+            onMouseDown={this.handleMouseDown}>{data}</div>
         </div>
         <div
           className="picker_center"
