@@ -3,6 +3,8 @@ import React, {PropTypes} from 'react';
 import {
   HOURS,
   MINUTES,
+  POINTER_RADIUS,
+  PICKER_RADIUS,
   MAX_ABSOLUTE_POSITION,
   MIN_ABSOLUTE_POSITION
 } from '../../ConstValue.js';
@@ -72,6 +74,17 @@ class MaterialTheme extends React.Component {
     }
   }
 
+  getTopAndHeight() {
+    let {step} = this.state;
+    let {hour, minute} = this.props;
+    let time = step === 0 ? hour : minute;
+    let splitNum = step === 0 ? 12 : 60;
+    let minLength = step === 0 ? MIN_ABSOLUTE_POSITION : MAX_ABSOLUTE_POSITION;
+    let height = time < splitNum ? minLength - POINTER_RADIUS : MAX_ABSOLUTE_POSITION - POINTER_RADIUS
+    let top = time < splitNum ? PICKER_RADIUS - minLength + POINTER_RADIUS : PICKER_RADIUS - MAX_ABSOLUTE_POSITION + POINTER_RADIUS;
+    return [top, height];
+  }
+
   renderMinutePointes() {
     return MINUTES.map((m, index) => {
       let angle = 360 * index / 60;
@@ -115,6 +128,12 @@ class MaterialTheme extends React.Component {
     let activeHourClass = step === 0 ? "time_picker_header active" : "time_picker_header";
     let activeMinuteClass = step === 1 ? "time_picker_header active" : "time_picker_header";
     let modalContainerClass = focused ? "time_picker_modal_container active" : "time_picker_modal_container";
+    let [top, height] = this.getTopAndHeight();
+    let rotateState = {
+      top,
+      height,
+      pointerRotate
+    };
 
     return (
       <div className={modalContainerClass}>
@@ -128,10 +147,9 @@ class MaterialTheme extends React.Component {
         </div>
         <PickerDargHandler
           step={step}
-          pointerRotate={pointerRotate}
+          rotateState={rotateState}
           time={step === 0 ? parseInt(hour) : parseInt(minute)}
           minLength={step === 0 ? MIN_ABSOLUTE_POSITION : MAX_ABSOLUTE_POSITION}
-          splitNum={step === 0 ? 12 : 60}
           handleTimeChange={this.handleTimeChange}
           handleDegreeChange={this.handleDegreeChange}>
           {step === 0 ? this.renderHourPointes() : this.renderMinutePointes()}
