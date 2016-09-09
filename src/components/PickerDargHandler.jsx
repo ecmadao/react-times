@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import {
   PICKER_RADIUS,
+  MIN_ABSOLUTE_POSITION,
   MAX_ABSOLUTE_POSITION,
   POINTER_RADIUS
 } from '../ConstValue.js';
@@ -19,6 +20,7 @@ const propTypes = {
   step: PropTypes.number,
   pointerRotate: PropTypes.number,
   minLength: PropTypes.number,
+  maxLength: PropTypes.number,
   rotateState: PropTypes.shape({
     top: PropTypes.number,
     height: PropTypes.number,
@@ -37,7 +39,8 @@ const defaultProps = {
     height: 0,
     pointerRotate: 0
   },
-  minLength: MAX_ABSOLUTE_POSITION,
+  minLength: MIN_ABSOLUTE_POSITION,
+  maxLength: MAX_ABSOLUTE_POSITION,
   handleTimeChange: () => {},
   handleDegreeChange: () => {}
 };
@@ -137,6 +140,7 @@ class PickerDargHandler extends React.Component {
 
   handleMouseMove(e) {
     if (this.state.draging) {
+      let {minLength, maxLength} = this.props;
       let pos = mousePosition(e);
       let dragX = pos.x;
       let dragY = pos.y;
@@ -144,7 +148,7 @@ class PickerDargHandler extends React.Component {
         let sRad = this.getRadian(dragX, dragY);
         let pointerRotate = sRad * (360 / (2 * Math.PI));
         let absolutePosition = this.getAbsolutePosition(dragX, dragY);
-        absolutePosition = getStandardAbsolutePosition(absolutePosition, MAX_ABSOLUTE_POSITION / 2);
+        absolutePosition = getStandardAbsolutePosition(absolutePosition, minLength / 2, maxLength);
         let height = absolutePosition - POINTER_RADIUS;
         let top = PICKER_RADIUS - height;
         this.setState({
@@ -164,6 +168,7 @@ class PickerDargHandler extends React.Component {
 
       let {
         minLength,
+        maxLength,
         step,
         handleTimeChange,
         handleDegreeChange
@@ -184,10 +189,10 @@ class PickerDargHandler extends React.Component {
 
       let absolutePosition = this.getAbsolutePosition(endX, endY);
 
-      absolutePosition = getStandardAbsolutePosition(absolutePosition, minLength);
-      if (minLength < absolutePosition && absolutePosition < MAX_ABSOLUTE_POSITION) {
-        if ((absolutePosition - minLength) > (MAX_ABSOLUTE_POSITION - minLength) / 2) {
-          absolutePosition = MAX_ABSOLUTE_POSITION;
+      absolutePosition = getStandardAbsolutePosition(absolutePosition, minLength, maxLength);
+      if (minLength < absolutePosition && absolutePosition < maxLength) {
+        if ((absolutePosition - minLength) > (maxLength - minLength) / 2) {
+          absolutePosition = maxLength;
         } else {
           absolutePosition = minLength;
         }

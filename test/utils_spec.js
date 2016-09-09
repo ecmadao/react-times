@@ -58,11 +58,11 @@ describe('Utils Test', () => {
 
   describe('Test getStandardAbsolutePosition func', () => {
     it('should return the MinPosition', () => {
-      expect(getStandardAbsolutePosition(MIN_ABSOLUTE_POSITION - 1, MIN_ABSOLUTE_POSITION)).to.equal(MIN_ABSOLUTE_POSITION);
+      expect(getStandardAbsolutePosition(MIN_ABSOLUTE_POSITION - 1, MIN_ABSOLUTE_POSITION, MAX_ABSOLUTE_POSITION)).to.equal(MIN_ABSOLUTE_POSITION);
     });
 
     it('should return the MaxPosition', () => {
-      expect(getStandardAbsolutePosition(MAX_ABSOLUTE_POSITION + 1, MAX_ABSOLUTE_POSITION)).to.equal(MAX_ABSOLUTE_POSITION);
+      expect(getStandardAbsolutePosition(MAX_ABSOLUTE_POSITION + 1, MAX_ABSOLUTE_POSITION, MAX_ABSOLUTE_POSITION)).to.equal(MAX_ABSOLUTE_POSITION);
     });
   });
 });

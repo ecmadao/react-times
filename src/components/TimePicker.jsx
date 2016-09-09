@@ -8,7 +8,8 @@ import TimeIcon from '../svg/time.svg';
 
 import {
   initialTime,
-  getValidateTime
+  getValidateTime,
+  getValidateTimeMode
 } from '../utils.js';
 
 const propTypes = {
@@ -17,6 +18,10 @@ const propTypes = {
   placeholder: PropTypes.string,
   colorPalette: PropTypes.string,
   theme: PropTypes.string,
+  timeMode: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
   withoutIcon: PropTypes.bool,
   onFocusChange: PropTypes.func,
   onHourChange: PropTypes.func,
@@ -28,6 +33,7 @@ const defaultProps = {
   focused: false,
   placeholder: '',
   colorPalette: "light",
+  timeMode: "24",
   theme: "material",
   withoutIcon: false,
   onFocusChange: () => {},
@@ -38,8 +44,8 @@ const defaultProps = {
 class TimePicker extends React.Component {
   constructor(props) {
     super(props);
-    let {defaultTime, focused} = props;
-    let [hour, minute] = initialTime(defaultTime);
+    let {defaultTime, focused, timeMode} = props;
+    let [hour, minute] = initialTime(defaultTime, getValidateTimeMode(timeMode));
     this.state = {
       hour: hour,
       minute: minute,
@@ -108,7 +114,7 @@ class TimePicker extends React.Component {
   }
 
   render() {
-    let {placeholder, colorPalette, withoutIcon, theme} = this.props;
+    let {placeholder, colorPalette, withoutIcon, timeMode} = this.props;
     let {hour, minute, focused} = this.state;
     let times = `${hour} : ${minute}`;
     let pickerPreviewClass = focused ? "time_picker_preview active" : "time_picker_preview";
@@ -126,7 +132,7 @@ class TimePicker extends React.Component {
           </div>
         </div>
         <OutsideClickHandler onOutsideClick={this.onClearFocus}>
-          {theme.toLowerCase() === 'material' ? this.renderMaterialTheme() : this.renderTwelveHoursTheme()}
+          {getValidateTimeMode(timeMode) === 24 ? this.renderMaterialTheme() : this.renderTwelveHoursTheme()}
         </OutsideClickHandler>
       </div>
     )

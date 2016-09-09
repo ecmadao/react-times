@@ -2,27 +2,27 @@ import React from 'react';
 import {storiesOf} from '@kadira/storybook';
 import TimePickerWrapper from '../examples/TimePickerWrapper';
 
-storiesOf('TwelveHoursTheme', module)
+storiesOf('TwelveHoursMode', module)
   .add('with default time', () => (
     <TimePickerWrapper
-      theme="twelveHours"
-      defaultTime="3:15"
+      timeMode="12"
+      defaultTime="13:15"
     />
   ))
   .add('basical', () => (
     <TimePickerWrapper
-      theme="twelveHours"
+      timeMode="12"
     />
   ))
   .add('focused at setup', () => (
     <TimePickerWrapper
-      theme="twelveHours"
+      timeMode="12"
       focused={true}
     />
   ))
   .add('focused at setup', () => (
     <TimePickerWrapper
-      theme="twelveHours"
+      timeMode="12"
       withoutIcon={true}
       focused={true}
     />

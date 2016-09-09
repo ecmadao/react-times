@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 
 import {
-  HOURS,
+  TWELVE_HOURS,
   MINUTES,
   POINTER_RADIUS,
   PICKER_RADIUS,
@@ -31,31 +31,52 @@ import PickerPoint from '../PickerPoint.jsx';
 class TwelveHoursTheme extends React.Component {
   constructor(props) {
     super(props);
-    let hour = parseInt(this.props.hour);
-    let pointerRotate = 0;
-    HOURS.map((h, index) => {
-      if (hour === index + 1) {
-        pointerRotate = index < 12 ? 360 * (index + 1) / 12 : 360 * (index + 1 - 12) / 12;
-      }
-    });
+    let hourPointerRotate = this.resetHourDegree();
+    let minutePointerRotate = this.resetMinuteDegree();
 
     this.state = {
       step: 0,
-      pointerRotate
+      hourPointerRotate,
+      minutePointerRotate
     }
-    this.handleTimeChange = this.handleTimeChange.bind(this);
+    this.handleHourChange = this.handleHourChange.bind(this);
+    this.handleMinuteChange = this.handleMinuteChange.bind(this);
     this.handleDegreeChange = this.handleDegreeChange.bind(this);
-    this.handleTimePointerClick = this.handleTimePointerClick.bind(this);
+    this.handleHourPointerClick = this.handleHourPointerClick.bind(this);
+    this.handleMinutePointerClick = this.handleMinutePointerClick.bind(this);
   }
 
-  getTopAndHeight() {
-    let {step} = this.state;
-    let {hour, minute} = this.props;
-    let time = step === 0 ? hour : minute;
-    let splitNum = step === 0 ? 12 : 60;
-    let minLength = step === 0 ? MIN_ABSOLUTE_POSITION : MAX_ABSOLUTE_POSITION;
-    let height = time < splitNum ? minLength - POINTER_RADIUS : MAX_ABSOLUTE_POSITION - POINTER_RADIUS
-    let top = time < splitNum ? PICKER_RADIUS - minLength + POINTER_RADIUS : PICKER_RADIUS - MAX_ABSOLUTE_POSITION + POINTER_RADIUS;
+  resetHourDegree() {
+    let hour = parseInt(this.props.hour);
+    let pointerRotate = 0;
+    TWELVE_HOURS.map((h, index) => {
+      if (hour === index + 1) {
+        pointerRotate = 360 * (index + 1) / 12;
+      }
+    });
+    return pointerRotate
+  }
+
+  resetMinuteDegree() {
+    let minute = parseInt(this.props.minute);
+    let pointerRotate = 0;
+    MINUTES.map((m, index) => {
+      if (minute === index) {
+        pointerRotate = 360 * index / 60;
+      }
+    });
+    return pointerRotate;
+  }
+
+  getHourTopAndHeight() {
+    let height = MIN_ABSOLUTE_POSITION - POINTER_RADIUS;
+    let top = PICKER_RADIUS - MIN_ABSOLUTE_POSITION + POINTER_RADIUS;
+    return [top, height];
+  }
+
+  getMinuteTopAndHeight() {
+    let height = MAX_ABSOLUTE_POSITION - POINTER_RADIUS;
+    let top = PICKER_RADIUS - MAX_ABSOLUTE_POSITION + POINTER_RADIUS;
     return [top, height];
   }
 
@@ -66,24 +87,30 @@ class TwelveHoursTheme extends React.Component {
     }
   }
 
-  handleTimePointerClick(time, pointerRotate) {
-    this.setState({pointerRotate});
-    this.handleTimeChange(time);
+  handleHourPointerClick(time, hourPointerRotate) {
+    this.handleHourChange(time);
+    this.handleDegreeChange({hourPointerRotate});
+  }
+
+  handleMinutePointerClick(time, minutePointerRotate) {
+    this.handleMinuteChange(time);
+    this.handleDegreeChange({minutePointerRotate});
   }
 
   handleDegreeChange(pointerRotate) {
-    this.setState({pointerRotate});
+    this.setState(pointerRotate);
   }
 
-  handleTimeChange(time) {
-    time = parseInt(time);
-    let {step} = this.state;
-    let {handleHourChange, handleMinuteChange} = this.props;
-    if (step === 0) {
-      handleHourChange && handleHourChange(time);
-    } else {
-      handleMinuteChange && handleMinuteChange(time);
-    }
+  handleHourChange(time) {
+    let hour = parseInt(time);
+    let {handleHourChange} = this.props;
+    handleHourChange && handleHourChange(hour);
+  }
+
+  handleMinuteChange(time) {
+    let minute = parseInt(time);
+    let {handleMinuteChange} = this.props;
+    handleMinuteChange && handleMinuteChange(minute);
   }
 
   renderMinutePointes() {
@@ -95,7 +122,7 @@ class TwelveHoursTheme extends React.Component {
             index={index}
             key={index}
             angle={angle}
-            handleTimeChange={this.handleTimePointerClick}
+            handleTimeChange={this.handleMinutePointerClick}
           />
         )
       }
@@ -103,16 +130,15 @@ class TwelveHoursTheme extends React.Component {
   }
 
   renderHourPointes() {
-    return HOURS.map((h, index) => {
-      let pointClass = index < 12 ? "picker_point point_inner" : "picker_point point_outter";
-      let angle = index < 12 ? 360 * (index + 1) / 12 : 360 * (index + 1 - 12) / 12;
+    return TWELVE_HOURS.map((h, index) => {
+      let angle = 360 * (index + 1) / 12;
       return (
         <PickerPoint
           index={index + 1}
           key={index}
           angle={angle}
-          pointClass={pointClass}
-          handleTimeChange={this.handleTimePointerClick}
+          pointClass="picker_point point_inner"
+          handleTimeChange={this.handleHourPointerClick}
         />
       )
     });
@@ -124,17 +150,23 @@ class TwelveHoursTheme extends React.Component {
       minute,
       focused
     } = this.props;
-    let {step, pointerRotate} = this.state;
+    let {step, hourPointerRotate, minutePointerRotate} = this.state;
 
     let activeHourClass = step === 0 ? "time_picker_header active" : "time_picker_header";
     let activeMinuteClass = step === 1 ? "time_picker_header active" : "time_picker_header";
     let modalContainerClass = focused ? "time_picker_modal_container active" : "time_picker_modal_container";
 
-    let [top, height] = this.getTopAndHeight();
-    let rotateState = {
+    let [top, height] = this.getHourTopAndHeight();
+    let hourRotateState = {
       top,
       height,
-      pointerRotate
+      pointerRotate: hourPointerRotate
+    };
+    let [minuteTop, minuteHeight] = this.getMinuteTopAndHeight()
+    let minuteRotateState = {
+      top: minuteTop,
+      height: minuteHeight,
+      pointerRotate: minutePointerRotate
     };
 
     return (
@@ -148,15 +180,26 @@ class TwelveHoursTheme extends React.Component {
             onClick={this.handleStepChange.bind(this, 1)}>PM</span>
         </div>
         <div className="picker_container">
-          {step === 0 ? this.renderHourPointes() : this.renderMinutePointes()}
+          {this.renderHourPointes()}
+          {this.renderMinutePointes()}
           <PickerDargHandler
-            step={step}
-            rotateState={rotateState}
-            time={step === 0 ? parseInt(hour) : parseInt(minute)}
-            minLength={step === 0 ? MIN_ABSOLUTE_POSITION : MAX_ABSOLUTE_POSITION}
-            handleTimeChange={this.handleTimeChange}
-            handleDegreeChange={this.handleDegreeChange}>
-          </PickerDargHandler>
+            step={0}
+            rotateState={hourRotateState}
+            time={parseInt(hour)}
+            maxLength={MIN_ABSOLUTE_POSITION}
+            handleTimeChange={this.handleHourChange}
+            handleDegreeChange={(degree) => {
+              this.handleDegreeChange({hourPointerRotate: degree});
+            }} />
+          <PickerDargHandler
+            step={1}
+            rotateState={minuteRotateState}
+            time={parseInt(minute)}
+            minLength={MAX_ABSOLUTE_POSITION}
+            handleTimeChange={this.handleMinuteChange}
+            handleDegreeChange={(degree) => {
+              this.handleDegreeChange({minutePointerRotate: degree});
+            }} />
         </div>
       </div>
     )

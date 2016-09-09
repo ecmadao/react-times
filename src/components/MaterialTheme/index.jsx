@@ -31,13 +31,7 @@ import PickerPoint from '../PickerPoint.jsx';
 class MaterialTheme extends React.Component {
   constructor(props) {
     super(props);
-    let hour = parseInt(this.props.hour);
-    let pointerRotate = 0;
-    HOURS.map((h, index) => {
-      if (hour === index + 1) {
-        pointerRotate = index < 12 ? 360 * (index + 1) / 12 : 360 * (index + 1 - 12) / 12;
-      }
-    });
+    let pointerRotate = this.resetHourDegree();
     this.state = {
       step: 0,
       pointerRotate
@@ -50,11 +44,21 @@ class MaterialTheme extends React.Component {
   handleStepChange(step) {
     let stateStep = this.state.step;
     if (stateStep !== step) {
-      this.setState({step});
+      let pointerRotate = 0;
+      if (step === 0) {
+        pointerRotate = this.resetHourDegree();
+      } else {
+        pointerRotate = this.resetMinuteDegree();
+      }
+      this.setState({
+        step,
+        pointerRotate
+      });
     }
   }
 
   handleTimePointerClick(time, pointerRotate) {
+    console.log(time);
     this.setState({pointerRotate});
     this.handleTimeChange(time);
   }
@@ -74,14 +78,36 @@ class MaterialTheme extends React.Component {
     }
   }
 
+  resetHourDegree() {
+    let hour = parseInt(this.props.hour);
+    let pointerRotate = 0;
+    HOURS.map((h, index) => {
+      if (hour === index + 1) {
+        pointerRotate = index < 12 ? 360 * (index + 1) / 12 : 360 * (index + 1 - 12) / 12;
+      }
+    });
+    return pointerRotate
+  }
+
+  resetMinuteDegree() {
+    let minute = parseInt(this.props.minute);
+    let pointerRotate = 0;
+    MINUTES.map((m, index) => {
+      if (minute === index) {
+        pointerRotate = 360 * index / 60;
+      }
+    });
+    return pointerRotate;
+  }
+
   getTopAndHeight() {
     let {step} = this.state;
     let {hour, minute} = this.props;
     let time = step === 0 ? hour : minute;
     let splitNum = step === 0 ? 12 : 60;
     let minLength = step === 0 ? MIN_ABSOLUTE_POSITION : MAX_ABSOLUTE_POSITION;
-    let height = time < splitNum ? minLength - POINTER_RADIUS : MAX_ABSOLUTE_POSITION - POINTER_RADIUS
-    let top = time < splitNum ? PICKER_RADIUS - minLength + POINTER_RADIUS : PICKER_RADIUS - MAX_ABSOLUTE_POSITION + POINTER_RADIUS;
+    let height = time <= splitNum ? minLength - POINTER_RADIUS : MAX_ABSOLUTE_POSITION - POINTER_RADIUS;
+    let top = time <= splitNum ? PICKER_RADIUS - minLength + POINTER_RADIUS : PICKER_RADIUS - MAX_ABSOLUTE_POSITION + POINTER_RADIUS;
     return [top, height];
   }
 
@@ -153,8 +179,7 @@ class MaterialTheme extends React.Component {
             time={step === 0 ? parseInt(hour) : parseInt(minute)}
             minLength={step === 0 ? MIN_ABSOLUTE_POSITION : MAX_ABSOLUTE_POSITION}
             handleTimeChange={this.handleTimeChange}
-            handleDegreeChange={this.handleDegreeChange}>
-          </PickerDargHandler>
+            handleDegreeChange={this.handleDegreeChange} />
         </div>
       </div>
     )
