@@ -145,15 +145,17 @@ class MaterialTheme extends React.Component {
           <span className={activeMinuteClass}
             onClick={this.handleStepChange.bind(this, 1)}>{minute}</span>
         </div>
-        <PickerDargHandler
-          step={step}
-          rotateState={rotateState}
-          time={step === 0 ? parseInt(hour) : parseInt(minute)}
-          minLength={step === 0 ? MIN_ABSOLUTE_POSITION : MAX_ABSOLUTE_POSITION}
-          handleTimeChange={this.handleTimeChange}
-          handleDegreeChange={this.handleDegreeChange}>
+        <div className="picker_container">
           {step === 0 ? this.renderHourPointes() : this.renderMinutePointes()}
-        </PickerDargHandler>
+          <PickerDargHandler
+            step={step}
+            rotateState={rotateState}
+            time={step === 0 ? parseInt(hour) : parseInt(minute)}
+            minLength={step === 0 ? MIN_ABSOLUTE_POSITION : MAX_ABSOLUTE_POSITION}
+            handleTimeChange={this.handleTimeChange}
+            handleDegreeChange={this.handleDegreeChange}>
+          </PickerDargHandler>
+        </div>
       </div>
     )
   }

@@ -19,7 +19,6 @@ const propTypes = {
   step: PropTypes.number,
   pointerRotate: PropTypes.number,
   minLength: PropTypes.number,
-  children: PropTypes.node,
   rotateState: PropTypes.shape({
     top: PropTypes.number,
     height: PropTypes.number,
@@ -33,7 +32,6 @@ const defaultProps = {
   time: 0,
   step: 0,
   pointerRotate: 0,
-  children: <span />,
   rotateState: {
     top: 0,
     height: 0,
@@ -205,14 +203,12 @@ class PickerDargHandler extends React.Component {
   }
 
   render() {
-    let {time, children} = this.props;
+    let {time} = this.props;
     let {draging, height, top, pointerRotate} = this.state;
     let pickerPointerClass = draging ? "picker_pointer" : "picker_pointer animation";
 
     return (
-      <div
-        className="picker_container hour_picker_container">
-        {children}
+      <div className="picker_handler">
         <div
           ref="dragPointer"
           className={pickerPointerClass}
