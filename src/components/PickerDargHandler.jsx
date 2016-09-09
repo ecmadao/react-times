@@ -19,17 +19,29 @@ const propTypes = {
   step: PropTypes.number,
   pointerRotate: PropTypes.number,
   minLength: PropTypes.number,
-  splitNum: PropTypes.number,
-  handleTimeChange: PropTypes.func
+  children: PropTypes.node,
+  rotateState: PropTypes.shape({
+    top: PropTypes.number,
+    height: PropTypes.number,
+    pointerRotate: PropTypes.number
+  }),
+  handleTimeChange: PropTypes.func,
+  handleDegreeChange: PropTypes.func
 };
 
 const defaultProps = {
   time: 0,
   step: 0,
   pointerRotate: 0,
+  children: <span />,
+  rotateState: {
+    top: 0,
+    height: 0,
+    pointerRotate: 0
+  },
   minLength: MAX_ABSOLUTE_POSITION,
-  splitNum: 60,
-  handleTimeChange: () => {}
+  handleTimeChange: () => {},
+  handleDegreeChange: () => {}
 };
 
 class PickerDargHandler extends React.Component {
