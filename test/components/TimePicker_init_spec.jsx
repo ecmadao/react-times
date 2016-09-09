@@ -4,8 +4,8 @@ import {shallow} from 'enzyme';
 import moment from 'moment';
 
 import TimePicker from '../../src/components/TimePicker';
-import MaterialTheme from '../../src/components/MaterialTheme/index';
-import TwelveHoursTheme from '../../src/components/TwelveHoursTheme/index';
+import MaterialTheme from '../../src/components/MaterialTheme';
+import TwelveHoursTheme from '../../src/components/TwelveHoursTheme';
 import OutsideClickHandler from '../../src/components/OutsideClickHandler';
 import PickerDargHandler from '../../src/components/PickerDargHandler';
 
