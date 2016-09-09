@@ -11,30 +11,57 @@ import {
 } from '../src/ConstValue';
 
 describe('Utils Test', () => {
-  describe('Test initialTime func', () => {
+  describe('Test initialTime func with 24h mode', () => {
     it('should get current time', () => {
       let times = moment().format("HH:mm").split(':');
-      expect(times).to.deep.equal(initialTime(false));
+      expect([...times, null]).to.deep.equal(initialTime(false));
     });
 
     it('should get default time', () => {
-      let times = ["11", "12"];
+      let times = ["11", "12", null];
       expect(times).to.deep.equal(initialTime("11:12"));
     });
 
     it('should get validate default time', () => {
-      let times = ["01", "02"];
+      let times = ["01", "02", null];
       expect(times).to.deep.equal(initialTime("1:2"));
     });
 
     it('should get validate default time', () => {
-      let times = ["01", "00"];
+      let times = ["01", "00", null];
       expect(times).to.deep.equal(initialTime("1:"));
     });
 
     it('should get validate default time', () => {
-      let times = ["00", "01"];
+      let times = ["00", "01", null];
       expect(times).to.deep.equal(initialTime("abc:1"));
+    });
+  });
+
+  describe('Test initialTime func with 12h mode', () => {
+    it('should get default time', () => {
+      let times = ["11", "12", "AM"];
+      expect(times).to.deep.equal(initialTime("11:12", 12));
+    });
+
+    it('should get default time', () => {
+      let times = ["01", "12", "PM"];
+      expect(times).to.deep.equal(initialTime("13:12", 12));
+    });
+
+    it('should get validate default time', () => {
+      let times = ["01", "02", "AM"];
+      expect(times).to.deep.equal(initialTime("1:2", 12));
+    });
+
+    it('should get validate default time', () => {
+      let times = ["01", "00", "AM"];
+      expect(times).to.deep.equal(initialTime("1:", 12));
+    });
+
+    it('should get validate default time', () => {
+      let times = ["00", "01", "AM"];
+      expect(times).to.deep.equal(initialTime("abc:1", 12));
     });
   });
 

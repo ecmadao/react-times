@@ -27,7 +27,7 @@ describe('TimePicker initial', () => {
     });
 
     it('renders an TwelveHoursTheme', () => {
-      const wrapper = shallow(<TimePicker theme="twelveHours" />);
+      const wrapper = shallow(<TimePicker timeMode="12" />);
       expect(wrapper.find(TwelveHoursTheme)).to.have.lengthOf(1);
     });
 
