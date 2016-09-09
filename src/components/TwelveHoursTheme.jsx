@@ -7,7 +7,7 @@ import {
   PICKER_RADIUS,
   MAX_ABSOLUTE_POSITION,
   MIN_ABSOLUTE_POSITION
-} from '../../ConstValue.js';
+} from '../ConstValue.js';
 
 const propTypes = {
   hour: PropTypes.string,
@@ -25,8 +25,8 @@ const defaultProps = {
   handleMinuteChange: () => {}
 };
 
-import PickerDargHandler from '../PickerDargHandler';
-import PickerPoint from '../PickerPoint.jsx';
+import PickerDargHandler from './PickerDargHandler';
+import PickerPoint from './PickerPoint.jsx';
 
 class TwelveHoursTheme extends React.Component {
   constructor(props) {
