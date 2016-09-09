@@ -2,8 +2,8 @@ import React, {PropTypes} from 'react';
 import moment from 'moment';
 
 import OutsideClickHandler from './OutsideClickHandler';
-import MaterialTheme from './MaterialTheme/index';
-import TwelveHoursTheme from './TwelveHoursTheme/index';
+import MaterialTheme from './MaterialTheme';
+import TwelveHoursTheme from './TwelveHoursTheme';
 import TimeIcon from '../svg/time.svg';
 
 import {
