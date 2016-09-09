@@ -1,7 +1,4 @@
 import moment from 'moment';
-import {
-  MAX_ABSOLUTE_POSITION
-} from './ConstValue';
 
 export const mousePosition = (e) => {
   let xPos, yPos;
@@ -85,10 +82,12 @@ export const initialTime = (defaultTime, mode = 24) => {
     hour = getValidateTime(hour);
     minute = getValidateTime(minute);
   }
-  if (mode !== 24) {
+  let timeInterval = null;
+  if (mode === 12) {
+    timeInterval = hour > 12 ? "PM" : "AM";
     hour = hour > 12 ? getValidateTime(hour - 12) : hour;
   }
-  return [hour, minute];
+  return [hour, minute, timeInterval];
 };
 
 export const getValidateTimeMode = (timeMode) => {

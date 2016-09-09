@@ -33,9 +33,7 @@ class TwelveHoursTheme extends React.Component {
     super(props);
     let hourPointerRotate = this.resetHourDegree();
     let minutePointerRotate = this.resetMinuteDegree();
-
     this.state = {
-      step: 0,
       hourPointerRotate,
       minutePointerRotate
     }
@@ -80,10 +78,10 @@ class TwelveHoursTheme extends React.Component {
     return [top, height];
   }
 
-  handleStepChange(step) {
-    let stateStep = this.state.step;
-    if (stateStep !== step) {
-      this.setState({step});
+  handleTimeIntervalChange(timeInterval) {
+    if (timeInterval !== this.props.timeInterval) {
+      let {handleTimeIntervalChange} = this.props;
+      handleTimeIntervalChange && handleTimeIntervalChange(timeInterval);
     }
   }
 
@@ -148,12 +146,13 @@ class TwelveHoursTheme extends React.Component {
     let {
       hour,
       minute,
-      focused
+      focused,
+      timeInterval
     } = this.props;
-    let {step, hourPointerRotate, minutePointerRotate} = this.state;
+    let {hourPointerRotate, minutePointerRotate} = this.state;
 
-    let activeHourClass = step === 0 ? "time_picker_header active" : "time_picker_header";
-    let activeMinuteClass = step === 1 ? "time_picker_header active" : "time_picker_header";
+    let activeAMClass = timeInterval === "AM" ? "time_picker_header active" : "time_picker_header";
+    let activePMClass = timeInterval === "PM" ? "time_picker_header active" : "time_picker_header";
     let modalContainerClass = focused ? "time_picker_modal_container active" : "time_picker_modal_container";
 
     let [top, height] = this.getHourTopAndHeight();
@@ -173,11 +172,11 @@ class TwelveHoursTheme extends React.Component {
       <div className={modalContainerClass}>
         <div className="time_picker_modal_header">
           <span
-            className={activeHourClass}
-            onClick={this.handleStepChange.bind(this, 0)}>AM</span>
+            className={activeAMClass}
+            onClick={this.handleTimeIntervalChange.bind(this, "AM")}>AM</span>
           &nbsp;|&nbsp;
-          <span className={activeMinuteClass}
-            onClick={this.handleStepChange.bind(this, 1)}>PM</span>
+          <span className={activePMClass}
+            onClick={this.handleTimeIntervalChange.bind(this, "PM")}>PM</span>
         </div>
         <div className="picker_container">
           {this.renderHourPointes()}

@@ -1,8 +1,6 @@
 # React-Times
 
-[![Build Status](https://travis-ci.org/ecmadao/react-times.svg?branch=master)](https://travis-ci.org/ecmadao/react-times) [![Coverage Status](https://coveralls.io/repos/github/ecmadao/react-times/badge.svg?branch=master)](https://coveralls.io/github/ecmadao/react-times?branch=master) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
-[![react-times](http://img.shields.io/npm/dm/react-times.svg)](https://www.npmjs.com/package/react-times)
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/ecmadao/react-times/master/LICENSE)
+[![Build Status](https://travis-ci.org/ecmadao/react-times.svg?branch=master)](https://travis-ci.org/ecmadao/react-times) [![Coverage Status](https://coveralls.io/repos/github/ecmadao/react-times/badge.svg?branch=master)](https://coveralls.io/github/ecmadao/react-times?branch=master) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![react-times](http://img.shields.io/npm/dm/react-times.svg)](https://www.npmjs.com/package/react-times) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/ecmadao/react-times/master/LICENSE)
 
 [![NPM](https://nodei.co/npm/react-times.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/react-times)
 
@@ -127,6 +125,19 @@ colorPalette="dark"
 colorPalette="light"
 ```
 
+- `timeMode`
+
+`React.PropTypes.string` or `React.PropTypes.number`
+
+Support "12" or "24" hours mode.
+
+```javascript
+timeMode="24"
+timeMode=24
+timeMode="12"
+timeMode=12
+```
+
 - `onFocusChange`
 
 `React.PropTypes.func`
@@ -163,11 +174,11 @@ onMinuteChange(minute) {
 
   - [ ] react component test
 
-  - [x] TimePicker Component
-  - [x] PickerDragHandler Component
-  - [ ] OutsideClickHandler Component
-  - [x] TimePickerModal Component
-  - [ ] PickerPoint Component
+    - [x] TimePicker Component
+    - [x] PickerDragHandler Component
+    - [ ] OutsideClickHandler Component
+    - [x] TimePickerModal Component
+    - [ ] PickerPoint Component
 
   - [x] utils test
 
@@ -181,7 +192,11 @@ onMinuteChange(minute) {
 
   - [x] Material Theme
   - [ ] Classical Theme
-  - [ ] AM/PM Theme
+
+- Mode
+
+  - [x] 12h mode
+  - [x] 24h mode
 
 - Animations
 
