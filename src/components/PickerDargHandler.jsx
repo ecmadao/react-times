@@ -26,8 +26,7 @@ const propTypes = {
     height: PropTypes.number,
     pointerRotate: PropTypes.number
   }),
-  handleTimeChange: PropTypes.func,
-  handleDegreeChange: PropTypes.func
+  handleTimePointerClick: PropTypes.func
 };
 
 const defaultProps = {
@@ -41,8 +40,7 @@ const defaultProps = {
   },
   minLength: MIN_ABSOLUTE_POSITION,
   maxLength: MAX_ABSOLUTE_POSITION,
-  handleTimeChange: () => {},
-  handleDegreeChange: () => {}
+  handleTimePointerClick: () => {}
 };
 
 class PickerDargHandler extends React.Component {
@@ -80,6 +78,12 @@ class PickerDargHandler extends React.Component {
   }
 
   componentDidMount() {
+    if (!this.originX) {
+      let centerPoint = ReactDOM.findDOMNode(this.refs.pickerCenter);
+      let centerPointPos = centerPoint.getBoundingClientRect();
+      this.originX = centerPointPos.left;
+      this.originY = centerPointPos.top;
+    }
     if (document.addEventListener) {
       document.addEventListener('mousemove', this.handleMouseMove, true);
       document.addEventListener('mouseup', this.handleMouseUp, true);
@@ -130,12 +134,6 @@ class PickerDargHandler extends React.Component {
     let pos = mousePosition(event);
     this.startX = pos.x;
     this.startY = pos.y;
-    if (!this.originX) {
-      let centerPoint = ReactDOM.findDOMNode(this.refs.pickerCenter);
-      let centerPointPos = centerPoint.getBoundingClientRect();
-      this.originX = centerPointPos.left;
-      this.originY = centerPointPos.top;
-    }
   }
 
   handleMouseMove(e) {
@@ -170,8 +168,7 @@ class PickerDargHandler extends React.Component {
         minLength,
         maxLength,
         step,
-        handleTimeChange,
-        handleDegreeChange
+        handleTimePointerClick
       } = this.props;
 
       let pos = mousePosition(e);
@@ -202,8 +199,7 @@ class PickerDargHandler extends React.Component {
       }
       let time = absolutePosition === minLength ? roundSeg : roundSeg + 12;
       time = step === 0 ? time : time * 5;
-      handleTimeChange && handleTimeChange(time);
-      handleDegreeChange && handleDegreeChange(pointerRotate);
+      handleTimePointerClick && handleTimePointerClick(time, pointerRotate);
     }
   }
 
