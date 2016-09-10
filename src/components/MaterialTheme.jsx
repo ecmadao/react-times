@@ -80,11 +80,6 @@ class MaterialTheme extends React.Component {
         pointerRotate = index < 12 ? 360 * (index + 1) / 12 : 360 * (index + 1 - 12) / 12;
       }
     })
-    // HOURS.map((h, index) => {
-    //   if (hour === index + 1) {
-    //     pointerRotate = index < 12 ? 360 * (index + 1) / 12 : 360 * (index + 1 - 12) / 12;
-    //   }
-    // });
     return pointerRotate
   }
 
@@ -96,11 +91,6 @@ class MaterialTheme extends React.Component {
         pointerRotate = 360 * index / 60;
       }
     });
-    // MINUTES.map((m, index) => {
-    //   if (minute === index) {
-    //     pointerRotate = 360 * index / 60;
-    //   }
-    // });
     return pointerRotate;
   }
 
