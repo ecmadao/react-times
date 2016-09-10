@@ -26,7 +26,7 @@ const propTypes = {
   onFocusChange: PropTypes.func,
   onHourChange: PropTypes.func,
   onMinuteChange: PropTypes.func,
-  handleTimeChange: PropTypes.func
+  onTimeChange: PropTypes.func
 };
 
 const defaultProps = {
@@ -40,7 +40,7 @@ const defaultProps = {
   onFocusChange: () => {},
   onHourChange: () => {},
   onMinuteChange: () => {},
-  handleTimeChange: () => {}
+  onTimeChange: () => {}
 };
 
 class TimePicker extends React.Component {

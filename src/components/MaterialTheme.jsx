@@ -37,7 +37,6 @@ class MaterialTheme extends React.Component {
       pointerRotate
     }
     this.handleTimeChange = this.handleTimeChange.bind(this);
-    this.handleDegreeChange = this.handleDegreeChange.bind(this);
     this.handleTimePointerClick = this.handleTimePointerClick.bind(this);
   }
 
@@ -58,13 +57,8 @@ class MaterialTheme extends React.Component {
   }
 
   handleTimePointerClick(time, pointerRotate) {
-    console.log(time);
     this.setState({pointerRotate});
     this.handleTimeChange(time);
-  }
-
-  handleDegreeChange(pointerRotate) {
-    this.setState({pointerRotate});
   }
 
   handleTimeChange(time) {
@@ -81,22 +75,32 @@ class MaterialTheme extends React.Component {
   resetHourDegree() {
     let hour = parseInt(this.props.hour);
     let pointerRotate = 0;
-    HOURS.map((h, index) => {
+    HOURS.forEach((h, index) => {
       if (hour === index + 1) {
         pointerRotate = index < 12 ? 360 * (index + 1) / 12 : 360 * (index + 1 - 12) / 12;
       }
-    });
+    })
+    // HOURS.map((h, index) => {
+    //   if (hour === index + 1) {
+    //     pointerRotate = index < 12 ? 360 * (index + 1) / 12 : 360 * (index + 1 - 12) / 12;
+    //   }
+    // });
     return pointerRotate
   }
 
   resetMinuteDegree() {
     let minute = parseInt(this.props.minute);
     let pointerRotate = 0;
-    MINUTES.map((m, index) => {
+    MINUTES.forEach((m, index) => {
       if (minute === index) {
         pointerRotate = 360 * index / 60;
       }
     });
+    // MINUTES.map((m, index) => {
+    //   if (minute === index) {
+    //     pointerRotate = 360 * index / 60;
+    //   }
+    // });
     return pointerRotate;
   }
 
@@ -178,8 +182,7 @@ class MaterialTheme extends React.Component {
             rotateState={rotateState}
             time={step === 0 ? parseInt(hour) : parseInt(minute)}
             minLength={step === 0 ? MIN_ABSOLUTE_POSITION : MAX_ABSOLUTE_POSITION}
-            handleTimeChange={this.handleTimeChange}
-            handleDegreeChange={this.handleDegreeChange} />
+            handleTimePointerClick={this.handleTimePointerClick} />
         </div>
       </div>
     )
