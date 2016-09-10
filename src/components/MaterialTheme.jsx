@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import ReactDOM from 'react-dom';
 
 import {
   HOURS,
@@ -43,16 +44,20 @@ class MaterialTheme extends React.Component {
   handleStepChange(step) {
     let stateStep = this.state.step;
     if (stateStep !== step) {
-      let pointerRotate = 0;
-      if (step === 0) {
-        pointerRotate = this.resetHourDegree();
-      } else {
-        pointerRotate = this.resetMinuteDegree();
-      }
-      this.setState({
-        step,
-        pointerRotate
-      });
+      ReactDOM.findDOMNode(this.pickerPointerContainer).className = "animation";
+      setTimeout(() => {
+        ReactDOM.findDOMNode(this.pickerPointerContainer).className = "";
+        let pointerRotate = 0;
+        if (step === 0) {
+          pointerRotate = this.resetHourDegree();
+        } else {
+          pointerRotate = this.resetMinuteDegree();
+        }
+        this.setState({
+          step,
+          pointerRotate
+        });
+      }, 300);
     }
   }
 
@@ -79,13 +84,8 @@ class MaterialTheme extends React.Component {
       if (hour === index + 1) {
         pointerRotate = index < 12 ? 360 * (index + 1) / 12 : 360 * (index + 1 - 12) / 12;
       }
-    })
-    // HOURS.map((h, index) => {
-    //   if (hour === index + 1) {
-    //     pointerRotate = index < 12 ? 360 * (index + 1) / 12 : 360 * (index + 1 - 12) / 12;
-    //   }
-    // });
-    return pointerRotate
+    });
+    return pointerRotate;
   }
 
   resetMinuteDegree() {
@@ -96,11 +96,6 @@ class MaterialTheme extends React.Component {
         pointerRotate = 360 * index / 60;
       }
     });
-    // MINUTES.map((m, index) => {
-    //   if (minute === index) {
-    //     pointerRotate = 360 * index / 60;
-    //   }
-    // });
     return pointerRotate;
   }
 
@@ -176,7 +171,11 @@ class MaterialTheme extends React.Component {
             onClick={this.handleStepChange.bind(this, 1)}>{minute}</span>
         </div>
         <div className="picker_container">
-          {step === 0 ? this.renderHourPointes() : this.renderMinutePointes()}
+          <div
+            ref={(container) => this.pickerPointerContainer = container}
+            id="picker_pointer_container">
+            {step === 0 ? this.renderHourPointes() : this.renderMinutePointes()}
+          </div>
           <PickerDargHandler
             step={step}
             rotateState={rotateState}

@@ -81,8 +81,8 @@ class PickerDargHandler extends React.Component {
     if (!this.originX) {
       let centerPoint = ReactDOM.findDOMNode(this.refs.pickerCenter);
       let centerPointPos = centerPoint.getBoundingClientRect();
-      this.originX = centerPointPos.left;
-      this.originY = centerPointPos.top;
+      this.originX = centerPointPos.left + centerPoint.clientWidth;
+      this.originY = centerPointPos.top + centerPoint.clientWidth;
     }
     if (document.addEventListener) {
       document.addEventListener('mousemove', this.handleMouseMove, true);
@@ -183,7 +183,6 @@ class PickerDargHandler extends React.Component {
       }
       let roundSeg = Math.round(degree / (360 / 12));
       let pointerRotate = roundSeg * (360 / 12);
-
       let absolutePosition = this.getAbsolutePosition(endX, endY);
 
       absolutePosition = getStandardAbsolutePosition(absolutePosition, minLength, maxLength);
@@ -199,6 +198,7 @@ class PickerDargHandler extends React.Component {
       }
       let time = absolutePosition === minLength ? roundSeg : roundSeg + 12;
       time = step === 0 ? time : time * 5;
+      this.setState({pointerRotate});
       handleTimePointerClick && handleTimePointerClick(time, pointerRotate);
     }
   }
