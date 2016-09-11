@@ -32,6 +32,7 @@
     "react/jsx-uses-react": [2],
     "no-console": 1,
     "no-debugger": 1,
+    "no-return-assign": 0,
     "no-extra-semi": 1,
     "no-constant-condition": 2,
     "no-extra-boolean-cast": 2,

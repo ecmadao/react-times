@@ -79,7 +79,7 @@ class PickerDargHandler extends React.Component {
 
   componentDidMount() {
     if (!this.originX) {
-      let centerPoint = ReactDOM.findDOMNode(this.refs.pickerCenter);
+      let centerPoint = ReactDOM.findDOMNode(this.pickerCenter);
       let centerPointPos = centerPoint.getBoundingClientRect();
       this.originX = centerPointPos.left + centerPoint.clientWidth;
       this.originY = centerPointPos.top + centerPoint.clientWidth;
@@ -211,7 +211,7 @@ class PickerDargHandler extends React.Component {
     return (
       <div className="picker_handler">
         <div
-          ref="dragPointer"
+          ref={(d) => this.dragPointer = d}
           className={pickerPointerClass}
           style={getInitialPointerStyle(height, top, pointerRotate)}>
           <div
@@ -221,7 +221,7 @@ class PickerDargHandler extends React.Component {
         </div>
         <div
           className="picker_center"
-          ref="pickerCenter"></div>
+          ref={(p) => this.pickerCenter = p}></div>
       </div>
     )
   }

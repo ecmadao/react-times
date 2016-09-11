@@ -34,7 +34,7 @@ class OutsideClickHandler extends React.Component {
   }
 
   onOutsideClick(e) {
-    const isDescendantOfRoot = ReactDOM.findDOMNode(this.refs.childNode).contains(e.target);
+    const isDescendantOfRoot = ReactDOM.findDOMNode(this.childNode).contains(e.target);
     if (!isDescendantOfRoot) {
       let {onOutsideClick} = this.props;
       onOutsideClick && onOutsideClick(e);
@@ -43,7 +43,7 @@ class OutsideClickHandler extends React.Component {
 
   render() {
     return (
-      <div ref="childNode">
+      <div ref={(c) => this.childNode = c}>
         {this.props.children}
       </div>
     )
