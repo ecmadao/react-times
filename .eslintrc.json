@@ -37,6 +37,7 @@
     "no-extra-boolean-cast": 2,
     "use-isnan": 2,
     "no-undef-init": 2,
+    "no-return-assign": 0,
     "camelcase": 2,
     "no-mixed-spaces-and-tabs": 2,
     "no-const-assign":2,

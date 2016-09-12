@@ -162,19 +162,13 @@ class TwelveHoursTheme extends React.Component {
             rotateState={hourRotateState}
             time={parseInt(hour)}
             maxLength={MIN_ABSOLUTE_POSITION}
-            handleTimeChange={this.handleHourChange}
-            handleDegreeChange={(degree) => {
-              this.handleDegreeChange({hourPointerRotate: degree});
-            }} />
+            handleTimePointerClick={this.handleHourPointerClick} />
           <PickerDargHandler
             step={1}
             rotateState={minuteRotateState}
             time={parseInt(minute)}
             minLength={MAX_ABSOLUTE_POSITION}
-            handleTimeChange={this.handleMinuteChange}
-            handleDegreeChange={(degree) => {
-              this.handleDegreeChange({minutePointerRotate: degree});
-            }} />
+            handleTimePointerClick={this.handleMinutePointerClick} />
         </div>
       </div>
     )
