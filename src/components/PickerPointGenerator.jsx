@@ -7,7 +7,7 @@ import {
 } from '../ConstValue.js';
 import PickerPoint from './PickerPoint';
 
-const pickerPointGenerator = (type = 'hour', mode = 24) => {
+const pickerPointGenerator = (type = "hour", mode = 24) => {
   return class PickerPointGenerator extends React.Component {
     constructor(props) {
       super(props);
@@ -60,7 +60,7 @@ const pickerPointGenerator = (type = 'hour', mode = 24) => {
         <div
           ref={ref => this.pickerPointerContainer = ref}
           id="picker_pointer_container">
-          {type === 'hour' ? this.renderHourPointes() : this.renderMinutePointes()}
+          {type === "hour" ? this.renderHourPointes() : this.renderMinutePointes()}
         </div>
       )
     }
