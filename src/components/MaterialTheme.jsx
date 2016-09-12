@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-import ReactDOM from 'react-dom';
 
 import {
   HOURS,
@@ -27,7 +26,7 @@ const defaultProps = {
 };
 
 import PickerDargHandler from './PickerDargHandler';
-import PickerPoint from './PickerPoint';
+import pickerPointGenerator from './PickerPointGenerator';
 
 class MaterialTheme extends React.Component {
   constructor(props) {
@@ -44,9 +43,9 @@ class MaterialTheme extends React.Component {
   handleStepChange(step) {
     let stateStep = this.state.step;
     if (stateStep !== step) {
-      ReactDOM.findDOMNode(this.pickerPointerContainer).className = "animation";
+      this.pickerPointerContainer.addAnimation();
       setTimeout(() => {
-        ReactDOM.findDOMNode(this.pickerPointerContainer).className = "";
+        this.pickerPointerContainer.removeAnimation();
         let pointerRotate = 0;
         if (step === 0) {
           pointerRotate = this.resetHourDegree();
@@ -110,38 +109,6 @@ class MaterialTheme extends React.Component {
     return [top, height];
   }
 
-  renderMinutePointes() {
-    return MINUTES.map((m, index) => {
-      let angle = 360 * index / 60;
-      if (index % 5 === 0) {
-        return (
-          <PickerPoint
-            index={index}
-            key={index}
-            angle={angle}
-            handleTimeChange={this.handleTimePointerClick}
-          />
-        )
-      }
-    });
-  }
-
-  renderHourPointes() {
-    return HOURS.map((h, index) => {
-      let pointClass = index < 12 ? "picker_point point_inner" : "picker_point point_outter";
-      let angle = index < 12 ? 360 * (index + 1) / 12 : 360 * (index + 1 - 12) / 12;
-      return (
-        <PickerPoint
-          index={index + 1}
-          key={index}
-          angle={angle}
-          pointClass={pointClass}
-          handleTimeChange={this.handleTimePointerClick}
-        />
-      )
-    });
-  }
-
   render() {
     let {
       hour,
@@ -159,6 +126,8 @@ class MaterialTheme extends React.Component {
       height,
       pointerRotate
     };
+    let type = step === 0 ? 'hour' : 'minute';
+    const PickerPointGenerator = pickerPointGenerator(type);
 
     return (
       <div className={modalContainerClass}>
@@ -171,11 +140,10 @@ class MaterialTheme extends React.Component {
             onClick={this.handleStepChange.bind(this, 1)}>{minute}</span>
         </div>
         <div className="picker_container">
-          <div
-            ref={(container) => this.pickerPointerContainer = container}
-            id="picker_pointer_container">
-            {step === 0 ? this.renderHourPointes() : this.renderMinutePointes()}
-          </div>
+          <PickerPointGenerator
+            ref={ref => this.pickerPointerContainer = ref}
+            handleTimePointerClick={this.handleTimePointerClick}
+          />
           <PickerDargHandler
             step={step}
             rotateState={rotateState}
