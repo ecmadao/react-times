@@ -26,7 +26,7 @@ const defaultProps = {
 };
 
 import PickerDargHandler from './PickerDargHandler';
-import PickerPoint from './PickerPoint';
+import pickerPointGenerator from './PickerPointGenerator';
 
 class TwelveHoursTheme extends React.Component {
   constructor(props) {
@@ -111,37 +111,6 @@ class TwelveHoursTheme extends React.Component {
     handleMinuteChange && handleMinuteChange(minute);
   }
 
-  renderMinutePointes() {
-    return MINUTES.map((m, index) => {
-      let angle = 360 * index / 60;
-      if (index % 5 === 0) {
-        return (
-          <PickerPoint
-            index={index}
-            key={index}
-            angle={angle}
-            handleTimeChange={this.handleMinutePointerClick}
-          />
-        )
-      }
-    });
-  }
-
-  renderHourPointes() {
-    return TWELVE_HOURS.map((h, index) => {
-      let angle = 360 * (index + 1) / 12;
-      return (
-        <PickerPoint
-          index={index + 1}
-          key={index}
-          angle={angle}
-          pointClass="picker_point point_inner"
-          handleTimeChange={this.handleHourPointerClick}
-        />
-      )
-    });
-  }
-
   render() {
     let {
       hour,
@@ -168,6 +137,9 @@ class TwelveHoursTheme extends React.Component {
       pointerRotate: minutePointerRotate
     };
 
+    const HourPickerPointGenerator = pickerPointGenerator('hour', 12);
+    const MinutePickerPointGenerator = pickerPointGenerator('minute', 12);
+
     return (
       <div className={modalContainerClass}>
         <div className="time_picker_modal_header">
@@ -179,26 +151,24 @@ class TwelveHoursTheme extends React.Component {
             onClick={this.handleTimeIntervalChange.bind(this, "PM")}>PM</span>
         </div>
         <div className="picker_container">
-          {this.renderHourPointes()}
-          {this.renderMinutePointes()}
+          <HourPickerPointGenerator
+            handleTimePointerClick={this.handleHourPointerClick}
+          />
+          <MinutePickerPointGenerator
+            handleTimePointerClick={this.handleMinutePointerClick}
+          />
           <PickerDargHandler
             step={0}
             rotateState={hourRotateState}
             time={parseInt(hour)}
             maxLength={MIN_ABSOLUTE_POSITION}
-            handleTimeChange={this.handleHourChange}
-            handleDegreeChange={(degree) => {
-              this.handleDegreeChange({hourPointerRotate: degree});
-            }} />
+            handleTimePointerClick={this.handleHourPointerClick} />
           <PickerDargHandler
             step={1}
             rotateState={minuteRotateState}
             time={parseInt(minute)}
             minLength={MAX_ABSOLUTE_POSITION}
-            handleTimeChange={this.handleMinuteChange}
-            handleDegreeChange={(degree) => {
-              this.handleDegreeChange({minutePointerRotate: degree});
-            }} />
+            handleTimePointerClick={this.handleMinutePointerClick} />
         </div>
       </div>
     )
