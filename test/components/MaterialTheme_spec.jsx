@@ -8,20 +8,18 @@ import PickerDargHandler from '../../src/components/PickerDargHandler';
 
 describe('MaterialTheme', () => {
   describe('MaterialTheme Init', () => {
+    const wrapper = shallow(
+      <MaterialTheme hour={'03'} />
+    );
     it('should render component correctly', () => {
-      const wrapper = shallow(<MaterialTheme />);
       expect(wrapper.is('.time_picker_modal_container')).to.equal(true);
     });
 
     it('should render PickerDargHandler component', () => {
-      const wrapper = shallow(<MaterialTheme />);
       expect(wrapper.find(PickerDargHandler)).to.have.lengthOf(1);
     });
 
     it('should init currect state', () => {
-      const wrapper = shallow(
-        <MaterialTheme hour={'03'} />
-      );
       expect(wrapper.state()).to.deep.equal({
         step: 0,
         pointerRotate: 90

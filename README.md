@@ -201,6 +201,10 @@ onTimeChange(time) {
 }
 ```
 
+## ARTICLE
+
+- [一言不合造轮子--撸一个ReactTimePicker](https://github.com/ecmadao/Coding-Guide/blob/master/Notes/React/ReactJS/Write%20a%20React%20Timepicker%20Component%20hand%20by%20hand.md)
+
 ## TODOS
 
 - Test
@@ -209,9 +213,11 @@ onTimeChange(time) {
 
     - [x] TimePicker Component
     - [x] PickerDragHandler Component
+    - [x] PickerPointGenerator Component
+    - [x] MaterialTheme Component
+    - [x] TwelveHoursTheme Component
+    - [x] PickerPoint Component
     - [ ] OutsideClickHandler Component
-    - [x] TimePickerModal Component
-    - [ ] PickerPoint Component
 
   - [x] utils test
 
