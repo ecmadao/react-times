@@ -9,7 +9,7 @@ storiesOf('DarkColor', module)
   .add('with default time', () => (
     <TimePickerWrapper
       colorPalette="dark"
-      defaultTime="11:11"
+      defaultTime="11:50"
     />
   ))
   .add('focused at setup', () => (

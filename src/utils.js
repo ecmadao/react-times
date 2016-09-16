@@ -54,6 +54,13 @@ export const getInitialPointerStyle = (height, top, degree) => {
   }
 };
 
+export const getValidateIntTime = (time) => {
+  if (isNaN(parseInt(time))) {
+    return 0;
+  }
+  return parseInt(time);
+};
+
 export const getValidateTime = (time) => {
   if (typeof time === 'undefined') { time = '00' }
   if (isNaN(parseInt(time))) { time = '00' }
@@ -79,14 +86,21 @@ export const initialTime = (defaultTime, mode = 24) => {
   let [hour, minute] = moment().format("HH:mm").split(':');
   if (defaultTime) {
     [hour, minute] = `${defaultTime}`.split(':');
-    hour = getValidateTime(hour);
-    minute = getValidateTime(minute);
   }
+  hour = getValidateIntTime(hour);
+  minute = getValidateIntTime(minute);
+  if (hour > 24) { hour = 24 - hour; }
+  if (minute >= 60) { minute = 60 - minute; }
+
   let timeInterval = null;
   if (mode === 12) {
     timeInterval = hour > 12 ? "PM" : "AM";
-    hour = hour > 12 ? getValidateTime(hour - 12) : hour;
+    hour = hour > 12 ? hour - 12 : hour;
   }
+
+  hour = getValidateTime(hour);
+  minute = getValidateTime(minute);
+
   return [hour, minute, timeInterval];
 };
 

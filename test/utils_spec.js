@@ -3,6 +3,7 @@ import {expect} from 'chai';
 import {
   initialTime,
   getValidateTime,
+  getValidateIntTime,
   getStandardAbsolutePosition
 } from '../src/utils';
 import {
@@ -80,6 +81,20 @@ describe('Utils Test', () => {
 
     it('should return a string with 0', () => {
       expect(getValidateTime('2')).to.equal('02');
+    });
+  });
+
+  describe('Test getValidateIntTime func', () => {
+    it('should return 0', () => {
+      expect(getValidateIntTime('a')).to.equal(0);
+    });
+
+    it('should return int', () => {
+      expect(getValidateIntTime('11')).to.equal(11);
+    });
+
+    it('should return 0', () => {
+      expect(getValidateIntTime(null)).to.equal(0);
     });
   });
 
