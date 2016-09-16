@@ -10,6 +10,7 @@ import {
 } from '../ConstValue.js';
 
 const propTypes = {
+  step: PropTypes.number,
   hour: PropTypes.string,
   minute: PropTypes.string,
   focused: PropTypes.bool,
@@ -18,6 +19,7 @@ const propTypes = {
 };
 
 const defaultProps = {
+  step: 0,
   hour: '00',
   minute: '00',
   focused: false,
@@ -32,8 +34,9 @@ class MaterialTheme extends React.Component {
   constructor(props) {
     super(props);
     let pointerRotate = this.resetHourDegree();
+    let {step} = props;
     this.state = {
-      step: 0,
+      step,
       pointerRotate
     }
     this.handleTimeChange = this.handleTimeChange.bind(this);
@@ -43,9 +46,9 @@ class MaterialTheme extends React.Component {
   handleStepChange(step) {
     let stateStep = this.state.step;
     if (stateStep !== step) {
-      this.pickerPointerContainer.addAnimation();
+      this.pickerPointerContainer && this.pickerPointerContainer.addAnimation();
       setTimeout(() => {
-        this.pickerPointerContainer.removeAnimation();
+        this.pickerPointerContainer && this.pickerPointerContainer.removeAnimation();
         let pointerRotate = 0;
         if (step === 0) {
           pointerRotate = this.resetHourDegree();
