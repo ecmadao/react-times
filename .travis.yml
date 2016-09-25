@@ -18,3 +18,5 @@ cache:
     - node_modules
 after_script:
     - npm run coveralls
+notifications:
+  webhooks: https://hook.bearychat.com/=bw9fs/travis/613010ff56ad38e540b93d5543cea6dd
