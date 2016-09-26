@@ -19,23 +19,25 @@ class OutsideClickHandler extends React.Component {
 
   componentDidMount() {
     if (document.addEventListener) {
-      document.addEventListener('click', this.onOutsideClick, true);
+      document.addEventListener('mousedown', this.onOutsideClick, true);
     } else {
-      document.attachEvent('onclick', this.onOutsideClick);
+      document.attachEvent('onmousedown', this.onOutsideClick);
     }
   }
 
   componentWillUnmount() {
     if (document.removeEventListener) {
-      document.removeEventListener('click', this.onOutsideClick, true);
+      document.removeEventListener('mousedown', this.onOutsideClick, true);
     } else {
-      document.detachEvent('onclick', this.onOutsideClick);
+      document.detachEvent('onmousedown', this.onOutsideClick);
     }
   }
 
   onOutsideClick(e) {
+    e = e || window.event;
+    const mouseTarget = (typeof e.which !== "undefined") ? e.which : e.button;
     const isDescendantOfRoot = ReactDOM.findDOMNode(this.childNode).contains(e.target);
-    if (!isDescendantOfRoot) {
+    if (!isDescendantOfRoot && mouseTarget === 1) {
       let {onOutsideClick} = this.props;
       onOutsideClick && onOutsideClick(e);
     }
