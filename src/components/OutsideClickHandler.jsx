@@ -45,7 +45,7 @@ class OutsideClickHandler extends React.Component {
 
   render() {
     return (
-      <div ref={(c) => this.childNode = c}>
+      <div ref={(c) => this.childNode = c} className="outside_container">
         {this.props.children}
       </div>
     )
