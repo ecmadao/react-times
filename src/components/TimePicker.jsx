@@ -2,8 +2,6 @@ import React, {PropTypes} from 'react';
 import moment from 'moment';
 
 import OutsideClickHandler from './OutsideClickHandler';
-// import TwentyFourHoursMode from './TwentyFourHoursMode';
-// import TwelveHoursMode from './TwelveHoursMode';
 import MaterialTheme from './MaterialTheme';
 import ClassicTheme from './ClassicTheme';
 import TimeIcon from '../svg/time.svg';
@@ -114,12 +112,11 @@ class TimePicker extends React.Component {
   }
 
   renderMaterialTheme() {
-    const {hour, minute, focused, timeInterval} = this.state;
+    const {hour, minute, timeInterval} = this.state;
     return (
       <MaterialTheme
         hour={hour}
         minute={minute}
-        focused={focused}
         handleHourChange={this.handleHourChange}
         handleMinuteChange={this.handleMinuteChange}
         handleTimeIntervalChange={this.handleTimeIntervalChange}
@@ -128,7 +125,7 @@ class TimePicker extends React.Component {
   }
 
   renderClassicTheme() {
-    const {hour, minute, focused} = this.state;
+    const {hour, minute} = this.state;
     return (
       <ClassicTheme
         hour={hour}
@@ -138,34 +135,6 @@ class TimePicker extends React.Component {
       />
     )
   }
-
-  // renderTwentyFourHoursMode() {
-  //   let {hour, minute, focused} = this.state;
-  //   return (
-  //     <TwentyFourHoursMode
-  //       hour={hour}
-  //       minute={minute}
-  //       focused={focused}
-  //       handleHourChange={this.handleHourChange}
-  //       handleMinuteChange={this.handleMinuteChange}
-  //     />
-  //   )
-  // }
-  //
-  // renderTwelveHoursMode() {
-  //   let {hour, minute, focused, timeInterval} = this.state;
-  //   return (
-  //     <TwelveHoursMode
-  //       hour={hour}
-  //       minute={minute}
-  //       focused={focused}
-  //       timeInterval={timeInterval}
-  //       handleHourChange={this.handleHourChange}
-  //       handleMinuteChange={this.handleMinuteChange}
-  //       handleTimeIntervalChange={this.handleTimeIntervalChange}
-  //     />
-  //   )
-  // }
 
   render() {
     const {placeholder, colorPalette, withoutIcon, timeMode, theme} = this.props;
@@ -193,7 +162,6 @@ class TimePicker extends React.Component {
           onOutsideClick={this.onClearFocus}
           focused={focused}>
           {theme === 'material' ? this.renderMaterialTheme() : this.renderClassicTheme()}
-          {/* {validateTimeMode === 24 ? this.renderTwentyFourHoursMode() : this.renderTwelveHoursMode()} */}
         </OutsideClickHandler>
       </div>
     )

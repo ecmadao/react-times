@@ -1,0 +1,60 @@
+.time_picker_container {
+  position: relative;
+}
+
+.time_picker_preview {
+  position: relative;
+  cursor: pointer;
+  height: 50px;
+  color: #343434;
+  border-radius: 2px;
+  background-color: #fff;
+  transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  -ms-transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  -moz-transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  -o-transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  -webkit-transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.12), 0 0 4px 0 rgba(0, 0, 0, 0.08);
+  -moz-box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.12), 0 0 4px 0 rgba(0, 0, 0, 0.08);
+  -webkit-box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.12), 0 0 4px 0 rgba(0, 0, 0, 0.08);
+}
+.time_picker_preview.active,
+.time_picker_preview:hover {
+  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.12), 0 0 8px 0 rgba(0, 0, 0, 0.08);
+  -moz-box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.12), 0 0 8px 0 rgba(0, 0, 0, 0.08);
+  -webkit-box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.12), 0 0 8px 0 rgba(0, 0, 0, 0.08);
+}
+.time_picker_preview.active {
+  color: #fff;
+  background-color: #3498db;
+}
+
+.time_picker_preview.active .preview_container svg {
+  fill: #fff;
+}
+
+.preview_container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 40px;
+  line-height: 40px;
+  padding-left: 30px;
+  transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+}
+
+.preview_container.without_icon {
+  padding-right: 30px;
+}
+
+.preview_container svg {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  top: 5.5px;
+  left: 0;
+}

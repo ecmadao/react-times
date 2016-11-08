@@ -16,7 +16,7 @@ describe('TwelveHoursTheme', () => {
       />
     );
     it('should render component correctly', () => {
-      expect(wrapper.is('.time_picker_modal_container.active')).to.equal(true);
+      expect(wrapper.is('.time_picker_modal_container')).to.equal(true);
     });
 
     it('should render PickerDargHandler component', () => {

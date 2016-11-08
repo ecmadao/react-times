@@ -1,6 +1,7 @@
 import React from 'react';
 import TwelveHoursMode from './TwelveHoursMode';
 import TwentyFourHoursMode from './TwentyFourHoursMode';
+import '../../css/material/default.css';
 
 class MaterialTheme extends React.Component {
   renderTwentyFourHoursMode() {
