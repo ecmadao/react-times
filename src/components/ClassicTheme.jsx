@@ -1,11 +1,26 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {
   TIMES_24_MODE
 } from '../ConstValue';
 import {
   getValidateTime
 } from '../utils';
-import '../../css/classic/base.css';
+
+const propTypes = {
+  hour: PropTypes.string,
+  minute: PropTypes.string,
+  handleHourChange: PropTypes.func,
+  handleMinuteChange: PropTypes.func,
+  handleModalClose: PropTypes.func
+};
+
+const defaultProps = {
+  hour: '00',
+  minute: '00',
+  handleHourChange: () => {},
+  handleMinuteChange: () => {},
+  handleModalClose: () => {}
+};
 
 class ClassicTheme extends React.Component {
   constructor(props) {
@@ -56,10 +71,6 @@ class ClassicTheme extends React.Component {
   }
 
   render() {
-    const {
-      hour,
-      minute
-    } = this.props;
     return (
       <div className="classic_theme_container">
         {this.renderTimes()}
@@ -67,5 +78,8 @@ class ClassicTheme extends React.Component {
     )
   }
 }
+
+ClassicTheme.propTypes = propTypes;
+ClassicTheme.defaultProps = defaultProps;
 
 export default ClassicTheme;

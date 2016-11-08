@@ -1,6 +1,7 @@
 import React from 'react';
 import {storiesOf} from '@kadira/storybook';
 import TimePickerWrapper from '../examples/TimePickerWrapper';
+import '../css/material/default.css';
 
 storiesOf('TwelveHoursMode', module)
   .add('with default time', () => (

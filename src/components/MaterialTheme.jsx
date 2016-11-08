@@ -1,7 +1,24 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import TwelveHoursMode from './TwelveHoursMode';
 import TwentyFourHoursMode from './TwentyFourHoursMode';
-import '../../css/material/default.css';
+
+const propTypes = {
+  hour: PropTypes.string,
+  minute: PropTypes.string,
+  timeInterval: PropTypes.string,
+  handleHourChange: PropTypes.func,
+  handleMinuteChange: PropTypes.func,
+  handleTimeIntervalChange: PropTypes.func
+};
+
+const defaultProps = {
+  hour: '00',
+  minute: '00',
+  timeInterval: 'AM',
+  handleHourChange: () => {},
+  handleMinuteChange: () => {},
+  handleTimeIntervalChange: () => {}
+};
 
 class MaterialTheme extends React.Component {
   renderTwentyFourHoursMode() {
@@ -51,5 +68,8 @@ class MaterialTheme extends React.Component {
     )
   }
 }
+
+MaterialTheme.propTypes = propTypes;
+MaterialTheme.defaultProps = defaultProps;
 
 export default MaterialTheme;

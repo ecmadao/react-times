@@ -117,6 +117,7 @@ class TimePicker extends React.Component {
       <MaterialTheme
         hour={hour}
         minute={minute}
+        timeInterval={timeInterval}
         handleHourChange={this.handleHourChange}
         handleMinuteChange={this.handleMinuteChange}
         handleTimeIntervalChange={this.handleTimeIntervalChange}
