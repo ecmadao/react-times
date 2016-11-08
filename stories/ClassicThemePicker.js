@@ -12,9 +12,9 @@ storiesOf('Classic Theme', module)
       theme="classic"
     />
   ))
-  .add('focused at setup', () => (
+  .add('dark color', () => (
     <TimePickerWrapper
-      withoutIcon={true}
+      colorPalette="dark"
       theme="classic"
     />
   ));

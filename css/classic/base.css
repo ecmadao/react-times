@@ -51,3 +51,19 @@
   background-color: #757575;
   color: #fff;
 }
+
+// dark theme
+.dark .classic_theme_container {
+  background-color: #4a4a4a;
+}
+
+.dark .classic_theme_container .classic_time {
+  border-bottom: 1px solid #5d5d5d;
+  background-color: #4a4a4a;
+  color: #fff;
+}
+
+.dark .classic_theme_container .classic_time.active,
+.dark .classic_theme_container .classic_time:hover {
+  background-color: #343434;
+}
