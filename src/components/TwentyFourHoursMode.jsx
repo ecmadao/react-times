@@ -13,7 +13,6 @@ const propTypes = {
   step: PropTypes.number,
   hour: PropTypes.string,
   minute: PropTypes.string,
-  focused: PropTypes.bool,
   handleHourChange: PropTypes.func,
   handleMinuteChange: PropTypes.func
 };
@@ -22,7 +21,6 @@ const defaultProps = {
   step: 0,
   hour: '00',
   minute: '00',
-  focused: false,
   handleHourChange: () => {},
   handleMinuteChange: () => {}
 };
@@ -33,8 +31,8 @@ import pickerPointGenerator from './PickerPointGenerator';
 class TwentyFourHoursMode extends React.Component {
   constructor(props) {
     super(props);
-    let pointerRotate = this.resetHourDegree();
-    let {step} = props;
+    const pointerRotate = this.resetHourDegree();
+    const {step} = props;
     this.state = {
       step,
       pointerRotate
@@ -44,7 +42,7 @@ class TwentyFourHoursMode extends React.Component {
   }
 
   handleStepChange(step) {
-    let stateStep = this.state.step;
+    const stateStep = this.state.step;
     if (stateStep !== step) {
       this.pickerPointerContainer && this.pickerPointerContainer.addAnimation();
       setTimeout(() => {
@@ -70,8 +68,8 @@ class TwentyFourHoursMode extends React.Component {
 
   handleTimeChange(time) {
     time = parseInt(time);
-    let {step} = this.state;
-    let {handleHourChange, handleMinuteChange} = this.props;
+    const {step} = this.state;
+    const {handleHourChange, handleMinuteChange} = this.props;
     if (step === 0) {
       handleHourChange && handleHourChange(time);
     } else {
@@ -80,7 +78,7 @@ class TwentyFourHoursMode extends React.Component {
   }
 
   resetHourDegree() {
-    let hour = parseInt(this.props.hour);
+    const hour = parseInt(this.props.hour);
     let pointerRotate = 0;
     HOURS.forEach((h, index) => {
       if (hour === index + 1) {
@@ -91,7 +89,7 @@ class TwentyFourHoursMode extends React.Component {
   }
 
   resetMinuteDegree() {
-    let minute = parseInt(this.props.minute);
+    const minute = parseInt(this.props.minute);
     let pointerRotate = 0;
     MINUTES.forEach((m, index) => {
       if (minute === index) {
@@ -113,27 +111,25 @@ class TwentyFourHoursMode extends React.Component {
   }
 
   render() {
-    let {
+    const {
       hour,
-      minute,
-      focused
+      minute
     } = this.props;
-    let {step, pointerRotate} = this.state;
+    const {step, pointerRotate} = this.state;
 
-    let activeHourClass = step === 0 ? "time_picker_header active" : "time_picker_header";
-    let activeMinuteClass = step === 1 ? "time_picker_header active" : "time_picker_header";
-    let modalContainerClass = focused ? "time_picker_modal_container active" : "time_picker_modal_container";
-    let [top, height] = this.getTopAndHeight();
-    let rotateState = {
+    const activeHourClass = step === 0 ? "time_picker_header active" : "time_picker_header";
+    const activeMinuteClass = step === 1 ? "time_picker_header active" : "time_picker_header";
+    const [top, height] = this.getTopAndHeight();
+    const rotateState = {
       top,
       height,
       pointerRotate
     };
-    let type = step === 0 ? 'hour' : 'minute';
+    const type = step === 0 ? 'hour' : 'minute';
     const PickerPointGenerator = pickerPointGenerator(type);
 
     return (
-      <div className={modalContainerClass}>
+      <div className="time_picker_modal_container">
         <div className="time_picker_modal_header">
           <span
             className={activeHourClass}

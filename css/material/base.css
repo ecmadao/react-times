@@ -83,10 +83,15 @@
   -webkit-box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.12), 0 0 4px 0 rgba(0, 0, 0, 0.08);
 }
 
-.time_picker_modal_container.active {
+.outside_container.active .time_picker_modal_container {
   opacity: 1;
   z-index: 2;
 }
+
+/*.time_picker_modal_container.active {
+  opacity: 1;
+  z-index: 2;
+}*/
 
 .time_picker_modal_header {
   height: 50px;
