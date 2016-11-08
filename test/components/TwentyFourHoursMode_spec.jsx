@@ -3,13 +3,13 @@ import {expect} from 'chai';
 import {shallow} from 'enzyme';
 import sinon from 'sinon-sandbox';
 
-import MaterialTheme from '../../src/components/MaterialTheme';
+import TwentyFourHoursMode from '../../src/components/TwentyFourHoursMode';
 import PickerDargHandler from '../../src/components/PickerDargHandler';
 
-describe('MaterialTheme', () => {
-  describe('MaterialTheme Init', () => {
+describe('TwentyFourHoursMode', () => {
+  describe('TwentyFourHoursMode Init', () => {
     const wrapper = shallow(
-      <MaterialTheme hour={'03'} />
+      <TwentyFourHoursMode hour={'03'} />
     );
     it('should render component correctly', () => {
       expect(wrapper.is('.time_picker_modal_container')).to.equal(true);
@@ -27,11 +27,11 @@ describe('MaterialTheme', () => {
     });
   });
 
-  describe('MaterialTheme Func', () => {
+  describe('TwentyFourHoursMode Func', () => {
     const handleHourChange = sinon.stub();
     const handleMinuteChange = sinon.stub();
     const wrapper = shallow(
-      <MaterialTheme
+      <TwentyFourHoursMode
         hour={'01'}
         minute={'45'}
         handleHourChange={handleHourChange}
@@ -61,7 +61,7 @@ describe('MaterialTheme', () => {
 
     it('should handleMinuteChange', () => {
       const newWrapper = shallow(
-        <MaterialTheme
+        <TwentyFourHoursMode
           hour={'01'}
           minute={'45'}
           step={1}

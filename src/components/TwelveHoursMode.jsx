@@ -28,7 +28,7 @@ const defaultProps = {
 import PickerDargHandler from './PickerDargHandler';
 import pickerPointGenerator from './PickerPointGenerator';
 
-class TwelveHoursTheme extends React.Component {
+class TwelveHoursMode extends React.Component {
   constructor(props) {
     super(props);
     let hourPointerRotate = this.resetHourDegree();
@@ -175,7 +175,7 @@ class TwelveHoursTheme extends React.Component {
   }
 }
 
-TwelveHoursTheme.propTypes = propTypes;
-TwelveHoursTheme.defaultProps = defaultProps;
+TwelveHoursMode.propTypes = propTypes;
+TwelveHoursMode.defaultProps = defaultProps;
 
-export default TwelveHoursTheme;
+export default TwelveHoursMode;

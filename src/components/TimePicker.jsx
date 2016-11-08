@@ -2,8 +2,8 @@ import React, {PropTypes} from 'react';
 import moment from 'moment';
 
 import OutsideClickHandler from './OutsideClickHandler';
-import MaterialTheme from './MaterialTheme';
-import TwelveHoursTheme from './TwelveHoursTheme';
+import TwentyFourHoursMode from './TwentyFourHoursMode';
+import TwelveHoursMode from './TwelveHoursMode';
 import TimeIcon from '../svg/time.svg';
 
 import {
@@ -111,10 +111,10 @@ class TimePicker extends React.Component {
     return onTimeChange && onTimeChange(`${hour}:${minute}`);
   }
 
-  renderMaterialTheme() {
+  renderTwentyFourHoursMode() {
     let {hour, minute, focused} = this.state;
     return (
-      <MaterialTheme
+      <TwentyFourHoursMode
         hour={hour}
         minute={minute}
         focused={focused}
@@ -124,10 +124,10 @@ class TimePicker extends React.Component {
     )
   }
 
-  renderTwelveHoursTheme() {
+  renderTwelveHoursMode() {
     let {hour, minute, focused, timeInterval} = this.state;
     return (
-      <TwelveHoursTheme
+      <TwelveHoursMode
         hour={hour}
         minute={minute}
         focused={focused}
@@ -162,7 +162,7 @@ class TimePicker extends React.Component {
           </div>
         </div>
         <OutsideClickHandler onOutsideClick={this.onClearFocus}>
-          {timeMode === 24 ? this.renderMaterialTheme() : this.renderTwelveHoursTheme()}
+          {timeMode === 24 ? this.renderTwentyFourHoursMode() : this.renderTwelveHoursMode()}
         </OutsideClickHandler>
       </div>
     )
