@@ -9,17 +9,17 @@
 
 ![react-times](./intro_src/react-times.gif)
 
-## HAVE A TRY
+## Play in local
 
 ```bash
-$ git clone git@github.com:ecmadao/react-times.git
+$ git clone https://github.com/ecmadao/react-times.git
 
 $ npm install
 
 $ npm run storybook
 ```
 
-## INSTALL
+## Install
 
 dependencies:
 
@@ -27,31 +27,32 @@ dependencies:
 - [`react`](https://github.com/facebook/react)
 - [`react-dom`](https://github.com/facebook/react)
 
-> NO JQUERT RELY 😤😤😤
+> No jQuery rely 😤😤😤
 
 So generally speaking, you should already have `react` & `react-dom` dependencies in your project. If not:
 
 ```bash
 $ npm install react react-dom --save-dev
-```
-
-and:
-
-```bash
+# and
 $ npm install react-times --save-dev
 ```
 
-## USAGE
+## Usage
 
-Until now, this Component has only one theme -- The Material Design Theme. I'll working on more themes later.
+This component has two themes now: Material Theme by default , or Classic Theme.
+
+> Always remember import css file when you use react-times
 
 ```javascript
 // basic usage
-
 // in some react component
 import React from 'react';
 import TimePicker from 'react-times';
-require('react-times/css/material/default.css');
+
+// use material theme
+import 'react-times/css/material/default.css';
+// or you can use classic theme
+import 'react-times/css/classic/default.css';
 
 export default class SomeComponent extends React.Component {
   // do some work
@@ -82,33 +83,54 @@ export default class SomeComponent extends React.Component {
 }
 ```
 
+> See more examples here:
+
+```javascript
+// some config example
+render() {
+  <TimePicker 
+  	colorPalette="dark" // main color, default "light"
+  	focused={true} // whether to show timepicker modal after rendered. default false
+  	withoutIcon={true} // whether to has time icon on button, default false
+  	defaultTime="13:05" // initial time, default current time
+  />
+}
+```
+
 > For more detail usage, you can visit [example](https://github.com/ecmadao/react-times/tree/master/examples) or see the source code.
 
-## SHOW
+## Show time
 
-> 24HoursMode, with light color as default
+> 24 hours mode with Material Theme, light color by default
 
 ![24HoursMode](./intro_src/24HoursMode.png)
 
-> 12HoursMode, with light color as default
+> 12 hours mode with Material Theme, light color by default
 
 ![12HoursMode](./intro_src/12HoursMode.png)
 
-> 24HoursMode, with dark color
+> 24 hours mode with Material Theme, dark color
 
 ![DarkColor](./intro_src/DarkColor.png)
 
-## APIS
+> 24 hours mode with Classic Theme, light color by default
+
+![24HoursMode-ClassicTheme](./intro_src/24HoursMode-ClassicTheme.png)
+
+> 24 hours mode with Classic Theme, dark color
+
+![24HoursMode-ClassicTheme-dark](./intro_src/24HoursMode-ClassicTheme-dark.png)
+
+## APIs
 
 ### Props
 
 - `defaultTime`
 
-`React.PropTypes.string`
-
-Must be a string, with `${hour}:${minute}` format, default now(by using `moment()`):
+> Initial time, must be a string, with `${hour}:${minute}` format, default now (by using `moment()`):
 
 ```javascript
+// React.PropTypes.string
 defaultTime="11:11"
 defaultTime="11:01"
 defaultTime="1:01"
@@ -117,43 +139,39 @@ defaultTime="1:1"
 
 - `focused`
 
-`React.PropTypes.bool`
-
-Whether the timepicker pannel is focused or not when it did mount. Default `false`
+> Whether the timepicker pannel is focused or not when it did mount. Default `false`
 
 ```javascript
+// React.PropTypes.bool
 focused={false}
 focused={true}
 ```
 
 - `withoutIcon`
 
-`React.PropTypes.bool`
-
-Whether the timepicker has a svg icon. Default `false`.
+> Whether the timepicker has a svg icon. Default `false`.
 
 ```javascript
+// React.PropTypes.bool
 withoutIcon={true}
 ```
 
 - `colorPalette`
 
-`React.PropTypes.string`
-
-The main color palette of picker pannel. Default `light`.
+> The main color palette of picker pannel. Default `light`.
 
 ```javascript
+// React.PropTypes.string
 colorPalette="dark"
 colorPalette="light"
 ```
 
 - `timeMode`
 
-`React.PropTypes.string` or `React.PropTypes.number`
-
-Support "12" or "24" hours mode.
+> Support "12" or "24" hours mode.
 
 ```javascript
+// React.PropTypes.string or React.PropTypes.number
 timeMode="24"
 timeMode=24
 timeMode="12"
@@ -164,13 +182,13 @@ timeMode=12
 
 `React.PropTypes.func`
 
-The callback func when component `focused` state is changed.
+> The callback func when component `focused` state is changed.
 
 - `onHourChange`
 
 `React.PropTypes.func`
 
-The callback func when component `hour` state is changed.
+> The callback func when component `hour` state is changed.
 
 ```javascript
 onHourChange(hour) {
@@ -182,7 +200,7 @@ onHourChange(hour) {
 
 `React.PropTypes.func`
 
-The callback func when component `minute` state is changed.
+> The callback func when component `minute` state is changed.
 
 ```javascript
 onMinuteChange(minute) {
@@ -194,7 +212,7 @@ onMinuteChange(minute) {
 
 `React.PropTypes.func`
 
-The callback func when component `hour` or `minute` or `AM/PM` state is changed.
+> The callback func when component `hour` or `minute` or `AM/PM` state is changed.
 
 ```javascript
 onTimeChange(time) {
@@ -202,11 +220,11 @@ onTimeChange(time) {
 }
 ```
 
-## ARTICLE
+## Article
 
 - [一言不合造轮子--撸一个ReactTimePicker](https://github.com/ecmadao/Coding-Guide/blob/master/Notes/React/ReactJS/Write%20a%20React%20Timepicker%20Component%20hand%20by%20hand.md)
 
-## TODOS
+## Todos
 
 - Test
 
@@ -229,7 +247,7 @@ onTimeChange(time) {
 - Themes
 
   - [x] Material Theme
-  - [ ] Classical Theme
+  - [x] Classical Theme
 
 - Mode
 
@@ -238,11 +256,11 @@ onTimeChange(time) {
 
 - Animations
 
-## THANK
+## Thx
 
 Thanks to the Airbnb's open source project: [react-dates](https://github.com/airbnb/react-dates), I have learn a lot from that. Thanks.
 
-## LICENSE
+## License
 
 ```
 MIT License
