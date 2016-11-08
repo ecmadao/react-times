@@ -5,6 +5,7 @@ import TwentyFourHoursMode from './TwentyFourHoursMode';
 const propTypes = {
   hour: PropTypes.string,
   minute: PropTypes.string,
+  timeMode: PropTypes.number,
   timeInterval: PropTypes.string,
   handleHourChange: PropTypes.func,
   handleMinuteChange: PropTypes.func,
@@ -14,6 +15,7 @@ const propTypes = {
 const defaultProps = {
   hour: '00',
   minute: '00',
+  timeMode: 24,
   timeInterval: 'AM',
   handleHourChange: () => {},
   handleMinuteChange: () => {},

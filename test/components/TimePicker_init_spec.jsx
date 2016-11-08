@@ -4,8 +4,8 @@ import {shallow} from 'enzyme';
 import moment from 'moment';
 
 import TimePicker from '../../src/components/TimePicker';
-import TwentyFourHoursMode from '../../src/components/TwentyFourHoursMode';
-import TwelveHoursMode from '../../src/components/TwelveHoursMode';
+import MaterialTheme from '../../src/components/MaterialTheme';
+import ClassicTheme from '../../src/components/ClassicTheme';
 import OutsideClickHandler from '../../src/components/OutsideClickHandler';
 import PickerDargHandler from '../../src/components/PickerDargHandler';
 
@@ -21,14 +21,14 @@ describe('TimePicker initial', () => {
       expect(wrapper.find(OutsideClickHandler)).to.have.lengthOf(1);
     });
 
-    it('renders an TwentyFourHoursMode', () => {
+    it('renders an MaterialTheme', () => {
       const wrapper = shallow(<TimePicker />);
-      expect(wrapper.find(TwentyFourHoursMode)).to.have.lengthOf(1);
+      expect(wrapper.find(MaterialTheme)).to.have.lengthOf(1);
     });
 
-    it('renders an TwelveHoursMode', () => {
-      const wrapper = shallow(<TimePicker timeMode="12" />);
-      expect(wrapper.find(TwelveHoursMode)).to.have.lengthOf(1);
+    it('renders an ClassicTheme', () => {
+      const wrapper = shallow(<TimePicker theme="classic" />);
+      expect(wrapper.find(ClassicTheme)).to.have.lengthOf(1);
     });
 
     it('renders an PickerDargHandler', () => {
@@ -50,7 +50,7 @@ describe('TimePicker initial', () => {
 
     it('should rendered with focused on child', () => {
       const wrapper = shallow(<TimePicker focused={true} />);
-      expect(wrapper.find(TwentyFourHoursMode).props().focused).to.equal(true);
+      expect(wrapper.find(OutsideClickHandler).props().focused).to.equal(true);
     });
 
     it('should rendered without icon', () => {
@@ -60,8 +60,8 @@ describe('TimePicker initial', () => {
 
     it('should rendered with default time in child props', () => {
       const wrapper = shallow(<TimePicker defaultTime="22:23" />);
-      expect(wrapper.find(TwentyFourHoursMode).props().hour).to.equal("22");
-      expect(wrapper.find(TwentyFourHoursMode).props().minute).to.equal("23");
+      expect(wrapper.find(MaterialTheme).props().hour).to.equal("22");
+      expect(wrapper.find(MaterialTheme).props().minute).to.equal("23");
     });
 
     it('should rendered with default time in DOM', () => {
@@ -72,8 +72,8 @@ describe('TimePicker initial', () => {
     it('should rendered with current time in child props', () => {
       const wrapper = shallow(<TimePicker />);
       const [hour, minute] = moment().format("HH:mm").split(':');
-      expect(wrapper.find(TwentyFourHoursMode).props().hour).to.equal(hour);
-      expect(wrapper.find(TwentyFourHoursMode).props().minute).to.equal(minute);
+      expect(wrapper.find(MaterialTheme).props().hour).to.equal(hour);
+      expect(wrapper.find(MaterialTheme).props().minute).to.equal(minute);
     });
 
     it('should rendered with current time in DOM', () => {
