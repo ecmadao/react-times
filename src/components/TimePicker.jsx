@@ -132,6 +132,7 @@ class TimePicker extends React.Component {
         minute={minute}
         handleHourChange={this.handleHourChange}
         handleMinuteChange={this.handleMinuteChange}
+        handleModalClose={this.onClearFocus}
       />
     )
   }

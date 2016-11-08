@@ -46,6 +46,7 @@
   -webkit-transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
+.classic_theme_container .classic_time.active,
 .classic_theme_container .classic_time:hover {
   background-color: #757575;
   color: #fff;
