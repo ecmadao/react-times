@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import TimePicker from '../../src/components/TimePicker';
 import MaterialTheme from '../../src/components/MaterialTheme';
-import TwelveHoursTheme from '../../src/components/TwelveHoursTheme';
+import ClassicTheme from '../../src/components/ClassicTheme';
 import OutsideClickHandler from '../../src/components/OutsideClickHandler';
 import PickerDargHandler from '../../src/components/PickerDargHandler';
 
@@ -26,9 +26,9 @@ describe('TimePicker initial', () => {
       expect(wrapper.find(MaterialTheme)).to.have.lengthOf(1);
     });
 
-    it('renders an TwelveHoursTheme', () => {
-      const wrapper = shallow(<TimePicker timeMode="12" />);
-      expect(wrapper.find(TwelveHoursTheme)).to.have.lengthOf(1);
+    it('renders an ClassicTheme', () => {
+      const wrapper = shallow(<TimePicker theme="classic" />);
+      expect(wrapper.find(ClassicTheme)).to.have.lengthOf(1);
     });
 
     it('renders an PickerDargHandler', () => {
@@ -50,7 +50,7 @@ describe('TimePicker initial', () => {
 
     it('should rendered with focused on child', () => {
       const wrapper = shallow(<TimePicker focused={true} />);
-      expect(wrapper.find(MaterialTheme).props().focused).to.equal(true);
+      expect(wrapper.find(OutsideClickHandler).props().focused).to.equal(true);
     });
 
     it('should rendered without icon', () => {

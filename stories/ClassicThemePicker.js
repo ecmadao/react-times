@@ -1,25 +1,21 @@
 import React from 'react';
 import {storiesOf} from '@kadira/storybook';
 import TimePickerWrapper from '../examples/TimePickerWrapper';
-import '../css/material/default.css';
+import '../css/classic/default.css';
 
-storiesOf('Default TimePicker', module)
+storiesOf('Classic Theme', module)
   .add('basical', () => (
-    <TimePickerWrapper />
-  ))
-  .add('with default time', () => (
-    <TimePickerWrapper
-      defaultTime="11:11"
-    />
+    <TimePickerWrapper theme="classic"/>
   ))
   .add('focused at setup', () => (
     <TimePickerWrapper
       focused={true}
+      theme="classic"
     />
   ))
-  .add('focused at setup', () => (
+  .add('dark color', () => (
     <TimePickerWrapper
-      withoutIcon={true}
-      focused={true}
+      colorPalette="dark"
+      theme="classic"
     />
   ));

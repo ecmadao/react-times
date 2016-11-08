@@ -1,6 +1,5 @@
 import moment from 'moment';
 import { configure, addDecorator } from '@kadira/storybook';
-import '../css/material/default.css';
 
 addDecorator((story) => {
   moment.locale('zh-cn');
@@ -11,6 +10,7 @@ function loadStories() {
   require('../stories/TimePicker.js');
   require('../stories/DarkColor.js');
   require('../stories/TwelveHoursMode.js');
+  require('../stories/ClassicThemePicker');
 }
 
 configure(loadStories, module);

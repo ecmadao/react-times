@@ -12,7 +12,6 @@ import {
 const propTypes = {
   hour: PropTypes.string,
   minute: PropTypes.string,
-  focused: PropTypes.bool,
   handleHourChange: PropTypes.func,
   handleMinuteChange: PropTypes.func
 };
@@ -20,7 +19,6 @@ const propTypes = {
 const defaultProps = {
   hour: '00',
   minute: '00',
-  focused: false,
   handleHourChange: () => {},
   handleMinuteChange: () => {}
 };
@@ -28,7 +26,7 @@ const defaultProps = {
 import PickerDargHandler from './PickerDargHandler';
 import pickerPointGenerator from './PickerPointGenerator';
 
-class TwelveHoursTheme extends React.Component {
+class TwelveHoursMode extends React.Component {
   constructor(props) {
     super(props);
     let hourPointerRotate = this.resetHourDegree();
@@ -115,14 +113,12 @@ class TwelveHoursTheme extends React.Component {
     let {
       hour,
       minute,
-      focused,
       timeInterval
     } = this.props;
     let {hourPointerRotate, minutePointerRotate} = this.state;
 
     let activeAMClass = timeInterval === "AM" ? "time_picker_header active" : "time_picker_header";
     let activePMClass = timeInterval === "PM" ? "time_picker_header active" : "time_picker_header";
-    let modalContainerClass = focused ? "time_picker_modal_container active" : "time_picker_modal_container";
 
     let [top, height] = this.getHourTopAndHeight();
     let hourRotateState = {
@@ -141,7 +137,7 @@ class TwelveHoursTheme extends React.Component {
     const MinutePickerPointGenerator = pickerPointGenerator('minute', 12);
 
     return (
-      <div className={modalContainerClass}>
+      <div className="time_picker_modal_container">
         <div className="time_picker_modal_header">
           <span
             className={activeAMClass}
@@ -175,7 +171,7 @@ class TwelveHoursTheme extends React.Component {
   }
 }
 
-TwelveHoursTheme.propTypes = propTypes;
-TwelveHoursTheme.defaultProps = defaultProps;
+TwelveHoursMode.propTypes = propTypes;
+TwelveHoursMode.defaultProps = defaultProps;
 
-export default TwelveHoursTheme;
+export default TwelveHoursMode;

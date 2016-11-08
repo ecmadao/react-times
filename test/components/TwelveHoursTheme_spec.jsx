@@ -3,20 +3,20 @@ import {expect} from 'chai';
 import {shallow} from 'enzyme';
 import sinon from 'sinon-sandbox';
 
-import TwelveHoursTheme from '../../src/components/TwelveHoursTheme';
+import TwelveHoursMode from '../../src/components/TwelveHoursMode';
 import PickerDargHandler from '../../src/components/PickerDargHandler';
 
-describe('TwelveHoursTheme', () => {
-  describe('TwelveHoursTheme Init', () => {
+describe('TwelveHoursMode', () => {
+  describe('TwelveHoursMode Init', () => {
     const wrapper = shallow(
-      <TwelveHoursTheme
+      <TwelveHoursMode
         hour={'01'}
         minute={'45'}
         focused={true}
       />
     );
     it('should render component correctly', () => {
-      expect(wrapper.is('.time_picker_modal_container.active')).to.equal(true);
+      expect(wrapper.is('.time_picker_modal_container')).to.equal(true);
     });
 
     it('should render PickerDargHandler component', () => {
@@ -31,12 +31,12 @@ describe('TwelveHoursTheme', () => {
     });
   });
 
-  describe('TwelveHoursTheme Func', () => {
+  describe('TwelveHoursMode Func', () => {
     const handleHourChange = sinon.stub();
     const handleMinuteChange = sinon.stub();
     const handleTimeIntervalChange = sinon.stub();
     const wrapper = shallow(
-      <TwelveHoursTheme
+      <TwelveHoursMode
         hour={'01'}
         minute={'45'}
         focused={true}
