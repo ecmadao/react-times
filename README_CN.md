@@ -5,13 +5,13 @@
 
 [![NPM](https://nodei.co/npm/react-times.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/react-times)
 
-README：[中文版](./README_CN.md)
+README：[English Version](./README.md)
 
-> A time picker react-component, no jquery-rely, writing in es6 standrad style.
+> 一个 React 时间选择器组件，使用 ES6 标准语法编写，没有 jQuery 依赖
 
 ![react-times](./intro_src/react-times.gif)
 
-## Play in local
+## 本地玩起来
 
 ```bash
 $ git clone https://github.com/ecmadao/react-times.git
@@ -21,17 +21,17 @@ $ npm install
 $ npm run storybook
 ```
 
-## Install
+## 安装说明
 
-dependencies:
+单独使用插件时所需的依赖：
 
 - [`moment`](https://github.com/moment/moment/)
 - [`react`](https://github.com/facebook/react)
 - [`react-dom`](https://github.com/facebook/react)
 
-> No jQuery rely 😤😤😤
+> No jQuery 😤😤😤
 
-So generally speaking, you should already have `react` & `react-dom` dependencies in your project. If not:
+使用的时候，需要你的项目里已经安装了`react`和`react-dom`。如果没有的话：
 
 ```bash
 $ npm install react react-dom --save-dev
@@ -39,21 +39,21 @@ $ npm install react react-dom --save-dev
 $ npm install react-times --save-dev
 ```
 
-## Usage
+## 使用方式
 
-This component has two themes now: Material Theme by default , or Classic Theme.
+目前组件总共有两种主题：Material 主题和经典主题
 
-> Always remember import css file when you use react-times
+> 在使用组件的时候，记得要引入对应主题的 CSS 文件
 
 ```javascript
-// basic usage
-// in some react component
+// 基本使用方式
+// 假设要在某个组件里使用该插件 (SomeComponent)
 import React from 'react';
 import TimePicker from 'react-times';
 
-// use material theme
+// 使用 Material 主题的话引入：
 import 'react-times/css/material/default.css';
-// or you can use classic theme
+// 否则经典主题的话则引入：
 import 'react-times/css/classic/default.css';
 
 export default class SomeComponent extends React.Component {
@@ -80,15 +80,18 @@ export default class SomeComponent extends React.Component {
       onHourChange={this.onHourChange.bind(this)}
       onMinuteChange={this.onMinuteChange.bind(this)}
       onTimeChange={this.onTimeChange.bind(this)}
+      // 确定主题，不填该 props 则默认为 material
+      theme="material"
+  	  // or
+  	  // theme="classic"
     />
   }
 }
 ```
 
-> See more examples here:
+关于配置的栗子：
 
 ```javascript
-// some config example
 render() {
   <TimePicker 
   	colorPalette="dark" // main color, default "light"
@@ -98,16 +101,15 @@ render() {
   	theme="material"
   	// or
   	// theme="classic"
-  	timeMode="12" // use 24 or 12 hours mode, default 24
   />
 }
 ```
 
-> For more detail usage, you can visit [example](https://github.com/ecmadao/react-times/tree/master/examples) or see the source code.
+> 你可以戳 [这里](https://github.com/ecmadao/react-times/tree/master/examples) 查看更多栗子
 
-## Show time
+## 秀一下
 
-- 24 hours mode with Material Theme, light color by default
+- 24 小时制，亮色调的 Material 主题（默认）
 
 ```javascript
 <TimePicker />
@@ -115,7 +117,7 @@ render() {
 
 ![24HoursMode](./intro_src/24HoursMode.png)
 
-- 12 hours mode with Material Theme, light color by default
+- 12 小时制，亮色调的 Material 主题
 
 ```javascript
 <TimePicker timeMode="12"/>
@@ -123,7 +125,7 @@ render() {
 
 ![12HoursMode](./intro_src/12HoursMode.png)
 
-- 24 hours mode with Material Theme, dark color
+- 24 小时制，暗色调的 Material 主题
 
 ```javascript
 <TimePicker colorPalette="dark"/>
@@ -131,7 +133,7 @@ render() {
 
 ![DarkColor](./intro_src/DarkColor.png)
 
-- 24 hours mode with Classic Theme, light color by default
+- 24 小时制，亮色调的经典主题
 
 ```javascript
 <TimePicker theme="classic"/>
@@ -139,7 +141,7 @@ render() {
 
 ![24HoursMode-ClassicTheme](./intro_src/24HoursMode-ClassicTheme.png)
 
-- 24 hours mode with Classic Theme, dark color
+- 24 小时制，暗色调的经典主题
 
 ```javascript
 <TimePicker colorPalette="dark" theme="classic"/>
@@ -153,7 +155,7 @@ render() {
 
 - `defaultTime`
 
-> Initial time, must be a string, with `${hour}:${minute}` format, default now (by using `moment()`):
+> 初始化时的时间，格式是 `${hour}:${minute}`，不传则默认使用当前时间（通过`moment()`）
 
 ```javascript
 // React.PropTypes.string
@@ -165,7 +167,7 @@ defaultTime="1:1"
 
 - `focused`
 
-> Whether the timepicker pannel is focused or not when it did mount. Default `false`
+> 初始化时时间选择器的 modal 是否打开，默认为`false`
 
 ```javascript
 // React.PropTypes.bool
@@ -175,7 +177,7 @@ focused={true}
 
 - `withoutIcon`
 
-> Whether the timepicker has a svg icon. Default `false`.
+> 时间选择器的按钮上是否不需要 svg icon，默认为`false`
 
 ```javascript
 // React.PropTypes.bool
@@ -184,7 +186,7 @@ withoutIcon={true}
 
 - `colorPalette`
 
-> The main color palette of picker pannel. Default `light`.
+> 配色方案，默认为`light`
 
 ```javascript
 // React.PropTypes.string
@@ -194,7 +196,7 @@ colorPalette="light"
 
 - `timeMode`
 
-> Support "12" or "24" hours mode.
+> 12 或 24 小时制，默认为 24
 
 ```javascript
 // React.PropTypes.string or React.PropTypes.number
@@ -204,19 +206,19 @@ timeMode="12"
 timeMode=12
 ```
 
-### Callback
+### 回调
 
 - `onFocusChange`
 
 `React.PropTypes.func`
 
-> The callback func when component `focused` state is changed.
+> 当组件`focused`属性改变，也就是选择器 modal 被打开或关闭时调用
 
 - `onHourChange`
 
 `React.PropTypes.func`
 
-> The callback func when component `hour` state is changed.
+> 小时`hour`改变时的回调
 
 ```javascript
 onHourChange(hour) {
@@ -228,7 +230,7 @@ onHourChange(hour) {
 
 `React.PropTypes.func`
 
-> The callback func when component `minute` state is changed.
+> 分钟`minute`被改变时的回调
 
 ```javascript
 onMinuteChange(minute) {
@@ -240,7 +242,7 @@ onMinuteChange(minute) {
 
 `React.PropTypes.func`
 
-> The callback func when component `hour` or `minute` or `AM/PM` state is changed.
+> 小时`hour`或者分钟`minute`被改变时的回调
 
 ```javascript
 onTimeChange(time) {
@@ -248,13 +250,13 @@ onTimeChange(time) {
 }
 ```
 
-## Article
+## 相关文章
 
 - [一言不合造轮子--撸一个ReactTimePicker](https://github.com/ecmadao/Coding-Guide/blob/master/Notes/React/ReactJS/Write%20a%20React%20Timepicker%20Component%20hand%20by%20hand.md)
 
 ## Todos
 
-- Test
+- 测试
 
   - [x] TimePicker Component
   - [x] PickerDragHandler Component
@@ -266,28 +268,28 @@ onTimeChange(time) {
 
   - [x] utils test
 
-- Color Palette (Now It has light and dark color)
+- 配色
 
   - [x] light
   - [x] dark
   - [ ] colorful
 
-- Themes
+- 主题
 
   - [x] Material Theme
   - [x] Classical Theme
 
-- Mode
+- 小时制
 
   - [x] 12h mode
   - [x] 24h mode
 
-- Animations
+- 动画
 
-## Thx
+## 致谢
 
-Thanks to the Airbnb's open source project: [react-dates](https://github.com/airbnb/react-dates), I have learn a lot from that. Thanks.
+感谢 Airbnb 的 [react-dates](https://github.com/airbnb/react-dates) 组件，没有它我也不会想着写一个小时选择组件
 
-## License
+## 版权
 
 [MIT License](./LICENSE)
