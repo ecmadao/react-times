@@ -9,6 +9,8 @@ export const POINTER_RADIUS = 15;
 
 export const TIMES_24_MODE = [
   "00:00",
+  "00:30",
+  "01:00",
   "01:30",
   "02:00",
   "02:30",

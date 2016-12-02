@@ -59,6 +59,7 @@ class TimePicker extends React.Component {
     this.handleHourChange = this.handleHourChange.bind(this);
     this.handleMinuteChange = this.handleMinuteChange.bind(this);
     this.handleTimeIntervalChange = this.handleTimeIntervalChange.bind(this);
+    this.handleHourAndMinuteChange = this.handleHourAndMinuteChange.bind(this);
   }
 
   onFocus() {
@@ -98,8 +99,18 @@ class TimePicker extends React.Component {
     this.handleTimeChange({timeInterval});
   }
 
+  handleHourAndMinuteChange(time) {
+    const {onTimeChange} = this.props;
+    let [hour, minute] = time.split(':');
+    hour = getValidateTime(hour);
+    minute = getValidateTime(minute);
+    this.setState({hour, minute});
+    return onTimeChange && onTimeChange(time);
+  }
+
   handleTimeChange(timeObject) {
     let {timeInterval, hour, minute} = this.state;
+
     timeInterval = timeObject["timeInterval"] ? timeObject["timeInterval"] : timeInterval;
     hour = timeObject["hour"] ? timeObject["hour"] : hour;
     minute = timeObject["minute"] ? timeObject["minute"] : minute;
@@ -131,8 +142,7 @@ class TimePicker extends React.Component {
       <ClassicTheme
         hour={hour}
         minute={minute}
-        handleHourChange={this.handleHourChange}
-        handleMinuteChange={this.handleMinuteChange}
+        handleTimeChange={this.handleHourAndMinuteChange}
         handleModalClose={this.onClearFocus}
       />
     )
