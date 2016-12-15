@@ -40,7 +40,7 @@ const defaultProps = {
   onFocusChange: () => {},
   onHourChange: () => {},
   onMinuteChange: () => {},
-  onTimeChange: () => {}
+  onTimeChange: () => {},
 };
 
 class TimePicker extends React.Component {
@@ -146,6 +146,10 @@ class TimePicker extends React.Component {
         handleModalClose={this.onClearFocus}
       />
     )
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.handleHourAndMinuteChange(nextProps.defaultTime);
   }
 
   render() {
