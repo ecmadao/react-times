@@ -6,6 +6,7 @@ const propTypes = {
   hour: PropTypes.string,
   minute: PropTypes.string,
   timeMode: PropTypes.number,
+  autoMode: PropTypes.bool,
   timeInterval: PropTypes.string,
   handleHourChange: PropTypes.func,
   handleMinuteChange: PropTypes.func,
@@ -16,6 +17,7 @@ const defaultProps = {
   hour: '00',
   minute: '00',
   timeMode: 24,
+  autoMode: true,
   timeInterval: 'AM',
   handleHourChange: () => {},
   handleMinuteChange: () => {},
@@ -27,6 +29,8 @@ class MaterialTheme extends React.Component {
     let {
       hour,
       minute,
+      autoMode,
+      clearFoucs,
       handleHourChange,
       handleMinuteChange
     } = this.props;
@@ -34,8 +38,10 @@ class MaterialTheme extends React.Component {
       <TwentyFourHoursMode
         hour={hour}
         minute={minute}
+        autoMode={autoMode}
         handleHourChange={handleHourChange}
         handleMinuteChange={handleMinuteChange}
+        clearFoucs={clearFoucs}
       />
     )
   }

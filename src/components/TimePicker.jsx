@@ -129,14 +129,16 @@ class TimePicker extends React.Component {
 
   renderMaterialTheme() {
     const { hour, minute, timeInterval } = this.state;
-    const { timeMode } = this.props;
+    const { timeMode, autoMode } = this.props;
 
     return (
       <MaterialTheme
         hour={hour}
         minute={minute}
         timeMode={timeMode}
+        autoMode={autoMode}
         timeInterval={timeInterval}
+        clearFoucs={this.onClearFocus}
         handleHourChange={this.handleHourChange}
         handleMinuteChange={this.handleMinuteChange}
         handleTimeIntervalChange={this.handleTimeIntervalChange}

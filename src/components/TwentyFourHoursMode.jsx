@@ -12,17 +12,21 @@ import {
 const propTypes = {
   step: PropTypes.number,
   hour: PropTypes.string,
+  autoMode: PropTypes.bool,
   minute: PropTypes.string,
   handleHourChange: PropTypes.func,
-  handleMinuteChange: PropTypes.func
+  handleMinuteChange: PropTypes.func,
+  clearFoucs: PropTypes.func
 };
 
 const defaultProps = {
   step: 0,
   hour: '00',
   minute: '00',
+  autoMode: true,
   handleHourChange: () => {},
-  handleMinuteChange: () => {}
+  handleMinuteChange: () => {},
+  clearFoucs: () => {}
 };
 
 import PickerDargHandler from './PickerDargHandler';
@@ -47,18 +51,17 @@ class TwentyFourHoursMode extends React.Component {
       this.pickerPointerContainer && this.pickerPointerContainer.addAnimation();
       setTimeout(() => {
         this.pickerPointerContainer && this.pickerPointerContainer.removeAnimation();
-        let pointerRotate = 0;
-        if (step === 0) {
-          pointerRotate = this.resetHourDegree();
-        } else {
-          pointerRotate = this.resetMinuteDegree();
-        }
-        this.setState({
-          step,
-          pointerRotate
-        });
+        this.setStep(step);
       }, 300);
     }
+  }
+
+  setStep(step) {
+    const pointerRotate = step === 0 ? this.resetHourDegree() : this.resetMinuteDegree();
+    this.setState({
+      step,
+      pointerRotate
+    });
   }
 
   handleTimePointerClick(time, pointerRotate) {
@@ -69,11 +72,23 @@ class TwentyFourHoursMode extends React.Component {
   handleTimeChange(time) {
     time = parseInt(time);
     const { step } = this.state;
-    const { handleHourChange, handleMinuteChange } = this.props;
+    const {
+      handleHourChange,
+      handleMinuteChange,
+      autoMode,
+      clearFoucs
+    } = this.props;
     if (step === 0) {
       handleHourChange && handleHourChange(time);
     } else {
       handleMinuteChange && handleMinuteChange(time);
+    }
+    if (!autoMode) { return }
+    if (step === 0) {
+      this.handleStepChange(1);
+    } else {
+      clearFoucs();
+      this.setStep(0);
     }
   }
 
