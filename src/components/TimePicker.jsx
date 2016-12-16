@@ -15,6 +15,7 @@ import {
 const propTypes = {
   defaultTime: PropTypes.string,
   focused: PropTypes.bool,
+  autoMode: PropTypes.bool,
   placeholder: PropTypes.string,
   colorPalette: PropTypes.string,
   theme: PropTypes.string,
@@ -32,9 +33,10 @@ const propTypes = {
 const defaultProps = {
   defaultTime: moment().format("HH:mm"),
   focused: false,
+  autoMode: true,
   placeholder: '',
   colorPalette: "light",
-  timeMode: "24",
+  timeMode: 24,
   theme: "material",
   withoutIcon: false,
   onFocusChange: () => {},
@@ -100,11 +102,14 @@ class TimePicker extends React.Component {
   }
 
   handleHourAndMinuteChange(time) {
-    const { onTimeChange } = this.props;
+    const { onTimeChange, autoMode } = this.props;
     let [hour, minute] = time.split(':');
     hour = getValidateTime(hour);
     minute = getValidateTime(minute);
     this.setState({ hour, minute });
+    if (autoMode) {
+      this.onClearFocus();
+    }
     return onTimeChange && onTimeChange(time);
   }
 
@@ -125,6 +130,7 @@ class TimePicker extends React.Component {
   renderMaterialTheme() {
     const { hour, minute, timeInterval } = this.state;
     const { timeMode } = this.props;
+
     return (
       <MaterialTheme
         hour={hour}
@@ -145,7 +151,6 @@ class TimePicker extends React.Component {
         hour={hour}
         minute={minute}
         handleTimeChange={this.handleHourAndMinuteChange}
-        handleModalClose={this.onClearFocus}
       />
     )
   }

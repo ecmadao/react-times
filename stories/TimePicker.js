@@ -13,7 +13,7 @@ storiesOf('Default TimePicker', module)
     const aDefaultTime = text('set default time', '22:10');
     return (
       <TimePickerWrapper
-      defaultTime={aDefaultTime}
+        defaultTime={aDefaultTime}
       />
     )
   })
