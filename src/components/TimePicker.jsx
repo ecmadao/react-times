@@ -15,6 +15,7 @@ import {
 const propTypes = {
   defaultTime: PropTypes.string,
   focused: PropTypes.bool,
+  autoMode: PropTypes.bool,
   placeholder: PropTypes.string,
   colorPalette: PropTypes.string,
   theme: PropTypes.string,
@@ -32,6 +33,7 @@ const propTypes = {
 const defaultProps = {
   defaultTime: moment().format("HH:mm"),
   focused: false,
+  autoMode: false,
   placeholder: '',
   colorPalette: "light",
   timeMode: "24",
@@ -46,7 +48,7 @@ const defaultProps = {
 class TimePicker extends React.Component {
   constructor(props) {
     super(props);
-    let {defaultTime, focused, timeMode} = props;
+    let {defaultTime, focused, timeMode, autoMode} = props;
     let [hour, minute, timeInterval] = initialTime(defaultTime, getValidateTimeMode(timeMode));
     this.state = {
       hour,
@@ -113,13 +115,16 @@ class TimePicker extends React.Component {
 
   renderMaterialTheme() {
     let {hour, minute, focused} = this.state;
+    let {autoMode} = this.props;
     return (
       <MaterialTheme
         hour={hour}
         minute={minute}
         focused={focused}
+        autoMode={autoMode}
         handleHourChange={this.handleHourChange}
         handleMinuteChange={this.handleMinuteChange}
+        clearFocus={this.onClearFocus}
       />
     )
   }
