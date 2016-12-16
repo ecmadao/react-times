@@ -78,7 +78,7 @@ class TwelveHoursMode extends React.Component {
 
   handleTimeIntervalChange(timeInterval) {
     if (timeInterval !== this.props.timeInterval) {
-      let {handleTimeIntervalChange} = this.props;
+      let { handleTimeIntervalChange } = this.props;
       handleTimeIntervalChange && handleTimeIntervalChange(timeInterval);
     }
   }
@@ -99,13 +99,13 @@ class TwelveHoursMode extends React.Component {
 
   handleHourChange(time) {
     let hour = parseInt(time);
-    let {handleHourChange} = this.props;
+    let { handleHourChange } = this.props;
     handleHourChange && handleHourChange(hour);
   }
 
   handleMinuteChange(time) {
     let minute = parseInt(time);
-    let {handleMinuteChange} = this.props;
+    let { handleMinuteChange } = this.props;
     handleMinuteChange && handleMinuteChange(minute);
   }
 
@@ -115,7 +115,7 @@ class TwelveHoursMode extends React.Component {
       minute,
       timeInterval
     } = this.props;
-    let {hourPointerRotate, minutePointerRotate} = this.state;
+    let { hourPointerRotate, minutePointerRotate } = this.state;
 
     let activeAMClass = timeInterval === "AM" ? "time_picker_header active" : "time_picker_header";
     let activePMClass = timeInterval === "PM" ? "time_picker_header active" : "time_picker_header";

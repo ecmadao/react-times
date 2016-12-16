@@ -9,14 +9,12 @@ import {
 const propTypes = {
   hour: PropTypes.string,
   minute: PropTypes.string,
-  handleModalClose: PropTypes.func,
   handleTimeChange: PropTypes.func
 };
 
 const defaultProps = {
   hour: '00',
   minute: '00',
-  handleModalClose: () => {},
   handleTimeChange: () => {}
 };
 
@@ -28,15 +26,13 @@ class ClassicTheme extends React.Component {
 
   handleTimeChange(time) {
     const {
-      handleTimeChange,
-      handleModalClose
+      handleTimeChange
     } = this.props;
     handleTimeChange && handleTimeChange(time);
-    handleModalClose && handleModalClose();
   }
 
   checkTimeIsActive(time) {
-    const {hour, minute} = this.props;
+    const { hour, minute } = this.props;
     const times = time.split(':');
     const currentHour = getValidateTime(times[0]);
     const currentMinute = getValidateTime(times[1]);

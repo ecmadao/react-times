@@ -23,7 +23,7 @@ const defaultProps = {
 class PickerPoint extends React.Component {
 
   render() {
-    let {index, handleTimeChange, pointClass, angle} = this.props;
+    let { index, handleTimeChange, pointClass, angle } = this.props;
     let inlineStyle = getInlineRotateStyle(angle);
     let wrapperStyle = getRotateStyle(-angle);
 

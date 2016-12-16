@@ -12,17 +12,21 @@ import {
 const propTypes = {
   step: PropTypes.number,
   hour: PropTypes.string,
+  autoMode: PropTypes.bool,
   minute: PropTypes.string,
   handleHourChange: PropTypes.func,
-  handleMinuteChange: PropTypes.func
+  handleMinuteChange: PropTypes.func,
+  clearFoucs: PropTypes.func
 };
 
 const defaultProps = {
   step: 0,
   hour: '00',
   minute: '00',
+  autoMode: true,
   handleHourChange: () => {},
-  handleMinuteChange: () => {}
+  handleMinuteChange: () => {},
+  clearFoucs: () => {}
 };
 
 import PickerDargHandler from './PickerDargHandler';
@@ -32,7 +36,7 @@ class TwentyFourHoursMode extends React.Component {
   constructor(props) {
     super(props);
     const pointerRotate = this.resetHourDegree();
-    const {step} = props;
+    const { step } = props;
     this.state = {
       step,
       pointerRotate
@@ -47,33 +51,44 @@ class TwentyFourHoursMode extends React.Component {
       this.pickerPointerContainer && this.pickerPointerContainer.addAnimation();
       setTimeout(() => {
         this.pickerPointerContainer && this.pickerPointerContainer.removeAnimation();
-        let pointerRotate = 0;
-        if (step === 0) {
-          pointerRotate = this.resetHourDegree();
-        } else {
-          pointerRotate = this.resetMinuteDegree();
-        }
-        this.setState({
-          step,
-          pointerRotate
-        });
+        this.setStep(step);
       }, 300);
     }
   }
 
+  setStep(step) {
+    const pointerRotate = step === 0 ? this.resetHourDegree() : this.resetMinuteDegree();
+    this.setState({
+      step,
+      pointerRotate
+    });
+  }
+
   handleTimePointerClick(time, pointerRotate) {
-    this.setState({pointerRotate});
+    this.setState({ pointerRotate });
     this.handleTimeChange(time);
   }
 
   handleTimeChange(time) {
     time = parseInt(time);
-    const {step} = this.state;
-    const {handleHourChange, handleMinuteChange} = this.props;
+    const { step } = this.state;
+    const {
+      handleHourChange,
+      handleMinuteChange,
+      autoMode,
+      clearFoucs
+    } = this.props;
     if (step === 0) {
       handleHourChange && handleHourChange(time);
     } else {
       handleMinuteChange && handleMinuteChange(time);
+    }
+    if (!autoMode) { return }
+    if (step === 0) {
+      this.handleStepChange(1);
+    } else {
+      clearFoucs();
+      this.setStep(0);
     }
   }
 
@@ -100,8 +115,8 @@ class TwentyFourHoursMode extends React.Component {
   }
 
   getTopAndHeight() {
-    let {step} = this.state;
-    let {hour, minute} = this.props;
+    let { step } = this.state;
+    let { hour, minute } = this.props;
     let time = step === 0 ? hour : minute;
     let splitNum = step === 0 ? 12 : 60;
     let minLength = step === 0 ? MIN_ABSOLUTE_POSITION : MAX_ABSOLUTE_POSITION;
@@ -115,7 +130,7 @@ class TwentyFourHoursMode extends React.Component {
       hour,
       minute
     } = this.props;
-    const {step, pointerRotate} = this.state;
+    const { step, pointerRotate } = this.state;
 
     const activeHourClass = step === 0 ? "time_picker_header active" : "time_picker_header";
     const activeMinuteClass = step === 1 ? "time_picker_header active" : "time_picker_header";

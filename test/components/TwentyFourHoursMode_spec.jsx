@@ -70,8 +70,9 @@ describe('TwentyFourHoursMode', () => {
         />
       );
       newWrapper.instance().handleTimePointerClick(30, 180);
-      expect(newWrapper.state().pointerRotate).to.equal(180);
-      expect(newWrapper.state().step).to.equal(1);
+      // after click minute, we close the panel & reset step state.
+      expect(newWrapper.state().pointerRotate).to.equal(30);
+      expect(newWrapper.state().step).to.equal(0);
       expect(handleMinuteChange.callCount).to.equal(1);
     });
   });
