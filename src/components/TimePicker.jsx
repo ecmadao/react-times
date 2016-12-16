@@ -66,7 +66,7 @@ class TimePicker extends React.Component {
     this.setState({
       focused: true
     });
-    const {onFocusChange} = this.props;
+    const { onFocusChange } = this.props;
     onFocusChange && onFocusChange(true);
   }
 
@@ -74,48 +74,48 @@ class TimePicker extends React.Component {
     this.setState({
       focused: false
     });
-    const {onFocusChange} = this.props;
+    const { onFocusChange } = this.props;
     onFocusChange && onFocusChange(false);
   }
 
   handleHourChange(hour) {
     hour = getValidateTime(hour);
     this.setState({hour});
-    const {onHourChange} = this.props;
+    const { onHourChange } = this.props;
     onHourChange && onHourChange(hour);
-    this.handleTimeChange({hour});
+    this.handleTimeChange({ hour });
   }
 
   handleMinuteChange(minute) {
     minute = getValidateTime(minute);
-    this.setState({minute});
-    const {onMinuteChange} = this.props;
+    this.setState({ minute });
+    const { onMinuteChange } = this.props;
     onMinuteChange && onMinuteChange(minute);
-    this.handleTimeChange({minute});
+    this.handleTimeChange({ minute });
   }
 
   handleTimeIntervalChange(timeInterval) {
-    this.setState({timeInterval});
-    this.handleTimeChange({timeInterval});
+    this.setState({ timeInterval });
+    this.handleTimeChange({ timeInterval });
   }
 
   handleHourAndMinuteChange(time) {
-    const {onTimeChange} = this.props;
+    const { onTimeChange } = this.props;
     let [hour, minute] = time.split(':');
     hour = getValidateTime(hour);
     minute = getValidateTime(minute);
-    this.setState({hour, minute});
+    this.setState({ hour, minute });
     return onTimeChange && onTimeChange(time);
   }
 
   handleTimeChange(timeObject) {
-    let {timeInterval, hour, minute} = this.state;
+    let { timeInterval, hour, minute } = this.state;
 
     timeInterval = timeObject["timeInterval"] ? timeObject["timeInterval"] : timeInterval;
     hour = timeObject["hour"] ? timeObject["hour"] : hour;
     minute = timeObject["minute"] ? timeObject["minute"] : minute;
 
-    const {onTimeChange} = this.props;
+    const { onTimeChange } = this.props;
     if (timeInterval) {
       return onTimeChange && onTimeChange(`${hour}:${minute} ${timeInterval}`);
     }
@@ -123,11 +123,13 @@ class TimePicker extends React.Component {
   }
 
   renderMaterialTheme() {
-    const {hour, minute, timeInterval} = this.state;
+    const { hour, minute, timeInterval } = this.state;
+    const { timeMode } = this.props;
     return (
       <MaterialTheme
         hour={hour}
         minute={minute}
+        timeMode={timeMode}
         timeInterval={timeInterval}
         handleHourChange={this.handleHourChange}
         handleMinuteChange={this.handleMinuteChange}
@@ -137,7 +139,7 @@ class TimePicker extends React.Component {
   }
 
   renderClassicTheme() {
-    const {hour, minute} = this.state;
+    const { hour, minute } = this.state;
     return (
       <ClassicTheme
         hour={hour}
@@ -153,8 +155,8 @@ class TimePicker extends React.Component {
   }
 
   render() {
-    const {placeholder, colorPalette, withoutIcon, timeMode, theme} = this.props;
-    const {hour, minute, focused, timeInterval} = this.state;
+    const { placeholder, colorPalette, withoutIcon, timeMode, theme } = this.props;
+    const { hour, minute, focused, timeInterval } = this.state;
     const validateTimeMode = getValidateTimeMode(timeMode);
     let times = `${hour} : ${minute}`;
     if (validateTimeMode === 12) {

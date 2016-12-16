@@ -62,7 +62,7 @@ class MaterialTheme extends React.Component {
   }
 
   render() {
-    const {timeMode} = this.props;
+    const { timeMode } = this.props;
     return (
       <div>
         {timeMode === 24 ? this.renderTwentyFourHoursMode() : this.renderTwelveHoursMode()}

@@ -36,7 +36,7 @@ class ClassicTheme extends React.Component {
   }
 
   checkTimeIsActive(time) {
-    const {hour, minute} = this.props;
+    const { hour, minute } = this.props;
     const times = time.split(':');
     const currentHour = getValidateTime(times[0]);
     const currentMinute = getValidateTime(times[1]);

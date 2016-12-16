@@ -58,7 +58,7 @@ class PickerDargHandler extends React.Component {
   }
 
   initialRotationAndLength() {
-    let {rotateState} = this.props;
+    let { rotateState } = this.props;
     let {
       top,
       height,
@@ -104,7 +104,7 @@ class PickerDargHandler extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    let {step, time, rotateState} = this.props;
+    let { step, time, rotateState } = this.props;
     let prevStep = prevProps.step;
     let prevTime = prevProps.time;
     let PrevRotateState = prevProps.rotateState
@@ -138,7 +138,7 @@ class PickerDargHandler extends React.Component {
 
   handleMouseMove(e) {
     if (this.state.draging) {
-      let {minLength, maxLength} = this.props;
+      let { minLength, maxLength } = this.props;
       let pos = mousePosition(e);
       let dragX = pos.x;
       let dragY = pos.y;
@@ -204,8 +204,8 @@ class PickerDargHandler extends React.Component {
   }
 
   render() {
-    let {time} = this.props;
-    let {draging, height, top, pointerRotate} = this.state;
+    let { time } = this.props;
+    let { draging, height, top, pointerRotate } = this.state;
     let pickerPointerClass = draging ? "picker_pointer" : "picker_pointer animation";
 
     return (
