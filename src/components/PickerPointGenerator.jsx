@@ -42,10 +42,10 @@ const pickerPointGenerator = (type = "hour", mode = 24) => {
       const hours = parseInt(mode) === 24 ? HOURS : TWELVE_HOURS;
       return hours.map((h, index) => {
         let pointClass = index < 12 ? "picker_point point_inner" : "picker_point point_outter";
-        let angle = index < 12 ? 360 * (index + 1) / 12 : 360 * (index + 1 - 12) / 12;
+        let angle = index < 12 ? 360 * (index) / 12 : 360 * (index - 12) / 12;
         return (
           <PickerPoint
-            index={index + 1}
+            index={index}
             key={index}
             angle={angle}
             pointClass={pointClass}
