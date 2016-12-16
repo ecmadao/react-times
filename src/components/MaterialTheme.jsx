@@ -14,8 +14,10 @@ const propTypes = {
   hour: PropTypes.string,
   minute: PropTypes.string,
   focused: PropTypes.bool,
+  autoMode: PropTypes.bool,
   handleHourChange: PropTypes.func,
-  handleMinuteChange: PropTypes.func
+  handleMinuteChange: PropTypes.func,
+  clearFocus: PropTypes.func
 };
 
 const defaultProps = {
@@ -23,8 +25,10 @@ const defaultProps = {
   hour: '00',
   minute: '00',
   focused: false,
+  autoMode: false,
   handleHourChange: () => {},
-  handleMinuteChange: () => {}
+  handleMinuteChange: () => {},
+  clearFocus: () => {}
 };
 
 import PickerDargHandler from './PickerDargHandler';
@@ -34,7 +38,7 @@ class MaterialTheme extends React.Component {
   constructor(props) {
     super(props);
     let pointerRotate = this.resetHourDegree();
-    let {step} = props;
+    let {step, autoMode} = props;
     this.state = {
       step,
       pointerRotate
@@ -71,11 +75,16 @@ class MaterialTheme extends React.Component {
   handleTimeChange(time) {
     time = parseInt(time);
     let {step} = this.state;
-    let {handleHourChange, handleMinuteChange} = this.props;
+    let {handleHourChange, handleMinuteChange, autoMode} = this.props;
     if (step === 0) {
       handleHourChange && handleHourChange(time);
+      autoMode && this.handleStepChange(1);
     } else {
       handleMinuteChange && handleMinuteChange(time);
+      if (autoMode) {
+        this.props.clearFocus();
+        this.setState({step: 0});
+      }
     }
   }
 

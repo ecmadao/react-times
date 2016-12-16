@@ -16,6 +16,11 @@ storiesOf('Default TimePicker', module)
       focused={true}
     />
   ))
+  .add('auto mode', () => (
+    <TimePickerWrapper
+      autoMode={true}
+    />
+  ))
   .add('focused at setup', () => (
     <TimePickerWrapper
       withoutIcon={true}
