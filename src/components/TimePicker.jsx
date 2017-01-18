@@ -3,7 +3,7 @@ import React, {PropTypes} from 'react';
 import OutsideClickHandler from './OutsideClickHandler';
 import MaterialTheme from './MaterialTheme';
 import ClassicTheme from './ClassicTheme';
-import TimeIcon from '../svg/time.svg';
+import ICONS from '../icons';
 
 import {
   initialTime,
@@ -175,7 +175,7 @@ class TimePicker extends React.Component {
           onClick={this.onFocus}
           className={pickerPreviewClass}>
           <div className={previewContainerClass}>
-            {withoutIcon ? '' : <TimeIcon />}
+            {withoutIcon ? '' : (ICONS.time)}
             {placeholder || times}
           </div>
         </div>

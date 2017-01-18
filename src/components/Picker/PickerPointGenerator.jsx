@@ -4,7 +4,7 @@ import {
   MINUTES,
   HOURS,
   TWELVE_HOURS
-} from '../ConstValue.js';
+} from '../../ConstValue.js';
 import PickerPoint from './PickerPoint';
 
 const pickerPointGenerator = (type = "hour", mode = 24) => {

@@ -1,6 +1,5 @@
 import React from 'react';
 import TimePicker from '../src/components/TimePicker';
-import timeHelper from '../src/time';
 
 class TimePickerWrapper extends React.Component {
   constructor(props) {

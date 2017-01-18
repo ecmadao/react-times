@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 
 import {
@@ -6,14 +6,14 @@ import {
   MIN_ABSOLUTE_POSITION,
   MAX_ABSOLUTE_POSITION,
   POINTER_RADIUS
-} from '../ConstValue.js';
+} from '../../ConstValue.js';
 import {
   degree2Radian,
   mousePosition,
   getRotateStyle,
   getInitialPointerStyle,
   getStandardAbsolutePosition
-} from '../utils.js';
+} from '../../utils.js';
 
 const propTypes = {
   time: PropTypes.number,
