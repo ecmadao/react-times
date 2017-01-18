@@ -15,6 +15,7 @@ import timeHelper from '../time.js';
 
 const propTypes = {
   time: PropTypes.string,
+  timeQuantum: PropTypes.string,
   focused: PropTypes.bool,
   autoMode: PropTypes.bool,
   placeholder: PropTypes.string,
@@ -28,11 +29,13 @@ const propTypes = {
   onFocusChange: PropTypes.func,
   onHourChange: PropTypes.func,
   onMinuteChange: PropTypes.func,
-  onTimeChange: PropTypes.func
+  onTimeChange: PropTypes.func,
+  onTimeQuantumChange: PropTypes.func,
 };
 
 const defaultProps = {
   time: timeHelper.current(),
+  timeQuantum: 'AM',
   focused: false,
   autoMode: true,
   placeholder: '',
@@ -44,6 +47,7 @@ const defaultProps = {
   onHourChange: () => {},
   onMinuteChange: () => {},
   onTimeChange: () => {},
+  onTimeQuantumChange: () => {}
 };
 
 class TimePicker extends React.Component {
