@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-import moment from 'moment';
 
 import OutsideClickHandler from './OutsideClickHandler';
 import MaterialTheme from './MaterialTheme';
@@ -9,11 +8,13 @@ import TimeIcon from '../svg/time.svg';
 import {
   initialTime,
   getValidateTime,
-  getValidateTimeMode
+  getValidateTimeMode,
+  getValidateTimeQuantum
 } from '../utils.js';
+import timeHelper from '../time.js';
 
 const propTypes = {
-  defaultTime: PropTypes.string,
+  time: PropTypes.string,
   focused: PropTypes.bool,
   autoMode: PropTypes.bool,
   placeholder: PropTypes.string,
@@ -31,7 +32,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  defaultTime: moment().format("HH:mm"),
+  time: timeHelper.current(),
   focused: false,
   autoMode: true,
   placeholder: '',
@@ -48,106 +49,91 @@ const defaultProps = {
 class TimePicker extends React.Component {
   constructor(props) {
     super(props);
-    const {defaultTime, focused, timeMode} = props;
-    const [hour, minute, timeInterval] = initialTime(defaultTime, getValidateTimeMode(timeMode));
-    this.state = {
-      hour,
-      minute,
-      focused,
-      timeInterval
-    }
+    const { focused } = props;
+    this.state = { focused };
     this.onFocus = this.onFocus.bind(this);
     this.onClearFocus = this.onClearFocus.bind(this);
     this.handleHourChange = this.handleHourChange.bind(this);
     this.handleMinuteChange = this.handleMinuteChange.bind(this);
-    this.handleTimeIntervalChange = this.handleTimeIntervalChange.bind(this);
+    this.handleTimeQuantumChange = this.handleTimeQuantumChange.bind(this);
     this.handleHourAndMinuteChange = this.handleHourAndMinuteChange.bind(this);
   }
 
   onFocus() {
-    this.setState({
-      focused: true
-    });
+    this.setState({ focused: true });
     const { onFocusChange } = this.props;
     onFocusChange && onFocusChange(true);
   }
 
+  getHourAndMinute() {
+    const { time } = this.props;
+    if(!time) {
+      return timeHelper.current().split(':');
+    }
+    return time.split(':');
+  }
+
   onClearFocus() {
-    this.setState({
-      focused: false
-    });
+    this.setState({ focused: false });
     const { onFocusChange } = this.props;
     onFocusChange && onFocusChange(false);
   }
 
   handleHourChange(hour) {
     hour = getValidateTime(hour);
-    this.setState({hour});
     const { onHourChange } = this.props;
+    const [ _, minute ] = this.getHourAndMinute();
     onHourChange && onHourChange(hour);
-    this.handleTimeChange({ hour });
+    this.handleTimeChange(`${hour}:${minute}`);
   }
 
   handleMinuteChange(minute) {
     minute = getValidateTime(minute);
-    this.setState({ minute });
     const { onMinuteChange } = this.props;
+    const [ hour, _ ] = this.getHourAndMinute();
     onMinuteChange && onMinuteChange(minute);
-    this.handleTimeChange({ minute });
+    this.handleTimeChange(`${hour}:${minute}`);
   }
 
-  handleTimeIntervalChange(timeInterval) {
-    this.setState({ timeInterval });
-    this.handleTimeChange({ timeInterval });
+  handleTimeQuantumChange(timeQuantum) {
+    const { onTimeQuantumChange } = this.props;
+    onTimeQuantumChange && onTimeQuantumChange(timeQuantum);
+  }
+
+  handleTimeChange(time) {
+    const { onTimeChange } = this.props;
+    onTimeChange && onTimeChange(time);
   }
 
   handleHourAndMinuteChange(time) {
     const { onTimeChange, autoMode } = this.props;
-    let [hour, minute] = time.split(':');
-    hour = getValidateTime(hour);
-    minute = getValidateTime(minute);
-    this.setState({ hour, minute });
     if (autoMode) {
       this.onClearFocus();
     }
     return onTimeChange && onTimeChange(time);
   }
 
-  handleTimeChange(timeObject) {
-    let { timeInterval, hour, minute } = this.state;
-
-    timeInterval = timeObject["timeInterval"] ? timeObject["timeInterval"] : timeInterval;
-    hour = timeObject["hour"] ? timeObject["hour"] : hour;
-    minute = timeObject["minute"] ? timeObject["minute"] : minute;
-
-    const { onTimeChange } = this.props;
-    if (timeInterval) {
-      return onTimeChange && onTimeChange(`${hour}:${minute} ${timeInterval}`);
-    }
-    return onTimeChange && onTimeChange(`${hour}:${minute}`);
-  }
-
   renderMaterialTheme() {
-    const { hour, minute, timeInterval } = this.state;
-    const { timeMode, autoMode } = this.props;
+    const { timeMode, autoMode, timeQuantum, time } = this.props;
+    const [ hour, minute ] = this.getHourAndMinute();
 
     return (
       <MaterialTheme
         hour={hour}
         minute={minute}
-        timeMode={timeMode}
+        timeMode={parseInt(timeMode)}
         autoMode={autoMode}
-        timeInterval={timeInterval}
+        timeQuantum={timeQuantum || getValidateTimeQuantum(time, timeMode)}
         clearFoucs={this.onClearFocus}
         handleHourChange={this.handleHourChange}
         handleMinuteChange={this.handleMinuteChange}
-        handleTimeIntervalChange={this.handleTimeIntervalChange}
+        handleTimeQuantumChange={this.handleTimeQuantumChange}
       />
     )
   }
 
   renderClassicTheme() {
-    const { hour, minute } = this.state;
+    const [ hour, minute ] = this.getHourAndMinute();
     return (
       <ClassicTheme
         hour={hour}
@@ -157,17 +143,27 @@ class TimePicker extends React.Component {
     )
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.handleHourAndMinuteChange(nextProps.defaultTime);
-  }
+  componentWillReceiveProps(nextProps) {}
 
   render() {
-    const { placeholder, colorPalette, withoutIcon, timeMode, theme } = this.props;
-    const { hour, minute, focused, timeInterval } = this.state;
+    const {
+      time,
+      theme,
+      timeMode,
+      placeholder,
+      withoutIcon,
+      colorPalette,
+      timeQuantum
+    } = this.props;
+    const { focused } = this.state;
+    const [ hour, minute ] = this.getHourAndMinute();
     const validateTimeMode = getValidateTimeMode(timeMode);
+
+    const quantum = timeQuantum ? timeQuantum : getValidateTimeQuantum(time, timeMode);
+
     let times = `${hour} : ${minute}`;
     if (validateTimeMode === 12) {
-      times = `${times} ${timeInterval}`
+      times = `${times} ${quantum}`;
     }
     const pickerPreviewClass = focused ? "time_picker_preview active" : "time_picker_preview";
     const containerClass = colorPalette === 'dark' ? "time_picker_container dark" : "time_picker_container";

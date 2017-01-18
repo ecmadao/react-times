@@ -1,4 +1,4 @@
-import moment from 'moment';
+import timeHelper from './time';
 
 export const mousePosition = (e) => {
   let xPos, yPos;
@@ -83,9 +83,9 @@ export const degree2Radian = (degree) => {
 };
 
 export const initialTime = (defaultTime, mode = 24) => {
-  let [hour, minute] = moment().format("HH:mm").split(':');
+  let [ hour, minute ] = timeHelper.current().split(':');
   if (defaultTime) {
-    [hour, minute] = `${defaultTime}`.split(':');
+    [ hour, minute ] = `${defaultTime}`.split(':');
   }
   hour = getValidateIntTime(hour);
   minute = getValidateIntTime(minute);
@@ -101,8 +101,21 @@ export const initialTime = (defaultTime, mode = 24) => {
   hour = getValidateTime(hour);
   minute = getValidateTime(minute);
 
-  return [hour, minute, timeInterval];
+  return [ hour, minute, timeInterval ];
 };
+
+export const getValidateTimeQuantum = (time, timeMode) => {
+  if (!time) { time = timeHelper.current(); }
+  const mode = parseInt(timeMode);
+  let [ hour, minute ] = time.split(':');
+  hour = getValidateIntTime(hour);
+
+  let timeQuantum = null;
+  if (mode === 12) {
+    timeQuantum = hour > 12 ? "PM" : "AM";
+  }
+  return timeQuantum;
+}
 
 export const getValidateTimeMode = (timeMode) => {
   let mode = parseInt(timeMode);

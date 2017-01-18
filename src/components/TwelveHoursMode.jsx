@@ -67,30 +67,30 @@ class TwelveHoursMode extends React.Component {
   getHourTopAndHeight() {
     let height = MIN_ABSOLUTE_POSITION - POINTER_RADIUS;
     let top = PICKER_RADIUS - MIN_ABSOLUTE_POSITION + POINTER_RADIUS;
-    return [top, height];
+    return [ top, height ];
   }
 
   getMinuteTopAndHeight() {
     let height = MAX_ABSOLUTE_POSITION - POINTER_RADIUS;
     let top = PICKER_RADIUS - MAX_ABSOLUTE_POSITION + POINTER_RADIUS;
-    return [top, height];
+    return [ top, height ];
   }
 
-  handleTimeIntervalChange(timeInterval) {
-    if (timeInterval !== this.props.timeInterval) {
-      let { handleTimeIntervalChange } = this.props;
-      handleTimeIntervalChange && handleTimeIntervalChange(timeInterval);
+  handleTimeQuantumChange(timeQuantum) {
+    if (timeQuantum !== this.props.timeQuantum) {
+      let { handleTimeQuantumChange } = this.props;
+      handleTimeQuantumChange && handleTimeQuantumChange(timeQuantum);
     }
   }
 
   handleHourPointerClick(time, hourPointerRotate) {
     this.handleHourChange(time);
-    this.handleDegreeChange({hourPointerRotate});
+    this.handleDegreeChange({ hourPointerRotate });
   }
 
   handleMinutePointerClick(time, minutePointerRotate) {
     this.handleMinuteChange(time);
-    this.handleDegreeChange({minutePointerRotate});
+    this.handleDegreeChange({ minutePointerRotate });
   }
 
   handleDegreeChange(pointerRotate) {
@@ -113,20 +113,20 @@ class TwelveHoursMode extends React.Component {
     let {
       hour,
       minute,
-      timeInterval
+      timeQuantum
     } = this.props;
     let { hourPointerRotate, minutePointerRotate } = this.state;
+    console.log(timeQuantum);
+    let activeAMClass = timeQuantum === "AM" ? "time_picker_header active" : "time_picker_header";
+    let activePMClass = timeQuantum === "PM" ? "time_picker_header active" : "time_picker_header";
 
-    let activeAMClass = timeInterval === "AM" ? "time_picker_header active" : "time_picker_header";
-    let activePMClass = timeInterval === "PM" ? "time_picker_header active" : "time_picker_header";
-
-    let [top, height] = this.getHourTopAndHeight();
+    let [ top, height ] = this.getHourTopAndHeight();
     let hourRotateState = {
       top,
       height,
       pointerRotate: hourPointerRotate
     };
-    let [minuteTop, minuteHeight] = this.getMinuteTopAndHeight()
+    let [ minuteTop, minuteHeight ] = this.getMinuteTopAndHeight()
     let minuteRotateState = {
       top: minuteTop,
       height: minuteHeight,
@@ -141,10 +141,10 @@ class TwelveHoursMode extends React.Component {
         <div className="time_picker_modal_header">
           <span
             className={activeAMClass}
-            onClick={this.handleTimeIntervalChange.bind(this, "AM")}>AM</span>
+            onClick={this.handleTimeQuantumChange.bind(this, "AM")}>AM</span>
           &nbsp;|&nbsp;
           <span className={activePMClass}
-            onClick={this.handleTimeIntervalChange.bind(this, "PM")}>PM</span>
+            onClick={this.handleTimeQuantumChange.bind(this, "PM")}>PM</span>
         </div>
         <div className="picker_container">
           <HourPickerPointGenerator

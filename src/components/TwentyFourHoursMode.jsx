@@ -134,7 +134,7 @@ class TwentyFourHoursMode extends React.Component {
 
     const activeHourClass = step === 0 ? "time_picker_header active" : "time_picker_header";
     const activeMinuteClass = step === 1 ? "time_picker_header active" : "time_picker_header";
-    const [top, height] = this.getTopAndHeight();
+    const [ top, height ] = this.getTopAndHeight();
     const rotateState = {
       top,
       height,
