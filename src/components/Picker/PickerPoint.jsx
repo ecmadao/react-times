@@ -1,10 +1,10 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 
 import {
   getRotateStyle,
   disableMouseDown,
   getInlineRotateStyle
-} from '../utils.js';
+} from '../../utils.js';
 
 const propTypes = {
   index: PropTypes.number,

@@ -1,7 +1,6 @@
 ![react-times](./intro_src/react_times.png)
 
-[![npm version](https://badge.fury.io/js/react-times.svg)](https://badge.fury.io/js/react-times)
-[![Build Status](https://travis-ci.org/ecmadao/react-times.svg?branch=master)](https://travis-ci.org/ecmadao/react-times) [![Coverage Status](https://coveralls.io/repos/github/ecmadao/react-times/badge.svg?branch=master)](https://coveralls.io/github/ecmadao/react-times?branch=master) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![react-times](http://img.shields.io/npm/dm/react-times.svg)](https://www.npmjs.com/package/react-times) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/ecmadao/react-times/master/LICENSE)
+[![npm version](https://badge.fury.io/js/react-times.svg)](https://badge.fury.io/js/react-times) [![Build Status](https://travis-ci.org/ecmadao/react-times.svg?branch=master)](https://travis-ci.org/ecmadao/react-times) [![Coverage Status](https://coveralls.io/repos/github/ecmadao/react-times/badge.svg?branch=master)](https://coveralls.io/github/ecmadao/react-times?branch=master) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![react-times](http://img.shields.io/npm/dm/react-times.svg)](https://www.npmjs.com/package/react-times) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/ecmadao/react-times/master/LICENSE)
 
 [![NPM](https://nodei.co/npm/react-times.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/react-times)
 
@@ -11,7 +10,7 @@ README：[中文版](./README_CN.md)
 
 ![react-times](./intro_src/react-times.gif)
 
-## Play in local
+# Play in local
 
 ```bash
 $ git clone https://github.com/ecmadao/react-times.git
@@ -21,7 +20,7 @@ $ npm install
 $ npm run storybook
 ```
 
-## Install
+# Install
 
 dependencies:
 
@@ -39,7 +38,7 @@ $ npm install react react-dom --save-dev
 $ npm install react-times --save-dev
 ```
 
-## Usage
+# Usage
 
 This component has two themes now: Material Theme by default , or Classic Theme.
 
@@ -74,12 +73,17 @@ export default class SomeComponent extends React.Component {
     // do something
   }
 
+  onTimeQuantumChange(timeQuantum) {
+    // do something
+  }
+
   render() {
     <TimePicker
       onFocusChange={this.onFocusChange.bind(this)}
       onHourChange={this.onHourChange.bind(this)}
       onMinuteChange={this.onMinuteChange.bind(this)}
       onTimeChange={this.onTimeChange.bind(this)}
+      onTimeQuantumChange={this.onTimeQuantumChange.bind(this)}
     />
   }
 }
@@ -90,22 +94,22 @@ export default class SomeComponent extends React.Component {
 ```javascript
 // some config example
 render() {
-  <TimePicker 
-  	colorPalette="dark" // main color, default "light"
-  	focused={true} // whether to show timepicker modal after rendered. default false
-  	withoutIcon={true} // whether to has time icon on button, default false
-  	defaultTime="13:05" // initial time, default current time
-  	theme="material"
-  	// or
-  	// theme="classic"
-  	timeMode="12" // use 24 or 12 hours mode, default 24
+  <TimePicker
+      colorPalette="dark" // main color, default "light"
+      focused={true} // whether to show timepicker modal after rendered. default false
+      withoutIcon={true} // whether to has time icon on button, default false
+      time="13:05" // initial time, default current time
+      theme="material"
+      // or
+      // theme="classic"
+      timeMode="12" // use 24 or 12 hours mode, default 24
   />
 }
 ```
 
 > For more detail usage, you can visit [example](https://github.com/ecmadao/react-times/tree/master/examples) or see the source code.
 
-## Show time
+# Show time
 
 - 24 hours mode with Material Theme, light color by default
 
@@ -147,20 +151,20 @@ render() {
 
 ![24HoursMode-ClassicTheme-dark](./intro_src/24HoursMode-ClassicTheme-dark.png)
 
-## APIs
+# APIs
 
-### Props
+## Props
 
-- `defaultTime`
+- `time`
 
 > Initial time, must be a string, with `${hour}:${minute}` format, default now (by using `moment()`):
 
 ```javascript
 // React.PropTypes.string
-defaultTime="11:11"
-defaultTime="11:01"
-defaultTime="1:01"
-defaultTime="1:1"
+time="11:11"
+time="11:01"
+time="1:01"
+time="1:1"
 ```
 
 - `focused`
@@ -204,7 +208,13 @@ timeMode="12"
 timeMode=12
 ```
 
-### Callback
+- `timeQuantum`
+
+`React.PropTypes.string`
+
+> "PM" or "AM" for 12 hours mode.
+
+## Callback
 
 - `onFocusChange`
 
@@ -248,11 +258,17 @@ onTimeChange(time) {
 }
 ```
 
-## Article
+- `onTimeQuantumChange`
+
+`React.PropTypes.func`
+
+> The callback func when timeQuantum changed.
+
+# Article
 
 - [一言不合造轮子--撸一个ReactTimePicker](https://github.com/ecmadao/Coding-Guide/blob/master/Notes/React/ReactJS/Write%20a%20React%20Timepicker%20Component%20hand%20by%20hand.md)
 
-## Todos
+# Todos
 
 - Test
 
@@ -284,10 +300,10 @@ onTimeChange(time) {
 
 - Animations
 
-## Thx
+# Thx
 
 Thanks to the Airbnb's open source project: [react-dates](https://github.com/airbnb/react-dates), I have learn a lot from that. Thanks.
 
-## License
+# License
 
 [MIT License](./LICENSE)

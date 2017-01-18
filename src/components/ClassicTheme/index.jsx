@@ -1,10 +1,10 @@
 import React, {PropTypes} from 'react';
 import {
   TIMES_24_MODE
-} from '../ConstValue';
+} from '../../ConstValue';
 import {
   getValidateTime
-} from '../utils';
+} from '../../utils';
 
 const propTypes = {
   hour: PropTypes.string,

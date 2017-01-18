@@ -3,8 +3,8 @@ import {expect} from 'chai';
 import {shallow} from 'enzyme';
 
 import MaterialTheme from '../../src/components/MaterialTheme';
-import TwelveHoursMode from '../../src/components/TwelveHoursMode';
-import TwentyFourHoursMode from '../../src/components/TwentyFourHoursMode';
+import TwelveHoursMode from '../../src/components/MaterialTheme/TwelveHoursMode';
+import TwentyFourHoursMode from '../../src/components/MaterialTheme/TwentyFourHoursMode';
 
 describe('MaterialTheme', () => {
   describe('MaterialTheme render', () => {

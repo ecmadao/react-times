@@ -3,8 +3,8 @@ import {expect} from 'chai';
 import {shallow} from 'enzyme';
 import sinon from 'sinon-sandbox';
 
-import TwentyFourHoursMode from '../../src/components/TwentyFourHoursMode';
-import PickerDargHandler from '../../src/components/PickerDargHandler';
+import TwentyFourHoursMode from '../../src/components/MaterialTheme/TwentyFourHoursMode';
+import PickerDargHandler from '../../src/components/Picker/PickerDargHandler';
 
 describe('TwentyFourHoursMode', () => {
   describe('TwentyFourHoursMode Init', () => {

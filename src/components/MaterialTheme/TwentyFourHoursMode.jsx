@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 
 import {
   HOURS,
@@ -7,7 +7,7 @@ import {
   PICKER_RADIUS,
   MAX_ABSOLUTE_POSITION,
   MIN_ABSOLUTE_POSITION
-} from '../ConstValue.js';
+} from '../../ConstValue.js';
 
 const propTypes = {
   step: PropTypes.number,
@@ -29,8 +29,8 @@ const defaultProps = {
   clearFoucs: () => {}
 };
 
-import PickerDargHandler from './PickerDargHandler';
-import pickerPointGenerator from './PickerPointGenerator';
+import PickerDargHandler from '../Picker/PickerDargHandler';
+import pickerPointGenerator from '../Picker/PickerPointGenerator';
 
 class TwentyFourHoursMode extends React.Component {
   constructor(props) {
@@ -134,7 +134,7 @@ class TwentyFourHoursMode extends React.Component {
 
     const activeHourClass = step === 0 ? "time_picker_header active" : "time_picker_header";
     const activeMinuteClass = step === 1 ? "time_picker_header active" : "time_picker_header";
-    const [top, height] = this.getTopAndHeight();
+    const [ top, height ] = this.getTopAndHeight();
     const rotateState = {
       top,
       height,

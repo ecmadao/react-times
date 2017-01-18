@@ -1,10 +1,11 @@
 {
   "name": "react-times",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "A react time-picker component, no jquery-rely",
   "main": "index.js",
   "scripts": {
-    "build": "npm run clean && npm run build:js && webpack",
+    "babel": "babel ./src --out-dir ./lib",
+    "build": "npm run clean && npm run babel",
     "build:js": "babel src/ -d lib/ --ignore src/components",
     "clean": "rimraf lib",
     "eslint": "./node_modules/eslint/bin/eslint.js src",
@@ -54,6 +55,7 @@
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-0": "^6.16.0",
     "babel-register": "^6.14.0",
     "chai": "^3.5.0",
     "coveralls": "^2.11.12",
