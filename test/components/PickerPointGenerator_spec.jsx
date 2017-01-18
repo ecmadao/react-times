@@ -2,8 +2,8 @@ import React from 'react';
 import {expect} from 'chai';
 import {shallow} from 'enzyme';
 
-import PickerPoint from '../../src/components/PickerPoint';
-import pickerPointGenerator from '../../src/components/PickerPointGenerator';
+import PickerPoint from '../../src/components/Picker/PickerPoint';
+import pickerPointGenerator from '../../src/components/Picker/PickerPointGenerator';
 
 describe('PickerPointGenerator', () => {
   describe('Render 24 hours', () => {

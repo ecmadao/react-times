@@ -3,8 +3,8 @@ import {expect} from 'chai';
 import {shallow} from 'enzyme';
 import sinon from 'sinon-sandbox';
 
-import TwelveHoursMode from '../../src/components/TwelveHoursMode';
-import PickerDargHandler from '../../src/components/PickerDargHandler';
+import TwelveHoursMode from '../../src/components/MaterialTheme/TwelveHoursMode';
+import PickerDargHandler from '../../src/components/Picker/PickerDargHandler';
 
 describe('TwelveHoursMode', () => {
   describe('TwelveHoursMode Init', () => {
@@ -34,16 +34,16 @@ describe('TwelveHoursMode', () => {
   describe('TwelveHoursMode Func', () => {
     const handleHourChange = sinon.stub();
     const handleMinuteChange = sinon.stub();
-    const handleTimeIntervalChange = sinon.stub();
+    const handleTimeQuantumChange = sinon.stub();
     const wrapper = shallow(
       <TwelveHoursMode
         hour={'01'}
         minute={'45'}
         focused={true}
-        timeInterval={'AM'}
+        timeQuantum={'AM'}
         handleHourChange={handleHourChange}
         handleMinuteChange={handleMinuteChange}
-        handleTimeIntervalChange={handleTimeIntervalChange}
+        handleTimeQuantumChange={handleTimeQuantumChange}
       />
     );
     it('should handleHourPointerClick', () => {
@@ -58,11 +58,11 @@ describe('TwelveHoursMode', () => {
       expect(handleMinuteChange.callCount).to.equal(1);
     });
 
-    it('should handleTimeIntervalChange', () => {
-      wrapper.instance().handleTimeIntervalChange('AM');
-      expect(handleTimeIntervalChange.callCount).to.equal(0);
-      wrapper.instance().handleTimeIntervalChange('PM');
-      expect(handleTimeIntervalChange.callCount).to.equal(1);
+    it('should handleTimeQuantumChange', () => {
+      wrapper.instance().handleTimeQuantumChange('AM');
+      expect(handleTimeQuantumChange.callCount).to.equal(0);
+      wrapper.instance().handleTimeQuantumChange('PM');
+      expect(handleTimeQuantumChange.callCount).to.equal(1);
     });
   });
 });

@@ -2,7 +2,7 @@ import React from 'react';
 import {expect} from 'chai';
 import {shallow} from 'enzyme';
 
-import PickerDargHandler from '../../src/components/PickerDargHandler';
+import PickerDargHandler from '../../src/components/Picker/PickerDargHandler';
 
 describe('PickerDargHandler', () => {
   describe('PickerDargHandler Init', () => {

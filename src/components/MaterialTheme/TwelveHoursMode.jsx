@@ -43,7 +43,7 @@ class TwelveHoursMode extends React.Component {
   }
 
   resetHourDegree() {
-    let hour = parseInt(this.props.hour);
+    const hour = parseInt(this.props.hour);
     let pointerRotate = 0;
     TWELVE_HOURS.map((h, index) => {
       if (hour === index + 1) {
@@ -54,7 +54,7 @@ class TwelveHoursMode extends React.Component {
   }
 
   resetMinuteDegree() {
-    let minute = parseInt(this.props.minute);
+    const minute = parseInt(this.props.minute);
     let pointerRotate = 0;
     MINUTES.map((m, index) => {
       if (minute === index) {
@@ -65,20 +65,20 @@ class TwelveHoursMode extends React.Component {
   }
 
   getHourTopAndHeight() {
-    let height = MIN_ABSOLUTE_POSITION - POINTER_RADIUS;
-    let top = PICKER_RADIUS - MIN_ABSOLUTE_POSITION + POINTER_RADIUS;
-    return [ top, height ];
+    const height = MIN_ABSOLUTE_POSITION - POINTER_RADIUS;
+    const top = PICKER_RADIUS - MIN_ABSOLUTE_POSITION + POINTER_RADIUS;
+    return [top, height];
   }
 
   getMinuteTopAndHeight() {
-    let height = MAX_ABSOLUTE_POSITION - POINTER_RADIUS;
-    let top = PICKER_RADIUS - MAX_ABSOLUTE_POSITION + POINTER_RADIUS;
-    return [ top, height ];
+    const height = MAX_ABSOLUTE_POSITION - POINTER_RADIUS;
+    const top = PICKER_RADIUS - MAX_ABSOLUTE_POSITION + POINTER_RADIUS;
+    return [top, height];
   }
 
   handleTimeQuantumChange(timeQuantum) {
     if (timeQuantum !== this.props.timeQuantum) {
-      let { handleTimeQuantumChange } = this.props;
+      const { handleTimeQuantumChange } = this.props;
       handleTimeQuantumChange && handleTimeQuantumChange(timeQuantum);
     }
   }
@@ -98,36 +98,36 @@ class TwelveHoursMode extends React.Component {
   }
 
   handleHourChange(time) {
-    let hour = parseInt(time);
-    let { handleHourChange } = this.props;
+    const hour = parseInt(time);
+    const { handleHourChange } = this.props;
     handleHourChange && handleHourChange(hour);
   }
 
   handleMinuteChange(time) {
-    let minute = parseInt(time);
-    let { handleMinuteChange } = this.props;
+    const minute = parseInt(time);
+    const { handleMinuteChange } = this.props;
     handleMinuteChange && handleMinuteChange(minute);
   }
 
   render() {
-    let {
+    const {
       hour,
       minute,
       timeQuantum
     } = this.props;
-    let { hourPointerRotate, minutePointerRotate } = this.state;
-    console.log(timeQuantum);
-    let activeAMClass = timeQuantum === "AM" ? "time_picker_header active" : "time_picker_header";
-    let activePMClass = timeQuantum === "PM" ? "time_picker_header active" : "time_picker_header";
+    const { hourPointerRotate, minutePointerRotate } = this.state;
 
-    let [ top, height ] = this.getHourTopAndHeight();
-    let hourRotateState = {
+    const activeAMClass = timeQuantum === "AM" ? "time_picker_header active" : "time_picker_header";
+    const activePMClass = timeQuantum === "PM" ? "time_picker_header active" : "time_picker_header";
+
+    const [top, height] = this.getHourTopAndHeight();
+    const hourRotateState = {
       top,
       height,
       pointerRotate: hourPointerRotate
     };
-    let [ minuteTop, minuteHeight ] = this.getMinuteTopAndHeight()
-    let minuteRotateState = {
+    const [minuteTop, minuteHeight] = this.getMinuteTopAndHeight()
+    const minuteRotateState = {
       top: minuteTop,
       height: minuteHeight,
       pointerRotate: minutePointerRotate

@@ -83,9 +83,9 @@ export const degree2Radian = (degree) => {
 };
 
 export const initialTime = (defaultTime, mode = 24) => {
-  let [ hour, minute ] = timeHelper.current().split(':');
+  let [hour, minute] = timeHelper.current().split(':');
   if (defaultTime) {
-    [ hour, minute ] = `${defaultTime}`.split(':');
+    [hour, minute] = `${defaultTime}`.split(':');
   }
   hour = getValidateIntTime(hour);
   minute = getValidateIntTime(minute);
@@ -101,13 +101,13 @@ export const initialTime = (defaultTime, mode = 24) => {
   hour = getValidateTime(hour);
   minute = getValidateTime(minute);
 
-  return [ hour, minute, timeInterval ];
+  return [hour, minute, timeInterval];
 };
 
 export const getValidateTimeQuantum = (time, timeMode) => {
   if (!time) { time = timeHelper.current(); }
   const mode = parseInt(timeMode);
-  let [ hour, minute ] = time.split(':');
+  let [hour, _] = time.split(':');
   hour = getValidateIntTime(hour);
 
   let timeQuantum = null;

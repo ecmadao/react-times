@@ -7,7 +7,7 @@ import TimePicker from '../../src/components/TimePicker';
 import MaterialTheme from '../../src/components/MaterialTheme';
 import ClassicTheme from '../../src/components/ClassicTheme';
 import OutsideClickHandler from '../../src/components/OutsideClickHandler';
-import PickerDargHandler from '../../src/components/PickerDargHandler';
+import PickerDargHandler from '../../src/components/Picker/PickerDargHandler';
 
 describe('TimePicker initial', () => {
   describe('render basical picker', () => {
@@ -59,13 +59,13 @@ describe('TimePicker initial', () => {
     });
 
     it('should rendered with default time in child props', () => {
-      const wrapper = shallow(<TimePicker defaultTime="22:23" />);
+      const wrapper = shallow(<TimePicker time="22:23" />);
       expect(wrapper.find(MaterialTheme).props().hour).to.equal("22");
       expect(wrapper.find(MaterialTheme).props().minute).to.equal("23");
     });
 
     it('should rendered with default time in DOM', () => {
-      const wrapper = shallow(<TimePicker defaultTime="22:23" withoutIcon={true} />);
+      const wrapper = shallow(<TimePicker time="22:23" withoutIcon={true} />);
       expect(wrapper.find('.preview_container').text()).to.equal("22 : 23");
     });
 

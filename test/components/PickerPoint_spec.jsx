@@ -3,7 +3,7 @@ import {expect} from 'chai';
 import {shallow} from 'enzyme';
 import sinon from 'sinon-sandbox';
 
-import PickerPoint from '../../src/components/PickerPoint';
+import PickerPoint from '../../src/components/Picker/PickerPoint';
 
 describe('PickerPoint', () => {
   const wrapper = shallow(
