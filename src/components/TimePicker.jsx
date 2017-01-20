@@ -31,6 +31,11 @@ const propTypes = {
   onMinuteChange: PropTypes.func,
   onTimeChange: PropTypes.func,
   onTimeQuantumChange: PropTypes.func,
+  trigger: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.object,
+    PropTypes.instanceOf(React.Component)
+  ])
 };
 
 const defaultProps = {
@@ -47,7 +52,8 @@ const defaultProps = {
   onHourChange: () => {},
   onMinuteChange: () => {},
   onTimeChange: () => {},
-  onTimeQuantumChange: () => {}
+  onTimeQuantumChange: () => {},
+  trigger: null
 };
 
 class TimePicker extends React.Component {
@@ -147,18 +153,25 @@ class TimePicker extends React.Component {
     )
   }
 
-  componentWillReceiveProps(nextProps) {}
+  componentWillReceiveProps(nextProps) {
+    const { focused } = nextProps;
+    if (focused !== this.state.focused) {
+      this.setState({ focused });
+    }
+  }
 
   render() {
     const {
       time,
       theme,
+      trigger,
       timeMode,
       placeholder,
       withoutIcon,
       colorPalette,
       timeQuantum
     } = this.props;
+
     const { focused } = this.state;
     const [ hour, minute ] = this.getHourAndMinute();
     const validateTimeMode = getValidateTimeMode(timeMode);
@@ -175,14 +188,16 @@ class TimePicker extends React.Component {
 
     return (
       <div className={containerClass}>
-        <div
-          onClick={this.onFocus}
-          className={pickerPreviewClass}>
-          <div className={previewContainerClass}>
-            {withoutIcon ? '' : (ICONS.time)}
-            {placeholder || times}
+        { trigger ? trigger : (
+          <div
+            onClick={this.onFocus}
+            className={pickerPreviewClass}>
+            <div className={previewContainerClass}>
+              {withoutIcon ? '' : (ICONS.time)}
+              {placeholder || times}
+            </div>
           </div>
-        </div>
+        ) }
         <OutsideClickHandler
           onOutsideClick={this.onClearFocus}
           focused={focused}>

@@ -11,6 +11,7 @@ function loadStories() {
   require('../stories/DarkColor.js');
   require('../stories/TwelveHoursMode.js');
   require('../stories/ClassicThemePicker');
+  require('../stories/CustomTrigger');
 }
 
 configure(loadStories, module);
