@@ -1,5 +1,6 @@
 import React from 'react';
 import TimePicker from '../src/components/TimePicker';
+import timeHelper from '../src/time';
 import ICONS from '../src/icons';
 
 class TimePickerWrapper extends React.Component {
@@ -7,8 +8,10 @@ class TimePickerWrapper extends React.Component {
     super(props);
     const { defaultTime, timeQuantum, focused } = props;
     let hour = '', minute = '';
-    if (defaultTime) {
-      [ hour, minute ] = defaultTime.split(':');
+    if (!defaultTime) {
+      [hour, minute] = timeHelper.current().split(':');
+    } else {
+      [hour, minute] = defaultTime.split(':');
     }
     this.state = {
       hour,
@@ -49,13 +52,12 @@ class TimePickerWrapper extends React.Component {
     this.setState({ focused: !focused });
   }
 
-  get trigger() {
+  get basicTrigger() {
     const { hour, minute } = this.state;
     return (
       <div
         onClick={this.handleFocusedChange.bind(this)}
         className="time_picker_trigger">
-        {ICONS.time}
         <div>
           Click to open panel<br/>
           {hour}:{minute}
@@ -64,10 +66,28 @@ class TimePickerWrapper extends React.Component {
     )
   }
 
+  get customTrigger() {
+    return (
+      <div
+        onClick={this.handleFocusedChange.bind(this)}
+        className="time_picker_trigger">
+        {ICONS.time}
+      </div>
+    )
+  }
+
+  get trigger() {
+    const { customTriggerId } = this.props;
+    const triggers = {
+      0: (<div></div>),
+      1: this.basicTrigger,
+      2: this.customTrigger
+    };
+    return triggers[customTriggerId];
+  }
+
   render() {
-    const { customTrigger } = this.props;
     const { hour, minute, timeQuantum, focused } = this.state;
-    const trigger = customTrigger ? this.trigger : null;
 
     return (
       <div className="time_picker_wrapper">
@@ -80,7 +100,7 @@ class TimePickerWrapper extends React.Component {
           onTimeChange={this.onTimeChange}
           onFocusChange={this.onFocusChange}
           onTimeQuantumChange={this.onTimeQuantumChange}
-          trigger={trigger}
+          trigger={this.trigger}
           focused={focused}
         />
       </div>
@@ -89,7 +109,7 @@ class TimePickerWrapper extends React.Component {
 }
 
 TimePickerWrapper.defaultProps = {
-  customTrigger: null,
+  customTriggerId: null,
   focused: false,
   defaultTime: null,
   timeQuantum: 'AM'
