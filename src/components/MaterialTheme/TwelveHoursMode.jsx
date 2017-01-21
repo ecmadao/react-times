@@ -26,7 +26,7 @@ const defaultProps = {
   handleMinuteChange: () => {}
 };
 
-import Button from '../common/Button/index';
+import Button from '../Common/Button';
 import PickerDargHandler from '../Picker/PickerDargHandler';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';
 
