@@ -113,6 +113,7 @@ class TwelveHoursMode extends React.Component {
     const {
       hour,
       minute,
+      language,
       timeQuantum
     } = this.props;
     const { hourPointerRotate, minutePointerRotate } = this.state;
@@ -141,10 +142,10 @@ class TwelveHoursMode extends React.Component {
         <div className="time_picker_modal_header">
           <span
             className={activeAMClass}
-            onClick={this.handleTimeQuantumChange.bind(this, "AM")}>AM</span>
+            onClick={this.handleTimeQuantumChange.bind(this, "AM")}>{language.am}</span>
           &nbsp;|&nbsp;
           <span className={activePMClass}
-            onClick={this.handleTimeQuantumChange.bind(this, "PM")}>PM</span>
+            onClick={this.handleTimeQuantumChange.bind(this, "PM")}>{language.pm}</span>
         </div>
         <div className="picker_container">
           <HourPickerPointGenerator
@@ -165,6 +166,9 @@ class TwelveHoursMode extends React.Component {
             time={parseInt(minute)}
             minLength={MAX_ABSOLUTE_POSITION}
             handleTimePointerClick={this.handleMinutePointerClick} />
+        </div>
+        <div>
+          <div>{language.confirm}</div>
         </div>
       </div>
     )

@@ -7,6 +7,7 @@ const propTypes = {
   minute: PropTypes.string,
   timeMode: PropTypes.number,
   autoMode: PropTypes.bool,
+  language: PropTypes.object,
   timeQuantum: PropTypes.string,
   handleHourChange: PropTypes.func,
   handleMinuteChange: PropTypes.func,
@@ -50,6 +51,7 @@ class MaterialTheme extends React.Component {
     let {
       hour,
       minute,
+      language,
       timeQuantum,
       handleHourChange,
       handleMinuteChange,
@@ -59,6 +61,7 @@ class MaterialTheme extends React.Component {
       <TwelveHoursMode
         hour={hour}
         minute={minute}
+        language={language}
         timeQuantum={timeQuantum}
         handleHourChange={handleHourChange}
         handleMinuteChange={handleMinuteChange}

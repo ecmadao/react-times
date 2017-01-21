@@ -6,7 +6,7 @@ module.exports = {
       {
         test:   /\.css/,
         loaders: ['style', 'css'],
-        include: path.resolve(__dirname, '../css/')
+        // include: path.resolve(__dirname, '../css/')
       },
       {
         test: /\.svg$/,

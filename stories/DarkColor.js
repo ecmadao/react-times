@@ -1,5 +1,5 @@
 import React from 'react';
-import {storiesOf} from '@kadira/storybook';
+import { storiesOf } from '@kadira/storybook';
 import TimePickerWrapper from '../examples/TimePickerWrapper';
 import '../css/material/default.css';
 
