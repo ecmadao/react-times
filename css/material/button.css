@@ -1,0 +1,13 @@
+.time_picker_button {
+  padding: 5px 10px;
+  background-color: transparent;
+  display: inline-block;
+  border-radius: 3px;
+  cursor: pointer;
+  color: #949494;
+  transition: background-color 0.3s;
+}
+
+.time_picker_button:hover {
+  background-color: rgba(0,0,0,0.1);
+}

@@ -7,10 +7,12 @@ addDecorator((story) => {
 });
 
 function loadStories() {
-  require('../stories/TimePicker.js');
-  require('../stories/DarkColor.js');
-  require('../stories/TwelveHoursMode.js');
+  require('../stories/TimePicker');
+  require('../stories/DarkColor');
+  require('../stories/TwelveHoursMode');
   require('../stories/ClassicThemePicker');
+  require('../stories/CustomTrigger');
+  require('../stories/DifferentLanguage');
 }
 
 configure(loadStories, module);

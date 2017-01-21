@@ -8,8 +8,10 @@ import {
   MAX_ABSOLUTE_POSITION,
   MIN_ABSOLUTE_POSITION
 } from '../../ConstValue.js';
+import language from '../../language';
 
 const propTypes = {
+  language: PropTypes.object,
   hour: PropTypes.string,
   minute: PropTypes.string,
   handleHourChange: PropTypes.func,
@@ -17,12 +19,14 @@ const propTypes = {
 };
 
 const defaultProps = {
+  language: language.get(),
   hour: '00',
   minute: '00',
   handleHourChange: () => {},
   handleMinuteChange: () => {}
 };
 
+import Button from '../Common/Button';
 import PickerDargHandler from '../Picker/PickerDargHandler';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';
 
@@ -113,8 +117,11 @@ class TwelveHoursMode extends React.Component {
     const {
       hour,
       minute,
+      language,
+      clearFoucs,
       timeQuantum
     } = this.props;
+
     const { hourPointerRotate, minutePointerRotate } = this.state;
 
     const activeAMClass = timeQuantum === "AM" ? "time_picker_header active" : "time_picker_header";
@@ -141,10 +148,10 @@ class TwelveHoursMode extends React.Component {
         <div className="time_picker_modal_header">
           <span
             className={activeAMClass}
-            onClick={this.handleTimeQuantumChange.bind(this, "AM")}>AM</span>
+            onClick={this.handleTimeQuantumChange.bind(this, "AM")}>{language.am}</span>
           &nbsp;|&nbsp;
           <span className={activePMClass}
-            onClick={this.handleTimeQuantumChange.bind(this, "PM")}>PM</span>
+            onClick={this.handleTimeQuantumChange.bind(this, "PM")}>{language.pm}</span>
         </div>
         <div className="picker_container">
           <HourPickerPointGenerator
@@ -165,6 +172,12 @@ class TwelveHoursMode extends React.Component {
             time={parseInt(minute)}
             minLength={MAX_ABSOLUTE_POSITION}
             handleTimePointerClick={this.handleMinutePointerClick} />
+        </div>
+        <div className="buttons_wrapper">
+          <Button
+            onClick={clearFoucs}
+            text={language.close}
+          />
         </div>
       </div>
     )

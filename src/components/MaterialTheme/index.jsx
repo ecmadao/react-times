@@ -1,12 +1,14 @@
 import React, { PropTypes } from 'react';
 import TwelveHoursMode from './TwelveHoursMode';
 import TwentyFourHoursMode from './TwentyFourHoursMode';
+import language from '../../language';
 
 const propTypes = {
   hour: PropTypes.string,
   minute: PropTypes.string,
   timeMode: PropTypes.number,
   autoMode: PropTypes.bool,
+  language: PropTypes.object,
   timeQuantum: PropTypes.string,
   handleHourChange: PropTypes.func,
   handleMinuteChange: PropTypes.func,
@@ -50,15 +52,20 @@ class MaterialTheme extends React.Component {
     let {
       hour,
       minute,
+      language,
+      clearFoucs,
       timeQuantum,
       handleHourChange,
       handleMinuteChange,
       handleTimeQuantumChange
     } = this.props;
+
     return (
       <TwelveHoursMode
         hour={hour}
         minute={minute}
+        language={language}
+        clearFoucs={clearFoucs}
         timeQuantum={timeQuantum}
         handleHourChange={handleHourChange}
         handleMinuteChange={handleMinuteChange}

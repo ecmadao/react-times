@@ -9,6 +9,11 @@ module.exports = {
         include: path.resolve(__dirname, '../css/')
       },
       {
+        test:   /\.css/,
+        loaders: ['style', 'css'],
+        include: path.resolve(__dirname, '../src/')
+      },
+      {
         test: /\.svg$/,
         loader: 'babel!react-svg'
       }

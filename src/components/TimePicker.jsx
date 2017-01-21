@@ -3,7 +3,6 @@ import React, {PropTypes} from 'react';
 import OutsideClickHandler from './OutsideClickHandler';
 import MaterialTheme from './MaterialTheme';
 import ClassicTheme from './ClassicTheme';
-import ICONS from '../icons';
 
 import {
   initialTime,
@@ -12,6 +11,10 @@ import {
   getValidateTimeQuantum
 } from '../utils.js';
 import timeHelper from '../time.js';
+import ICONS from '../icons';
+import language from '../language';
+
+let LANGUAGE = language.get();
 
 const propTypes = {
   time: PropTypes.string,
@@ -31,6 +34,12 @@ const propTypes = {
   onMinuteChange: PropTypes.func,
   onTimeChange: PropTypes.func,
   onTimeQuantumChange: PropTypes.func,
+  trigger: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.object,
+    PropTypes.instanceOf(React.Component)
+  ]),
+  language: PropTypes.string
 };
 
 const defaultProps = {
@@ -47,7 +56,9 @@ const defaultProps = {
   onHourChange: () => {},
   onMinuteChange: () => {},
   onTimeChange: () => {},
-  onTimeQuantumChange: () => {}
+  onTimeQuantumChange: () => {},
+  trigger: null,
+  language: 'en'
 };
 
 class TimePicker extends React.Component {
@@ -55,6 +66,8 @@ class TimePicker extends React.Component {
     super(props);
     const { focused } = props;
     this.state = { focused };
+    LANGUAGE = language.get(props.language);
+
     this.onFocus = this.onFocus.bind(this);
     this.onClearFocus = this.onClearFocus.bind(this);
     this.handleHourChange = this.handleHourChange.bind(this);
@@ -117,21 +130,27 @@ class TimePicker extends React.Component {
     return onTimeChange && onTimeChange(time);
   }
 
+  get timeQuantum() {
+    const { timeQuantum, time, timeMode } = this.props;
+    return timeQuantum || getValidateTimeQuantum(time, timeMode)
+  }
+
   renderMaterialTheme() {
-    const { timeMode, autoMode, timeQuantum, time } = this.props;
+    const { timeMode, autoMode } = this.props;
     const [ hour, minute ] = this.getHourAndMinute();
 
     return (
       <MaterialTheme
         hour={hour}
         minute={minute}
-        timeMode={parseInt(timeMode)}
         autoMode={autoMode}
-        timeQuantum={timeQuantum || getValidateTimeQuantum(time, timeMode)}
+        language={LANGUAGE}
+        timeMode={parseInt(timeMode)}
         clearFoucs={this.onClearFocus}
         handleHourChange={this.handleHourChange}
         handleMinuteChange={this.handleMinuteChange}
         handleTimeQuantumChange={this.handleTimeQuantumChange}
+        timeQuantum={this.timeQuantum}
       />
     )
   }
@@ -147,23 +166,28 @@ class TimePicker extends React.Component {
     )
   }
 
-  componentWillReceiveProps(nextProps) {}
+  componentWillReceiveProps(nextProps) {
+    const { focused } = nextProps;
+    if (focused !== this.state.focused) {
+      this.setState({ focused });
+    }
+  }
 
   render() {
     const {
       time,
       theme,
+      trigger,
       timeMode,
       placeholder,
       withoutIcon,
-      colorPalette,
-      timeQuantum
+      colorPalette
     } = this.props;
+
     const { focused } = this.state;
     const [ hour, minute ] = this.getHourAndMinute();
     const validateTimeMode = getValidateTimeMode(timeMode);
-
-    const quantum = timeQuantum ? timeQuantum : getValidateTimeQuantum(time, timeMode);
+    const quantum = LANGUAGE[this.timeQuantum.toLowerCase()] || this.timeQuantum;
 
     let times = `${hour} : ${minute}`;
     if (validateTimeMode === 12) {
@@ -175,14 +199,16 @@ class TimePicker extends React.Component {
 
     return (
       <div className={containerClass}>
-        <div
-          onClick={this.onFocus}
-          className={pickerPreviewClass}>
-          <div className={previewContainerClass}>
-            {withoutIcon ? '' : (ICONS.time)}
-            {placeholder || times}
+        { trigger ? trigger : (
+          <div
+            onClick={this.onFocus}
+            className={pickerPreviewClass}>
+            <div className={previewContainerClass}>
+              {withoutIcon ? '' : (ICONS.time)}
+              {placeholder || times}
+            </div>
           </div>
-        </div>
+        ) }
         <OutsideClickHandler
           onOutsideClick={this.onClearFocus}
           focused={focused}>

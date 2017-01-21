@@ -210,9 +210,41 @@ timeMode=12
 
 - `timeQuantum`
 
-`React.PropTypes.string`
+> `React.PropTypes.string`, support "PM" or "AM" for 12 hours mode.
 
-> "PM" or "AM" for 12 hours mode.
+- `trigger`
+
+> `React.component`, means a DOM which can control TimePicker Modal "open" or "close" status.
+
+```javascript
+<TimePicker
+  focused={focused}
+  trigger={(
+    <div
+      onClick={this.handleFocusedChange.bind(this)} >
+      click to open modal
+    </div>
+  )}
+/>
+```
+
+- `language`
+
+> `React.string`, use different language. Default english.
+
+```javascript
+/*
+ * support
+ * en: english
+ * zh-cn: 中文简体
+ * zh-tw: 中文繁体
+ * fr: Français
+ * ja: 日本語
+ */
+<TimePicker
+  language="zh-cn" // 中文简体
+/>
+```
 
 ## Callback
 

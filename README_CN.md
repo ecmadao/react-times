@@ -1,7 +1,6 @@
 ![react-times](./intro_src/react_times.png)
 
-[![npm version](https://badge.fury.io/js/react-times.svg)](https://badge.fury.io/js/react-times)
-[![Build Status](https://travis-ci.org/ecmadao/react-times.svg?branch=master)](https://travis-ci.org/ecmadao/react-times) [![Coverage Status](https://coveralls.io/repos/github/ecmadao/react-times/badge.svg?branch=master)](https://coveralls.io/github/ecmadao/react-times?branch=master) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![react-times](http://img.shields.io/npm/dm/react-times.svg)](https://www.npmjs.com/package/react-times) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/ecmadao/react-times/master/LICENSE)
+[![npm version](https://badge.fury.io/js/react-times.svg)](https://badge.fury.io/js/react-times) [![Build Status](https://travis-ci.org/ecmadao/react-times.svg?branch=master)](https://travis-ci.org/ecmadao/react-times) [![Coverage Status](https://coveralls.io/repos/github/ecmadao/react-times/badge.svg?branch=master)](https://coveralls.io/github/ecmadao/react-times?branch=master) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![react-times](http://img.shields.io/npm/dm/react-times.svg)](https://www.npmjs.com/package/react-times) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/ecmadao/react-times/master/LICENSE)
 
 [![NPM](https://nodei.co/npm/react-times.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/react-times)
 
@@ -11,7 +10,7 @@ README：[English Version](./README.md)
 
 ![react-times](./intro_src/react-times.gif)
 
-## 本地玩起来
+# 本地玩起来
 
 ```bash
 $ git clone https://github.com/ecmadao/react-times.git
@@ -21,7 +20,7 @@ $ npm install
 $ npm run storybook
 ```
 
-## 安装说明
+# 安装说明
 
 单独使用插件时所需的依赖：
 
@@ -39,7 +38,7 @@ $ npm install react react-dom --save-dev
 $ npm install react-times --save-dev
 ```
 
-## 使用方式
+# 使用方式
 
 目前组件总共有两种主题：Material 主题和经典主题
 
@@ -74,16 +73,21 @@ export default class SomeComponent extends React.Component {
     // do something
   }
 
+  onTimeQuantumChange(timeQuantum) {
+    // do something
+  }
+
   render() {
     <TimePicker
       onFocusChange={this.onFocusChange.bind(this)}
       onHourChange={this.onHourChange.bind(this)}
       onMinuteChange={this.onMinuteChange.bind(this)}
       onTimeChange={this.onTimeChange.bind(this)}
+      onTimeQuantumChange={this.onTimeQuantumChange.bind(this)}
       // 确定主题，不填该 props 则默认为 material
       theme="material"
-  	  // or
-  	  // theme="classic"
+        // or
+        // theme="classic"
     />
   }
 }
@@ -93,21 +97,22 @@ export default class SomeComponent extends React.Component {
 
 ```javascript
 render() {
-  <TimePicker 
-  	colorPalette="dark" // main color, default "light"
-  	focused={true} // whether to show timepicker modal after rendered. default false
-  	withoutIcon={true} // whether to has time icon on button, default false
-  	defaultTime="13:05" // initial time, default current time
-  	theme="material"
-  	// or
-  	// theme="classic"
+  <TimePicker
+      colorPalette="dark" // main color, default "light"
+      focused={true} // whether to show timepicker modal after rendered. default false
+      withoutIcon={true} // whether to has time icon on button, default false
+      time="13:05" // initial time, default current time
+      theme="material"
+      // or
+      // theme="classic"
+      timeMode="12" // use 24 or 12 hours mode, default 24
   />
 }
 ```
 
 > 你可以戳 [这里](https://github.com/ecmadao/react-times/tree/master/examples) 查看更多栗子
 
-## 秀一下
+# 秀一下
 
 - 24 小时制，亮色调的 Material 主题（默认）
 
@@ -149,20 +154,20 @@ render() {
 
 ![24HoursMode-ClassicTheme-dark](./intro_src/24HoursMode-ClassicTheme-dark.png)
 
-## APIs
+# APIs
 
-### Props
+## Props
 
-- `defaultTime`
+- `time`
 
 > 初始化时的时间，格式是 `${hour}:${minute}`，不传则默认使用当前时间（通过`moment()`）
 
 ```javascript
 // React.PropTypes.string
-defaultTime="11:11"
-defaultTime="11:01"
-defaultTime="1:01"
-defaultTime="1:1"
+time="11:11"
+time="11:01"
+time="1:01"
+time="1:1"
 ```
 
 - `focused`
@@ -206,7 +211,45 @@ timeMode="12"
 timeMode=12
 ```
 
-### 回调
+- `timeQuantum`
+
+> 上下午，在 12 小时制里为 "AM" 或 "PM"
+
+- `trigger`
+
+> 开启、关闭时间选择器 Modal 的触发器，是一个 React Component
+
+```javascript
+<TimePicker
+  focused={focused}
+  trigger={(
+    <div
+      onClick={this.handleFocusedChange.bind(this)} >
+      click to open modal
+    </div>
+  )}
+/>
+```
+
+- `language`
+
+> 语言。默认为英语
+
+```javascript
+/*
+ * support
+ * en: english
+ * zh-cn: 中文简体
+ * zh-tw: 中文繁体
+ * fr: Français
+ * ja: 日本語
+ */
+<TimePicker
+  language="zh-cn" // 中文简体
+/>
+```
+
+## 回调
 
 - `onFocusChange`
 
@@ -250,11 +293,17 @@ onTimeChange(time) {
 }
 ```
 
-## 相关文章
+- `onTimeQuantumChange`
+
+`React.PropTypes.func`
+
+> 当 上、下午改变时触发的回调
+
+# 相关文章
 
 - [一言不合造轮子--撸一个ReactTimePicker](https://github.com/ecmadao/Coding-Guide/blob/master/Notes/React/ReactJS/Write%20a%20React%20Timepicker%20Component%20hand%20by%20hand.md)
 
-## Todos
+# Todos
 
 - 测试
 
@@ -286,10 +335,10 @@ onTimeChange(time) {
 
 - 动画
 
-## 致谢
+# 致谢
 
 感谢 Airbnb 的 [react-dates](https://github.com/airbnb/react-dates) 组件，没有它我也不会想着写一个小时选择组件
 
-## 版权
+# 版权
 
 [MIT License](./LICENSE)
