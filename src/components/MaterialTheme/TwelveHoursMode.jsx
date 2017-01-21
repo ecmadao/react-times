@@ -8,8 +8,10 @@ import {
   MAX_ABSOLUTE_POSITION,
   MIN_ABSOLUTE_POSITION
 } from '../../ConstValue.js';
+import language from '../../language';
 
 const propTypes = {
+  language: PropTypes.object,
   hour: PropTypes.string,
   minute: PropTypes.string,
   handleHourChange: PropTypes.func,
@@ -17,6 +19,7 @@ const propTypes = {
 };
 
 const defaultProps = {
+  language: language.get(),
   hour: '00',
   minute: '00',
   handleHourChange: () => {},
@@ -118,6 +121,7 @@ class TwelveHoursMode extends React.Component {
       clearFoucs,
       timeQuantum
     } = this.props;
+    console.log(language);
     const { hourPointerRotate, minutePointerRotate } = this.state;
 
     const activeAMClass = timeQuantum === "AM" ? "time_picker_header active" : "time_picker_header";

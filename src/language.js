@@ -36,7 +36,7 @@ const LANGUAGES = {
   }
 };
 
-const language = (type = 'cn') => {
+const language = (type = 'en') => {
   return LANGUAGES[type];
 };
 

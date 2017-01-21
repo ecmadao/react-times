@@ -1,9 +1,11 @@
 @import "./base.css";
+@import "./button.css";
 
 .dark .time_picker_preview {
   background-color: #4a4a4a;
   color: #fff;
 }
+
 .dark .time_picker_preview .preview_container svg {
   fill: #fff;
 }
@@ -39,6 +41,7 @@
 .dark .picker_point.point_outter {
   color: #fff;
 }
+
 .dark .picker_point.point_inner {
   color: #D0D0D0;
 }
