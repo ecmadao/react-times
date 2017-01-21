@@ -66,10 +66,7 @@ class TimePicker extends React.Component {
     super(props);
     const { focused } = props;
     this.state = { focused };
-    console.log('language')
-    console.log(props.language);
     LANGUAGE = language.get(props.language);
-    console.log(LANGUAGE);
 
     this.onFocus = this.onFocus.bind(this);
     this.onClearFocus = this.onClearFocus.bind(this);

@@ -52,6 +52,7 @@ class MaterialTheme extends React.Component {
       hour,
       minute,
       language,
+      clearFoucs,
       timeQuantum,
       handleHourChange,
       handleMinuteChange,
@@ -62,6 +63,7 @@ class MaterialTheme extends React.Component {
         hour={hour}
         minute={minute}
         language={language}
+        clearFoucs={clearFoucs}
         timeQuantum={timeQuantum}
         handleHourChange={handleHourChange}
         handleMinuteChange={handleMinuteChange}

@@ -38,7 +38,7 @@
   height: 50px;
   line-height: 50px;
   text-align: center;
-  font-size: 1.5em;
+  font-size: 1.3em;
 }
 
 .time_picker_modal_header .time_picker_header {
@@ -170,4 +170,9 @@
   color: #fff;
   text-align: center;
   line-height: 30px;
+}
+
+.buttons_wrapper {
+  float: right;
+  margin-top: 10px;
 }

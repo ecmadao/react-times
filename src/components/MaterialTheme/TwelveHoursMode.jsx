@@ -23,6 +23,7 @@ const defaultProps = {
   handleMinuteChange: () => {}
 };
 
+import Button from '../common/Button';
 import PickerDargHandler from '../Picker/PickerDargHandler';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';
 
@@ -114,6 +115,7 @@ class TwelveHoursMode extends React.Component {
       hour,
       minute,
       language,
+      clearFoucs,
       timeQuantum
     } = this.props;
     const { hourPointerRotate, minutePointerRotate } = this.state;
@@ -167,8 +169,11 @@ class TwelveHoursMode extends React.Component {
             minLength={MAX_ABSOLUTE_POSITION}
             handleTimePointerClick={this.handleMinutePointerClick} />
         </div>
-        <div>
-          <div>{language.confirm}</div>
+        <div className="buttons_wrapper">
+          <Button
+            onClick={clearFoucs}
+            text={language.close}
+          />
         </div>
       </div>
     )
