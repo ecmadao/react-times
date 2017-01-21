@@ -26,7 +26,7 @@ const defaultProps = {
   handleMinuteChange: () => {}
 };
 
-import Button from '../common/Button';
+import Button from '../common/Button/index';
 import PickerDargHandler from '../Picker/PickerDargHandler';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';
 
@@ -121,7 +121,7 @@ class TwelveHoursMode extends React.Component {
       clearFoucs,
       timeQuantum
     } = this.props;
-    console.log(language);
+
     const { hourPointerRotate, minutePointerRotate } = this.state;
 
     const activeAMClass = timeQuantum === "AM" ? "time_picker_header active" : "time_picker_header";
