@@ -4,24 +4,24 @@ import TimePickerWrapper from '../examples/TimePickerWrapper';
 import '../css/material/default.css';
 
 storiesOf('TwelveHoursMode', module)
-  .add('with default time', () => (
+  .addWithInfo('with default time', () => (
     <TimePickerWrapper
       timeMode="12"
       defaultTime="13:15"
     />
   ))
-  .add('basical', () => (
+  .addWithInfo('basical', () => (
     <TimePickerWrapper
       timeMode="12"
     />
   ))
-  .add('focused at setup', () => (
+  .addWithInfo('focused at setup', () => (
     <TimePickerWrapper
       timeMode="12"
       focused={true}
     />
   ))
-  .add('focused at setup', () => (
+  .addWithInfo('focused at setup', () => (
     <TimePickerWrapper
       timeMode="12"
       withoutIcon={true}

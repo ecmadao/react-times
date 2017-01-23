@@ -6,10 +6,10 @@ import '../css/material/default.css';
 
 storiesOf('Different Languages', module)
   .addDecorator(withKnobs)
-  .add('English (basic)', () => (
+  .addWithInfo('English (basic)', () => (
     <TimePickerWrapper timeMode="12" />
   ))
-  .add('汉语 - 简体', () => {
+  .addWithInfo('汉语 - 简体', () => {
     return (
       <TimePickerWrapper
         timeMode="12"
@@ -17,7 +17,7 @@ storiesOf('Different Languages', module)
       />
     )
   })
-  .add('汉语 - 繁体', () => {
+  .addWithInfo('汉语 - 繁体', () => {
     return (
       <TimePickerWrapper
         timeMode="12"
@@ -25,13 +25,13 @@ storiesOf('Different Languages', module)
       />
     )
   })
-  .add('Français', () => (
+  .addWithInfo('Français', () => (
     <TimePickerWrapper
       timeMode="12"
       language="fr"
     />
   ))
-  .add('日本語', () => (
+  .addWithInfo('日本語', () => (
     <TimePickerWrapper
       timeMode="12"
       language="ja"

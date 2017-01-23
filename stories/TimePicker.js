@@ -6,10 +6,10 @@ import '../css/material/default.css';
 
 storiesOf('Default TimePicker', module)
   .addDecorator(withKnobs)
-  .add('basical', () => (
+  .addWithInfo('basical', () => (
     <TimePickerWrapper />
   ))
-  .add('with default time', () => {
+  .addWithInfo('with default time', () => {
     const aDefaultTime = text('set default time', '22:10');
     return (
       <TimePickerWrapper
@@ -17,12 +17,12 @@ storiesOf('Default TimePicker', module)
       />
     )
   })
-  .add('focused at setup', () => (
+  .addWithInfo('focused at setup', () => (
     <TimePickerWrapper
       focused={true}
     />
   ))
-  .add('focused at setup', () => (
+  .addWithInfo('focused at setup', () => (
     <TimePickerWrapper
       withoutIcon={true}
       focused={true}

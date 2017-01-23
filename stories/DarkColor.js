@@ -4,22 +4,22 @@ import TimePickerWrapper from '../examples/TimePickerWrapper';
 import '../css/material/default.css';
 
 storiesOf('DarkColor', module)
-  .add('basical', () => (
+  .addWithInfo('basical', () => (
     <TimePickerWrapper colorPalette="dark"/>
   ))
-  .add('with default time', () => (
+  .addWithInfo('with default time', () => (
     <TimePickerWrapper
       colorPalette="dark"
       defaultTime="11:50"
     />
   ))
-  .add('focused at setup', () => (
+  .addWithInfo('focused at setup', () => (
     <TimePickerWrapper
       colorPalette="dark"
       focused={true}
     />
   ))
-  .add('without icon', () => (
+  .addWithInfo('without icon', () => (
     <TimePickerWrapper
       withoutIcon={true}
       colorPalette="dark"

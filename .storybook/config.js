@@ -1,5 +1,6 @@
 import moment from 'moment';
-import { configure, addDecorator } from '@kadira/storybook';
+import { configure, addDecorator, setAddon } from '@kadira/storybook';
+import infoAddon from '@kadira/react-storybook-addon-info';
 
 addDecorator((story) => {
   moment.locale('zh-cn');
@@ -14,5 +15,7 @@ function loadStories() {
   require('../stories/CustomTrigger');
   require('../stories/DifferentLanguage');
 }
+
+setAddon(infoAddon);
 
 configure(loadStories, module);

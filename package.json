@@ -46,6 +46,7 @@
     "moment": "^2.14.1"
   },
   "devDependencies": {
+    "@kadira/react-storybook-addon-info": "^3.3.0",
     "@kadira/storybook": "^2.24.1",
     "@kadira/storybook-addon-knobs": "^1.7.1",
     "@kadira/storybook-deployer": "^1.2.0",
@@ -81,5 +82,11 @@
     "sinon-sandbox": "^1.0.2",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.2"
+  },
+  "peerDependencies": {
+    "moment": "2.10 - 2.14 || ^2.15.1",
+    "react": ">=0.14",
+    "react-dom": ">=0.14",
+    "react-addons-shallow-compare": ">=0.14"
   }
 }

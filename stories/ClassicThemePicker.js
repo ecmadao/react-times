@@ -4,16 +4,16 @@ import TimePickerWrapper from '../examples/TimePickerWrapper';
 import '../css/classic/default.css';
 
 storiesOf('Classic Theme', module)
-  .add('basical', () => (
+  .addWithInfo('basical', () => (
     <TimePickerWrapper theme="classic"/>
   ))
-  .add('focused at setup', () => (
+  .addWithInfo('focused at setup', () => (
     <TimePickerWrapper
       focused={true}
       theme="classic"
     />
   ))
-  .add('dark color', () => (
+  .addWithInfo('dark color', () => (
     <TimePickerWrapper
       colorPalette="dark"
       theme="classic"

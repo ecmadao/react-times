@@ -6,17 +6,17 @@ import '../css/material/default.css';
 
 storiesOf('Custom TimePicker Trigger', module)
   .addDecorator(withKnobs)
-  .add('basic example', () => (
+  .addWithInfo('basic example', () => (
     <TimePickerWrapper
       customTriggerId={1}
     />
   ))
-  .add('any custom DOM', () => (
+  .addWithInfo('any custom DOM', () => (
     <TimePickerWrapper
       customTriggerId={2}
     />
   ))
-  .add('only render picker modal', () => (
+  .addWithInfo('only render picker modal', () => (
     <TimePickerWrapper
       focused={true}
       customTriggerId={0}
