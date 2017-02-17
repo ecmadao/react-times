@@ -197,8 +197,8 @@ class PickerDargHandler extends React.Component {
         roundSeg = roundSeg - 12;
       }
       let time = absolutePosition === minLength ? roundSeg : roundSeg + 12;
-      time = step === 0 ? time : time * 5;
-      this.setState({pointerRotate});
+      time = step === 0 ? (time === 24 ? 12 : time) : (time * 5 === 60 ? 0 : time * 5);
+      this.setState({ pointerRotate });
       handleTimePointerClick && handleTimePointerClick(time, pointerRotate);
     }
   }
