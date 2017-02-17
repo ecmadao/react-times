@@ -17,7 +17,12 @@
     "storybook-deploy": "npm run storybook-pro && npm run deploy-storybook",
     "storybook-pro": "build-storybook -c .storybook -o .out",
     "deploy-storybook": "storybook-to-ghpages",
-    "prepublish": "in-publish && safe-publish-latest && npm run build || not-in-publish"
+    "prepublish": "in-publish && safe-publish-latest && npm run build || not-in-publish",
+    "gh-pages:clean": "rimraf _gh-pages",
+    "gh-pages:build": "$(npm bin)/build-storybook -o _gh-pages",
+    "gh-pages:copy-public": "cp public/* _gh-pages/$1",
+    "gh-pages:publish": "$(npm bin)/git-directory-deploy --directory _gh-pages",
+    "gh-pages": "npm run gh-pages:clean && npm run gh-pages:build && npm run gh-pages:copy-public && npm run gh-pages:publish"
   },
   "repository": {
     "type": "git",
@@ -69,10 +74,12 @@
     "eslint-plugin-promise": "^3.3.1",
     "eslint-plugin-react": "^6.2.0",
     "eslint-plugin-standard": "^2.0.0",
+    "git-directory-deploy": "^1.5.1",
     "in-publish": "^2.0.0",
     "mocha": "^3.0.2",
     "mocha-lcov-reporter": "^1.2.0",
     "react": "^15.3.1",
+    "react-addons-shallow-compare": "^15.4.2",
     "react-addons-test-utils": "^15.3.1",
     "react-dom": "^15.3.1",
     "react-svg-loader": "^1.1.1",
