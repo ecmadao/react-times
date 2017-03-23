@@ -7,6 +7,13 @@ storiesOf('Classic Theme', module)
   .addWithInfo('basical', () => (
     <TimePickerWrapper theme="classic"/>
   ))
+  .addWithInfo('12 hours mode', () => (
+    <TimePickerWrapper
+      theme="classic"
+      timeMode="12"
+      defaultTime="10:30"
+    />
+  ))
   .addWithInfo('focused at setup', () => (
     <TimePickerWrapper
       focused={true}

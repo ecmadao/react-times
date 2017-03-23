@@ -1,21 +1,19 @@
 import React, { PropTypes } from 'react';
 
-class Button extends React.Component {
-  render() {
-    const {
-      text,
-      onClick
-    } = this.props;
+const Button = (props) => {
+  const {
+    text,
+    onClick
+  } = props;
 
-    return (
-      <div
-        className="time_picker_button"
-        onClick={onClick}>
-        {text}
-      </div>
-    )
-  }
-}
+  return (
+    <div
+      className="time_picker_button"
+      onClick={onClick}>
+      {text}
+    </div>
+  )
+};
 
 Button.propTypes = {
   text: PropTypes.string,
