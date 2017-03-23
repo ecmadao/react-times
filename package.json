@@ -1,6 +1,6 @@
 {
   "name": "react-times",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "A react time-picker component, no jquery-rely",
   "main": "index.js",
   "scripts": {
@@ -18,6 +18,7 @@
     "storybook-pro": "build-storybook -c .storybook -o .out",
     "deploy-storybook": "storybook-to-ghpages",
     "prepublish": "in-publish && safe-publish-latest && npm run build || not-in-publish",
+    "postversion": "git commit package.json -m \"Version $npm_package_version\" && npm run tag && git push && git push --tags && npm publish --registry=https://registry.npmjs.org/",
     "gh-pages:clean": "rimraf _gh-pages",
     "gh-pages:build": "$(npm bin)/build-storybook -o _gh-pages",
     "gh-pages:copy-public": "cp public/* _gh-pages/$1",
