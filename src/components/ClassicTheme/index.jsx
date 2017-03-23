@@ -1,58 +1,90 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import {
+  TIMES_12_MODE,
   TIMES_24_MODE
 } from '../../ConstValue';
-import {
-  getValidateTime
-} from '../../utils';
+import { getValidateTime } from '../../utils';
 
 const propTypes = {
   hour: PropTypes.string,
   minute: PropTypes.string,
-  handleTimeChange: PropTypes.func
+  timeMode: PropTypes.number,
+  timeQuantum: PropTypes.string,
+  handleTimeChange: PropTypes.func,
+  handleTimeQuantumChange: PropTypes.func
 };
 
 const defaultProps = {
   hour: '00',
   minute: '00',
-  handleTimeChange: () => {}
+  timeMode: 24,
+  timeQuantum: 'AM',
+  handleTimeChange: () => {},
+  handleTimeQuantumChange: () => {}
 };
 
 class ClassicTheme extends React.Component {
   constructor(props) {
     super(props);
-    this.handleTimeChange = this.handleTimeChange.bind(this);
+    this.handle12ModeHourChange = this.handle12ModeHourChange.bind(this);
+    this.handle24ModeHourChange = this.handle24ModeHourChange.bind(this);
   }
 
-  handleTimeChange(time) {
-    const {
-      handleTimeChange
-    } = this.props;
+  handle12ModeHourChange(time) {
+    const [times, quantum] = time.split(' ');
+    const { handleTimeChange, handleTimeQuantumChange } = this.props;
+    handleTimeQuantumChange && handleTimeQuantumChange(quantum);
+    handleTimeChange && handleTimeChange(times);
+  }
+
+  handle24ModeHourChange(time) {
+    const { handleTimeChange } = this.props;
     handleTimeChange && handleTimeChange(time);
   }
 
   checkTimeIsActive(time) {
-    const { hour, minute } = this.props;
-    const times = time.split(':');
-    const currentHour = getValidateTime(times[0]);
-    const currentMinute = getValidateTime(times[1]);
+    const { hour, minute, timeQuantum } = this.props;
+    const [times, quantum] = time.split(' ');
+    const [rawHour, rawMinute] = time.split(':');
+    const currentHour = getValidateTime(rawHour);
+    const currentMinute = getValidateTime(rawMinute);
+
     if (hour !== currentHour) {
       return false;
     }
-    if (Math.abs(minute - currentMinute) < 15) {
+    if (quantum && quantum !== timeQuantum) {
+      return false;
+    }
+    if (Math.abs(parseInt(minute) - parseInt(currentMinute)) < 15) {
       return true;
     }
     return false;
   }
 
-  renderTimes() {
+  render12Hours() {
+    return TIMES_12_MODE.map((hourValue, index) => {
+      const timeClass = this.checkTimeIsActive(hourValue) ? 'classic_time active' : 'classic_time';
+      return (
+        <div
+          key={index}
+          onClick={() => {
+            this.handle12ModeHourChange(hourValue);
+          }}
+          className={timeClass}>
+          {hourValue}
+        </div>
+      );
+    });
+  }
+
+  render24Hours() {
     return TIMES_24_MODE.map((hourValue, index) => {
       const timeClass = this.checkTimeIsActive(hourValue) ? 'classic_time active' : 'classic_time';
       return (
         <div
           key={index}
           onClick={() => {
-            this.handleTimeChange(hourValue);
+            this.handle24ModeHourChange(hourValue);
           }}
           className={timeClass}>
           {hourValue}
@@ -62,9 +94,10 @@ class ClassicTheme extends React.Component {
   }
 
   render() {
+    const { timeMode } = this.props;
     return (
       <div className="classic_theme_container">
-        {this.renderTimes()}
+        {timeMode === 12 ? this.render12Hours() : this.render24Hours()}
       </div>
     )
   }

@@ -1,9 +1,8 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 
 import OutsideClickHandler from './OutsideClickHandler';
 import MaterialTheme from './MaterialTheme';
 import ClassicTheme from './ClassicTheme';
-
 import {
   initialTime,
   getValidateTime,
@@ -156,12 +155,16 @@ class TimePicker extends React.Component {
   }
 
   renderClassicTheme() {
+    const { timeMode } = this.props;
     const [ hour, minute ] = this.getHourAndMinute();
     return (
       <ClassicTheme
         hour={hour}
         minute={minute}
+        timeMode={parseInt(timeMode)}
+        timeQuantum={this.timeQuantum}
         handleTimeChange={this.handleHourAndMinuteChange}
+        handleTimeQuantumChange={this.handleTimeQuantumChange}
       />
     )
   }
@@ -185,7 +188,7 @@ class TimePicker extends React.Component {
     } = this.props;
 
     const { focused } = this.state;
-    const [ hour, minute ] = this.getHourAndMinute();
+    const [hour, minute] = this.getHourAndMinute();
     const validateTimeMode = getValidateTimeMode(timeMode);
     const quantum = LANGUAGE[this.timeQuantum.toLowerCase()] || this.timeQuantum;
 

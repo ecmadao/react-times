@@ -28,7 +28,7 @@ const defaultProps = {
 
 class MaterialTheme extends React.Component {
   renderTwentyFourHoursMode() {
-    let {
+    const {
       hour,
       minute,
       autoMode,
@@ -49,7 +49,7 @@ class MaterialTheme extends React.Component {
   }
 
   renderTwelveHoursMode() {
-    let {
+    const {
       hour,
       minute,
       language,
