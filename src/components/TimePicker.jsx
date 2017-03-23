@@ -188,7 +188,7 @@ class TimePicker extends React.Component {
     } = this.props;
 
     const { focused } = this.state;
-    const [ hour, minute ] = this.getHourAndMinute();
+    const [hour, minute] = this.getHourAndMinute();
     const validateTimeMode = getValidateTimeMode(timeMode);
     const quantum = LANGUAGE[this.timeQuantum.toLowerCase()] || this.timeQuantum;
 

@@ -18,6 +18,7 @@
     "storybook-pro": "build-storybook -c .storybook -o .out",
     "deploy-storybook": "storybook-to-ghpages",
     "prepublish": "in-publish && safe-publish-latest && npm run build || not-in-publish",
+    "tag": "git tag v$npm_package_version",
     "postversion": "git commit package.json -m \"Version $npm_package_version\" && npm run tag && git push && git push --tags && npm publish --registry=https://registry.npmjs.org/",
     "gh-pages:clean": "rimraf _gh-pages",
     "gh-pages:build": "$(npm bin)/build-storybook -o _gh-pages",
