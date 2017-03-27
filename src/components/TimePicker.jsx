@@ -20,6 +20,7 @@ const propTypes = {
   timeQuantum: PropTypes.string,
   focused: PropTypes.bool,
   autoMode: PropTypes.bool,
+  dragable: PropTypes.bool,
   placeholder: PropTypes.string,
   colorPalette: PropTypes.string,
   theme: PropTypes.string,
@@ -46,10 +47,11 @@ const defaultProps = {
   timeQuantum: 'AM',
   focused: false,
   autoMode: true,
+  dragable: true,
   placeholder: '',
-  colorPalette: "light",
+  colorPalette: 'light',
   timeMode: 24,
-  theme: "material",
+  theme: 'material',
   withoutIcon: false,
   onFocusChange: () => {},
   onHourChange: () => {},
@@ -135,7 +137,7 @@ class TimePicker extends React.Component {
   }
 
   renderMaterialTheme() {
-    const { timeMode, autoMode } = this.props;
+    const { timeMode, autoMode, dragable } = this.props;
     const [ hour, minute ] = this.getHourAndMinute();
 
     return (
@@ -150,17 +152,19 @@ class TimePicker extends React.Component {
         handleMinuteChange={this.handleMinuteChange}
         handleTimeQuantumChange={this.handleTimeQuantumChange}
         timeQuantum={this.timeQuantum}
+        dragable={dragable}
       />
     )
   }
 
   renderClassicTheme() {
-    const { timeMode } = this.props;
+    const { timeMode, colorPalette } = this.props;
     const [ hour, minute ] = this.getHourAndMinute();
     return (
       <ClassicTheme
         hour={hour}
         minute={minute}
+        colorPalette={colorPalette}
         timeMode={parseInt(timeMode)}
         timeQuantum={this.timeQuantum}
         handleTimeChange={this.handleHourAndMinuteChange}

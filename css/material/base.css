@@ -2,6 +2,7 @@
 
 .time_picker_modal_container {
   user-select: none;
+  cursor: default;
   position: absolute;
   opacity: 0;
   z-index: -1;
@@ -174,10 +175,13 @@
   top: -17.5px;
   left: -15.5px;
   background-color: #3498db;
-  cursor: move;
   color: #fff;
   text-align: center;
   line-height: 35px;
+}
+
+.picker_pointer .pointer_drag.dragable {
+  cursor: move;
 }
 
 .buttons_wrapper {

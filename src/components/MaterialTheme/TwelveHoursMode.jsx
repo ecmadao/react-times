@@ -117,6 +117,7 @@ class TwelveHoursMode extends React.Component {
       hour,
       minute,
       language,
+      dragable,
       clearFoucs,
       timeQuantum
     } = this.props;
@@ -165,6 +166,7 @@ class TwelveHoursMode extends React.Component {
             rotateState={hourRotateState}
             time={parseInt(hour)}
             maxLength={MIN_ABSOLUTE_POSITION}
+            dragable={dragable}
             handleTimePointerClick={this.handleHourPointerClick} />
           <PickerDargHandler
             step={1}

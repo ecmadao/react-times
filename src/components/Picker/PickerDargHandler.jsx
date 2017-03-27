@@ -18,6 +18,7 @@ import {
 const propTypes = {
   time: PropTypes.number,
   step: PropTypes.number,
+  dragable: PropTypes.bool,
   pointerRotate: PropTypes.number,
   minLength: PropTypes.number,
   maxLength: PropTypes.number,
@@ -204,7 +205,7 @@ class PickerDargHandler extends React.Component {
   }
 
   render() {
-    const { time } = this.props;
+    const { time, dragable } = this.props;
     const { draging, height, top, pointerRotate } = this.state;
     const pickerPointerClass = draging ? "picker_pointer" : "picker_pointer animation";
 
@@ -215,9 +216,9 @@ class PickerDargHandler extends React.Component {
           className={pickerPointerClass}
           style={getInitialPointerStyle(height, top, pointerRotate)}>
           <div
-            className="pointer_drag"
+            className={`pointer_drag ${dragable ? 'dragable' : ''}`}
             style={getRotateStyle(-pointerRotate)}
-            onMouseDown={this.handleMouseDown}
+            onMouseDown={dragable ? this.handleMouseDown : () => {}}
           >
             {time}
           </div>

@@ -127,7 +127,8 @@ class TwentyFourHoursMode extends React.Component {
   render() {
     const {
       hour,
-      minute
+      minute,
+      dragable
     } = this.props;
     const { step, pointerRotate } = this.state;
 
@@ -159,6 +160,7 @@ class TwentyFourHoursMode extends React.Component {
           />
           <PickerDargHandler
             step={step}
+            dragable={dragable}
             rotateState={rotateState}
             time={step === 0 ? parseInt(hour) : parseInt(minute)}
             minLength={step === 0 ? MIN_ABSOLUTE_POSITION : MAX_ABSOLUTE_POSITION}
