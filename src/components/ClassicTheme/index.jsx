@@ -10,6 +10,7 @@ const propTypes = {
   minute: PropTypes.string,
   timeMode: PropTypes.number,
   timeQuantum: PropTypes.string,
+  colorPalette: PropTypes.string,
   handleTimeChange: PropTypes.func,
   handleTimeQuantumChange: PropTypes.func
 };
@@ -19,6 +20,7 @@ const defaultProps = {
   minute: '00',
   timeMode: 24,
   timeQuantum: 'AM',
+  colorPalette: 'light',
   handleTimeChange: () => {},
   handleTimeQuantumChange: () => {}
 };
@@ -62,6 +64,7 @@ class ClassicTheme extends React.Component {
   }
 
   render12Hours() {
+    const { colorPalette } = this.props;
     return TIMES_12_MODE.map((hourValue, index) => {
       const timeClass = this.checkTimeIsActive(hourValue) ? 'classic_time active' : 'classic_time';
       return (
@@ -70,7 +73,7 @@ class ClassicTheme extends React.Component {
           onClick={() => {
             this.handle12ModeHourChange(hourValue);
           }}
-          className={timeClass}>
+          className={`${timeClass} ${colorPalette}`}>
           {hourValue}
         </div>
       );
@@ -78,6 +81,7 @@ class ClassicTheme extends React.Component {
   }
 
   render24Hours() {
+    const { colorPalette } = this.props;
     return TIMES_24_MODE.map((hourValue, index) => {
       const timeClass = this.checkTimeIsActive(hourValue) ? 'classic_time active' : 'classic_time';
       return (
@@ -86,7 +90,7 @@ class ClassicTheme extends React.Component {
           onClick={() => {
             this.handle24ModeHourChange(hourValue);
           }}
-          className={timeClass}>
+          className={`${timeClass} ${colorPalette}`}>
           {hourValue}
         </div>
       );

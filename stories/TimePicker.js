@@ -22,9 +22,8 @@ storiesOf('Default TimePicker', module)
       focused={true}
     />
   ))
-  .addWithInfo('focused at setup', () => (
+  .addWithInfo('undragable', () => (
     <TimePickerWrapper
-      withoutIcon={true}
-      focused={true}
+      dragable={false}
     />
   ));

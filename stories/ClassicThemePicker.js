@@ -7,6 +7,9 @@ storiesOf('Classic Theme', module)
   .addWithInfo('basical', () => (
     <TimePickerWrapper theme="classic"/>
   ))
+  .addWithInfo('dark color', () => (
+    <TimePickerWrapper theme="classic" colorPalette="dark"/>
+  ))
   .addWithInfo('12 hours mode', () => (
     <TimePickerWrapper
       theme="classic"
@@ -19,10 +22,4 @@ storiesOf('Classic Theme', module)
       focused={true}
       theme="classic"
     />
-  ))
-  .addWithInfo('dark color', () => (
-    <TimePickerWrapper
-      colorPalette="dark"
-      theme="classic"
-    />
-  ));
+));

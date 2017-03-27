@@ -231,6 +231,16 @@ timeMode=12
 />
 ```
 
+- `dragable`
+
+如果想禁用拖拽，则可以设置 `dragable` 为 `false`，那样的话用户只能通过点击来改变时间。默认为 `true`
+
+```
+<TimePicker
+  dragable={true}
+/>
+```
+
 - `language`
 
 > 语言。默认为英语

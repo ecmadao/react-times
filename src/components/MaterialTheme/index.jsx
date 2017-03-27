@@ -8,6 +8,7 @@ const propTypes = {
   minute: PropTypes.string,
   timeMode: PropTypes.number,
   autoMode: PropTypes.bool,
+  dragable: PropTypes.bool,
   language: PropTypes.object,
   timeQuantum: PropTypes.string,
   handleHourChange: PropTypes.func,
@@ -32,6 +33,7 @@ class MaterialTheme extends React.Component {
       hour,
       minute,
       autoMode,
+      dragable,
       clearFoucs,
       handleHourChange,
       handleMinuteChange
@@ -40,6 +42,7 @@ class MaterialTheme extends React.Component {
       <TwentyFourHoursMode
         hour={hour}
         minute={minute}
+        dragable={dragable}
         autoMode={autoMode}
         handleHourChange={handleHourChange}
         handleMinuteChange={handleMinuteChange}
@@ -53,6 +56,7 @@ class MaterialTheme extends React.Component {
       hour,
       minute,
       language,
+      dragable,
       clearFoucs,
       timeQuantum,
       handleHourChange,
@@ -64,6 +68,7 @@ class MaterialTheme extends React.Component {
       <TwelveHoursMode
         hour={hour}
         minute={minute}
+        dragable={dragable}
         language={language}
         clearFoucs={clearFoucs}
         timeQuantum={timeQuantum}

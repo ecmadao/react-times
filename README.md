@@ -228,6 +228,16 @@ timeMode=12
 />
 ```
 
+- `dragable`
+
+If you don't want to drag the pointer, then you can set `dragable` props to `false`, then users can only use click to change time. Default `true`
+
+```
+<TimePicker
+  dragable={true}
+/>
+```
+
 - `language`
 
 > `React.string`, use different language. Default english.
