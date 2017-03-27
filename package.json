@@ -1,6 +1,6 @@
 {
   "name": "react-times",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "A react time-picker component, no jquery-rely",
   "main": "index.js",
   "scripts": {
