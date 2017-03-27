@@ -2,16 +2,12 @@
 @import "./button.css";
 
 .dark .time_picker_preview {
-  background-color: #4a4a4a;
-  color: #fff;
 }
 
 .dark .time_picker_preview .preview_container svg {
-  fill: #fff;
 }
 
 .dark .time_picker_preview.active {
-  background-color: #343434;
 }
 
 .dark .time_picker_modal_container {
@@ -19,12 +15,11 @@
 }
 
 .dark .time_picker_modal_header {
-  color: #b5b5b5;
+  background-color: #343434;
 }
 
 .dark .time_picker_modal_header .time_picker_header.active,
 .dark .time_picker_modal_header .time_picker_header:hover {
-  color: #F4511E;
 }
 
 .dark .picker_container {

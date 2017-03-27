@@ -1,6 +1,7 @@
 @import "../base.css";
 
 .classic_theme_container {
+  user-select: none;
   position: absolute;
   opacity: 0;
   z-index: -1;

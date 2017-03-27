@@ -148,7 +148,7 @@ class TwentyFourHoursMode extends React.Component {
           <span
             className={activeHourClass}
             onClick={this.handleStepChange.bind(this, 0)}>{hour}</span>
-          &nbsp;:&nbsp;
+          <span className="time_picker_header_delivery">:</span>
           <span className={activeMinuteClass}
             onClick={this.handleStepChange.bind(this, 1)}>{minute}</span>
         </div>
