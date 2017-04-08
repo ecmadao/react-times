@@ -77,6 +77,13 @@ class TimePicker extends React.Component {
     this.handleHourAndMinuteChange = this.handleHourAndMinuteChange.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { focused } = nextProps;
+    if (focused !== this.state.focused) {
+      this.setState({ focused });
+    }
+  }
+
   onFocus() {
     this.setState({ focused: true });
     const { onFocusChange } = this.props;
@@ -171,13 +178,6 @@ class TimePicker extends React.Component {
         handleTimeQuantumChange={this.handleTimeQuantumChange}
       />
     )
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { focused } = nextProps;
-    if (focused !== this.state.focused) {
-      this.setState({ focused });
-    }
   }
 
   render() {
