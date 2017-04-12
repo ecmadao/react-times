@@ -90,22 +90,19 @@ class TimePickerWrapper extends React.Component {
     const { hour, minute, timeQuantum, focused } = this.state;
 
     return (
-      <div>
-        <div className="mock"></div>
-        <div className="time_picker_wrapper">
-          <TimePicker
-            {...this.props}
-            time={hour && minute ? `${hour}:${minute}` : null}
-            timeQuantum={timeQuantum}
-            onHourChange={this.onHourChange}
-            onMinuteChange={this.onMinuteChange}
-            onTimeChange={this.onTimeChange}
-            onFocusChange={this.onFocusChange}
-            onTimeQuantumChange={this.onTimeQuantumChange}
-            trigger={this.trigger}
-            focused={focused}
-          />
-        </div>
+      <div className="time_picker_wrapper">
+        <TimePicker
+          {...this.props}
+          time={hour && minute ? `${hour}:${minute}` : null}
+          timeQuantum={timeQuantum}
+          onHourChange={this.onHourChange}
+          onMinuteChange={this.onMinuteChange}
+          onTimeChange={this.onTimeChange}
+          onFocusChange={this.onFocusChange}
+          onTimeQuantumChange={this.onTimeQuantumChange}
+          trigger={this.trigger}
+          focused={focused}
+        />
       </div>
     )
   }

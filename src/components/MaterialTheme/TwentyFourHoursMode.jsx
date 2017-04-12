@@ -137,11 +137,11 @@ class TwentyFourHoursMode extends React.Component {
     const { step, pointerRotate } = this.state;
 
     const activeHourClass = step === 0
-      ? "time_picker_header active"
-      : "time_picker_header";
+      ? 'time_picker_header active'
+      : 'time_picker_header';
     const activeMinuteClass = step === 1
-      ? "time_picker_header active"
-      : "time_picker_header";
+      ? 'time_picker_header active'
+      : 'time_picker_header';
     const [ top, height ] = this.getTopAndHeight();
     const rotateState = {
       top,
@@ -152,16 +152,16 @@ class TwentyFourHoursMode extends React.Component {
     const PickerPointGenerator = pickerPointGenerator(type);
 
     return (
-      <div className="time_picker_modal_container">
-        <div className="time_picker_modal_header">
+      <div className='time_picker_modal_container'>
+        <div className='time_picker_modal_header'>
           <span
             className={activeHourClass}
             onClick={this.handleStepChange.bind(this, 0)}>{hour}</span>
-          <span className="time_picker_header_delivery">:</span>
+          <span className='time_picker_header_delivery'>:</span>
           <span className={activeMinuteClass}
             onClick={this.handleStepChange.bind(this, 1)}>{minute}</span>
         </div>
-        <div className="picker_container">
+        <div className='picker_container'>
           <PickerPointGenerator
             ref={ref => this.pickerPointerContainer = ref}
             handleTimePointerClick={this.handleTimePointerClick}

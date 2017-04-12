@@ -1,4 +1,4 @@
-export const mousePosition = (e) => {
+const mousePosition = (e) => {
   e = e || window.event;
   const xPos = e.pageX
     ? e.pageX
@@ -12,13 +12,13 @@ export const mousePosition = (e) => {
   };
 };
 
-export const disableMouseDown = (e) => {
+const disableMouseDown = (e) => {
   const event = e || window.event;
   event.preventDefault();
   event.stopPropagation();
 };
 
-export const getRotateStyle = (degree) => {
+const getRotateStyle = (degree) => {
   return {
     'transform': `rotate(${degree}deg)`,
     'OTransform': `rotate(${degree}deg)`,
@@ -28,7 +28,7 @@ export const getRotateStyle = (degree) => {
   };
 };
 
-export const getInlineRotateStyle = (degree) => {
+const getInlineRotateStyle = (degree) => {
   return {
     'transform': `translateX(-50%) rotate(${degree}deg)`,
     'OTransform': `translateX(-50%) rotate(${degree}deg)`,
@@ -38,7 +38,7 @@ export const getInlineRotateStyle = (degree) => {
   };
 };
 
-export const getInitialPointerStyle = (height, top, degree) => {
+const getInitialPointerStyle = (height, top, degree) => {
   return {
     'height': `${height}px`,
     'top': `${top}px`,
@@ -50,7 +50,7 @@ export const getInitialPointerStyle = (height, top, degree) => {
   };
 };
 
-export const getStandardAbsolutePosition = (position, minPosition, maxPosition) => {
+const getStandardAbsolutePosition = (position, minPosition, maxPosition) => {
   if (position < minPosition) {
     position = minPosition;
   }
@@ -60,4 +60,14 @@ export const getStandardAbsolutePosition = (position, minPosition, maxPosition) 
   return position;
 };
 
-export const degree2Radian = (degree) => degree * (2 * Math.PI) / 360;
+const degree2Radian = (degree) => degree * (2 * Math.PI) / 360;
+
+export default {
+  degree2Radian,
+  mousePosition,
+  disableMouseDown,
+  rotateStyle: getRotateStyle,
+  inlineRotateStyle: getInlineRotateStyle,
+  initialPointerStyle: getInitialPointerStyle,
+  validatePosition: getStandardAbsolutePosition
+};

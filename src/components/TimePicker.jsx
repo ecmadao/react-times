@@ -190,10 +190,9 @@ class TimePicker extends React.Component {
     const validateTimeMode = timeHelper.validateTimeMode(timeMode);
     const quantum = LANGUAGE[this.timeQuantum.toLowerCase()] || this.timeQuantum;
 
-    let times = `${hour} : ${minute}`;
-    if (validateTimeMode === 12) {
-      times = `${times} ${quantum}`;
-    }
+    const times = validateTimeMode === 12
+      ? `${times} ${quantum}`
+      : `${hour} : ${minute}`;
     const pickerPreviewClass = focused
       ? 'time_picker_preview active'
       : 'time_picker_preview';
@@ -219,7 +218,9 @@ class TimePicker extends React.Component {
         <OutsideClickHandler
           onOutsideClick={this.onClearFocus}
           focused={focused}>
-          {theme === 'material' ? this.renderMaterialTheme() : this.renderClassicTheme()}
+          {theme === 'material'
+            ? this.renderMaterialTheme()
+            : this.renderClassicTheme()}
         </OutsideClickHandler>
       </div>
     );

@@ -35,7 +35,7 @@ class OutsideClickHandler extends React.Component {
 
   onOutsideClick(e) {
     e = e || window.event;
-    const mouseTarget = (typeof e.which !== "undefined") ? e.which : e.button;
+    const mouseTarget = (typeof e.which !== 'undefined') ? e.which : e.button;
     const isDescendantOfRoot = ReactDOM.findDOMNode(this.childNode).contains(e.target);
     if (!isDescendantOfRoot && mouseTarget === 1) {
       const { onOutsideClick } = this.props;

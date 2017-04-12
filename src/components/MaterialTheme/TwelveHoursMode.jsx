@@ -142,19 +142,19 @@ class TwelveHoursMode extends React.Component {
 
     const handleQuantumChange = this.handleTimeQuantumChange.bind(
       this,
-      timeQuantum === "AM" ? "PM" : "AM"
+      timeQuantum === 'AM' ? 'PM' : 'AM'
     );
 
     return (
-      <div className="time_picker_modal_container">
-        <div className="time_picker_modal_header">
+      <div className='time_picker_modal_container'>
+        <div className='time_picker_modal_header'>
           <span
-            className="time_picker_header active">{hour}:{minute}</span>&nbsp;
+            className='time_picker_header active'>{hour}:{minute}</span>&nbsp;
           <span
             onClick={handleQuantumChange}
-            className="time_picker_header quantum">{timeQuantum}</span>
+            className='time_picker_header quantum'>{timeQuantum}</span>
         </div>
-        <div className="picker_container">
+        <div className='picker_container'>
           <HourPickerPointGenerator
             handleTimePointerClick={this.handleHourPointerClick}
           />
@@ -175,7 +175,7 @@ class TwelveHoursMode extends React.Component {
             minLength={MAX_ABSOLUTE_POSITION}
             handleTimePointerClick={this.handleMinutePointerClick} />
         </div>
-        <div className="buttons_wrapper">
+        <div className='buttons_wrapper'>
           <Button
             onClick={clearFoucs}
             text={language.close}
