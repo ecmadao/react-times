@@ -1,9 +1,7 @@
 import moment from 'moment';
 import { expect } from 'chai';
-import {
-  getStandardAbsolutePosition
-} from '../src/utils/drag';
 import timeHelper from '../src/utils/time';
+import drag from '../src/utils/drag';
 import {
   MAX_ABSOLUTE_POSITION,
   MIN_ABSOLUTE_POSITION
@@ -98,11 +96,11 @@ describe('Utils Test', () => {
 
   describe('Test getStandardAbsolutePosition func', () => {
     it('should return the MinPosition', () => {
-      expect(getStandardAbsolutePosition(MIN_ABSOLUTE_POSITION - 1, MIN_ABSOLUTE_POSITION, MAX_ABSOLUTE_POSITION)).to.equal(MIN_ABSOLUTE_POSITION);
+      expect(drag.validatePosition(MIN_ABSOLUTE_POSITION - 1, MIN_ABSOLUTE_POSITION, MAX_ABSOLUTE_POSITION)).to.equal(MIN_ABSOLUTE_POSITION);
     });
 
     it('should return the MaxPosition', () => {
-      expect(getStandardAbsolutePosition(MAX_ABSOLUTE_POSITION + 1, MAX_ABSOLUTE_POSITION, MAX_ABSOLUTE_POSITION)).to.equal(MAX_ABSOLUTE_POSITION);
+      expect(drag.validatePosition(MAX_ABSOLUTE_POSITION + 1, MAX_ABSOLUTE_POSITION, MAX_ABSOLUTE_POSITION)).to.equal(MAX_ABSOLUTE_POSITION);
     });
   });
 });
