@@ -6,8 +6,8 @@ import {
   PICKER_RADIUS,
   MAX_ABSOLUTE_POSITION,
   MIN_ABSOLUTE_POSITION
-} from '../../ConstValue.js';
-import language from '../../language';
+} from '../../utils/const_value.js';
+import language from '../../utils/language';
 
 const propTypes = {
   language: PropTypes.object,
@@ -32,12 +32,12 @@ import pickerPointGenerator from '../Picker/PickerPointGenerator';
 class TwelveHoursMode extends React.Component {
   constructor(props) {
     super(props);
-    let hourPointerRotate = this.resetHourDegree();
-    let minutePointerRotate = this.resetMinuteDegree();
+    const hourPointerRotate = this.resetHourDegree();
+    const minutePointerRotate = this.resetMinuteDegree();
     this.state = {
       hourPointerRotate,
       minutePointerRotate
-    }
+    };
     this.handleHourChange = this.handleHourChange.bind(this);
     this.handleMinuteChange = this.handleMinuteChange.bind(this);
     this.handleDegreeChange = this.handleDegreeChange.bind(this);
@@ -182,7 +182,7 @@ class TwelveHoursMode extends React.Component {
           />
         </div>
       </div>
-    )
+    );
   }
 }
 

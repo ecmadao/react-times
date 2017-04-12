@@ -45,12 +45,14 @@ class OutsideClickHandler extends React.Component {
 
   render() {
     const { focused } = this.props;
-    const outsideClass = focused ? "outside_container active" : "outside_container";
+    const outsideClass = focused
+      ? 'outside_container active'
+      : 'outside_container';
     return (
       <div ref={(c) => this.childNode = c} className={outsideClass}>
         {this.props.children}
       </div>
-    )
+    );
   }
 }
 

@@ -4,7 +4,7 @@ import {
   MINUTES,
   HOURS,
   TWELVE_HOURS
-} from '../../ConstValue.js';
+} from '../../utils/const_value.js';
 import PickerPoint from './PickerPoint';
 
 const pickerPointGenerator = (type = "hour", mode = 24) => {
@@ -33,7 +33,7 @@ const pickerPointGenerator = (type = "hour", mode = 24) => {
               angle={angle}
               handleTimeChange={this.handleTimePointerClick}
             />
-          )
+          );
         }
       });
     }
@@ -51,7 +51,7 @@ const pickerPointGenerator = (type = "hour", mode = 24) => {
             pointClass={pointClass}
             handleTimeChange={this.handleTimePointerClick}
           />
-        )
+        );
       });
     }
 
@@ -62,7 +62,7 @@ const pickerPointGenerator = (type = "hour", mode = 24) => {
           id="picker_pointer_container">
           {type === "hour" ? this.renderHourPointes() : this.renderMinutePointes()}
         </div>
-      )
+      );
     }
   }
 };

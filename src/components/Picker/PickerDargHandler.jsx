@@ -6,14 +6,14 @@ import {
   MIN_ABSOLUTE_POSITION,
   MAX_ABSOLUTE_POSITION,
   POINTER_RADIUS
-} from '../../ConstValue.js';
+} from '../../utils/const_value.js';
 import {
   degree2Radian,
   mousePosition,
   getRotateStyle,
   getInitialPointerStyle,
   getStandardAbsolutePosition
-} from '../../utils.js';
+} from '../../utils/drag.js';
 
 const propTypes = {
   time: PropTypes.number,
@@ -227,7 +227,7 @@ class PickerDargHandler extends React.Component {
           className="picker_center"
           ref={(p) => this.pickerCenter = p}></div>
       </div>
-    )
+    );
   }
 }
 

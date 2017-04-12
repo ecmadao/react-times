@@ -6,7 +6,7 @@ import {
   PICKER_RADIUS,
   MAX_ABSOLUTE_POSITION,
   MIN_ABSOLUTE_POSITION
-} from '../../ConstValue.js';
+} from '../../utils/const_value.js';
 
 const propTypes = {
   step: PropTypes.number,
@@ -119,8 +119,12 @@ class TwentyFourHoursMode extends React.Component {
     let time = step === 0 ? hour : minute;
     let splitNum = step === 0 ? 12 : 60;
     let minLength = step === 0 ? MIN_ABSOLUTE_POSITION : MAX_ABSOLUTE_POSITION;
-    let height = time < splitNum ? minLength - POINTER_RADIUS : MAX_ABSOLUTE_POSITION - POINTER_RADIUS;
-    let top = time < splitNum ? PICKER_RADIUS - minLength + POINTER_RADIUS : PICKER_RADIUS - MAX_ABSOLUTE_POSITION + POINTER_RADIUS;
+    let height = time < splitNum
+      ? minLength - POINTER_RADIUS
+      : MAX_ABSOLUTE_POSITION - POINTER_RADIUS;
+    let top = time < splitNum
+      ? PICKER_RADIUS - minLength + POINTER_RADIUS
+      : PICKER_RADIUS - MAX_ABSOLUTE_POSITION + POINTER_RADIUS;
     return [top, height];
   }
 
@@ -132,8 +136,12 @@ class TwentyFourHoursMode extends React.Component {
     } = this.props;
     const { step, pointerRotate } = this.state;
 
-    const activeHourClass = step === 0 ? "time_picker_header active" : "time_picker_header";
-    const activeMinuteClass = step === 1 ? "time_picker_header active" : "time_picker_header";
+    const activeHourClass = step === 0
+      ? "time_picker_header active"
+      : "time_picker_header";
+    const activeMinuteClass = step === 1
+      ? "time_picker_header active"
+      : "time_picker_header";
     const [ top, height ] = this.getTopAndHeight();
     const rotateState = {
       top,
@@ -167,7 +175,7 @@ class TwentyFourHoursMode extends React.Component {
             handleTimePointerClick={this.handleTimePointerClick} />
         </div>
       </div>
-    )
+    );
   }
 }
 

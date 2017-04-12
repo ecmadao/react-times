@@ -3,7 +3,7 @@ import {
   getRotateStyle,
   disableMouseDown,
   getInlineRotateStyle
-} from '../../utils.js';
+} from '../../utils/drag.js';
 
 const propTypes = {
   index: PropTypes.number,
@@ -20,7 +20,6 @@ const defaultProps = {
 };
 
 class PickerPoint extends React.Component {
-
   render() {
     const { index, handleTimeChange, pointClass, angle } = this.props;
     const inlineStyle = getInlineRotateStyle(angle);

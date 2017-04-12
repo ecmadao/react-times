@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import TwelveHoursMode from './TwelveHoursMode';
 import TwentyFourHoursMode from './TwentyFourHoursMode';
-import language from '../../language';
+import language from '../../utils/language';
 
 const propTypes = {
   hour: PropTypes.string,
@@ -83,9 +83,11 @@ class MaterialTheme extends React.Component {
     const { timeMode } = this.props;
     return (
       <div>
-        {parseInt(timeMode) === 24 ? this.renderTwentyFourHoursMode() : this.renderTwelveHoursMode()}
+        {parseInt(timeMode) === 24
+          ? this.renderTwentyFourHoursMode()
+          : this.renderTwelveHoursMode()}
       </div>
-    )
+    );
   }
 }
 

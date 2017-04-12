@@ -5,3 +5,8 @@
 /.storybook
 /intro_src
 /test
+/src
+/.coveralls.yml
+/.travis.yml
+/webpack.config.js
+/README_CN.md

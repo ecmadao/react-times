@@ -1,7 +1,7 @@
 import React from 'react';
 import TimePicker from '../src/components/TimePicker';
-import timeHelper from '../src/time';
-import ICONS from '../src/icons';
+import timeHelper from '../src/utils/time';
+import ICONS from '../src/utils/icons';
 
 class TimePickerWrapper extends React.Component {
   constructor(props) {
@@ -73,7 +73,7 @@ class TimePickerWrapper extends React.Component {
         className="time_picker_trigger">
         {ICONS.time}
       </div>
-    )
+    );
   }
 
   get trigger() {
@@ -90,19 +90,22 @@ class TimePickerWrapper extends React.Component {
     const { hour, minute, timeQuantum, focused } = this.state;
 
     return (
-      <div className="time_picker_wrapper">
-        <TimePicker
-          {...this.props}
-          time={hour && minute ? `${hour}:${minute}` : null}
-          timeQuantum={timeQuantum}
-          onHourChange={this.onHourChange}
-          onMinuteChange={this.onMinuteChange}
-          onTimeChange={this.onTimeChange}
-          onFocusChange={this.onFocusChange}
-          onTimeQuantumChange={this.onTimeQuantumChange}
-          trigger={this.trigger}
-          focused={focused}
-        />
+      <div>
+        <div className="mock"></div>
+        <div className="time_picker_wrapper">
+          <TimePicker
+            {...this.props}
+            time={hour && minute ? `${hour}:${minute}` : null}
+            timeQuantum={timeQuantum}
+            onHourChange={this.onHourChange}
+            onMinuteChange={this.onMinuteChange}
+            onTimeChange={this.onTimeChange}
+            onFocusChange={this.onFocusChange}
+            onTimeQuantumChange={this.onTimeQuantumChange}
+            trigger={this.trigger}
+            focused={focused}
+          />
+        </div>
       </div>
     )
   }
@@ -113,6 +116,6 @@ TimePickerWrapper.defaultProps = {
   focused: false,
   defaultTime: null,
   timeQuantum: 'AM'
-}
+};
 
 export default TimePickerWrapper;
