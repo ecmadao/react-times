@@ -1,3 +1,5 @@
+*.lock
+.DS_Store
 /lib
 /.out
 /node_modules
