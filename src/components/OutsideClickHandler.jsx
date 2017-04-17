@@ -11,7 +11,7 @@ const defaultProps = {
   onOutsideClick: () => {},
 };
 
-class OutsideClickHandler extends React.Component {
+class OutsideClickHandler extends React.PureComponent {
   constructor(props) {
     super(props);
     this.onOutsideClick = this.onOutsideClick.bind(this);

@@ -38,7 +38,7 @@ const defaultProps = {
   handleTimePointerClick: () => {}
 };
 
-class PickerDargHandler extends React.Component {
+class PickerDargHandler extends React.PureComponent {
   constructor(props) {
     super(props);
     this.startX = 0;
@@ -89,6 +89,7 @@ class PickerDargHandler extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    console.log(`PickerPointGenerator update`);
     const { step, time, rotateState } = this.props;
     const prevStep = prevProps.step;
     const prevTime = prevProps.time;
@@ -123,8 +124,6 @@ class PickerDargHandler extends React.Component {
     const centerPointPos = centerPoint.getBoundingClientRect();
     this.originX = centerPointPos.left + centerPoint.clientWidth;
     this.originY = centerPointPos.top + centerPoint.clientWidth;
-    console.log(`this.originX: ${this.originX}`)
-    console.log(`this.originY: ${this.originY}`)
   }
 
   getRadian(x, y) {

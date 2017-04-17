@@ -15,26 +15,24 @@ const defaultProps = {
   handleTimeChange: () => {}
 };
 
-class PickerPoint extends React.Component {
-  render() {
-    const { index, handleTimeChange, pointClass, angle } = this.props;
-    const inlineStyle = darg.inlineRotateStyle(angle);
-    const wrapperStyle = darg.rotateStyle(-angle);
+const PickerPoint = (props) => {
+  const { index, handleTimeChange, pointClass, angle } = props;
+  const inlineStyle = darg.inlineRotateStyle(angle);
+  const wrapperStyle = darg.rotateStyle(-angle);
 
-    return (
-      <div
-        className={pointClass}
-        style={inlineStyle}
-        onClick={() => {
-          handleTimeChange(index, angle)
-        }}
-        onMouseDown={darg.disableMouseDown}>
-        <div className="point_wrapper" style={wrapperStyle}>
-          {index}
-        </div>
+  return (
+    <div
+      className={pointClass}
+      style={inlineStyle}
+      onClick={() => {
+        handleTimeChange(index, angle)
+      }}
+      onMouseDown={darg.disableMouseDown}>
+      <div className="point_wrapper" style={wrapperStyle}>
+        {index}
       </div>
-    )
-  }
+    </div>
+  );
 }
 
 PickerPoint.propTypes = propTypes;

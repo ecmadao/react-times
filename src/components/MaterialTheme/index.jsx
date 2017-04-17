@@ -27,7 +27,7 @@ const defaultProps = {
   handleTimeQuantumChange: () => {}
 };
 
-class MaterialTheme extends React.Component {
+class MaterialTheme extends React.PureComponent {
   renderTwentyFourHoursMode() {
     const {
       hour,

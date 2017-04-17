@@ -29,7 +29,7 @@ import Button from '../Common/Button';
 import PickerDargHandler from '../Picker/PickerDargHandler';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';
 
-class TwelveHoursMode extends React.Component {
+class TwelveHoursMode extends React.PureComponent {
   constructor(props) {
     super(props);
     const hourPointerRotate = this.resetHourDegree();

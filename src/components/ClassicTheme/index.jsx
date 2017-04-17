@@ -25,7 +25,7 @@ const defaultProps = {
   handleTimeQuantumChange: () => {}
 };
 
-class ClassicTheme extends React.Component {
+class ClassicTheme extends React.PureComponent {
   constructor(props) {
     super(props);
     this.handle12ModeHourChange = this.handle12ModeHourChange.bind(this);

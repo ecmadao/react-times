@@ -31,7 +31,8 @@ const propTypes = {
   trigger: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.object,
-    PropTypes.instanceOf(React.Component)
+    PropTypes.instanceOf(React.Component),
+    PropTypes.instanceOf(React.PureComponent)
   ]),
   language: PropTypes.string
 };
@@ -56,7 +57,7 @@ const defaultProps = {
   language: 'en'
 };
 
-class TimePicker extends React.Component {
+class TimePicker extends React.PureComponent {
   constructor(props) {
     super(props);
     const { focused } = props;
@@ -191,7 +192,7 @@ class TimePicker extends React.Component {
     const quantum = LANGUAGE[this.timeQuantum.toLowerCase()] || this.timeQuantum;
 
     const times = validateTimeMode === 12
-      ? `${times} ${quantum}`
+      ? `${time} ${quantum}`
       : `${hour} : ${minute}`;
     const pickerPreviewClass = focused
       ? 'time_picker_preview active'

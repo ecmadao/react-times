@@ -8,7 +8,7 @@ import {
 import PickerPoint from './PickerPoint';
 
 const pickerPointGenerator = (type = "hour", mode = 24) => {
-  return class PickerPointGenerator extends React.Component {
+  return class PickerPointGenerator extends React.PureComponent {
     constructor(props) {
       super(props);
       this.handleTimePointerClick = props.handleTimePointerClick.bind(this);
