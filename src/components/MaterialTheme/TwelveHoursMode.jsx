@@ -6,8 +6,8 @@ import {
   PICKER_RADIUS,
   MAX_ABSOLUTE_POSITION,
   MIN_ABSOLUTE_POSITION
-} from '../../ConstValue.js';
-import language from '../../language';
+} from '../../utils/const_value.js';
+import language from '../../utils/language';
 
 const propTypes = {
   language: PropTypes.object,
@@ -29,15 +29,15 @@ import Button from '../Common/Button';
 import PickerDargHandler from '../Picker/PickerDargHandler';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';
 
-class TwelveHoursMode extends React.Component {
+class TwelveHoursMode extends React.PureComponent {
   constructor(props) {
     super(props);
-    let hourPointerRotate = this.resetHourDegree();
-    let minutePointerRotate = this.resetMinuteDegree();
+    const hourPointerRotate = this.resetHourDegree();
+    const minutePointerRotate = this.resetMinuteDegree();
     this.state = {
       hourPointerRotate,
       minutePointerRotate
-    }
+    };
     this.handleHourChange = this.handleHourChange.bind(this);
     this.handleMinuteChange = this.handleMinuteChange.bind(this);
     this.handleDegreeChange = this.handleDegreeChange.bind(this);
@@ -142,19 +142,19 @@ class TwelveHoursMode extends React.Component {
 
     const handleQuantumChange = this.handleTimeQuantumChange.bind(
       this,
-      timeQuantum === "AM" ? "PM" : "AM"
+      timeQuantum === 'AM' ? 'PM' : 'AM'
     );
 
     return (
-      <div className="time_picker_modal_container">
-        <div className="time_picker_modal_header">
+      <div className='time_picker_modal_container'>
+        <div className='time_picker_modal_header'>
           <span
-            className="time_picker_header active">{hour}:{minute}</span>&nbsp;
+            className='time_picker_header active'>{hour}:{minute}</span>&nbsp;
           <span
             onClick={handleQuantumChange}
-            className="time_picker_header quantum">{timeQuantum}</span>
+            className='time_picker_header quantum'>{timeQuantum}</span>
         </div>
-        <div className="picker_container">
+        <div className='picker_container'>
           <HourPickerPointGenerator
             handleTimePointerClick={this.handleHourPointerClick}
           />
@@ -175,14 +175,14 @@ class TwelveHoursMode extends React.Component {
             minLength={MAX_ABSOLUTE_POSITION}
             handleTimePointerClick={this.handleMinutePointerClick} />
         </div>
-        <div className="buttons_wrapper">
+        <div className='buttons_wrapper'>
           <Button
             onClick={clearFoucs}
             text={language.close}
           />
         </div>
       </div>
-    )
+    );
   }
 }
 

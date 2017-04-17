@@ -11,7 +11,7 @@ const defaultProps = {
   onOutsideClick: () => {},
 };
 
-class OutsideClickHandler extends React.Component {
+class OutsideClickHandler extends React.PureComponent {
   constructor(props) {
     super(props);
     this.onOutsideClick = this.onOutsideClick.bind(this);
@@ -35,7 +35,7 @@ class OutsideClickHandler extends React.Component {
 
   onOutsideClick(e) {
     e = e || window.event;
-    const mouseTarget = (typeof e.which !== "undefined") ? e.which : e.button;
+    const mouseTarget = (typeof e.which !== 'undefined') ? e.which : e.button;
     const isDescendantOfRoot = ReactDOM.findDOMNode(this.childNode).contains(e.target);
     if (!isDescendantOfRoot && mouseTarget === 1) {
       const { onOutsideClick } = this.props;
@@ -45,12 +45,14 @@ class OutsideClickHandler extends React.Component {
 
   render() {
     const { focused } = this.props;
-    const outsideClass = focused ? "outside_container active" : "outside_container";
+    const outsideClass = focused
+      ? 'outside_container active'
+      : 'outside_container';
     return (
       <div ref={(c) => this.childNode = c} className={outsideClass}>
         {this.props.children}
       </div>
-    )
+    );
   }
 }
 

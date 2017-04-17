@@ -3,15 +3,9 @@ import React, { PropTypes } from 'react';
 import OutsideClickHandler from './OutsideClickHandler';
 import MaterialTheme from './MaterialTheme';
 import ClassicTheme from './ClassicTheme';
-import {
-  initialTime,
-  getValidateTime,
-  getValidateTimeMode,
-  getValidateTimeQuantum
-} from '../utils.js';
-import timeHelper from '../time.js';
-import ICONS from '../icons';
-import language from '../language';
+import timeHelper from '../utils/time.js';
+import ICONS from '../utils/icons';
+import language from '../utils/language';
 
 let LANGUAGE = language.get();
 
@@ -37,7 +31,8 @@ const propTypes = {
   trigger: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.object,
-    PropTypes.instanceOf(React.Component)
+    PropTypes.instanceOf(React.Component),
+    PropTypes.instanceOf(React.PureComponent)
   ]),
   language: PropTypes.string
 };
@@ -62,7 +57,7 @@ const defaultProps = {
   language: 'en'
 };
 
-class TimePicker extends React.Component {
+class TimePicker extends React.PureComponent {
   constructor(props) {
     super(props);
     const { focused } = props;
@@ -75,6 +70,13 @@ class TimePicker extends React.Component {
     this.handleMinuteChange = this.handleMinuteChange.bind(this);
     this.handleTimeQuantumChange = this.handleTimeQuantumChange.bind(this);
     this.handleHourAndMinuteChange = this.handleHourAndMinuteChange.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { focused } = nextProps;
+    if (focused !== this.state.focused) {
+      this.setState({ focused });
+    }
   }
 
   onFocus() {
@@ -98,7 +100,7 @@ class TimePicker extends React.Component {
   }
 
   handleHourChange(hour) {
-    hour = getValidateTime(hour);
+    hour = timeHelper.validate(hour);
     const { onHourChange } = this.props;
     const [ _, minute ] = this.getHourAndMinute();
     onHourChange && onHourChange(hour);
@@ -106,7 +108,7 @@ class TimePicker extends React.Component {
   }
 
   handleMinuteChange(minute) {
-    minute = getValidateTime(minute);
+    minute = timeHelper.validate(minute);
     const { onMinuteChange } = this.props;
     const [ hour, _ ] = this.getHourAndMinute();
     onMinuteChange && onMinuteChange(minute);
@@ -133,7 +135,7 @@ class TimePicker extends React.Component {
 
   get timeQuantum() {
     const { timeQuantum, time, timeMode } = this.props;
-    return timeQuantum || getValidateTimeQuantum(time, timeMode)
+    return timeQuantum || timeHelper.validateQuantum(time, timeMode)
   }
 
   renderMaterialTheme() {
@@ -154,7 +156,7 @@ class TimePicker extends React.Component {
         timeQuantum={this.timeQuantum}
         dragable={dragable}
       />
-    )
+    );
   }
 
   renderClassicTheme() {
@@ -170,14 +172,7 @@ class TimePicker extends React.Component {
         handleTimeChange={this.handleHourAndMinuteChange}
         handleTimeQuantumChange={this.handleTimeQuantumChange}
       />
-    )
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { focused } = nextProps;
-    if (focused !== this.state.focused) {
-      this.setState({ focused });
-    }
+    );
   }
 
   render() {
@@ -193,16 +188,21 @@ class TimePicker extends React.Component {
 
     const { focused } = this.state;
     const [hour, minute] = this.getHourAndMinute();
-    const validateTimeMode = getValidateTimeMode(timeMode);
+    const validateTimeMode = timeHelper.validateTimeMode(timeMode);
     const quantum = LANGUAGE[this.timeQuantum.toLowerCase()] || this.timeQuantum;
 
-    let times = `${hour} : ${minute}`;
-    if (validateTimeMode === 12) {
-      times = `${times} ${quantum}`;
-    }
-    const pickerPreviewClass = focused ? "time_picker_preview active" : "time_picker_preview";
-    const containerClass = colorPalette === 'dark' ? "time_picker_container dark" : "time_picker_container";
-    const previewContainerClass = withoutIcon ? "preview_container without_icon" : "preview_container";
+    const times = validateTimeMode === 12
+      ? `${time} ${quantum}`
+      : `${hour} : ${minute}`;
+    const pickerPreviewClass = focused
+      ? 'time_picker_preview active'
+      : 'time_picker_preview';
+    const containerClass = colorPalette === 'dark'
+      ? 'time_picker_container dark'
+      : 'time_picker_container';
+    const previewContainerClass = withoutIcon
+      ? 'preview_container without_icon'
+      : 'preview_container';
 
     return (
       <div className={containerClass}>
@@ -219,10 +219,12 @@ class TimePicker extends React.Component {
         <OutsideClickHandler
           onOutsideClick={this.onClearFocus}
           focused={focused}>
-          {theme === 'material' ? this.renderMaterialTheme() : this.renderClassicTheme()}
+          {theme === 'material'
+            ? this.renderMaterialTheme()
+            : this.renderClassicTheme()}
         </OutsideClickHandler>
       </div>
-    )
+    );
   }
 }
 

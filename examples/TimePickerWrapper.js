@@ -1,7 +1,7 @@
 import React from 'react';
 import TimePicker from '../src/components/TimePicker';
-import timeHelper from '../src/time';
-import ICONS from '../src/icons';
+import timeHelper from '../src/utils/time';
+import ICONS from '../src/utils/icons';
 
 class TimePickerWrapper extends React.Component {
   constructor(props) {
@@ -73,7 +73,7 @@ class TimePickerWrapper extends React.Component {
         className="time_picker_trigger">
         {ICONS.time}
       </div>
-    )
+    );
   }
 
   get trigger() {
@@ -113,6 +113,6 @@ TimePickerWrapper.defaultProps = {
   focused: false,
   defaultTime: null,
   timeQuantum: 'AM'
-}
+};
 
 export default TimePickerWrapper;
