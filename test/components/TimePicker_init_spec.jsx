@@ -1,16 +1,15 @@
-import React from 'react';
-import {expect} from 'chai';
-import {shallow} from 'enzyme';
-import moment from 'moment';
-
-import TimePicker from '../../src/components/TimePicker';
-import MaterialTheme from '../../src/components/MaterialTheme';
 import ClassicTheme from '../../src/components/ClassicTheme';
+import MaterialTheme from '../../src/components/MaterialTheme';
 import OutsideClickHandler from '../../src/components/OutsideClickHandler';
 import PickerDargHandler from '../../src/components/Picker/PickerDargHandler';
+import React from 'react';
+import TimePicker from '../../src/components/TimePicker';
+import {expect} from 'chai';
+import moment from 'moment';
+import {shallow} from 'enzyme';
 
 describe('TimePicker initial', () => {
-  describe('render basical picker', () => {
+  describe('render basic picker', () => {
     it('should be wrappered by div.time_picker_container', () => {
       const wrapper = shallow(<TimePicker />);
       expect(wrapper.is('.time_picker_container')).to.equal(true);

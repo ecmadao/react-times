@@ -180,7 +180,7 @@
   line-height: 35px;
 }
 
-.picker_pointer .pointer_drag.dragable {
+.picker_pointer .pointer_drag.draggable {
   cursor: move;
 }
 

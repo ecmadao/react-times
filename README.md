@@ -6,7 +6,7 @@
 
 README：[中文版](./README_CN.md)
 
-> A time picker react-component, no jquery-rely, writing in es6 standrad style.
+> A time picker react-component, no jquery-rely, writing in es6 standard style.
 
 ![react-times](./intro_src/react-times.gif)
 
@@ -232,13 +232,13 @@ timeMode=12
 />
 ```
 
-- `dragable`
+- `draggable`
 
-If you don't want to drag the pointer, then you can set `dragable` props to `false`, then users can only use click to change time. Default `true`
+If you don't want to drag the pointer, then you can set `draggable` props to `false`, then users can only use click to change time. Default `true`
 
 ```
 <TimePicker
-  dragable={true}
+  draggable={true}
 />
 ```
 

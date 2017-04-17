@@ -1,29 +1,45 @@
+import ICONS from '../src/utils/icons';
 import React from 'react';
 import TimePicker from '../src/components/TimePicker';
 import timeHelper from '../src/utils/time';
-import ICONS from '../src/utils/icons';
 
 class TimePickerWrapper extends React.Component {
   constructor(props) {
     super(props);
-    const { defaultTime, timeQuantum, focused } = props;
+    const {
+      defaultTime,
+      timeQuantum,
+      focused,
+      timezone,
+      showTimezone,
+      editableTimezone } = props;
+
     let hour = '', minute = '';
+
     if (!defaultTime) {
       [hour, minute] = timeHelper.current().split(':');
     } else {
       [hour, minute] = defaultTime.split(':');
     }
+
     this.state = {
       hour,
       minute,
       timeQuantum,
-      focused
+      focused,
+      timezone,
+      showTimezone,
+      editableTimezone
     };
+
     this.onFocusChange = this.onFocusChange.bind(this);
     this.onHourChange = this.onHourChange.bind(this);
     this.onMinuteChange = this.onMinuteChange.bind(this);
     this.onTimeChange = this.onTimeChange.bind(this);
     this.onTimeQuantumChange = this.onTimeQuantumChange.bind(this);
+    this.onTimezoneChange = this.onTimezoneChange.bind(this);
+    this.onShowTimezoneChange = this.onShowTimezoneChange.bind(this);
+    this.onEditTimezoneChange = this.onEditTimezoneChange.bind(this);
   }
 
   onHourChange(hour) {
@@ -45,6 +61,18 @@ class TimePickerWrapper extends React.Component {
 
   onFocusChange(focused) {
     this.setState({ focused });
+  }
+
+  onTimezoneChange(timezone) {
+    this.setState({ timezone });
+  }
+
+  onShowTimezoneChange(showTimezone) {
+    this.setState({ showTimezone });
+  }
+
+  onEditTimezoneChange(editableTimezone) {
+    this.setState({ editableTimezone });
   }
 
   handleFocusedChange() {
@@ -87,7 +115,14 @@ class TimePickerWrapper extends React.Component {
   }
 
   render() {
-    const { hour, minute, timeQuantum, focused } = this.state;
+    const {
+      hour,
+      minute,
+      timeQuantum,
+      focused,
+      timezone,
+      showTimezone,
+      editableTimezone } = this.state;
 
     return (
       <div className="time_picker_wrapper">
@@ -100,8 +135,14 @@ class TimePickerWrapper extends React.Component {
           onTimeChange={this.onTimeChange}
           onFocusChange={this.onFocusChange}
           onTimeQuantumChange={this.onTimeQuantumChange}
+          onTimezoneChange = {this.onTimezoneChange}
+          onShowTimezoneChange = {this.onShowTimezoneChange}
+          onEditTimezoneChange = {this.onEditTimezoneChange}
           trigger={this.trigger}
           focused={focused}
+          timezone={timezone}
+          showTimezone={showTimezone}
+          editableTimezone={editableTimezone}
         />
       </div>
     )
@@ -112,7 +153,10 @@ TimePickerWrapper.defaultProps = {
   customTriggerId: null,
   focused: false,
   defaultTime: null,
-  timeQuantum: 'AM'
+  timeQuantum: 'AM',
+  timezone: '',
+  showTimezone: false,
+  editableTimezone: false
 };
 
 export default TimePickerWrapper;

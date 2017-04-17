@@ -1,18 +1,18 @@
-import React, { PropTypes } from 'react';
-import ReactDOM from 'react-dom';
-
 import {
-  PICKER_RADIUS,
-  MIN_ABSOLUTE_POSITION,
   MAX_ABSOLUTE_POSITION,
-  POINTER_RADIUS
+  MIN_ABSOLUTE_POSITION,
+  PICKER_RADIUS,
+  POINTER_RADIUS,
 } from '../../utils/const_value.js';
+import React, { PropTypes } from 'react';
+
+import ReactDOM from 'react-dom';
 import darg from '../../utils/drag';
 
 const propTypes = {
   time: PropTypes.number,
   step: PropTypes.number,
-  dragable: PropTypes.bool,
+  draggable: PropTypes.bool,
   pointerRotate: PropTypes.number,
   minLength: PropTypes.number,
   maxLength: PropTypes.number,
@@ -89,7 +89,6 @@ class PickerDargHandler extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    console.log(`PickerPointGenerator update`);
     const { step, time, rotateState } = this.props;
     const prevStep = prevProps.step;
     const prevTime = prevProps.time;
@@ -217,7 +216,7 @@ class PickerDargHandler extends React.PureComponent {
   }
 
   render() {
-    const { time, dragable } = this.props;
+    const { time, draggable } = this.props;
     const { draging, height, top, pointerRotate } = this.state;
     const pickerPointerClass = draging ? "picker_pointer" : "picker_pointer animation";
 
@@ -228,9 +227,9 @@ class PickerDargHandler extends React.PureComponent {
           className={pickerPointerClass}
           style={darg.initialPointerStyle(height, top, pointerRotate)}>
           <div
-            className={`pointer_drag ${dragable ? 'dragable' : ''}`}
+            className={`pointer_drag ${draggable ? 'draggable' : ''}`}
             style={darg.rotateStyle(-pointerRotate)}
-            onMouseDown={dragable ? this.handleMouseDown : () => {}}
+            onMouseDown={draggable ? this.handleMouseDown : () => {}}
           >
             {time}
           </div>

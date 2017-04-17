@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react';
 
-import OutsideClickHandler from './OutsideClickHandler';
-import MaterialTheme from './MaterialTheme';
 import ClassicTheme from './ClassicTheme';
-import timeHelper from '../utils/time.js';
 import ICONS from '../utils/icons';
+import MaterialTheme from './MaterialTheme';
+import OutsideClickHandler from './OutsideClickHandler';
 import language from '../utils/language';
+import timeHelper from '../utils/time.js';
 
 let LANGUAGE = language.get();
 
@@ -14,7 +14,7 @@ const propTypes = {
   timeQuantum: PropTypes.string,
   focused: PropTypes.bool,
   autoMode: PropTypes.bool,
-  dragable: PropTypes.bool,
+  draggable: PropTypes.bool,
   placeholder: PropTypes.string,
   colorPalette: PropTypes.string,
   theme: PropTypes.string,
@@ -28,13 +28,19 @@ const propTypes = {
   onMinuteChange: PropTypes.func,
   onTimeChange: PropTypes.func,
   onTimeQuantumChange: PropTypes.func,
+  onTimezoneChange: PropTypes.func,
+  onShowTimezoneChange: PropTypes.func,
+  onEditTimezoneChange: PropTypes.func,
   trigger: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.object,
     PropTypes.instanceOf(React.Component),
     PropTypes.instanceOf(React.PureComponent)
   ]),
-  language: PropTypes.string
+  language: PropTypes.string,
+  timezone: PropTypes.string,
+  showTimezone: PropTypes.bool,
+  editableTimezone: PropTypes.bool
 };
 
 const defaultProps = {
@@ -42,7 +48,7 @@ const defaultProps = {
   timeQuantum: 'AM',
   focused: false,
   autoMode: true,
-  dragable: true,
+  draggable: true,
   placeholder: '',
   colorPalette: 'light',
   timeMode: 24,
@@ -53,8 +59,14 @@ const defaultProps = {
   onMinuteChange: () => {},
   onTimeChange: () => {},
   onTimeQuantumChange: () => {},
+  onTimezoneChange: () => {},
+  onShowTimezoneChange: () => {},
+  onEditTimezoneChange: () => {},
   trigger: null,
-  language: 'en'
+  language: 'en',
+  timezone: '',
+  showTimezone: false,
+  editableTimezone: false
 };
 
 class TimePicker extends React.PureComponent {
@@ -70,6 +82,9 @@ class TimePicker extends React.PureComponent {
     this.handleMinuteChange = this.handleMinuteChange.bind(this);
     this.handleTimeQuantumChange = this.handleTimeQuantumChange.bind(this);
     this.handleHourAndMinuteChange = this.handleHourAndMinuteChange.bind(this);
+    this.handleTimezoneChange = this.handleTimezoneChange.bind(this);
+    this.handleShowTimezoneChange = this.handleShowTimezoneChange.bind(this);
+    this.handleEditTimezoneChange = this.handleEditTimezoneChange.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -133,13 +148,28 @@ class TimePicker extends React.PureComponent {
     return onTimeChange && onTimeChange(time);
   }
 
+  handleTimezoneChange(timezone) {
+    const { onTimezoneChange } = this.props;
+    onTimezoneChange && onTimezoneChange(timezone);
+  }
+
+  handleShowTimezoneChange(showTimezone) {
+    const { onShowTimezoneChange } = this.props;
+    onShowTimezoneChange && onShowTimezoneChange(showTimezone);
+  }
+
+  handleEditTimezoneChange(editTimezone) {
+    const { onEditTimezoneChange } = this.props;
+    onEditTimezoneChange && onEditTimezoneChange(editTimezone);
+  }
+
   get timeQuantum() {
     const { timeQuantum, time, timeMode } = this.props;
     return timeQuantum || timeHelper.validateQuantum(time, timeMode)
   }
 
   renderMaterialTheme() {
-    const { timeMode, autoMode, dragable } = this.props;
+    const { timeMode, autoMode, draggable } = this.props;
     const [ hour, minute ] = this.getHourAndMinute();
 
     return (
@@ -154,7 +184,7 @@ class TimePicker extends React.PureComponent {
         handleMinuteChange={this.handleMinuteChange}
         handleTimeQuantumChange={this.handleTimeQuantumChange}
         timeQuantum={this.timeQuantum}
-        dragable={dragable}
+        draggable={draggable}
       />
     );
   }

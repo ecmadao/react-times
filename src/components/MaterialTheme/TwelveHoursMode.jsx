@@ -1,13 +1,17 @@
-import React, { PropTypes } from 'react';
 import {
-  TWELVE_HOURS,
-  MINUTES,
-  POINTER_RADIUS,
-  PICKER_RADIUS,
   MAX_ABSOLUTE_POSITION,
-  MIN_ABSOLUTE_POSITION
+  MINUTES,
+  MIN_ABSOLUTE_POSITION,
+  PICKER_RADIUS,
+  POINTER_RADIUS,
+  TWELVE_HOURS,
 } from '../../utils/const_value.js';
+import React, { PropTypes } from 'react';
+
+import Button from '../Common/Button';
+import PickerDargHandler from '../Picker/PickerDargHandler';
 import language from '../../utils/language';
+import pickerPointGenerator from '../Picker/PickerPointGenerator';
 
 const propTypes = {
   language: PropTypes.object,
@@ -25,9 +29,6 @@ const defaultProps = {
   handleMinuteChange: () => {}
 };
 
-import Button from '../Common/Button';
-import PickerDargHandler from '../Picker/PickerDargHandler';
-import pickerPointGenerator from '../Picker/PickerPointGenerator';
 
 class TwelveHoursMode extends React.PureComponent {
   constructor(props) {
@@ -117,7 +118,7 @@ class TwelveHoursMode extends React.PureComponent {
       hour,
       minute,
       language,
-      dragable,
+      draggable,
       clearFoucs,
       timeQuantum
     } = this.props;
@@ -166,7 +167,7 @@ class TwelveHoursMode extends React.PureComponent {
             rotateState={hourRotateState}
             time={parseInt(hour)}
             maxLength={MIN_ABSOLUTE_POSITION}
-            dragable={dragable}
+            draggable={draggable}
             handleTimePointerClick={this.handleHourPointerClick} />
           <PickerDargHandler
             step={1}

@@ -1,10 +1,11 @@
-import React from 'react';
-import { storiesOf } from '@kadira/storybook';
-import TimePickerWrapper from '../examples/TimePickerWrapper';
 import '../css/classic/default.css';
 
+import React from 'react';
+import TimePickerWrapper from '../examples/TimePickerWrapper';
+import { storiesOf } from '@kadira/storybook';
+
 storiesOf('Classic Theme', module)
-  .addWithInfo('basical', () => (
+  .addWithInfo('basic', () => (
     <TimePickerWrapper theme="classic"/>
   ))
   .addWithInfo('dark color', () => (

@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 const getCurrentTime = () => moment().format("HH:mm");
 
@@ -62,11 +62,40 @@ const getValidateTimeMode = (timeMode) => {
   return mode;
 };
 
+const guessUserTz = () => {
+  // User-Agent sniffing is not always reliable, but is the recommended technique
+  // for determining whether or not we're on a mobile device according to MDN
+  // see https://developer.mozilla.org/en-US/docs/Web/HTTP/Browser_detection_using_the_user_agent#Mobile_Tablet_or_Desktop
+  const isMobile = global.navigator !== undefined
+    ? global.navigator.userAgent.match(/Mobi/)
+    : false;
+
+  const supportsIntl = global.Intl !== undefined;
+
+  let userTz;
+
+  if (isMobile && supportsIntl) {
+    // moment-timezone gives preference to the Intl API regardless of device type,
+    // so unset global.Intl to trick moment-timezone into using its fallback
+    // see https://github.com/moment/moment-timezone/issues/441
+    // TODO: Clean this up when that issue is resolved
+    const globalIntl = global.Intl;
+    global.Intl = undefined;
+    userTz = moment.tz.guess();
+    global.Intl = globalIntl;
+  } else {
+    userTz = moment.tz.guess();
+  }
+
+  return userTz;
+};
+
 export default {
   current: getCurrentTime,
   validate: getValidateTime,
   validateInt: getValidateIntTime,
   validateQuantum: getValidateTimeQuantum,
   validateTimeMode: getValidateTimeMode,
-  initial: initialTime
+  initial: initialTime,
+  guessUserTz
 };

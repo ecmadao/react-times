@@ -1,12 +1,15 @@
-import React, { PropTypes } from 'react';
 import {
   HOURS,
-  MINUTES,
-  POINTER_RADIUS,
-  PICKER_RADIUS,
   MAX_ABSOLUTE_POSITION,
-  MIN_ABSOLUTE_POSITION
+  MINUTES,
+  MIN_ABSOLUTE_POSITION,
+  PICKER_RADIUS,
+  POINTER_RADIUS,
 } from '../../utils/const_value.js';
+import React, { PropTypes } from 'react';
+
+import PickerDargHandler from '../Picker/PickerDargHandler';
+import pickerPointGenerator from '../Picker/PickerPointGenerator';
 
 const propTypes = {
   step: PropTypes.number,
@@ -28,8 +31,6 @@ const defaultProps = {
   clearFoucs: () => {}
 };
 
-import PickerDargHandler from '../Picker/PickerDargHandler';
-import pickerPointGenerator from '../Picker/PickerPointGenerator';
 
 class TwentyFourHoursMode extends React.PureComponent {
   constructor(props) {
@@ -132,7 +133,7 @@ class TwentyFourHoursMode extends React.PureComponent {
     const {
       hour,
       minute,
-      dragable
+      draggable
     } = this.props;
     const { step, pointerRotate } = this.state;
 
@@ -168,7 +169,7 @@ class TwentyFourHoursMode extends React.PureComponent {
           />
           <PickerDargHandler
             step={step}
-            dragable={dragable}
+            draggable={draggable}
             rotateState={rotateState}
             time={step === 0 ? parseInt(hour) : parseInt(minute)}
             minLength={step === 0 ? MIN_ABSOLUTE_POSITION : MAX_ABSOLUTE_POSITION}

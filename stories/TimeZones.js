@@ -9,13 +9,14 @@ import { storiesOf } from '@kadira/storybook';
 storiesOf('TimeZones', module)
   .addDecorator(withKnobs)
   .addWithInfo('with default timezone', () => (
-    <TimePickerWrapper />
+    <TimePickerWrapper
+      showTimezone={true} />
   ))
   .addWithInfo('with timezone search', () => {
-    const aDefaultTime = text('set default time', '22:10');
     return (
       <TimePickerWrapper
-        defaultTime={aDefaultTime}
+        showTimezone={true}
+        editableTimezone={true}
       />
     )
   });

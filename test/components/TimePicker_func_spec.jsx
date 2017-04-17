@@ -1,9 +1,8 @@
 import React from 'react';
+import TimePicker from '../../src/components/TimePicker';
 import {expect} from 'chai';
 import {shallow} from 'enzyme';
 import sinon from 'sinon-sandbox';
-
-import TimePicker from '../../src/components/TimePicker';
 
 describe('TimePicker func', () => {
   describe('handle focus change func', () => {
