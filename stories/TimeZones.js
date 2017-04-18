@@ -12,11 +12,11 @@ const tzForCity = timeHelper.tzForCity('Kuala Lumpur');
 
 storiesOf('TimeZones', module)
   .addDecorator(withKnobs)
-  .addWithInfo('with default timezone', () => (
+  .addWithInfo('with default (detected) timezone', () => (
     <TimePickerWrapper
       showTimezone={true} />
   ))
-  .addWithInfo('with custom timezone', () => (
+  .addWithInfo('with default (custom) timezone', () => (
     <TimePickerWrapper
       timezone={tzForCity}
       showTimezone={true} />

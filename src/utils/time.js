@@ -5,7 +5,7 @@ import memoize from 'fast-memoize';
 // at https://www.iana.org/time-zones
 moment.tz.load({version: 'latest', zones: [], links: []});
 
-const getCurrentTime = () => moment().format("HH:mm");
+const getCurrentTime = (tz = guessUserTz().zoneName) => moment().tz(tz).format("HH:mm");
 
 const getValidateIntTime = (time) => {
   if (isNaN(parseInt(time))) {

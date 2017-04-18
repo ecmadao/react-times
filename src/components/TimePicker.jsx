@@ -105,9 +105,9 @@ class TimePicker extends React.PureComponent {
   }
 
   getHourAndMinute() {
-    const { time } = this.props;
+    const { time, timezone } = this.props;
     if(!time) {
-      return timeHelper.current().split(':');
+      return timeHelper.current(timezone.zoneName).split(':');
     }
     return time.split(':');
   }

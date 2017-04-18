@@ -17,7 +17,7 @@ class TimePickerWrapper extends React.Component {
     let hour = '', minute = '';
 
     if (!defaultTime) {
-      [hour, minute] = timeHelper.current().split(':');
+      [hour, minute] = timeHelper.current(timezone.zoneName).split(':');
     } else {
       [hour, minute] = defaultTime.split(':');
     }
