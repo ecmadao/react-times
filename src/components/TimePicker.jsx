@@ -64,7 +64,7 @@ const defaultProps = {
   onEditTimezoneChange: () => {},
   trigger: null,
   language: 'en',
-  timezone: '',
+  timezone: timeHelper.guessUserTz(),
   showTimezone: false,
   editableTimezone: false
 };
