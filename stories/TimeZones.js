@@ -29,6 +29,15 @@ storiesOf('TimeZones', module)
       />
     )
   })
+  .addWithInfo('with 12 hour time', () => {
+    return (
+      <TimePickerWrapper
+        timeMode="12"
+        showTimezone={true}
+        editableTimezone={true}
+      />
+    )
+  })
   .addWithInfo('with dark theme', () => {
     return (
       <TimePickerWrapper

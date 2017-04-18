@@ -12,12 +12,17 @@ import Button from '../Common/Button';
 import PickerDragHandler from '../Picker/PickerDragHandler';
 import language from '../../utils/language';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';
+import timeHelper from '../../utils/time';
 
 const propTypes = {
   language: PropTypes.object,
   hour: PropTypes.string,
   minute: PropTypes.string,
-  timezone: PropTypes.string,
+  timezone: PropTypes.shape({
+    city: PropTypes.string,
+    zoneAbbr: PropTypes.string,
+    zoneName: PropTypes.string
+  }),
   showTimezone: PropTypes.bool,
   editableTimezone: PropTypes.bool,
   handleHourChange: PropTypes.func,
@@ -31,7 +36,7 @@ const defaultProps = {
   language: language.get(),
   hour: '00',
   minute: '00',
-  timezone: '',
+  timezone: {}, //timeHelper.guessUserTz(),
   showTimezone: false,
   editableTimezone: false,
   handleHourChange: () => {},

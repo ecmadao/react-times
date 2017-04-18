@@ -5,7 +5,11 @@ import memoize from 'fast-memoize';
 // at https://www.iana.org/time-zones
 moment.tz.load({version: 'latest', zones: [], links: []});
 
-const getCurrentTime = (tz = guessUserTz().zoneName) => moment().tz(tz).format("HH:mm");
+const getCurrentTime = (tz = guessUserTz().zoneName, timeMode) => {
+  const mode = getValidateTimeMode(timeMode);
+  const formatter = mode === 24 ? "HH:mm" : "hh:mmA";
+  return moment().tz(tz).format(formatter);
+};
 
 const getValidateIntTime = (time) => {
   if (isNaN(parseInt(time))) {
@@ -22,7 +26,7 @@ const getValidateTime = (time) => {
 };
 
 const initialTime = (defaultTime, mode = 24) => {
-  let [hour, minute] = getCurrentTime().split(':');
+  let [hour, minute] = getCurrentTime(undefined, mode).split(':');
   if (defaultTime) {
     [hour, minute] = `${defaultTime}`.split(':');
   }
@@ -94,7 +98,7 @@ const tzCities = tzNames
 // Provide a mapping between a human-friendly city name and its corresponding
 // timezone identifier and timezone abbreviation as a named export.
 // We can fuzzy match on any of these.
-export const tzMaps = tzCities.map(city => {
+const tzMaps = tzCities.map(city => {
   let tzMap = {};
   const tzName = tzNames[tzCities.indexOf(city)];
 
@@ -149,5 +153,6 @@ export default {
   validateTimeMode: getValidateTimeMode,
   initial: initialTime,
   tzForCity: getTzForCity,
-  guessUserTz
+  guessUserTz,
+  tzMaps
 };
