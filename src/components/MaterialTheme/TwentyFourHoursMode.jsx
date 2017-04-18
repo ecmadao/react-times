@@ -151,7 +151,7 @@ class TwentyFourHoursMode extends React.PureComponent {
 
     return (
       <div className='time_picker_modal_footer'>
-        <span className='time_picker_modal_footer_timezone'>{timezone.zoneName}</span>
+        <span className='time_picker_modal_footer_timezone'>{timezone.zoneName} - {timezone.zoneAbbr}</span>
       </div>
     )
   }
@@ -163,8 +163,6 @@ class TwentyFourHoursMode extends React.PureComponent {
       draggable,
       showTimezone
     } = this.props;
-
-    console.info(`props passed into TwentyFourHoursMode: ${JSON.stringify(this.props)}`);
 
     const { step, pointerRotate } = this.state;
 

@@ -182,8 +182,6 @@ class TimePicker extends React.PureComponent {
       editableTimezone } = this.props;
     const [ hour, minute ] = this.getHourAndMinute();
 
-    console.info(`props passed to MaterialTheme: ${JSON.stringify(this.props)}`);
-
     return (
       <MaterialTheme
         hour={hour}

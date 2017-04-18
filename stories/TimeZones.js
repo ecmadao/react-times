@@ -28,5 +28,14 @@ storiesOf('TimeZones', module)
         editableTimezone={true}
       />
     )
+  })
+  .addWithInfo('with dark theme', () => {
+    return (
+      <TimePickerWrapper
+        colorPalette="dark"
+        showTimezone={true}
+        editableTimezone={true}
+      />
+    )
   });
 

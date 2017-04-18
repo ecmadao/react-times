@@ -30,7 +30,8 @@
   z-index: 2;
 }
 
-.time_picker_modal_header {
+.time_picker_modal_header,
+.time_picker_modal_footer {
   height: 75px;
   line-height: 75px;
   text-align: center;
@@ -58,6 +59,15 @@
 }
 .time_picker_modal_header .time_picker_header.quantum {
   font-size: 0.8em;
+}
+
+.time_picker_modal_footer {
+  font-size: 1em;
+  margin-bottom: 0px;
+}
+
+.time_picker_modal_footer .time_picker_modal_footer_timezone{
+  cursor: pointer;
 }
 
 .picker_container {

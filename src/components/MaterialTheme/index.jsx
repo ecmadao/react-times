@@ -63,8 +63,6 @@ class MaterialTheme extends React.PureComponent {
       handleShowTimezoneChange
     } = this.props;
 
-    console.info(`props passed to TwentyFourHoursMode: ${JSON.stringify(this.props)}`);
-
     return (
       <TwentyFourHoursMode
         hour={hour}
