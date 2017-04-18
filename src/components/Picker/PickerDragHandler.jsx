@@ -38,7 +38,7 @@ const defaultProps = {
   handleTimePointerClick: () => {}
 };
 
-class PickerDargHandler extends React.PureComponent {
+class PickerDragHandler extends React.PureComponent {
   constructor(props) {
     super(props);
     this.startX = 0;
@@ -242,7 +242,7 @@ class PickerDargHandler extends React.PureComponent {
   }
 }
 
-PickerDargHandler.propTypes = propTypes;
-PickerDargHandler.defaultProps = defaultProps;
+PickerDragHandler.propTypes = propTypes;
+PickerDragHandler.defaultProps = defaultProps;
 
-export default PickerDargHandler;
+export default PickerDragHandler;

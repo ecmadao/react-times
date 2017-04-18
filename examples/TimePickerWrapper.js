@@ -154,8 +154,8 @@ TimePickerWrapper.defaultProps = {
   focused: false,
   defaultTime: null,
   timeQuantum: 'AM',
-  timezone: '',
-  showTimezone: false,
+  timezone: 'Twilight Zone!',
+  showTimezone: true,
   editableTimezone: false
 };
 

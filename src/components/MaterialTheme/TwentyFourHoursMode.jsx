@@ -8,7 +8,7 @@ import {
 } from '../../utils/const_value.js';
 import React, { PropTypes } from 'react';
 
-import PickerDargHandler from '../Picker/PickerDargHandler';
+import PickerDragHandler from '../Picker/PickerDragHandler';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';
 
 const propTypes = {
@@ -16,9 +16,15 @@ const propTypes = {
   hour: PropTypes.string,
   autoMode: PropTypes.bool,
   minute: PropTypes.string,
+  timezone: PropTypes.string,
+  showTimezone: PropTypes.bool,
+  editableTimezone: PropTypes.bool,
   handleHourChange: PropTypes.func,
   handleMinuteChange: PropTypes.func,
-  clearFoucs: PropTypes.func
+  handleTimezoneChange: PropTypes.func,
+  handleEditTimezoneChange: PropTypes.func,
+  handleShowTimezoneChange: PropTypes.func,
+  clearFocus: PropTypes.func
 };
 
 const defaultProps = {
@@ -26,9 +32,15 @@ const defaultProps = {
   hour: '00',
   minute: '00',
   autoMode: true,
+  timezone: '',
+  showTimezone: false,
+  editableTimezone: false,
   handleHourChange: () => {},
   handleMinuteChange: () => {},
-  clearFoucs: () => {}
+  clearFocus: () => {},
+  handleTimezoneChange: () => {},
+  handleEditTimezoneChange: () => {},
+  handleShowTimezoneChange: () => {}
 };
 
 
@@ -76,7 +88,7 @@ class TwentyFourHoursMode extends React.PureComponent {
       handleHourChange,
       handleMinuteChange,
       autoMode,
-      clearFoucs
+      clearFocus
     } = this.props;
     if (step === 0) {
       handleHourChange && handleHourChange(time);
@@ -87,7 +99,7 @@ class TwentyFourHoursMode extends React.PureComponent {
     if (step === 0) {
       this.handleStepChange(1);
     } else {
-      clearFoucs();
+      clearFocus();
       this.setStep(0);
     }
   }
@@ -129,12 +141,26 @@ class TwentyFourHoursMode extends React.PureComponent {
     return [top, height];
   }
 
+  renderTimezone() {
+    const { timezone, editableTimezone } = this.props;
+
+    return (
+      <div className='time_picker_modal_footer'>
+        <span className='time_picker_modal_footer_timezone'>{timezone}</span>
+      </div>
+    )
+  }
+
   render() {
     const {
       hour,
       minute,
-      draggable
+      draggable,
+      showTimezone
     } = this.props;
+
+    console.info(`props passed into TwentyFourHoursMode: ${JSON.stringify(this.props)}`);
+
     const { step, pointerRotate } = this.state;
 
     const activeHourClass = step === 0
@@ -167,7 +193,7 @@ class TwentyFourHoursMode extends React.PureComponent {
             ref={ref => this.pickerPointerContainer = ref}
             handleTimePointerClick={this.handleTimePointerClick}
           />
-          <PickerDargHandler
+          <PickerDragHandler
             step={step}
             draggable={draggable}
             rotateState={rotateState}
@@ -175,6 +201,7 @@ class TwentyFourHoursMode extends React.PureComponent {
             minLength={step === 0 ? MIN_ABSOLUTE_POSITION : MAX_ABSOLUTE_POSITION}
             handleTimePointerClick={this.handleTimePointerClick} />
         </div>
+        {showTimezone ? this.renderTimezone() : ''}
       </div>
     );
   }

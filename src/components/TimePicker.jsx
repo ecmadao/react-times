@@ -169,8 +169,16 @@ class TimePicker extends React.PureComponent {
   }
 
   renderMaterialTheme() {
-    const { timeMode, autoMode, draggable } = this.props;
+    const {
+      timeMode,
+      autoMode,
+      draggable,
+      timezone,
+      showTimezone,
+      editableTimezone } = this.props;
     const [ hour, minute ] = this.getHourAndMinute();
+
+    console.info(`props passed to MaterialTheme: ${JSON.stringify(this.props)}`);
 
     return (
       <MaterialTheme
@@ -179,12 +187,18 @@ class TimePicker extends React.PureComponent {
         autoMode={autoMode}
         language={LANGUAGE}
         timeMode={parseInt(timeMode)}
-        clearFoucs={this.onClearFocus}
+        clearFocus={this.onClearFocus}
         handleHourChange={this.handleHourChange}
         handleMinuteChange={this.handleMinuteChange}
         handleTimeQuantumChange={this.handleTimeQuantumChange}
+        handleTimezoneChange={this.handleTimezoneChange}
+        handleEditTimezoneChange={this.handleEditTimezoneChange}
+        handleShowTimezoneChange={this.handleShowTimezoneChange}
         timeQuantum={this.timeQuantum}
         draggable={draggable}
+        timezone={timezone}
+        showTimezone={showTimezone}
+        editableTimezone={editableTimezone}
       />
     );
   }

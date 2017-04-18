@@ -1,7 +1,7 @@
 import ClassicTheme from '../../src/components/ClassicTheme';
 import MaterialTheme from '../../src/components/MaterialTheme';
 import OutsideClickHandler from '../../src/components/OutsideClickHandler';
-import PickerDargHandler from '../../src/components/Picker/PickerDargHandler';
+import PickerDragHandler from '../../src/components/Picker/PickerDragHandler';
 import React from 'react';
 import TimePicker from '../../src/components/TimePicker';
 import {expect} from 'chai';
@@ -30,9 +30,9 @@ describe('TimePicker initial', () => {
       expect(wrapper.find(ClassicTheme)).to.have.lengthOf(1);
     });
 
-    it('renders an PickerDargHandler', () => {
+    it('renders an PickerDragHandler', () => {
       const wrapper = shallow(<TimePicker />);
-      expect(wrapper.find(PickerDargHandler)).to.have.lengthOf(0);
+      expect(wrapper.find(PickerDragHandler)).to.have.lengthOf(0);
     });
   });
 

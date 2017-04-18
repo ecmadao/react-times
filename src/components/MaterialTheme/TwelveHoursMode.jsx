@@ -9,7 +9,7 @@ import {
 import React, { PropTypes } from 'react';
 
 import Button from '../Common/Button';
-import PickerDargHandler from '../Picker/PickerDargHandler';
+import PickerDragHandler from '../Picker/PickerDragHandler';
 import language from '../../utils/language';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';
 
@@ -17,16 +17,28 @@ const propTypes = {
   language: PropTypes.object,
   hour: PropTypes.string,
   minute: PropTypes.string,
+  timezone: PropTypes.string,
+  showTimezone: PropTypes.bool,
+  editableTimezone: PropTypes.bool,
   handleHourChange: PropTypes.func,
-  handleMinuteChange: PropTypes.func
+  handleMinuteChange: PropTypes.func,
+  handleTimezoneChange: PropTypes.func,
+  handleEditTimezoneChange: PropTypes.func,
+  handleShowTimezoneChange: PropTypes.func,
 };
 
 const defaultProps = {
   language: language.get(),
   hour: '00',
   minute: '00',
+  timezone: '',
+  showTimezone: false,
+  editableTimezone: false,
   handleHourChange: () => {},
-  handleMinuteChange: () => {}
+  handleMinuteChange: () => {},
+  handleTimezoneChange: () => {},
+  handleEditTimezoneChange: () => {},
+  handleShowTimezoneChange: () => {}
 };
 
 
@@ -113,14 +125,27 @@ class TwelveHoursMode extends React.PureComponent {
     handleMinuteChange && handleMinuteChange(minute);
   }
 
+  renderTimezone() {
+    const { timezone, editableTimezone } = this.props;
+
+    return (
+      <div className='time_picker_modal_footer'>
+        <span className='time_picker_modal_footer_timezone'>{timezone}</span>
+      </div>
+    )
+  };
+
   render() {
     const {
       hour,
       minute,
       language,
       draggable,
-      clearFoucs,
-      timeQuantum
+      clearFocus,
+      timeQuantum,
+      timezone,
+      showTimezone,
+      editableTimezone
     } = this.props;
 
     const { hourPointerRotate, minutePointerRotate } = this.state;
@@ -162,23 +187,24 @@ class TwelveHoursMode extends React.PureComponent {
           <MinutePickerPointGenerator
             handleTimePointerClick={this.handleMinutePointerClick}
           />
-          <PickerDargHandler
+          <PickerDragHandler
             step={0}
             rotateState={hourRotateState}
             time={parseInt(hour)}
             maxLength={MIN_ABSOLUTE_POSITION}
             draggable={draggable}
             handleTimePointerClick={this.handleHourPointerClick} />
-          <PickerDargHandler
+          <PickerDragHandler
             step={1}
             rotateState={minuteRotateState}
             time={parseInt(minute)}
             minLength={MAX_ABSOLUTE_POSITION}
             handleTimePointerClick={this.handleMinutePointerClick} />
         </div>
+        {showTimezone ? this.renderTimezone() : ''}
         <div className='buttons_wrapper'>
           <Button
-            onClick={clearFoucs}
+            onClick={clearFocus}
             text={language.close}
           />
         </div>

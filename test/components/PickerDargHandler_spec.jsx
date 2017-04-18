@@ -2,11 +2,11 @@ import React from 'react';
 import {expect} from 'chai';
 import {shallow} from 'enzyme';
 
-import PickerDargHandler from '../../src/components/Picker/PickerDargHandler';
+import PickerDragHandler from '../../src/components/Picker/PickerDragHandler';
 
-describe('PickerDargHandler', () => {
-  describe('PickerDargHandler Init', () => {
-    const wrapper = shallow(<PickerDargHandler />);
+describe('PickerDragHandler', () => {
+  describe('PickerDragHandler Init', () => {
+    const wrapper = shallow(<PickerDragHandler />);
     it('should render component correctly', () => {
       expect(wrapper.is('.picker_handler')).to.equal(true);
     });

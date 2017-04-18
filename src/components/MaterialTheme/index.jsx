@@ -12,9 +12,15 @@ const propTypes = {
   draggable: PropTypes.bool,
   language: PropTypes.object,
   timeQuantum: PropTypes.string,
+  timezone: PropTypes.string,
+  editableTimezone: PropTypes.bool,
+  showTimezone: PropTypes.bool,
   handleHourChange: PropTypes.func,
   handleMinuteChange: PropTypes.func,
-  handleTimeQuantumChange: PropTypes.func
+  handleTimeQuantumChange: PropTypes.func,
+  handleTimezoneChange: PropTypes.func,
+  handleEditTimezoneChange: PropTypes.func,
+  handleShowTimezoneChange: PropTypes.func
 };
 
 const defaultProps = {
@@ -23,9 +29,15 @@ const defaultProps = {
   timeMode: 24,
   autoMode: true,
   timeQuantum: 'AM',
+  timezone: '',
+  showTimezone: false,
+  editableTimezone: false,
   handleHourChange: () => {},
   handleMinuteChange: () => {},
-  handleTimeQuantumChange: () => {}
+  handleTimeQuantumChange: () => {},
+  handleTimezoneChange: () => {},
+  handleEditTimezoneChange: () => {},
+  handleShowTimezoneChange: () => {}
 };
 
 class MaterialTheme extends React.PureComponent {
@@ -35,10 +47,19 @@ class MaterialTheme extends React.PureComponent {
       minute,
       autoMode,
       draggable,
-      clearFoucs,
+      clearFocus,
+      timezone,
+      editableTimezone,
+      showTimezone,
       handleHourChange,
-      handleMinuteChange
+      handleMinuteChange,
+      handleTimezoneChange,
+      handleEditTimezoneChange,
+      handleShowTimezoneChange
     } = this.props;
+
+    console.info(`props passed to TwentyFourHoursMode: ${JSON.stringify(this.props)}`);
+
     return (
       <TwentyFourHoursMode
         hour={hour}
@@ -47,7 +68,13 @@ class MaterialTheme extends React.PureComponent {
         autoMode={autoMode}
         handleHourChange={handleHourChange}
         handleMinuteChange={handleMinuteChange}
-        clearFoucs={clearFoucs}
+        handleTimezoneChange={handleTimezoneChange}
+        handleEditTimezoneChange={handleEditTimezoneChange}
+        handleShowTimezoneChange={handleShowTimezoneChange}
+        clearFocus={clearFocus}
+        timezone={timezone}
+        editableTimezone={editableTimezone}
+        showTimezone={showTimezone}
       />
     )
   }
@@ -58,11 +85,17 @@ class MaterialTheme extends React.PureComponent {
       minute,
       language,
       draggable,
-      clearFoucs,
+      clearFocus,
       timeQuantum,
+      timezone,
+      editableTimezone,
+      showTimezone,
       handleHourChange,
       handleMinuteChange,
-      handleTimeQuantumChange
+      handleTimeQuantumChange,
+      handleTimezoneChange,
+      handleEditTimezoneChange,
+      handleShowTimezoneChange
     } = this.props;
 
     return (
@@ -71,11 +104,17 @@ class MaterialTheme extends React.PureComponent {
         minute={minute}
         draggable={draggable}
         language={language}
-        clearFoucs={clearFoucs}
+        clearFocus={clearFocus}
         timeQuantum={timeQuantum}
+        timezone={timezone}
+        editableTimezone={editableTimezone}
+        showTimezone={showTimezone}
         handleHourChange={handleHourChange}
         handleMinuteChange={handleMinuteChange}
         handleTimeQuantumChange={handleTimeQuantumChange}
+        handleTimezoneChange={handleTimezoneChange}
+        handleEditTimezoneChange={handleEditTimezoneChange}
+        handleShowTimezoneChange={handleShowTimezoneChange}
       />
     )
   }

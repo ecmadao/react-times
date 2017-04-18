@@ -4,7 +4,7 @@ import {shallow} from 'enzyme';
 import sinon from 'sinon-sandbox';
 
 import TwelveHoursMode from '../../src/components/MaterialTheme/TwelveHoursMode';
-import PickerDargHandler from '../../src/components/Picker/PickerDargHandler';
+import PickerDragHandler from '../../src/components/Picker/PickerDragHandler';
 
 describe('TwelveHoursMode', () => {
   describe('TwelveHoursMode Init', () => {
@@ -19,8 +19,8 @@ describe('TwelveHoursMode', () => {
       expect(wrapper.is('.time_picker_modal_container')).to.equal(true);
     });
 
-    it('should render PickerDargHandler component', () => {
-      expect(wrapper.find(PickerDargHandler)).to.have.lengthOf(2);
+    it('should render PickerDragHandler component', () => {
+      expect(wrapper.find(PickerDragHandler)).to.have.lengthOf(2);
     });
 
     it('should init currect state', () => {
