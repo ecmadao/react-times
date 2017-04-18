@@ -5,7 +5,7 @@ import ICONS from '../utils/icons';
 import MaterialTheme from './MaterialTheme';
 import OutsideClickHandler from './OutsideClickHandler';
 import language from '../utils/language';
-import timeHelper from '../utils/time.js';
+import timeHelper from '../utils/time';
 
 let LANGUAGE = language.get();
 
@@ -38,7 +38,11 @@ const propTypes = {
     PropTypes.instanceOf(React.PureComponent)
   ]),
   language: PropTypes.string,
-  timezone: PropTypes.string,
+  timezone: PropTypes.shape({
+    city: PropTypes.string,
+    zoneAbbr: PropTypes.string,
+    zoneName: PropTypes.string
+  }),
   showTimezone: PropTypes.bool,
   editableTimezone: PropTypes.bool
 };

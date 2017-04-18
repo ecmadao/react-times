@@ -130,7 +130,7 @@ class TwelveHoursMode extends React.PureComponent {
 
     return (
       <div className='time_picker_modal_footer'>
-        <span className='time_picker_modal_footer_timezone'>{timezone}</span>
+        <span className='time_picker_modal_footer_timezone'>{timezone.zoneName}</span>
       </div>
     )
   };

@@ -1,10 +1,9 @@
 import moment from 'moment-timezone';
 import memoize from 'fast-memoize';
 
-
 // loads moment-timezone's timezone data, which comes from the IANA Time Zone Database
 // at https://www.iana.org/time-zones
-moment.tz.load({ version: 'latest', zones: [], links: [] });
+moment.tz.load({version: 'latest', zones: [], links: []});
 
 const getCurrentTime = () => moment().format("HH:mm");
 
@@ -47,7 +46,7 @@ const initialTime = (defaultTime, mode = 24) => {
 const getValidateTimeQuantum = (time, timeMode) => {
   if (!time) { time = getCurrentTime(); }
   const mode = parseInt(timeMode);
-  let [hour, _] = time.split(':');
+  let [hour, _] = time.split(':');  // eslint-disable-line no-unused-vars
   hour = getValidateIntTime(hour);
 
   let timeQuantum = null;
@@ -69,12 +68,10 @@ const getValidateTimeMode = (timeMode) => {
 };
 
 const tzNames = (() => {
-  /*
-  *  We want to subset the existing timezone data as much as possible, both for efficiency
-  *  and to avoid confusing the user. Here, we focus on removing reduntant timezone names
-  *  and timezone names for timezones we don't necessarily care about, like Antarctica, and
-  *  special timezone names that exist for convenience.
-  */
+  //  We want to subset the existing timezone data as much as possible, both for efficiency
+  //  and to avoid confusing the user. Here, we focus on removing reduntant timezone names
+  //  and timezone names for timezones we don't necessarily care about, like Antarctica, and
+  //  special timezone names that exist for convenience.
   const scrubbedPrefixes = ['Antarctica', 'Arctic', 'Chile', 'Etc'];
   const scrubbedSuffixes = ['ACT', 'East', 'Knox_IN', 'LHI', 'North', 'NSW', 'South', 'West'];
 
@@ -87,17 +84,16 @@ const tzNames = (() => {
 })();
 
 // We need a human-friendly city name for each timezone identifier
+// counting Canada/*, Mexico/*, and US/* allows users to search for
+// things like 'Eastern' or 'Mountain' and get matches back
 const tzCities = tzNames
     .map(name => ['Canada', 'Mexico', 'US'].includes(name.split('/')[0])
       ? name : name.split('/').slice(-1)[0])
     .map(name => name.replace(/_/g, ' '));
 
-/*
- * Provide a mapping between a human-friendly city name and its corresponding
- * timezone identifier and timezone abbreviation as a named export.
- * We can fuzzy match on any of these. This is the data that is searched in
- * ./lib/searchUtils.js.
- */
+// Provide a mapping between a human-friendly city name and its corresponding
+// timezone identifier and timezone abbreviation as a named export.
+// We can fuzzy match on any of these.
 export const tzMaps = tzCities.map(city => {
   let tzMap = {};
   const tzName = tzNames[tzCities.indexOf(city)];
@@ -108,6 +104,14 @@ export const tzMaps = tzCities.map(city => {
 
   return tzMap;
 });
+
+const getTzForCity = memoize(city => tzMaps
+    .filter(tzMap => tzMap['city'] === city)
+    .reduce(tzMap => tzMap));
+
+const getTzForName = memoize(name => tzMaps
+    .filter(tzMap => tzMap['zoneName'] === name)
+    .reduce(tzMap => tzMap));
 
 const guessUserTz = () => {
   // User-Agent sniffing is not always reliable, but is the recommended technique
@@ -134,12 +138,8 @@ const guessUserTz = () => {
     userTz = moment.tz.guess();
   }
 
-  return userTz;
+  return getTzForName(userTz);
 };
-
-const getTzForCity = memoize(city => tzMaps
-    .filter(tzMap => tzMap['city'] === city)
-    .reduce(tzMap => tzMap));
 
 export default {
   current: getCurrentTime,

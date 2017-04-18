@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react';
 import TwelveHoursMode from './TwelveHoursMode';
 import TwentyFourHoursMode from './TwentyFourHoursMode';
 import language from '../../utils/language';
+import timeHelper from '../../utils/time';
 
 const propTypes = {
   hour: PropTypes.string,
@@ -12,7 +13,11 @@ const propTypes = {
   draggable: PropTypes.bool,
   language: PropTypes.object,
   timeQuantum: PropTypes.string,
-  timezone: PropTypes.string,
+  timezone: PropTypes.shape({
+    city: PropTypes.string,
+    zoneAbbr: PropTypes.string,
+    zoneName: PropTypes.string
+  }),
   editableTimezone: PropTypes.bool,
   showTimezone: PropTypes.bool,
   handleHourChange: PropTypes.func,
@@ -29,7 +34,7 @@ const defaultProps = {
   timeMode: 24,
   autoMode: true,
   timeQuantum: 'AM',
-  timezone: '',
+  timezone: timeHelper.guessUserTz(),
   showTimezone: false,
   editableTimezone: false,
   handleHourChange: () => {},

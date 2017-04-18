@@ -10,13 +10,18 @@ import React, { PropTypes } from 'react';
 
 import PickerDragHandler from '../Picker/PickerDragHandler';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';
+import timeHelper from '../../utils/time';
 
 const propTypes = {
   step: PropTypes.number,
   hour: PropTypes.string,
   autoMode: PropTypes.bool,
   minute: PropTypes.string,
-  timezone: PropTypes.string,
+  timezone: PropTypes.shape({
+    city: PropTypes.string,
+    zoneAbbr: PropTypes.string,
+    zoneName: PropTypes.string
+  }),
   showTimezone: PropTypes.bool,
   editableTimezone: PropTypes.bool,
   handleHourChange: PropTypes.func,
@@ -32,7 +37,7 @@ const defaultProps = {
   hour: '00',
   minute: '00',
   autoMode: true,
-  timezone: '',
+  timezone: timeHelper.guessUserTz(),
   showTimezone: false,
   editableTimezone: false,
   handleHourChange: () => {},
@@ -146,7 +151,7 @@ class TwentyFourHoursMode extends React.PureComponent {
 
     return (
       <div className='time_picker_modal_footer'>
-        <span className='time_picker_modal_footer_timezone'>{timezone}</span>
+        <span className='time_picker_modal_footer_timezone'>{timezone.zoneName}</span>
       </div>
     )
   }

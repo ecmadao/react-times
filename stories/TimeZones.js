@@ -8,7 +8,7 @@ import { storiesOf } from '@kadira/storybook';
 import timeHelper from '../src/utils/time.js';
 
 
-const tzForCity = timeHelper.tzForCity('Kuala Lumpur').zoneName;
+const tzForCity = timeHelper.tzForCity('Kuala Lumpur');
 
 storiesOf('TimeZones', module)
   .addDecorator(withKnobs)
