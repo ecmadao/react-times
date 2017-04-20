@@ -103,7 +103,6 @@ class ClassicTheme extends React.PureComponent {
 
   render() {
     const { timeMode } = this.props;
-    console.log(timeMode);
     return (
       <div className="classic_theme_container">
         {timeMode === 12 ? this.render12Hours() : this.render24Hours()}

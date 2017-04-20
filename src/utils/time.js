@@ -26,6 +26,7 @@ const getValidateTime = (time) => {
 };
 
 const initialTime = (defaultTime, mode = 24) => {
+  console.log(`initialTime() called with defaultTime ${defaultTime} and mode ${mode}`)
   let [hour, minute] = getCurrentTime(undefined, mode).split(':');
   if (defaultTime) {
     [hour, minute] = `${defaultTime}`.split(':');

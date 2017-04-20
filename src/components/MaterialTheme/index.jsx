@@ -124,7 +124,6 @@ class MaterialTheme extends React.PureComponent {
 
   render() {
     const { timeMode } = this.props;
-    console.log(timeMode);
     return (
       <div>
         {parseInt(timeMode) === 24

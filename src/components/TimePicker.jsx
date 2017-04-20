@@ -232,8 +232,6 @@ class TimePicker extends React.PureComponent {
       colorPalette
     } = this.props;
 
-    console.info(`${time}`)
-
     const { focused } = this.state;
     const [hour, minute] = this.getHourAndMinute();
     const validateTimeMode = timeHelper.validateTimeMode(timeMode);
