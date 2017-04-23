@@ -48,7 +48,6 @@ const defaultProps = {
   handleShowTimezoneChange: () => {}
 };
 
-
 class TwentyFourHoursMode extends React.PureComponent {
   constructor(props) {
     super(props);

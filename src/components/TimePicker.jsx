@@ -105,11 +105,17 @@ class TimePicker extends React.PureComponent {
   }
 
   getHourAndMinute() {
-    const { time, timezone } = this.props;
-    if(!time) {
-      return timeHelper.current(timezone.zoneName).split(':');
+    const { time, timeMode, timezone } = this.props;
+    const splitTime = timeHelper.current(time, timeMode, timezone).split(/:/);
+
+    if(timeMode === 12) {
+      return [
+        splitTime[0],
+        splitTime[splitTime.length - 1].slice(0, -2)
+      ];
     }
-    return time.split(':');
+
+    return splitTime;
   }
 
   onClearFocus() {

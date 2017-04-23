@@ -7,7 +7,7 @@ import TwelveHoursMode from '../../src/components/MaterialTheme/TwelveHoursMode'
 import PickerDragHandler from '../../src/components/Picker/PickerDragHandler';
 
 describe('TwelveHoursMode', () => {
-  describe('TwelveHoursMode Init', () => {
+  describe('TwelveHoursMode init', () => {
     const wrapper = shallow(
       <TwelveHoursMode
         hour={'01'}
@@ -17,16 +17,47 @@ describe('TwelveHoursMode', () => {
     );
     it('should render component correctly', () => {
       expect(wrapper.is('.time_picker_modal_container')).to.equal(true);
+      expect(wrapper.find('.quantum')).to.have.lengthOf(1);
+      expect(wrapper.find('.quantum').html()).to.equal(`<span class="time_picker_header quantum">AM</span>`);
     });
 
     it('should render PickerDragHandler component', () => {
       expect(wrapper.find(PickerDragHandler)).to.have.lengthOf(2);
     });
-
-    it('should init currect state', () => {
+    console.log(wrapper.debug());
+    it('should init correct state', () => {
       expect(wrapper.state()).to.deep.equal({
         hourPointerRotate: 30,
         minutePointerRotate: 270
+      });
+    });
+  });
+
+  describe('TwelveHoursMode', () => {
+    describe('TwelveHoursMode init with defaultTime in 24-hour format', () => {
+      const wrapper = shallow(
+        <TwelveHoursMode
+            hour={'13'}
+            minute={'45'}
+            focused={true}
+        />
+      );
+
+      it('should render component correctly', () => {
+        expect(wrapper.is('.time_picker_modal_container')).to.equal(true);
+        expect(wrapper.find('.quantum')).to.have.lengthOf(1);
+        expect(wrapper.find('.quantum').html()).to.equal(`<span class="time_picker_header quantum">PM</span>`);
+      });
+
+      it('should render PickerDragHandler component', () => {
+        expect(wrapper.find(PickerDragHandler)).to.have.lengthOf(2);
+      });
+
+      it('should init correct state', () => {
+        expect(wrapper.state()).to.deep.equal({
+          hourPointerRotate: 30,
+          minutePointerRotate: 270
+        });
       });
     });
   });

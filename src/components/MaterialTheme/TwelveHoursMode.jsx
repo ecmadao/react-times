@@ -18,6 +18,8 @@ const propTypes = {
   language: PropTypes.object,
   hour: PropTypes.string,
   minute: PropTypes.string,
+  draggable: PropTypes.bool,
+  timeQuantum: PropTypes.string,
   timezone: PropTypes.shape({
     city: PropTypes.string,
     zoneAbbr: PropTypes.string,
@@ -36,7 +38,9 @@ const defaultProps = {
   language: language.get(),
   hour: '00',
   minute: '00',
-  timezone: {}, //timeHelper.guessUserTz(),
+  draggable: false,
+  timeQuantum: 'AM',
+  timezone: timeHelper.guessUserTz(),
   showTimezone: false,
   editableTimezone: false,
   handleHourChange: () => {},
@@ -45,7 +49,6 @@ const defaultProps = {
   handleEditTimezoneChange: () => {},
   handleShowTimezoneChange: () => {}
 };
-
 
 class TwelveHoursMode extends React.PureComponent {
   constructor(props) {

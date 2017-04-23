@@ -1,76 +1,106 @@
 import moment from 'moment-timezone';
 import memoize from 'fast-memoize';
 
-// loads moment-timezone's timezone data, which comes from the IANA Time Zone Database
-// at https://www.iana.org/time-zones
+// loads moment-timezone's timezone data, which comes from the
+// IANA Time Zone Database at https://www.iana.org/time-zones
 moment.tz.load({version: 'latest', zones: [], links: []});
 
-const getCurrentTime = (tz = guessUserTz().zoneName, timeMode) => {
+/**
+ * Create an array of time data like [hh, mm, A] using moment.
+ * If a time is provided, just format it; if not, use the current time.
+ *
+ * @function getTime
+ * @param  {string} time                a time; defaults to now
+ * @param  {Number} timeMode=24         12 or 24-hour mode; default to 24-hour mode
+ * @param  {string} tz                  a timezone name; guesses user timezone by default
+ * @return {[string, string, string]}   an array of hour, minute, and (if mode is 12-hour) AM or PM
+ */
+const getTime = (time, timeMode = 24, tz = guessUserTz().zoneName) => {
   const mode = getValidateTimeMode(timeMode);
-  const formatter = mode === 24 ? "HH:mm" : "hh:mmA";
-  return moment().tz(tz).format(formatter);
-};
+  const validTime = (time && time.includes(':'))
+    ? time.split(/:/).map((t) => getValidateTime(t)).join(':')
+    : time; // if time is undefined, fall through to formattedTime below, where we default to now
 
-const getValidateIntTime = (time) => {
-  if (isNaN(parseInt(time))) {
-    return 0;
+  const formatter = mode === 24 ? 'HH:mm' : 'hh:mmA';
+
+  const formattedTime = (validTime)
+    ? moment(`1970-01-01 ${validTime}`).tz(tz).format(formatter)
+    : moment().tz(tz).format(formatter);
+
+  const splitTime = formattedTime.split(/:/);
+
+  if (timeMode === 12) {
+    return [
+      splitTime[0],                                 // hour
+      splitTime[splitTime.length - 1].slice(0, 2),  // minute
+      splitTime[splitTime.length - 1].slice(2)      // quantum
+    ];
   }
-  return parseInt(time);
+
+  return splitTime; // hour, minute
 };
 
-const getValidateTime = (time) => {
+/**
+ * Get an integer representation of a time.
+ * @function getValidateIntTime
+ * @param  {string} time
+ * @return {Number}
+ */
+const getValidateIntTime = memoize((time) => {
+  if (isNaN(parseInt(time))) { return 0; }
+
+  return parseInt(time);
+});
+
+/**
+ * Validate, set a default for, and stringify time data.
+ * @function getValidateTime
+ * @type {string}
+ * @return {string}
+ */
+const getValidateTime = memoize((time) => {
   if (typeof time === 'undefined') { time = '00'; }
   if (isNaN(parseInt(time))) { time = '00'; }
   if (parseInt(time) < 10) { time = `0${parseInt(time)}`; }
   return `${time}`;
-};
+});
 
+/**
+ * Get time data to use for initializing a TimePicker.
+ * @function initialTime
+ * @param  {string} defaultTime
+ * @param  {Number} mode=24
+ * @return {[string, string, string]}
+ */
 const initialTime = (defaultTime, mode = 24) => {
-  console.log(`initialTime() called with defaultTime ${defaultTime} and mode ${mode}`)
-  let [hour, minute] = getCurrentTime(undefined, mode).split(':');
-  if (defaultTime) {
-    [hour, minute] = `${defaultTime}`.split(':');
-  }
+  let [hour, minute, quantum] = getTime(defaultTime, mode);
+
   hour = getValidateIntTime(hour);
   minute = getValidateIntTime(minute);
+
   if (hour > 24) { hour = 24 - hour; }
   if (minute >= 60) { minute = 60 - minute; }
-
-  let timeInterval = null;
-  if (mode === 12) {
-    timeInterval = hour > 12 ? "PM" : "AM";
-    hour = hour > 12 ? hour - 12 : hour;
-  }
 
   hour = getValidateTime(hour);
   minute = getValidateTime(minute);
 
-  return [hour, minute, timeInterval];
+  return [hour, minute, quantum];
 };
 
-const getValidateTimeQuantum = (time, timeMode) => {
-  if (!time) { time = getCurrentTime(); }
-  const mode = parseInt(timeMode);
-  let [hour, _] = time.split(':');  // eslint-disable-line no-unused-vars
-  hour = getValidateIntTime(hour);
-
-  let timeQuantum = null;
-  if (mode === 12) {
-    timeQuantum = hour > 12 ? "PM" : "AM";
-  }
-  return timeQuantum;
-}
-
-const getValidateTimeMode = (timeMode) => {
+/**
+ * Validate and set a sensible default for time modes.
+ * @function getValidateTimeMode
+ * @param  {string|Number} timeMode
+ * @return {Number}
+ */
+const getValidateTimeMode = memoize((timeMode) => {
   let mode = parseInt(timeMode);
-  if (isNaN(mode)) {
-    return 24;
-  }
-  if (mode !== 24 && mode !== 12) {
-    return 24;
-  }
+
+  if (isNaN(mode)) { return 24; }
+  if (mode !== 24 && mode !== 12) { return 24; }
+
   return mode;
-};
+});
 
 const tzNames = (() => {
   //  We want to subset the existing timezone data as much as possible, both for efficiency
@@ -147,10 +177,9 @@ const guessUserTz = () => {
 };
 
 export default {
-  current: getCurrentTime,
+  current: getTime,
   validate: getValidateTime,
   validateInt: getValidateIntTime,
-  validateQuantum: getValidateTimeQuantum,
   validateTimeMode: getValidateTimeMode,
   initial: initialTime,
   tzForCity: getTzForCity,

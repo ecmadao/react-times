@@ -11,37 +11,37 @@ describe('Utils Test', () => {
   describe('Test initialTime func with 24h mode', () => {
     it('should get current time', () => {
       let times = moment().format("HH:mm").split(':');
-      expect([...times, null]).to.deep.equal(timeHelper.initial(false));
+      expect([...times, undefined]).to.deep.equal(timeHelper.initial(false));
     });
 
     it('should get default time', () => {
-      let times = ["11", "12", null];
+      let times = ["11", "12", undefined];
       expect(times).to.deep.equal(timeHelper.initial("11:12"));
     });
 
     it('should get validate default time', () => {
-      let times = ["01", "02", null];
+      let times = ["01", "02", undefined];
       expect(times).to.deep.equal(timeHelper.initial("1:2"));
     });
 
     it('should get validate default time', () => {
-      let times = ["01", "00", null];
+      let times = ["01", "00", undefined];
       expect(times).to.deep.equal(timeHelper.initial("1:"));
     });
 
     it('should get validate default time', () => {
-      let times = ["00", "01", null];
+      let times = ["00", "01", undefined];
       expect(times).to.deep.equal(timeHelper.initial("abc:1"));
     });
   });
 
   describe('Test initialTime func with 12h mode', () => {
-    it('should get default time', () => {
+    it('should get default time in 12h mode', () => {
       let times = ["11", "12", "AM"];
       expect(times).to.deep.equal(timeHelper.initial("11:12", 12));
     });
 
-    it('should get default time', () => {
+    it('should get default time in 24h mode', () => {
       let times = ["01", "12", "PM"];
       expect(times).to.deep.equal(timeHelper.initial("13:12", 12));
     });
@@ -57,7 +57,7 @@ describe('Utils Test', () => {
     });
 
     it('should get validate default time', () => {
-      let times = ["00", "01", "AM"];
+      let times = ["12", "01", "AM"];
       expect(times).to.deep.equal(timeHelper.initial("abc:1", 12));
     });
   });
