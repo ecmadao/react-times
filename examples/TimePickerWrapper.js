@@ -14,13 +14,17 @@ class TimePickerWrapper extends React.Component {
       showTimezone,
       editableTimezone } = props;
 
-    let hour = '', minute = '';
+    let hour = '', minute = '', quantum = '';
 
-    if (!defaultTime) {
-      [hour, minute] = timeHelper.current(timezone.zoneName).split(':');
-    } else {
-      [hour, minute] = defaultTime.split(':');
-    }
+    // We need both a 12h and 24h formatted time here in the parent
+    // so we can infer the timeQuantum and pass it down to the children
+    const timeIn12Hour = timeHelper.time(defaultTime, 12);
+    const timeIn24Hour = timeHelper.time(defaultTime);
+
+    [hour, minute] = timeIn24Hour;
+    // if a user supplies a timeQuantum, we need to use that, so stick it on to defaultTime and pass it
+    // in any case, we'll get it back from getTime() and need to get it out of that list and use it
+    // as our timeQuantum below
 
     this.state = {
       hour,
