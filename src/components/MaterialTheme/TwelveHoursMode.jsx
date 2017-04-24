@@ -144,17 +144,19 @@ class TwelveHoursMode extends React.PureComponent {
   };
 
   render() {
+    let { hour, minute, timeQuantum } = this.props;
     const {
-      hour,
-      minute,
       language,
       draggable,
       clearFocus,
-      timeQuantum,
       timezone,
       showTimezone,
       editableTimezone
     } = this.props;
+
+    // Since someone might pass us a time in 24h format, we need to pass it through
+    // timeHelper.time() to 'translate' it into 12h format, including its accurate quantum
+    [ hour, minute, timeQuantum ] = timeHelper.time([hour, minute].join(':'), 12);
 
     const { hourPointerRotate, minutePointerRotate } = this.state;
 

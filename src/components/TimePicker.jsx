@@ -98,24 +98,18 @@ class TimePicker extends React.PureComponent {
     }
   }
 
+  getHourAndMinute() {
+    const { time } = this.props;
+
+    if (!time) { return timeHelper.time(); }
+
+    return time.split(/:/);
+  }
+
   onFocus() {
     this.setState({ focused: true });
     const { onFocusChange } = this.props;
     onFocusChange && onFocusChange(true);
-  }
-
-  getHourAndMinute() {
-    const { time, timeMode, timezone } = this.props;
-    const splitTime = timeHelper.current(time, timeMode, timezone).split(/:/);
-
-    if(timeMode === 12) {
-      return [
-        splitTime[0],
-        splitTime[splitTime.length - 1].slice(0, -2)
-      ];
-    }
-
-    return splitTime;
   }
 
   onClearFocus() {
@@ -127,7 +121,7 @@ class TimePicker extends React.PureComponent {
   handleHourChange(hour) {
     hour = timeHelper.validate(hour);
     const { onHourChange } = this.props;
-    const [ _, minute ] = this.getHourAndMinute();
+    const [ _, minute, quantum ] = this.getHourAndMinute();
     onHourChange && onHourChange(hour);
     this.handleTimeChange(`${hour}:${minute}`);
   }
@@ -135,7 +129,7 @@ class TimePicker extends React.PureComponent {
   handleMinuteChange(minute) {
     minute = timeHelper.validate(minute);
     const { onMinuteChange } = this.props;
-    const [ hour, _ ] = this.getHourAndMinute();
+    const [ hour, _, quantum ] = this.getHourAndMinute();
     onMinuteChange && onMinuteChange(minute);
     this.handleTimeChange(`${hour}:${minute}`);
   }
@@ -175,7 +169,7 @@ class TimePicker extends React.PureComponent {
 
   get timeQuantum() {
     const { timeQuantum, time, timeMode } = this.props;
-    return timeQuantum || timeHelper.validateQuantum(time, timeMode)
+    return timeQuantum || timeHelper.time(time, 12)[2];
   }
 
   renderMaterialTheme() {
@@ -186,7 +180,7 @@ class TimePicker extends React.PureComponent {
       timezone,
       showTimezone,
       editableTimezone } = this.props;
-    const [ hour, minute ] = this.getHourAndMinute();
+    const [ hour, minute, quantum ] = this.getHourAndMinute();
 
     return (
       <MaterialTheme
@@ -213,7 +207,7 @@ class TimePicker extends React.PureComponent {
 
   renderClassicTheme() {
     const { timeMode, colorPalette } = this.props;
-    const [ hour, minute ] = this.getHourAndMinute();
+    const [ hour, minute, quantum ] = this.getHourAndMinute();
     return (
       <ClassicTheme
         hour={hour}
@@ -237,9 +231,10 @@ class TimePicker extends React.PureComponent {
       withoutIcon,
       colorPalette
     } = this.props;
+    console.log(`rendering TimePicker with time ${time} and timeMode ${timeMode}`);
 
     const { focused } = this.state;
-    const [hour, minute] = this.getHourAndMinute();
+    const [ hour, minute, interval ] = this.getHourAndMinute();
     const validateTimeMode = timeHelper.validateTimeMode(timeMode);
     const quantum = LANGUAGE[this.timeQuantum.toLowerCase()] || this.timeQuantum;
 

@@ -153,7 +153,7 @@ TimePickerWrapper.defaultProps = {
   customTriggerId: null,
   focused: false,
   defaultTime: null,
-  timeQuantum: 'AM',
+  timeQuantum: null,
   timezone: timeHelper.guessUserTz(),
   showTimezone: false,
   editableTimezone: false

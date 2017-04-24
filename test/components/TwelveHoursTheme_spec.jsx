@@ -7,7 +7,7 @@ import TwelveHoursMode from '../../src/components/MaterialTheme/TwelveHoursMode'
 import PickerDragHandler from '../../src/components/Picker/PickerDragHandler';
 
 describe('TwelveHoursMode', () => {
-  describe('TwelveHoursMode init', () => {
+  describe('TwelveHoursMode init with defaultTime in 12h format', () => {
     const wrapper = shallow(
       <TwelveHoursMode
         hour={'01'}
@@ -24,7 +24,7 @@ describe('TwelveHoursMode', () => {
     it('should render PickerDragHandler component', () => {
       expect(wrapper.find(PickerDragHandler)).to.have.lengthOf(2);
     });
-    console.log(wrapper.debug());
+
     it('should init correct state', () => {
       expect(wrapper.state()).to.deep.equal({
         hourPointerRotate: 30,
@@ -34,7 +34,7 @@ describe('TwelveHoursMode', () => {
   });
 
   describe('TwelveHoursMode', () => {
-    describe('TwelveHoursMode init with defaultTime in 24-hour format', () => {
+    describe('TwelveHoursMode init with defaultTime in 24h format', () => {
       const wrapper = shallow(
         <TwelveHoursMode
             hour={'13'}

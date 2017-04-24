@@ -18,14 +18,14 @@ describe('TimePicker func', () => {
       expect(wrapper.state().focused).to.equal(false);
     });
 
-    it('should callback when focuse', () => {
+    it('should callback when focus', () => {
       const onFocusChangeStub = sinon.stub();
       const wrapper = shallow(<TimePicker onFocusChange={onFocusChangeStub} />);
       wrapper.instance().onFocus();
       expect(onFocusChangeStub.callCount).to.equal(1);
     });
 
-    it('should callback when clear focuse', () => {
+    it('should callback when clear focus', () => {
       const onFocusChangeStub = sinon.stub();
       const wrapper = shallow(<TimePicker onFocusChange={onFocusChangeStub} />);
       wrapper.instance().onClearFocus();

@@ -1,5 +1,4 @@
 import moment from 'moment-timezone';
-import memoize from 'fast-memoize';
 
 // loads moment-timezone's timezone data, which comes from the
 // IANA Time Zone Database at https://www.iana.org/time-zones
@@ -22,7 +21,6 @@ const getTime = (time, timeMode = 24, tz = guessUserTz().zoneName) => {
     : time; // if time is undefined, fall through to formattedTime below, where we default to now
 
   const formatter = mode === 24 ? 'HH:mm' : 'hh:mmA';
-
   const formattedTime = (validTime)
     ? moment(`1970-01-01 ${validTime}`).tz(tz).format(formatter)
     : moment().tz(tz).format(formatter);
@@ -40,17 +38,18 @@ const getTime = (time, timeMode = 24, tz = guessUserTz().zoneName) => {
   return splitTime; // hour, minute
 };
 
+const getCurrentTime = () => getTime().join(':'); // defaults to 24h mode
+
 /**
  * Get an integer representation of a time.
  * @function getValidateIntTime
  * @param  {string} time
  * @return {Number}
  */
-const getValidateIntTime = memoize((time) => {
+const getValidateIntTime = (time) => {
   if (isNaN(parseInt(time))) { return 0; }
-
   return parseInt(time);
-});
+};
 
 /**
  * Validate, set a default for, and stringify time data.
@@ -58,12 +57,12 @@ const getValidateIntTime = memoize((time) => {
  * @type {string}
  * @return {string}
  */
-const getValidateTime = memoize((time) => {
+const getValidateTime = (time) => {
   if (typeof time === 'undefined') { time = '00'; }
   if (isNaN(parseInt(time))) { time = '00'; }
   if (parseInt(time) < 10) { time = `0${parseInt(time)}`; }
   return `${time}`;
-});
+};
 
 /**
  * Get time data to use for initializing a TimePicker.
@@ -93,14 +92,14 @@ const initialTime = (defaultTime, mode = 24) => {
  * @param  {string|Number} timeMode
  * @return {Number}
  */
-const getValidateTimeMode = memoize((timeMode) => {
+const getValidateTimeMode = (timeMode) => {
   let mode = parseInt(timeMode);
 
   if (isNaN(mode)) { return 24; }
   if (mode !== 24 && mode !== 12) { return 24; }
 
   return mode;
-});
+};
 
 const tzNames = (() => {
   //  We want to subset the existing timezone data as much as possible, both for efficiency
@@ -140,13 +139,13 @@ const tzMaps = tzCities.map(city => {
   return tzMap;
 });
 
-const getTzForCity = memoize(city => tzMaps
+const getTzForCity = (city) => tzMaps
     .filter(tzMap => tzMap['city'] === city)
-    .reduce(tzMap => tzMap));
+    .reduce(tzMap => tzMap);
 
-const getTzForName = memoize(name => tzMaps
+const getTzForName = (name) => tzMaps
     .filter(tzMap => tzMap['zoneName'] === name)
-    .reduce(tzMap => tzMap));
+    .reduce(tzMap => tzMap);
 
 const guessUserTz = () => {
   // User-Agent sniffing is not always reliable, but is the recommended technique
@@ -177,7 +176,8 @@ const guessUserTz = () => {
 };
 
 export default {
-  current: getTime,
+  current: getCurrentTime,
+  time: getTime,
   validate: getValidateTime,
   validateInt: getValidateIntTime,
   validateTimeMode: getValidateTimeMode,
