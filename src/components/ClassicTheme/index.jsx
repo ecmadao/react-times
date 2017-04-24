@@ -69,6 +69,7 @@ class ClassicTheme extends React.PureComponent {
       const timeClass = this.checkTimeIsActive(hourValue)
         ? 'classic_time active'
         : 'classic_time';
+      const [time, quantum] = hourValue.split(' ');
       return (
         <div
           key={index}
@@ -76,7 +77,8 @@ class ClassicTheme extends React.PureComponent {
             this.handle12ModeHourChange(hourValue);
           }}
           className={`${timeClass} ${colorPalette}`}>
-          {hourValue}
+          {time}&nbsp;
+          <span className='quantum'>{quantum}</span>
         </div>
       );
     });

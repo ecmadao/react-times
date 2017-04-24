@@ -1,13 +1,12 @@
 {
   "name": "react-times",
+  "version": "1.4.6",
   "description": "A react time-picker component, no jquery-rely",
-  "version": "1.4.5",
   "author": "ecmadao",
   "bugs": {
     "url": "https://github.com/ecmadao/react-times/issues"
   },
   "dependencies": {
-    "fast-memoize": "^2.2.7",
     "fuse.js": "^2.6.2",
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13"
