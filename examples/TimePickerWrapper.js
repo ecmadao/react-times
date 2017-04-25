@@ -9,27 +9,26 @@ class TimePickerWrapper extends React.Component {
     const {
       defaultTime,
       timeQuantum,
+      timeMode,
       focused,
       timezone,
       showTimezone,
       editableTimezone } = props;
 
-    let hour = '', minute = '', quantum = '';
-
     // We need both a 12h and 24h formatted time here in the parent
     // so we can infer the timeQuantum and pass it down to the children
-    const timeIn12Hour = timeHelper.time(defaultTime, 12);
+    const time = (defaultTime && timeQuantum) ? `${defaultTime}${timeQuantum}` : defaultTime;
+    const timeIn12Hour = timeHelper.time(time, 12);
     const timeIn24Hour = timeHelper.time(defaultTime);
 
-    [hour, minute] = timeIn24Hour;
-    // if a user supplies a timeQuantum, we need to use that, so stick it on to defaultTime and pass it
-    // in any case, we'll get it back from getTime() and need to get it out of that list and use it
-    // as our timeQuantum below
+    const [hour, minute] = timeIn24Hour;
+    const quantum = timeIn12Hour[2]; // AM or PM
 
     this.state = {
       hour,
       minute,
-      timeQuantum,
+      timeQuantum: quantum,
+      timeMode,
       focused,
       timezone,
       showTimezone,
@@ -41,6 +40,7 @@ class TimePickerWrapper extends React.Component {
     this.onMinuteChange = this.onMinuteChange.bind(this);
     this.onTimeChange = this.onTimeChange.bind(this);
     this.onTimeQuantumChange = this.onTimeQuantumChange.bind(this);
+    this.onTimeModeChange = this.onTimeModeChange.bind(this);
     this.onTimezoneChange = this.onTimezoneChange.bind(this);
     this.onShowTimezoneChange = this.onShowTimezoneChange.bind(this);
     this.onEditTimezoneChange = this.onEditTimezoneChange.bind(this);
@@ -61,6 +61,10 @@ class TimePickerWrapper extends React.Component {
 
   onTimeQuantumChange(timeQuantum) {
     this.setState({ timeQuantum });
+  }
+
+  onTimeModeChange(timeMode) {
+    this.setState({ timeMode });
   }
 
   onFocusChange(focused) {
@@ -123,6 +127,7 @@ class TimePickerWrapper extends React.Component {
       hour,
       minute,
       timeQuantum,
+      timeMode,
       focused,
       timezone,
       showTimezone,
@@ -134,6 +139,7 @@ class TimePickerWrapper extends React.Component {
           {...this.props}
           time={hour && minute ? `${hour}:${minute}` : null}
           timeQuantum={timeQuantum}
+          timeMode={timeMode}
           onHourChange={this.onHourChange}
           onMinuteChange={this.onMinuteChange}
           onTimeChange={this.onTimeChange}
@@ -158,6 +164,7 @@ TimePickerWrapper.defaultProps = {
   focused: false,
   defaultTime: null,
   timeQuantum: null,
+  timeMode: null,
   timezone: timeHelper.guessUserTz(),
   showTimezone: false,
   editableTimezone: false

@@ -28,6 +28,7 @@ const propTypes = {
   onMinuteChange: PropTypes.func,
   onTimeChange: PropTypes.func,
   onTimeQuantumChange: PropTypes.func,
+  onTimeModeChange: PropTypes.func,
   onTimezoneChange: PropTypes.func,
   onShowTimezoneChange: PropTypes.func,
   onEditTimezoneChange: PropTypes.func,
@@ -63,6 +64,7 @@ const defaultProps = {
   onMinuteChange: () => {},
   onTimeChange: () => {},
   onTimeQuantumChange: () => {},
+  onTimeModeChange: () => {},
   onTimezoneChange: () => {},
   onShowTimezoneChange: () => {},
   onEditTimezoneChange: () => {},
@@ -85,6 +87,7 @@ class TimePicker extends React.PureComponent {
     this.handleHourChange = this.handleHourChange.bind(this);
     this.handleMinuteChange = this.handleMinuteChange.bind(this);
     this.handleTimeQuantumChange = this.handleTimeQuantumChange.bind(this);
+    this.handleTimeModeChange = this.handleTimeModeChange.bind(this);
     this.handleHourAndMinuteChange = this.handleHourAndMinuteChange.bind(this);
     this.handleTimezoneChange = this.handleTimezoneChange.bind(this);
     this.handleShowTimezoneChange = this.handleShowTimezoneChange.bind(this);
@@ -139,6 +142,11 @@ class TimePicker extends React.PureComponent {
     onTimeQuantumChange && onTimeQuantumChange(timeQuantum);
   }
 
+  handleTimeModeChange(timeMode) {
+    const { onTimeModeChange } = this.props;
+    onTimeModeChange && onTimeModeChange(timeMode);
+  }
+
   handleTimeChange(time) {
     const { onTimeChange } = this.props;
     onTimeChange && onTimeChange(time);
@@ -170,6 +178,15 @@ class TimePicker extends React.PureComponent {
   get timeQuantum() {
     const { timeQuantum, time, timeMode } = this.props;
     return timeQuantum || timeHelper.time(time, 12)[2];
+  }
+
+  get timeMode() {
+    // if a dev passes in a timeMode of 12 *or* a timeQuantum, s/he wants 12h mode
+    const { timeMode, timeQuantum } = this.props;
+    const isTimeMode12 = (timeMode && parseInt(timeMode === 12));
+    const quantumMatch = timeQuantum.match(/[AM|PM]/i);
+    const isTimeQuantum = !!quantumMatch && quantumMatch.length === 1;
+    return (isTimeMode12 || isTimeQuantum) ? 12 : 24;
   }
 
   renderMaterialTheme() {
