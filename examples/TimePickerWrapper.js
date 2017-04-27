@@ -8,7 +8,7 @@ class TimePickerWrapper extends React.Component {
     super(props);
     const {
       defaultTime,
-      timeQuantum,
+      meridiem,
       timeMode,
       focused,
       timezone,
@@ -16,8 +16,8 @@ class TimePickerWrapper extends React.Component {
       editableTimezone } = props;
 
     // We need both a 12h and 24h formatted time here in the parent
-    // so we can infer the timeQuantum and pass it down to the children
-    const time = (defaultTime && timeQuantum) ? `${defaultTime}${timeQuantum}` : defaultTime;
+    // so we can infer the meridiem and pass it down to the children
+    const time = (defaultTime && meridiem) ? `${defaultTime}${meridiem}` : defaultTime;
     const timeIn12Hour = timeHelper.time(time, 12);
     const timeIn24Hour = timeHelper.time(defaultTime);
 
@@ -27,7 +27,7 @@ class TimePickerWrapper extends React.Component {
     this.state = {
       hour,
       minute,
-      timeQuantum: quantum,
+      meridiem: quantum,
       timeMode,
       focused,
       timezone,
@@ -59,8 +59,8 @@ class TimePickerWrapper extends React.Component {
     this.setState({ hour, minute });
   }
 
-  onTimeQuantumChange(timeQuantum) {
-    this.setState({ timeQuantum });
+  onTimeQuantumChange(meridiem) {
+    this.setState({ meridiem });
   }
 
   onTimeModeChange(timeMode) {
@@ -126,7 +126,7 @@ class TimePickerWrapper extends React.Component {
     const {
       hour,
       minute,
-      timeQuantum,
+      meridiem,
       timeMode,
       focused,
       timezone,
@@ -138,7 +138,7 @@ class TimePickerWrapper extends React.Component {
         <TimePicker
           {...this.props}
           time={hour && minute ? `${hour}:${minute}` : null}
-          timeQuantum={timeQuantum}
+          meridiem={meridiem}
           timeMode={timeMode}
           onHourChange={this.onHourChange}
           onMinuteChange={this.onMinuteChange}
@@ -163,7 +163,7 @@ TimePickerWrapper.defaultProps = {
   customTriggerId: null,
   focused: false,
   defaultTime: null,
-  timeQuantum: null,
+  meridiem: null,
   timeMode: null,
   timezone: timeHelper.guessUserTz(),
   showTimezone: false,

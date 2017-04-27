@@ -19,7 +19,7 @@ const propTypes = {
   hour: PropTypes.string,
   minute: PropTypes.string,
   draggable: PropTypes.bool,
-  timeQuantum: PropTypes.string,
+  meridiem: PropTypes.string,
   timezone: PropTypes.shape({
     city: PropTypes.string,
     zoneAbbr: PropTypes.string,
@@ -39,7 +39,7 @@ const defaultProps = {
   hour: '00',
   minute: '00',
   draggable: false,
-  timeQuantum: 'AM',
+  meridiem: 'AM',
   timezone: timeHelper.guessUserTz(),
   showTimezone: false,
   editableTimezone: false,
@@ -100,10 +100,10 @@ class TwelveHoursMode extends React.PureComponent {
     return [top, height];
   }
 
-  handleTimeQuantumChange(timeQuantum) {
-    if (timeQuantum !== this.props.timeQuantum) {
+  handleTimeQuantumChange(meridiem) {
+    if (meridiem !== this.props.meridiem) {
       const { handleTimeQuantumChange } = this.props;
-      handleTimeQuantumChange && handleTimeQuantumChange(timeQuantum);
+      handleTimeQuantumChange && handleTimeQuantumChange(meridiem);
     }
   }
 
@@ -144,7 +144,7 @@ class TwelveHoursMode extends React.PureComponent {
   };
 
   render() {
-    let { hour, minute, timeQuantum } = this.props;
+    let { hour, minute, meridiem } = this.props;
     const {
       language,
       draggable,
@@ -156,7 +156,7 @@ class TwelveHoursMode extends React.PureComponent {
 
     // Since someone might pass us a time in 24h format, we need to pass it through
     // timeHelper.time() to 'translate' it into 12h format, including its accurate quantum
-    [ hour, minute, timeQuantum ] = timeHelper.time([hour, minute].join(':'), 12);
+    [ hour, minute, meridiem ] = timeHelper.time([hour, minute].join(':'), 12);
 
     const { hourPointerRotate, minutePointerRotate } = this.state;
 
@@ -178,7 +178,7 @@ class TwelveHoursMode extends React.PureComponent {
 
     const handleQuantumChange = this.handleTimeQuantumChange.bind(
       this,
-      timeQuantum === 'AM' ? 'PM' : 'AM'
+      meridiem === 'AM' ? 'PM' : 'AM'
     );
 
     return (
@@ -188,7 +188,7 @@ class TwelveHoursMode extends React.PureComponent {
             className='time_picker_header active'>{hour}:{minute}</span>&nbsp;
           <span
             onClick={handleQuantumChange}
-            className='time_picker_header quantum'>{timeQuantum}</span>
+            className='time_picker_header quantum'>{meridiem}</span>
         </div>
         <div className='picker_container'>
           <HourPickerPointGenerator

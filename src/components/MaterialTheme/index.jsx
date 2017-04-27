@@ -12,7 +12,7 @@ const propTypes = {
   autoMode: PropTypes.bool,
   draggable: PropTypes.bool,
   language: PropTypes.object,
-  timeQuantum: PropTypes.string,
+  meridiem: PropTypes.string,
   timezone: PropTypes.shape({
     city: PropTypes.string,
     zoneAbbr: PropTypes.string,
@@ -33,7 +33,7 @@ const defaultProps = {
   minute: '00',
   timeMode: 24,
   autoMode: true,
-  timeQuantum: 'AM',
+  meridiem: 'AM',
   timezone: timeHelper.guessUserTz(),
   showTimezone: false,
   editableTimezone: false,
@@ -89,7 +89,7 @@ class MaterialTheme extends React.PureComponent {
       language,
       draggable,
       clearFocus,
-      timeQuantum,
+      meridiem,
       timezone,
       editableTimezone,
       showTimezone,
@@ -108,7 +108,7 @@ class MaterialTheme extends React.PureComponent {
         draggable={draggable}
         language={language}
         clearFocus={clearFocus}
-        timeQuantum={timeQuantum}
+        meridiem={meridiem}
         timezone={timezone}
         editableTimezone={editableTimezone}
         showTimezone={showTimezone}

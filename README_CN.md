@@ -77,7 +77,7 @@ export default class SomeComponent extends React.Component {
     // do something
   }
 
-  onTimeQuantumChange(timeQuantum) {
+  onTimeQuantumChange(meridiem) {
     // do something
   }
 
@@ -215,7 +215,7 @@ timeMode="12"
 timeMode=12
 ```
 
-- `timeQuantum`
+- `meridiem`
 
 > 上下午，在 12 小时制里为 "AM" 或 "PM"
 

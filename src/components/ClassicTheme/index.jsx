@@ -9,7 +9,7 @@ const propTypes = {
   hour: PropTypes.string,
   minute: PropTypes.string,
   timeMode: PropTypes.number,
-  timeQuantum: PropTypes.string,
+  meridiem: PropTypes.string,
   colorPalette: PropTypes.string,
   handleTimeChange: PropTypes.func,
   handleTimeQuantumChange: PropTypes.func
@@ -19,7 +19,7 @@ const defaultProps = {
   hour: '00',
   minute: '00',
   timeMode: 24,
-  timeQuantum: 'AM',
+  meridiem: 'AM',
   colorPalette: 'light',
   handleTimeChange: () => {},
   handleTimeQuantumChange: () => {}
@@ -45,7 +45,7 @@ class ClassicTheme extends React.PureComponent {
   }
 
   checkTimeIsActive(time) {
-    const { hour, minute, timeQuantum } = this.props;
+    const { hour, minute, meridiem } = this.props;
     const [times, quantum] = time.split(' ');
     const [rawHour, rawMinute] = time.split(':');
     const currentHour = timeHelper.validate(rawHour);
@@ -54,7 +54,7 @@ class ClassicTheme extends React.PureComponent {
     if (hour !== currentHour) {
       return false;
     }
-    if (quantum && quantum !== timeQuantum) {
+    if (quantum && quantum !== meridiem) {
       return false;
     }
     if (Math.abs(parseInt(minute) - parseInt(currentMinute)) < 15) {

@@ -77,7 +77,7 @@ export default class SomeComponent extends React.Component {
     // do something
   }
 
-  onTimeQuantumChange(timeQuantum) {
+  onTimeQuantumChange(meridiem) {
     // do something
   }
 
@@ -212,7 +212,7 @@ timeMode="12"
 timeMode=12
 ```
 
-- `timeQuantum`
+- `meridiem`
 
 > `React.PropTypes.string`, support "PM" or "AM" for 12 hours mode.
 
@@ -308,7 +308,7 @@ onTimeChange(time) {
 
 `React.PropTypes.func`
 
-> The callback func when timeQuantum changed.
+> The callback func when meridiem changed.
 
 # Article
 

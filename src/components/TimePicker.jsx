@@ -10,69 +10,66 @@ import timeHelper from '../utils/time';
 let LANGUAGE = language.get();
 
 const propTypes = {
-  time: PropTypes.string,
-  timeQuantum: PropTypes.string,
-  focused: PropTypes.bool,
   autoMode: PropTypes.bool,
-  draggable: PropTypes.bool,
-  placeholder: PropTypes.string,
   colorPalette: PropTypes.string,
-  theme: PropTypes.string,
-  timeMode: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number
-  ]),
-  withoutIcon: PropTypes.bool,
+  draggable: PropTypes.bool,
+  focused: PropTypes.bool,
+  language: PropTypes.string,
+  meridiem: PropTypes.string,
+  onEditTimezoneChange: PropTypes.func,
   onFocusChange: PropTypes.func,
   onHourChange: PropTypes.func,
   onMinuteChange: PropTypes.func,
-  onTimeChange: PropTypes.func,
-  onTimeQuantumChange: PropTypes.func,
-  onTimeModeChange: PropTypes.func,
-  onTimezoneChange: PropTypes.func,
   onShowTimezoneChange: PropTypes.func,
-  onEditTimezoneChange: PropTypes.func,
+  onTimeChange: PropTypes.func,
+  onTimeModeChange: PropTypes.func,
+  onTimeQuantumChange: PropTypes.func,
+  onTimezoneChange: PropTypes.func,
+  placeholder: PropTypes.string,
+  showTimezone: PropTypes.bool,
+  theme: PropTypes.string,
+  time: PropTypes.string,
+  timeMode: PropTypes.string,
+  timezone: PropTypes.shape({
+    city: PropTypes.string,
+    zoneAbbr: PropTypes.string,
+    zoneName: PropTypes.string
+  }),
+  timezoneIsEditable: PropTypes.bool,
   trigger: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.object,
     PropTypes.instanceOf(React.Component),
     PropTypes.instanceOf(React.PureComponent)
   ]),
-  language: PropTypes.string,
-  timezone: PropTypes.shape({
-    city: PropTypes.string,
-    zoneAbbr: PropTypes.string,
-    zoneName: PropTypes.string
-  }),
-  showTimezone: PropTypes.bool,
-  editableTimezone: PropTypes.bool
+  withoutIcon: PropTypes.bool
 };
 
 const defaultProps = {
-  time: timeHelper.current(),
-  timeQuantum: 'AM',
-  focused: false,
   autoMode: true,
-  draggable: true,
-  placeholder: '',
   colorPalette: 'light',
-  timeMode: 24,
-  theme: 'material',
-  withoutIcon: false,
+  draggable: true,
+  focused: false,
+  language: 'en',
+  meridiem: 'AM',
+  onEditTimezoneChange: () => {},
   onFocusChange: () => {},
   onHourChange: () => {},
   onMinuteChange: () => {},
-  onTimeChange: () => {},
-  onTimeQuantumChange: () => {},
-  onTimeModeChange: () => {},
-  onTimezoneChange: () => {},
   onShowTimezoneChange: () => {},
-  onEditTimezoneChange: () => {},
-  trigger: null,
-  language: 'en',
-  timezone: timeHelper.guessUserTz(),
+  onTimeChange: () => {},
+  onTimeModeChange: () => {},
+  onTimeQuantumChange: () => {},
+  onTimezoneChange: () => {},
+  placeholder: '',
   showTimezone: false,
-  editableTimezone: false
+  theme: 'material',
+  time: timeHelper.current(),
+  timeMode: '24h',
+  timezone: timeHelper.guessUserTz(),
+  timezoneIsEditable: false,
+  trigger: null,
+  withoutIcon: false
 };
 
 class TimePicker extends React.PureComponent {
@@ -137,9 +134,9 @@ class TimePicker extends React.PureComponent {
     this.handleTimeChange(`${hour}:${minute}`);
   }
 
-  handleTimeQuantumChange(timeQuantum) {
+  handleTimeQuantumChange(meridiem) {
     const { onTimeQuantumChange } = this.props;
-    onTimeQuantumChange && onTimeQuantumChange(timeQuantum);
+    onTimeQuantumChange && onTimeQuantumChange(meridiem);
   }
 
   handleTimeModeChange(timeMode) {
@@ -175,16 +172,16 @@ class TimePicker extends React.PureComponent {
     onEditTimezoneChange && onEditTimezoneChange(editTimezone);
   }
 
-  get timeQuantum() {
-    const { timeQuantum, time, timeMode } = this.props;
-    return timeQuantum || timeHelper.time(time, 12)[2];
+  get meridiem() {
+    const { meridiem, time, timeMode } = this.props;
+    return meridiem || timeHelper.time(time, 12)[2];
   }
 
   get timeMode() {
-    // if a dev passes in a timeMode of 12 *or* a timeQuantum, s/he wants 12h mode
-    const { timeMode, timeQuantum } = this.props;
+    // if a dev passes in a timeMode of 12 *or* a meridiem, s/he wants 12h mode
+    const { timeMode, meridiem } = this.props;
     const isTimeMode12 = (timeMode && parseInt(timeMode === 12));
-    const quantumMatch = timeQuantum.match(/[AM|PM]/i);
+    const quantumMatch = meridiem.match(/[AM|PM]/i);
     const isTimeQuantum = !!quantumMatch && quantumMatch.length === 1;
     return (isTimeMode12 || isTimeQuantum) ? 12 : 24;
   }
@@ -196,28 +193,28 @@ class TimePicker extends React.PureComponent {
       draggable,
       timezone,
       showTimezone,
-      editableTimezone } = this.props;
+      timezoneIsEditable } = this.props;
     const [ hour, minute, quantum ] = this.getHourAndMinute();
 
     return (
       <MaterialTheme
-        hour={hour}
-        minute={minute}
         autoMode={autoMode}
-        language={LANGUAGE}
-        timeMode={parseInt(timeMode)}
         clearFocus={this.onClearFocus}
+        draggable={draggable}
+        timezoneIsEditable={timezoneIsEditable}
+        handleEditTimezoneChange={this.handleEditTimezoneChange}
         handleHourChange={this.handleHourChange}
         handleMinuteChange={this.handleMinuteChange}
+        handleShowTimezoneChange={this.handleShowTimezoneChange}
         handleTimeQuantumChange={this.handleTimeQuantumChange}
         handleTimezoneChange={this.handleTimezoneChange}
-        handleEditTimezoneChange={this.handleEditTimezoneChange}
-        handleShowTimezoneChange={this.handleShowTimezoneChange}
-        timeQuantum={this.timeQuantum}
-        draggable={draggable}
-        timezone={timezone}
+        hour={hour}
+        language={LANGUAGE}
+        meridiem={this.meridiem}
+        minute={minute}
         showTimezone={showTimezone}
-        editableTimezone={editableTimezone}
+        timeMode={parseInt(timeMode)}
+        timezone={timezone}
       />
     );
   }
@@ -227,13 +224,13 @@ class TimePicker extends React.PureComponent {
     const [ hour, minute, quantum ] = this.getHourAndMinute();
     return (
       <ClassicTheme
-        hour={hour}
-        minute={minute}
         colorPalette={colorPalette}
-        timeMode={parseInt(timeMode)}
-        timeQuantum={this.timeQuantum}
         handleTimeChange={this.handleHourAndMinuteChange}
         handleTimeQuantumChange={this.handleTimeQuantumChange}
+        hour={hour}
+        meridiem={this.meridiem}
+        minute={minute}
+        timeMode={timeMode}
       />
     );
   }
@@ -251,9 +248,9 @@ class TimePicker extends React.PureComponent {
     console.log(`rendering TimePicker with time ${time} and timeMode ${timeMode}`);
 
     const { focused } = this.state;
-    const [ hour, minute, interval ] = this.getHourAndMinute();
+    const [ hour, minute, meridiem ] = this.getHourAndMinute();
     const validateTimeMode = timeHelper.validateTimeMode(timeMode);
-    const quantum = LANGUAGE[this.timeQuantum.toLowerCase()] || this.timeQuantum;
+    const quantum = LANGUAGE[this.meridiem.toLowerCase()] || this.meridiem;
 
     const times = validateTimeMode === 12
       ? `${time} ${quantum}`
