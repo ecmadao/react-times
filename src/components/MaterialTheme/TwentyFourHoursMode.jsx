@@ -23,7 +23,7 @@ const propTypes = {
     zoneName: PropTypes.string
   }),
   showTimezone: PropTypes.bool,
-  editableTimezone: PropTypes.bool,
+  timezoneIsEditable: PropTypes.bool,
   handleHourChange: PropTypes.func,
   handleMinuteChange: PropTypes.func,
   handleTimezoneChange: PropTypes.func,
@@ -39,7 +39,7 @@ const defaultProps = {
   autoMode: true,
   timezone: timeHelper.guessUserTz(),
   showTimezone: false,
-  editableTimezone: false,
+  timezoneIsEditable: false,
   handleHourChange: () => {},
   handleMinuteChange: () => {},
   clearFocus: () => {},
@@ -146,7 +146,7 @@ class TwentyFourHoursMode extends React.PureComponent {
   }
 
   renderTimezone() {
-    const { timezone, editableTimezone } = this.props;
+    const { timezone, timezoneIsEditable } = this.props;
 
     return (
       <div className='time_picker_modal_footer'>

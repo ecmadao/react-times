@@ -26,7 +26,7 @@ const propTypes = {
     zoneName: PropTypes.string
   }),
   showTimezone: PropTypes.bool,
-  editableTimezone: PropTypes.bool,
+  timezoneIsEditable: PropTypes.bool,
   handleHourChange: PropTypes.func,
   handleMinuteChange: PropTypes.func,
   handleTimezoneChange: PropTypes.func,
@@ -42,7 +42,7 @@ const defaultProps = {
   meridiem: 'AM',
   timezone: timeHelper.guessUserTz(),
   showTimezone: false,
-  editableTimezone: false,
+  timezoneIsEditable: false,
   handleHourChange: () => {},
   handleMinuteChange: () => {},
   handleTimezoneChange: () => {},
@@ -100,10 +100,10 @@ class TwelveHoursMode extends React.PureComponent {
     return [top, height];
   }
 
-  handleTimeQuantumChange(meridiem) {
+  handleMeridiemChange(meridiem) {
     if (meridiem !== this.props.meridiem) {
-      const { handleTimeQuantumChange } = this.props;
-      handleTimeQuantumChange && handleTimeQuantumChange(meridiem);
+      const { handleMeridiemChange } = this.props;
+      handleMeridiemChange && handleMeridiemChange(meridiem);
     }
   }
 
@@ -134,7 +134,7 @@ class TwelveHoursMode extends React.PureComponent {
   }
 
   renderTimezone() {
-    const { timezone, editableTimezone } = this.props;
+    const { timezone, timezoneIsEditable } = this.props;
 
     return (
       <div className='time_picker_modal_footer'>
@@ -151,7 +151,7 @@ class TwelveHoursMode extends React.PureComponent {
       clearFocus,
       timezone,
       showTimezone,
-      editableTimezone
+      timezoneIsEditable
     } = this.props;
 
     // Since someone might pass us a time in 24h format, we need to pass it through
@@ -176,7 +176,7 @@ class TwelveHoursMode extends React.PureComponent {
     const HourPickerPointGenerator = pickerPointGenerator('hour', 12);
     const MinutePickerPointGenerator = pickerPointGenerator('minute', 12);
 
-    const handleQuantumChange = this.handleTimeQuantumChange.bind(
+    const handleQuantumChange = this.handleMeridiemChange.bind(
       this,
       meridiem === 'AM' ? 'PM' : 'AM'
     );

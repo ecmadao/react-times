@@ -77,7 +77,7 @@ export default class SomeComponent extends React.Component {
     // do something
   }
 
-  onTimeQuantumChange(meridiem) {
+  onMeridiemChange(meridiem) {
     // do something
   }
 
@@ -87,7 +87,7 @@ export default class SomeComponent extends React.Component {
       onHourChange={this.onHourChange.bind(this)}
       onMinuteChange={this.onMinuteChange.bind(this)}
       onTimeChange={this.onTimeChange.bind(this)}
-      onTimeQuantumChange={this.onTimeQuantumChange.bind(this)}
+      onMeridiemChange={this.onMeridiemChange.bind(this)}
     />
   }
 }
@@ -304,7 +304,7 @@ onTimeChange(time) {
 }
 ```
 
-- `onTimeQuantumChange`
+- `onMeridiemChange`
 
 `React.PropTypes.func`
 

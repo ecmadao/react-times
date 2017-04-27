@@ -12,7 +12,7 @@ const propTypes = {
   meridiem: PropTypes.string,
   colorPalette: PropTypes.string,
   handleTimeChange: PropTypes.func,
-  handleTimeQuantumChange: PropTypes.func
+  handleMeridiemChange: PropTypes.func
 };
 
 const defaultProps = {
@@ -22,7 +22,7 @@ const defaultProps = {
   meridiem: 'AM',
   colorPalette: 'light',
   handleTimeChange: () => {},
-  handleTimeQuantumChange: () => {}
+  handleMeridiemChange: () => {}
 };
 
 class ClassicTheme extends React.PureComponent {
@@ -34,8 +34,8 @@ class ClassicTheme extends React.PureComponent {
 
   handle12ModeHourChange(time) {
     const [times, quantum] = time.split(' ');
-    const { handleTimeChange, handleTimeQuantumChange } = this.props;
-    handleTimeQuantumChange && handleTimeQuantumChange(quantum);
+    const { handleTimeChange, handleMeridiemChange } = this.props;
+    handleMeridiemChange && handleMeridiemChange(quantum);
     handleTimeChange && handleTimeChange(times);
   }
 

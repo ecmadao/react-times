@@ -25,7 +25,7 @@ storiesOf('TimeZones', module)
     return (
       <TimePickerWrapper
         showTimezone={true}
-        editableTimezone={true}
+        timezoneIsEditable={true}
       />
     )
   })
@@ -35,7 +35,7 @@ storiesOf('TimeZones', module)
         timeMode="12"
         defaultTime="13:15"
         showTimezone={true}
-        editableTimezone={true}
+        timezoneIsEditable={true}
       />
     )
   })
@@ -44,7 +44,7 @@ storiesOf('TimeZones', module)
       <TimePickerWrapper
         colorPalette="dark"
         showTimezone={true}
-        editableTimezone={true}
+        timezoneIsEditable={true}
       />
     )
   });

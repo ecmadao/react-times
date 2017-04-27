@@ -18,11 +18,11 @@ const propTypes = {
     zoneAbbr: PropTypes.string,
     zoneName: PropTypes.string
   }),
-  editableTimezone: PropTypes.bool,
+  timezoneIsEditable: PropTypes.bool,
   showTimezone: PropTypes.bool,
   handleHourChange: PropTypes.func,
   handleMinuteChange: PropTypes.func,
-  handleTimeQuantumChange: PropTypes.func,
+  handleMeridiemChange: PropTypes.func,
   handleTimezoneChange: PropTypes.func,
   handleEditTimezoneChange: PropTypes.func,
   handleShowTimezoneChange: PropTypes.func
@@ -36,10 +36,10 @@ const defaultProps = {
   meridiem: 'AM',
   timezone: timeHelper.guessUserTz(),
   showTimezone: false,
-  editableTimezone: false,
+  timezoneIsEditable: false,
   handleHourChange: () => {},
   handleMinuteChange: () => {},
-  handleTimeQuantumChange: () => {},
+  handleMeridiemChange: () => {},
   handleTimezoneChange: () => {},
   handleEditTimezoneChange: () => {},
   handleShowTimezoneChange: () => {}
@@ -54,7 +54,7 @@ class MaterialTheme extends React.PureComponent {
       draggable,
       clearFocus,
       timezone,
-      editableTimezone,
+      timezoneIsEditable,
       showTimezone,
       handleHourChange,
       handleMinuteChange,
@@ -76,7 +76,7 @@ class MaterialTheme extends React.PureComponent {
         handleShowTimezoneChange={handleShowTimezoneChange}
         clearFocus={clearFocus}
         timezone={timezone}
-        editableTimezone={editableTimezone}
+        timezoneIsEditable={timezoneIsEditable}
         showTimezone={showTimezone}
       />
     )
@@ -91,11 +91,11 @@ class MaterialTheme extends React.PureComponent {
       clearFocus,
       meridiem,
       timezone,
-      editableTimezone,
+      timezoneIsEditable,
       showTimezone,
       handleHourChange,
       handleMinuteChange,
-      handleTimeQuantumChange,
+      handleMeridiemChange,
       handleTimezoneChange,
       handleEditTimezoneChange,
       handleShowTimezoneChange
@@ -110,11 +110,11 @@ class MaterialTheme extends React.PureComponent {
         clearFocus={clearFocus}
         meridiem={meridiem}
         timezone={timezone}
-        editableTimezone={editableTimezone}
+        timezoneIsEditable={timezoneIsEditable}
         showTimezone={showTimezone}
         handleHourChange={handleHourChange}
         handleMinuteChange={handleMinuteChange}
-        handleTimeQuantumChange={handleTimeQuantumChange}
+        handleMeridiemChange={handleMeridiemChange}
         handleTimezoneChange={handleTimezoneChange}
         handleEditTimezoneChange={handleEditTimezoneChange}
         handleShowTimezoneChange={handleShowTimezoneChange}

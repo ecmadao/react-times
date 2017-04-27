@@ -65,7 +65,7 @@ describe('TwelveHoursMode', () => {
   describe('TwelveHoursMode Func', () => {
     const handleHourChange = sinon.stub();
     const handleMinuteChange = sinon.stub();
-    const handleTimeQuantumChange = sinon.stub();
+    const handleMeridiemChange = sinon.stub();
     const wrapper = shallow(
       <TwelveHoursMode
         hour={'01'}
@@ -74,7 +74,7 @@ describe('TwelveHoursMode', () => {
         meridiem={'AM'}
         handleHourChange={handleHourChange}
         handleMinuteChange={handleMinuteChange}
-        handleTimeQuantumChange={handleTimeQuantumChange}
+        handleMeridiemChange={handleMeridiemChange}
       />
     );
     it('should handleHourPointerClick', () => {
@@ -89,11 +89,11 @@ describe('TwelveHoursMode', () => {
       expect(handleMinuteChange.callCount).to.equal(1);
     });
 
-    it('should handleTimeQuantumChange', () => {
-      wrapper.instance().handleTimeQuantumChange('AM');
-      expect(handleTimeQuantumChange.callCount).to.equal(0);
-      wrapper.instance().handleTimeQuantumChange('PM');
-      expect(handleTimeQuantumChange.callCount).to.equal(1);
+    it('should handleMeridiemChange', () => {
+      wrapper.instance().handleMeridiemChange('AM');
+      expect(handleMeridiemChange.callCount).to.equal(0);
+      wrapper.instance().handleMeridiemChange('PM');
+      expect(handleMeridiemChange.callCount).to.equal(1);
     });
   });
 });

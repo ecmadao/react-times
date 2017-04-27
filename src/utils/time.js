@@ -4,41 +4,49 @@ import moment from 'moment-timezone';
 // IANA Time Zone Database at https://www.iana.org/time-zones
 moment.tz.load({version: 'latest', zones: [], links: []});
 
+// simple utils for working with sequences like Array or string
+const isSeq = (seq) => (typeof seq === 'string' || Array.isArray(seq));
+// eslint-disable-next-line no-undef
+const head = first = (seq) => isSeq(seq) ? seq[0] : null;
+// eslint-disable-next-line no-undef
+const tail = rest = (seq) => isSeq(seq) ? seq.slice(1) : null;
+const last = (seq) => isSeq(seq) ? seq[seq.length - 1] : null;
+
 /**
  * Create an array of time data like [hh, mm, A] using moment.
  * If a time is provided, just format it; if not, use the current time.
  *
- * @function getTime
- * @param  {string} time                a time; defaults to now
- * @param  {Number} timeMode=24         12 or 24-hour mode; default to 24-hour mode
- * @param  {string} tz                  a timezone name; guesses user timezone by default
- * @return {[string, string, string]}   an array of hour, minute, and (if mode is 12-hour) AM or PM
+ * @function getValidTimeData
+ * @param  {string} time          a time; defaults to now
+ * @param  {string} meridiem      AM or PM
+ * @param  {Number} timeMode=24   12 or 24-hour mode; default to 24-hour mode
+ * @param  {string} tz            a timezone name; guesses user timezone by default
+ * @return {[string]}             an array of hour, minute, and (if mode is 12-hour) AM or PM
  */
-const getTime = (time, timeMode = 24, tz = guessUserTz().zoneName) => {
+const getValidTimeData = (time, meridiem, timeMode = 24, tz = guessUserTz().zoneName) => {
   const mode = getValidateTimeMode(timeMode);
-  const validTime = (time && time.includes(':'))
-    ? time.split(/:/).map((t) => getValidateTime(t)).join(':')
-    : time; // if time is undefined, fall through to formattedTime below, where we default to now
+  const validMeridiem = getValidMeridiem(meridiem);
+  const validTime = getValidTimeString(time, validMeridiem);
 
-  const formatter = mode === 24 ? 'HH:mm' : 'hh:mmA';
+  const formatter = mode === 24 ? 'HH:mmA' : 'hh:mmA';
   const formattedTime = (validTime)
     ? moment(`1970-01-01 ${validTime}`).tz(tz).format(formatter)
     : moment().tz(tz).format(formatter);
 
   const splitTime = formattedTime.split(/:/);
 
-  if (timeMode === 12) {
-    return [
-      splitTime[0],                                 // hour
-      splitTime[splitTime.length - 1].slice(0, 2),  // minute
-      splitTime[splitTime.length - 1].slice(2)      // quantum
-    ];
-  }
+  let hour = head(splitTime);
+  if (head(hour) === '0' && mode === 12) { hour = tail(hour); }
 
-  return splitTime; // hour, minute
+  const minute = last(splitTime).slice(0, 2);
+  const merid = last(splitTime).slice(2);
+
+  const timeData = [ hour, minute, merid ];
+
+  return timeData;
 };
 
-const getCurrentTime = () => getTime().join(':'); // defaults to 24h mode
+const getCurrentTime = () => getValidTimeData().join(':');
 
 /**
  * Get an integer representation of a time.
@@ -64,6 +72,20 @@ const getValidateTime = (time) => {
   return `${time}`;
 };
 
+const getValidTimeString = (time, meridiem) => {
+  if(typeof time === 'string') {
+    let validTime = (time && time.includes(':'))
+      ? time.split(/:/).map((t) => getValidateTime(t)).join(':')
+      : time; // if time is undefined, fall through to formattedTime below, where we default to now
+
+    if (time && meridiem) { validTime = `${validTime} ${meridiem}`; }
+
+    return validTime;
+  }
+
+  return time;
+};
+
 /**
  * Get time data to use for initializing a TimePicker.
  * @function initialTime
@@ -72,7 +94,7 @@ const getValidateTime = (time) => {
  * @return {[string, string, string]}
  */
 const initialTime = (defaultTime, mode = 24) => {
-  let [hour, minute, quantum] = getTime(defaultTime, mode);
+  let [hour, minute, meridiem] = getValidTimeData(defaultTime, mode);
 
   hour = getValidateIntTime(hour);
   minute = getValidateIntTime(minute);
@@ -83,7 +105,15 @@ const initialTime = (defaultTime, mode = 24) => {
   hour = getValidateTime(hour);
   minute = getValidateTime(minute);
 
-  return [hour, minute, quantum];
+  return [hour, minute, meridiem];
+};
+
+const getValidMeridiem = (meridiem) => {
+  if(typeof meridiem === 'string') {
+    return (meridiem && meridiem.match(/[am|pm]/i)) ? meridiem : null;
+  }
+
+  return meridiem;
 };
 
 /**
@@ -177,7 +207,7 @@ const guessUserTz = () => {
 
 export default {
   current: getCurrentTime,
-  time: getTime,
+  time: getValidTimeData,
   validate: getValidateTime,
   validateInt: getValidateIntTime,
   validateTimeMode: getValidateTimeMode,
