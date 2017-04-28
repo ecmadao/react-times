@@ -6,12 +6,60 @@ import {
   MAX_ABSOLUTE_POSITION,
   MIN_ABSOLUTE_POSITION
 } from '../src/utils/const_value';
+import { isSeq, head, tail, last } from '../src/utils/func';
 
+describe('Functional utils', () => {
+  describe('isSeq', () => {
+    it('should correctly detect a sequence', () => {
+      const isSequence = [isSeq('foo'), isSeq('foo'.split())].every((e) => e === true);
+      const isNotSequence = [isSeq({ message: 'foo' }), isSeq(8), isSeq(true)].every((e) => e === false);
+      expect(isSequence).to.equal(true);
+      expect(isNotSequence).to.equal(true);
+    });
+  });
+
+  describe('head', () => {
+    it('should return the first element of a sequence', () => {
+      expect(head('foo')).to.equal('f');
+      expect(head('foo'.split(''))).to.equal('f');
+    });
+  });
+
+  describe('tail', () => {
+    it('should return the last elements of a sequence', () => {
+      expect(tail('foo')).to.equal('oo');
+      expect(tail('foo'.split(''))).to.deep.equal(['o', 'o']);
+    });
+  });
+
+  describe('last', () => {
+    it('should return the last element of a sequence', () => {
+      expect(last('foo')).to.equal('o');
+      expect(last('foo'.split(''))).to.equal('o');
+    });
+  });
+});
+
+// Note: data passed in is weighted: mode > meridiem > time
 describe('Time utils', () => {
   describe('getValidTimeData', () => {
     it('should return valid data when given no time, meridiem, or mode', () => {
       const timeData = timeHelper.time();
       const currentTime = moment().format('HH:mmA').split(/:/);
+
+      const newData = {
+        hour12: '',
+        hour24: '',
+        minute: '',
+        meridiem: '',
+        mode: '',
+        timezone: {
+          city: '',
+          zoneAbbr: '',
+          zoneName: ''
+        }
+      };
+
       const currentTimeData = [
         currentTime[0],
         currentTime[currentTime.length - 1].slice(0, 2),
@@ -20,6 +68,13 @@ describe('Time utils', () => {
 
       expect(timeData).to.deep.equal(currentTimeData);
     });
+
+    it('should return valid data when given only a mode');
+    it('should return valid data when given only a meridiem');
+    it('should return valid data when given only a time');
+    it('should return valid data when given a time and a mode');
+    it('should return valid data when given a time and a mode');
+    it('should return valid data when given a time, a mode, and a meridiem');
   });
 });
 

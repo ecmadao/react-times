@@ -1,16 +1,9 @@
 import moment from 'moment-timezone';
+import { head, tail, last } from './func';
 
 // loads moment-timezone's timezone data, which comes from the
 // IANA Time Zone Database at https://www.iana.org/time-zones
 moment.tz.load({version: 'latest', zones: [], links: []});
-
-// simple utils for working with sequences like Array or string
-const isSeq = (seq) => (typeof seq === 'string' || Array.isArray(seq));
-// eslint-disable-next-line no-undef
-const head = first = (seq) => isSeq(seq) ? seq[0] : null;
-// eslint-disable-next-line no-undef
-const tail = rest = (seq) => isSeq(seq) ? seq.slice(1) : null;
-const last = (seq) => isSeq(seq) ? seq[seq.length - 1] : null;
 
 /**
  * Create an array of time data like [hh, mm, A] using moment.
@@ -73,7 +66,7 @@ const getValidateTime = (time) => {
 };
 
 const getValidTimeString = (time, meridiem) => {
-  if(typeof time === 'string') {
+  if (typeof time === 'string') {
     let validTime = (time && time.includes(':'))
       ? time.split(/:/).map((t) => getValidateTime(t)).join(':')
       : time; // if time is undefined, fall through to formattedTime below, where we default to now
