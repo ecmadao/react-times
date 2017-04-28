@@ -43,10 +43,8 @@ describe('Functional utils', () => {
 // Note: data passed in is weighted: mode > meridiem > time
 describe('Time utils', () => {
   describe('getValidTimeData', () => {
-    it('should return valid data when given no time, meridiem, or mode', () => {
-      const timeData = timeHelper.time();
-      const currentTime = moment().format('HH:mmA').split(/:/);
 
+    before('create time data', () => {
       const newData = {
         hour12: '',
         hour24: '',
@@ -59,6 +57,11 @@ describe('Time utils', () => {
           zoneName: ''
         }
       };
+    });
+
+    it('should return valid data when given no time, meridiem, or mode', () => {
+      const timeData = timeHelper.time();
+      const currentTime = moment().format('HH:mmA').split(/:/);
 
       const currentTimeData = [
         currentTime[0],
