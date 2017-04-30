@@ -26,11 +26,11 @@ const getValidTimeData = (time, meridiem, timeMode, tz = guessUserTz()) => {
   const validTime = getValidTimeString(time, validMeridiem);
 
   const time24 = ((validTime)
-    ? moment(`1970-01-01 ${validTime}`).tz(tz.zoneName).format('HH:mmA')
+    ? moment(`1970-01-01 ${validTime}`, 'YYYY-MM-DD HH:mmA').tz(tz.zoneName).format('HH:mmA')
     : moment().tz(tz.zoneName).format('HH:mmA')).split(/:/);
 
   const time12 = ((validTime)
-    ? moment(`1970-01-01 ${validTime}`).tz(tz.zoneName).format('hh:mmA')
+    ? moment(`1970-01-01 ${validTime}`, 'YYYY-MM-DD hh:mmA').tz(tz.zoneName).format('hh:mmA')
     : moment().tz(tz.zoneName).format('hh:mmA')).split(/:/);
 
   const timeData = {
@@ -91,8 +91,10 @@ const getValidTimeString = (time, meridiem) => {
     let validTime = (time && time.includes(':'))
       ? time.split(/:/).map((t) => getValidateTime(t)).join(':')
       : time;
+    const hourAsInt = parseInt(head(validTime.split(/:/)));
+    const is12hTime = (hourAsInt > 0 && hourAsInt <= 12);
 
-    validTime = (validTime && meridiem && parseInt(head(validTime.split(/:/))) < 12)
+    validTime = (validTime && meridiem && is12hTime)
       ? `${validTime} ${meridiem}`
       : validTime;
 
@@ -102,31 +104,9 @@ const getValidTimeString = (time, meridiem) => {
   return time;
 };
 
-/**
- * Get time data to use for initializing a TimePicker.
- * @function initialTime
- * @param  {string} defaultTime
- * @param  {Number} mode=24
- * @return {[string, string, string]}
- */
-const initialTime = (defaultTime, mode = 24) => {
-  let [hour, minute, meridiem] = getValidTimeData(defaultTime, mode);
-
-  hour = getValidateIntTime(hour);
-  minute = getValidateIntTime(minute);
-
-  if (hour > 24) { hour = 24 - hour; }
-  if (minute >= 60) { minute = 60 - minute; }
-
-  hour = getValidateTime(hour);
-  minute = getValidateTime(minute);
-
-  return [hour, minute, meridiem];
-};
-
 const getValidMeridiem = (meridiem) => {
   if (typeof meridiem === 'string') {
-    return (meridiem && meridiem.match(/[am|pm]/i)) ? meridiem : null;
+    return (meridiem && meridiem.match(/am|pm/i)) ? meridiem.toLowerCase() : null;
   }
 
   return meridiem;
@@ -227,7 +207,6 @@ export default {
   validate: getValidateTime,
   validateInt: getValidateIntTime,
   validateTimeMode: getValidateTimeMode,
-  initial: initialTime,
   tzForCity: getTzForCity,
   guessUserTz,
   tzMaps

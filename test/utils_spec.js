@@ -47,7 +47,7 @@ const time12 = moment().format('hh:mmA').split(/:/);
 
 const modes = [24, 12];
 const meridies = ['AM', 'PM']; // yes, this is the correct plural 😜
-const times = ['1:00', '01:00', '13:00'];
+const times = ['00:00', '6:00', '06:00', '12:00', '18:00'];
 
 describe('Time utils', () => {
   describe('getCurrentTime()', () => {
@@ -56,6 +56,7 @@ describe('Time utils', () => {
       expect(timeString).to.equal(time24.join(':').slice(0, 5));
     });
   });
+
   describe('given a call to getValidTimeData()', () => {
     describe('when passed no arguments', () => {
       it('then it should default to the current local time in 24h mode', () => {
@@ -127,14 +128,33 @@ describe('Time utils', () => {
         times.forEach((time) => {
           const testTimeData = timeHelper.time(time);
           expect(testTimeData.mode).to.equal(24);
-          expect(testTimeData.hour12).to.equal('1');
 
-          if (time === '1:00' || time === '01:00') {
-            expect(testTimeData.meridiem).to.equal('AM');
-            expect(testTimeData.hour24).to.equal('01');
-          } else {
-            expect(testTimeData.meridiem).to.equal('PM');
-            expect(testTimeData.hour24).to.equal('13');
+          switch (time) {
+            case '6:00':
+              expect(testTimeData.meridiem).to.equal('AM');
+              expect(testTimeData.hour24).to.equal('06');
+              expect(testTimeData.hour12).to.equal('6');
+              break;
+            case '06:00':
+              expect(testTimeData.meridiem).to.equal('AM');
+              expect(testTimeData.hour24).to.equal('06');
+              expect(testTimeData.hour12).to.equal('6');
+              break;
+            case '12:00':
+              expect(testTimeData.meridiem).to.equal('PM');
+              expect(testTimeData.hour24).to.equal('12');
+              expect(testTimeData.hour12).to.equal('12');
+              break;
+            case '18:00':
+              expect(testTimeData.meridiem).to.equal('PM');
+              expect(testTimeData.hour24).to.equal('18');
+              expect(testTimeData.hour12).to.equal('6');
+              break;
+            default: // '00:00'
+              expect(testTimeData.meridiem).to.equal('AM');
+              expect(testTimeData.hour24).to.equal('00');
+              expect(testTimeData.hour12).to.equal('12');
+              break;
           }
         });
       });
@@ -159,15 +179,34 @@ describe('Time utils', () => {
         times.forEach((time) => {
           modes.forEach((mode) => {
             const testTimeData = timeHelper.time(time, undefined, mode);
-            expect(testTimeData.hour12).to.equal('1');
             expect(testTimeData.mode).to.equal(mode);
 
-            if (time === '1:00' || time === '01:00') {
-              expect(testTimeData.meridiem).to.equal('AM');
-              expect(testTimeData.hour24).to.equal('01');
-            } else {
-              expect(testTimeData.meridiem).to.equal('PM');
-              expect(testTimeData.hour24).to.equal('13');
+            switch (time) {
+              case '6:00':
+                expect(testTimeData.meridiem).to.equal('AM');
+                expect(testTimeData.hour24).to.equal('06');
+                expect(testTimeData.hour12).to.equal('6');
+                break;
+              case '06:00':
+                expect(testTimeData.meridiem).to.equal('AM');
+                expect(testTimeData.hour24).to.equal('06');
+                expect(testTimeData.hour12).to.equal('6');
+                break;
+              case '12:00':
+                expect(testTimeData.meridiem).to.equal('PM');
+                expect(testTimeData.hour24).to.equal('12');
+                expect(testTimeData.hour12).to.equal('12');
+                break;
+              case '18:00':
+                expect(testTimeData.meridiem).to.equal('PM');
+                expect(testTimeData.hour24).to.equal('18');
+                expect(testTimeData.hour12).to.equal('6');
+                break;
+              default: // '00:00'
+                expect(testTimeData.meridiem).to.equal('AM');
+                expect(testTimeData.hour24).to.equal('00');
+                expect(testTimeData.hour12).to.equal('12');
+                break;
             }
           });
         });
@@ -175,17 +214,41 @@ describe('Time utils', () => {
     });
 
     describe('when passed a meridiem and a time', () => {
-      it('then it should use the specified time and meridiem (unless given a PM time), and use 12h mode', () => {
+      it('then it should use the specified time, use the correct meridiem based on time provided, and use 12h mode', () => {
         times.forEach((time) => {
           meridies.forEach((meridiem) => {
             const testTimeData = timeHelper.time(time, meridiem);
             expect(testTimeData.mode).to.equal(12);
-            expect(testTimeData.hour12).to.equal('1');
 
-            if (time === '1:00' || time === '01:00') {
-              expect(testTimeData.meridiem).to.equal(meridiem);
-            } else {
-              expect(testTimeData.meridiem).to.equal('PM');
+            switch (time) {
+              case '6:00':
+                expect(testTimeData.meridiem).to.equal(meridiem);
+                if (meridiem === 'AM') expect(testTimeData.hour24).to.equal('06');
+                else expect(testTimeData.hour24).to.equal('18');
+                expect(testTimeData.hour12).to.equal('6');
+                break;
+              case '06:00':
+                expect(testTimeData.meridiem).to.equal(meridiem);
+                if (meridiem === 'AM') expect(testTimeData.hour24).to.equal('06');
+                else expect(testTimeData.hour24).to.equal('18');
+                expect(testTimeData.hour12).to.equal('6');
+                break;
+              case '12:00':
+                expect(testTimeData.meridiem).to.equal(meridiem);
+                if (meridiem === 'AM') expect(testTimeData.hour24).to.equal('00');
+                else expect(testTimeData.hour24).to.equal('12');
+                expect(testTimeData.hour12).to.equal('12');
+                break;
+              case '18:00':
+                expect(testTimeData.meridiem).to.equal('PM');
+                expect(testTimeData.hour24).to.equal('18');
+                expect(testTimeData.hour12).to.equal('6');
+                break;
+              default: // '00:00'
+                // moment doesn't like '00:00 pm', but we care about 12h here
+                expect(testTimeData.hour24).to.equal('00');
+                expect(testTimeData.hour12).to.equal('12');
+                break;
             }
           });
         });
@@ -198,73 +261,46 @@ describe('Time utils', () => {
           meridies.forEach((meridiem) => {
             modes.forEach((mode) => {
               const testTimeData = timeHelper.time(time, meridiem, mode);
-              expect(testTimeData.hour12).to.equal('1');
-              expect(testTimeData.mode).to.equal(mode);
 
-              if (time === '1:00' || time === '01:00') {
-                expect(testTimeData.meridiem).to.equal(meridiem);
-              } else {
-                expect(testTimeData.hour24).to.equal(head(time.split(/:/)))
-                expect(testTimeData.meridiem).to.equal('PM');
+              switch (time) {
+                case '6:00':
+                  expect(testTimeData.mode).to.equal(mode);
+                  expect(testTimeData.meridiem).to.equal(meridiem);
+                  if (meridiem === 'AM') expect(testTimeData.hour24).to.equal('06');
+                  else expect(testTimeData.hour24).to.equal('18');
+                  expect(testTimeData.hour12).to.equal('6');
+                  break;
+                case '06:00':
+                  expect(testTimeData.mode).to.equal(mode);
+                  expect(testTimeData.meridiem).to.equal(meridiem);
+                  if (meridiem === 'AM') expect(testTimeData.hour24).to.equal('06');
+                  else expect(testTimeData.hour24).to.equal('18');
+                  expect(testTimeData.hour12).to.equal('6');
+                  break;
+                case '12:00':
+                  expect(testTimeData.mode).to.equal(mode);
+                  expect(testTimeData.meridiem).to.equal(meridiem);
+                  if (meridiem === 'AM') expect(testTimeData.hour24).to.equal('00');
+                  else expect(testTimeData.hour24).to.equal('12');
+                  expect(testTimeData.hour12).to.equal('12');
+                  break;
+                case '18:00':
+                  expect(testTimeData.mode).to.equal(mode);
+                  expect(testTimeData.meridiem).to.equal('PM');
+                  expect(testTimeData.hour24).to.equal('18');
+                  expect(testTimeData.hour12).to.equal('6');
+                  break;
+                default: // '00:00'
+                  expect(testTimeData.mode).to.equal(mode);
+                  // moment doesn't like '00:00 pm'
+                  expect(testTimeData.hour24).to.equal('00');
+                  expect(testTimeData.hour12).to.equal('12');
+                  break;
               }
             });
           });
         });
       });
-    });
-  });
-
-  describe('Test initialTime func with 24h mode', () => {
-    it('should get current time', () => {
-      let times = moment().format("HH:mm").split(':');
-      expect([...times, undefined]).to.deep.equal(timeHelper.initial(false));
-    });
-
-    it('should get default time', () => {
-      let times = ["11", "12", undefined];
-      expect(times).to.deep.equal(timeHelper.initial("11:12"));
-    });
-
-    it('should get validate default time', () => {
-      let times = ["01", "02", undefined];
-      expect(times).to.deep.equal(timeHelper.initial("1:2"));
-    });
-
-    it('should get validate default time', () => {
-      let times = ["01", "00", undefined];
-      expect(times).to.deep.equal(timeHelper.initial("1:"));
-    });
-
-    it('should get validate default time', () => {
-      let times = ["00", "01", undefined];
-      expect(times).to.deep.equal(timeHelper.initial("abc:1"));
-    });
-  });
-
-  describe('Test initialTime func with 12h mode', () => {
-    it('should get default time in 12h mode', () => {
-      let times = ["11", "12", "AM"];
-      expect(times).to.deep.equal(timeHelper.initial("11:12", 12));
-    });
-
-    it('should get default time in 24h mode', () => {
-      let times = ["01", "12", "PM"];
-      expect(times).to.deep.equal(timeHelper.initial("13:12", 12));
-    });
-
-    it('should get validate default time', () => {
-      let times = ["01", "02", "AM"];
-      expect(times).to.deep.equal(timeHelper.initial("1:2", 12));
-    });
-
-    it('should get validate default time', () => {
-      let times = ["01", "00", "AM"];
-      expect(times).to.deep.equal(timeHelper.initial("1:", 12));
-    });
-
-    it('should get validate default time', () => {
-      let times = ["12", "01", "AM"];
-      expect(times).to.deep.equal(timeHelper.initial("abc:1", 12));
     });
   });
 
