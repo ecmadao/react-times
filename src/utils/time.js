@@ -1,45 +1,59 @@
 import moment from 'moment-timezone';
-import { head, tail, last } from './func';
+import { head, last } from './func';
 
 // loads moment-timezone's timezone data, which comes from the
 // IANA Time Zone Database at https://www.iana.org/time-zones
 moment.tz.load({version: 'latest', zones: [], links: []});
 
 /**
- * Create an array of time data like [hh, mm, A] using moment.
+ * Create a time data object using moment.
  * If a time is provided, just format it; if not, use the current time.
  *
  * @function getValidTimeData
  * @param  {string} time          a time; defaults to now
- * @param  {string} meridiem      AM or PM
- * @param  {Number} timeMode=24   12 or 24-hour mode; default to 24-hour mode
+ * @param  {string} meridiem      AM or PM; defaults to AM via moment
+ * @param  {Number} timeMode      12 or 24-hour mode
  * @param  {string} tz            a timezone name; guesses user timezone by default
- * @return {[string]}             an array of hour, minute, and (if mode is 12-hour) AM or PM
+ * @return {Object}               a key-value representation of time data
  */
-const getValidTimeData = (time, meridiem, timeMode = 24, tz = guessUserTz().zoneName) => {
-  const mode = getValidateTimeMode(timeMode);
+const getValidTimeData = (time, meridiem, timeMode, tz = guessUserTz()) => {
   const validMeridiem = getValidMeridiem(meridiem);
+
+  // when we only have a valid meridiem, that implies a 12h mode
+  const mode = (validMeridiem && !timeMode) ? 12 : timeMode || 24;
+
+  const validMode = getValidateTimeMode(mode);
   const validTime = getValidTimeString(time, validMeridiem);
 
-  const formatter = mode === 24 ? 'HH:mmA' : 'hh:mmA';
-  const formattedTime = (validTime)
-    ? moment(`1970-01-01 ${validTime}`).tz(tz).format(formatter)
-    : moment().tz(tz).format(formatter);
+  const time24 = ((validTime)
+    ? moment(`1970-01-01 ${validTime}`).tz(tz.zoneName).format('HH:mmA')
+    : moment().tz(tz.zoneName).format('HH:mmA')).split(/:/);
 
-  const splitTime = formattedTime.split(/:/);
+  const time12 = ((validTime)
+    ? moment(`1970-01-01 ${validTime}`).tz(tz.zoneName).format('hh:mmA')
+    : moment().tz(tz.zoneName).format('hh:mmA')).split(/:/);
 
-  let hour = head(splitTime);
-  if (head(hour) === '0' && mode === 12) { hour = tail(hour); }
-
-  const minute = last(splitTime).slice(0, 2);
-  const merid = last(splitTime).slice(2);
-
-  const timeData = [ hour, minute, merid ];
+  const timeData = {
+    hour12: head(time12).replace(/^0/i, ''),
+    hour24: head(time24),
+    minute: last(time24).slice(0, 2),
+    meridiem: last(time12).slice(2),
+    mode: validMode,
+    timezone: tz
+  };
 
   return timeData;
 };
 
-const getCurrentTime = () => getValidTimeData().join(':');
+/**
+ * Format the current time as a string
+ * @function getCurrentTime
+ * @return {[type]} [description]
+ */
+const getCurrentTime = () => {
+  const time = getValidTimeData();
+  return `${time.hour24}:${time.minute}`;
+};
 
 /**
  * Get an integer representation of a time.
@@ -65,13 +79,22 @@ const getValidateTime = (time) => {
   return `${time}`;
 };
 
+/**
+ * Given a time and meridiem, produce a time string to pass to moment
+ * @function getValidTimeString
+ * @param  {[type]} time     [description]
+ * @param  {[type]} meridiem [description]
+ * @return {[type]}          [description]
+ */
 const getValidTimeString = (time, meridiem) => {
   if (typeof time === 'string') {
     let validTime = (time && time.includes(':'))
       ? time.split(/:/).map((t) => getValidateTime(t)).join(':')
-      : time; // if time is undefined, fall through to formattedTime below, where we default to now
+      : time;
 
-    if (time && meridiem) { validTime = `${validTime} ${meridiem}`; }
+    validTime = (validTime && meridiem && parseInt(head(validTime.split(/:/))) < 12)
+      ? `${validTime} ${meridiem}`
+      : validTime;
 
     return validTime;
   }
@@ -102,7 +125,7 @@ const initialTime = (defaultTime, mode = 24) => {
 };
 
 const getValidMeridiem = (meridiem) => {
-  if(typeof meridiem === 'string') {
+  if (typeof meridiem === 'string') {
     return (meridiem && meridiem.match(/[am|pm]/i)) ? meridiem : null;
   }
 
