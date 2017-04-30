@@ -34,7 +34,7 @@ const getValidTimeData = (time, meridiem, timeMode, tz = guessUserTz()) => {
     : moment().tz(tz.zoneName).format('hh:mmA')).split(/:/);
 
   const timeData = {
-    hour12: head(time12).replace(/^0/i, ''),
+    hour12: head(time12).replace(/^0/, ''),
     hour24: head(time24),
     minute: last(time24).slice(0, 2),
     meridiem: last(time12).slice(2),

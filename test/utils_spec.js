@@ -62,7 +62,7 @@ describe('Time utils', () => {
         const testTimeData = timeHelper.time();
 
         const timeData = {
-          hour12: head(time12).replace(/^0/i, ''),
+          hour12: head(time12).replace(/^0/, ''),
           hour24: head(time24),
           minute: last(time24).slice(0, 2),
           meridiem: last(time12).slice(2),
@@ -83,7 +83,7 @@ describe('Time utils', () => {
         modes.forEach((mode) => {
           const testTimeData = timeHelper.time(undefined, undefined, mode);
           const timeData = {
-            hour12: head(time12).replace(/^0/i, ''),
+            hour12: head(time12).replace(/^0/, ''),
             hour24: head(time24),
             minute: last(time24).slice(0, 2),
             meridiem: last(time12).slice(2),
@@ -105,7 +105,7 @@ describe('Time utils', () => {
         meridies.forEach((meridiem) => {
           const testTimeData = timeHelper.time(undefined, meridiem);
           const timeData = {
-            hour12: head(time12).replace(/^0/i, ''),
+            hour12: head(time12).replace(/^0/, ''),
             hour24: head(time24),
             minute: last(time24).slice(0, 2),
             meridiem: last(time12).slice(2),
@@ -146,7 +146,7 @@ describe('Time utils', () => {
           meridies.forEach((meridiem) => {
             const testTimeData = timeHelper.time(undefined, meridiem, mode);
             expect(testTimeData.hour24).to.equal(head(time24));
-            expect(testTimeData.hour12).to.equal(head(time12).replace(/^0/i, ''));
+            expect(testTimeData.hour12).to.equal(head(time12).replace(/^0/, ''));
             expect(testTimeData.meridiem).to.equal(last(time24).slice(2));
             expect(testTimeData.mode).to.equal(mode);
           });
@@ -203,7 +203,9 @@ describe('Time utils', () => {
 
               if (time === '1:00' || time === '01:00') {
                 expect(testTimeData.meridiem).to.equal(meridiem);
+                if (meridiem === 'PM') expect(testTimeData.hour24).to.equal('13');
               } else {
+                expect(testTimeData.hour24).to.equal(head(time.split(/:/)))
                 expect(testTimeData.meridiem).to.equal('PM');
               }
             });
