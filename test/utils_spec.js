@@ -203,7 +203,6 @@ describe('Time utils', () => {
 
               if (time === '1:00' || time === '01:00') {
                 expect(testTimeData.meridiem).to.equal(meridiem);
-                if (meridiem === 'PM') expect(testTimeData.hour24).to.equal('13');
               } else {
                 expect(testTimeData.hour24).to.equal(head(time.split(/:/)))
                 expect(testTimeData.meridiem).to.equal('PM');
@@ -214,9 +213,7 @@ describe('Time utils', () => {
       });
     });
   });
-});
 
-describe('Utils Test', () => {
   describe('Test initialTime func with 24h mode', () => {
     it('should get current time', () => {
       let times = moment().format("HH:mm").split(':');
