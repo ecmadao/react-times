@@ -48,7 +48,7 @@ const getValidTimeData = (time, meridiem, timeMode, tz = guessUserTz()) => {
 /**
  * Format the current time as a string
  * @function getCurrentTime
- * @return {[type]} [description]
+ * @return {string}
  */
 const getCurrentTime = () => {
   const time = getValidTimeData();
@@ -69,7 +69,7 @@ const getValidateIntTime = (time) => {
 /**
  * Validate, set a default for, and stringify time data.
  * @function getValidateTime
- * @type {string}
+ * @param {string}
  * @return {string}
  */
 const getValidateTime = (time) => {
@@ -82,9 +82,9 @@ const getValidateTime = (time) => {
 /**
  * Given a time and meridiem, produce a time string to pass to moment
  * @function getValidTimeString
- * @param  {[type]} time     [description]
- * @param  {[type]} meridiem [description]
- * @return {[type]}          [description]
+ * @param  {string} time
+ * @param  {string} meridiem
+ * @return {string}
  */
 const getValidTimeString = (time, meridiem) => {
   if (typeof time === 'string') {
