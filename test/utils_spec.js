@@ -1,18 +1,18 @@
 import moment from 'moment';
-import { expect } from 'chai';
+import {expect} from 'chai';
 import timeHelper from '../src/utils/time';
 import drag from '../src/utils/drag';
 import {
   MAX_ABSOLUTE_POSITION,
   MIN_ABSOLUTE_POSITION
 } from '../src/utils/const_value';
-import { isSeq, head, tail, last } from '../src/utils/func';
+import {isSeq, head, tail, last} from '../src/utils/func';
 
 describe('Functional utils', () => {
   describe('isSeq', () => {
     it('should correctly detect a sequence', () => {
       const isSequence = [isSeq('foo'), isSeq('foo'.split())].every((e) => e === true);
-      const isNotSequence = [isSeq({ message: 'foo' }), isSeq(8), isSeq(true)].every((e) => e === false);
+      const isNotSequence = [isSeq({message: 'foo'}), isSeq(8), isSeq(true)].every((e) => e === false);
       expect(isSequence).to.equal(true);
       expect(isNotSequence).to.equal(true);
     });

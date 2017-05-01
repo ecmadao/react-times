@@ -1,5 +1,5 @@
 import moment from 'moment-timezone';
-import { head, last } from './func';
+import {head, last} from './func';
 
 // loads moment-timezone's timezone data, which comes from the
 // IANA Time Zone Database at https://www.iana.org/time-zones

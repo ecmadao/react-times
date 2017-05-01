@@ -1,13 +1,13 @@
 {
   "name": "react-times",
-  "version": "1.4.6",
   "description": "A react time-picker component, no jquery-rely",
+  "version": "1.4.6",
   "author": "ecmadao",
   "bugs": {
     "url": "https://github.com/ecmadao/react-times/issues"
   },
   "dependencies": {
-    "fuse.js": "^2.7.3",
+    "fuse.js": "^3.0.0",
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13"
   },
@@ -25,7 +25,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.24.1",
     "chai": "^3.5.0",
-    "coveralls": "^2.13.0",
+    "coveralls": "^2.13.1",
     "enzyme": "^2.8.2",
     "eslint": "^3.19.0",
     "eslint-config-standard": "^10.2.1",
@@ -95,12 +95,12 @@
     "postversion": "git commit package.json -m \"Version $npm_package_version\" && npm run tag && git push && git push --tags && npm publish --registry=https://registry.npmjs.org/",
     "prepublish": "in-publish && safe-publish-latest && npm run build || not-in-publish",
     "pretest": "npm run --silent eslint",
+    "scratch": "test/components/TwelveHoursTheme_spec.jsx",
     "storybook": "start-storybook -p 9001 -c .storybook",
     "storybook-deploy": "npm run storybook-pro && npm run deploy-storybook",
     "storybook-pro": "build-storybook -c .storybook -o .out",
     "tag": "git tag v$npm_package_version",
     "test": "npm run mocha --silent test",
-    "test:watch": "npm run mocha --silent test/utils_spec.js -- --watch",
-    "scratch": "test/components/TwelveHoursTheme_spec.jsx"
+    "test:watch": "npm run mocha --silent test/utils_spec.js -- --watch"
   }
 }
