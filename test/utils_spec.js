@@ -68,11 +68,7 @@ describe('Time utils', () => {
           minute: last(time24).slice(0, 2),
           meridiem: last(time12).slice(2),
           mode: 24,
-          timezone: {
-            city: tz.city,
-            zoneAbbr: tz.zoneAbbr,
-            zoneName: tz.zoneName
-          }
+          timezone: tz.zoneName
         };
 
         expect(testTimeData).to.deep.equal(timeData);
@@ -89,11 +85,7 @@ describe('Time utils', () => {
             minute: last(time24).slice(0, 2),
             meridiem: last(time12).slice(2),
             mode: mode,
-            timezone: {
-              city: tz.city,
-              zoneAbbr: tz.zoneAbbr,
-              zoneName: tz.zoneName
-            }
+            timezone: tz.zoneName
           };
 
           expect(testTimeData).to.deep.equal(timeData);
@@ -111,11 +103,7 @@ describe('Time utils', () => {
             minute: last(time24).slice(0, 2),
             meridiem: last(time12).slice(2),
             mode: 12,
-            timezone: {
-              city: tz.city,
-              zoneAbbr: tz.zoneAbbr,
-              zoneName: tz.zoneName
-            }
+            timezone: tz.zoneName
           };
 
           expect(testTimeData).to.deep.equal(timeData);

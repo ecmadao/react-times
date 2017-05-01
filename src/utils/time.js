@@ -16,7 +16,7 @@ moment.tz.load({version: 'latest', zones: [], links: []});
  * @param  {string} tz            a timezone name; guesses user timezone by default
  * @return {Object}               a key-value representation of time data
  */
-const getValidTimeData = (time, meridiem, timeMode, tz = guessUserTz()) => {
+const getValidTimeData = (time, meridiem, timeMode, tz = guessUserTz().zoneName) => {
   const validMeridiem = getValidMeridiem(meridiem);
 
   // when we only have a valid meridiem, that implies a 12h mode
@@ -25,13 +25,16 @@ const getValidTimeData = (time, meridiem, timeMode, tz = guessUserTz()) => {
   const validMode = getValidateTimeMode(mode);
   const validTime = getValidTimeString(time, validMeridiem);
 
+  // What format is the hour we provide to moment below in?
+  const hourFormat = (validMode === 12) ? 'hh:mmA' : 'HH:mmA';
+
   const time24 = ((validTime)
-    ? moment(`1970-01-01 ${validTime}`, 'YYYY-MM-DD HH:mmA').tz(tz.zoneName).format('HH:mmA')
-    : moment().tz(tz.zoneName).format('HH:mmA')).split(/:/);
+    ? moment(`1970-01-01 ${validTime}`, `YYYY-MM-DD ${hourFormat}`, 'en').tz(tz).format('HH:mmA')
+    : moment().tz(tz).format('HH:mmA')).split(/:/);
 
   const time12 = ((validTime)
-    ? moment(`1970-01-01 ${validTime}`, 'YYYY-MM-DD hh:mmA').tz(tz.zoneName).format('hh:mmA')
-    : moment().tz(tz.zoneName).format('hh:mmA')).split(/:/);
+    ? moment(`1970-01-01 ${validTime}`, `YYYY-MM-DD ${hourFormat}`, 'en').tz(tz).format('hh:mmA')
+    : moment().tz(tz).format('hh:mmA')).split(/:/);
 
   const timeData = {
     hour12: head(time12).replace(/^0/, ''),
@@ -137,6 +140,8 @@ const getValidateMeridiem = (time, timeMode) => {
 }
 /**
  * Validate and set a sensible default for time modes.
+ * TODO: this function might not really be necessary, see getValidTimeData() above
+ *
  * @function getValidateTimeMode
  * @param  {string|Number} timeMode
  * @return {Number}
@@ -232,6 +237,7 @@ export default {
   validateMeridiem: getValidateMeridiem,
   validateTimeMode: getValidateTimeMode,
   tzForCity: getTzForCity,
+  tzForName: getTzForName,
   guessUserTz,
   tzMaps
 };

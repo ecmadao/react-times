@@ -101,6 +101,6 @@
     "storybook-pro": "build-storybook -c .storybook -o .out",
     "tag": "git tag v$npm_package_version",
     "test": "npm run mocha --silent test",
-    "test:watch": "npm run mocha --silent test/utils_spec.js -- --watch"
+    "test:watch": "npm run mocha test -- --watch"
   }
 }

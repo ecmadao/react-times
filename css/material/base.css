@@ -57,7 +57,7 @@
 .time_picker_modal_header .time_picker_header:hover {
   opacity: 1;
 }
-.time_picker_modal_header .time_picker_header.quantum {
+.time_picker_modal_header .time_picker_header.meridiem {
   font-size: 0.8em;
 }
 

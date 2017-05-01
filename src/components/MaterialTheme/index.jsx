@@ -2,47 +2,53 @@ import React, { PropTypes } from 'react';
 
 import TwelveHoursMode from './TwelveHoursMode';
 import TwentyFourHoursMode from './TwentyFourHoursMode';
-import language from '../../utils/language';
+import languageHelper from '../../utils/language';
 import timeHelper from '../../utils/time';
 
 const propTypes = {
-  hour: PropTypes.string,
-  minute: PropTypes.string,
-  timeMode: PropTypes.number,
   autoMode: PropTypes.bool,
+  clearFocus: PropTypes.func,
   draggable: PropTypes.bool,
-  language: PropTypes.object,
-  meridiem: PropTypes.string,
-  timezone: PropTypes.shape({
-    city: PropTypes.string,
-    zoneAbbr: PropTypes.string,
-    zoneName: PropTypes.string
-  }),
-  timezoneIsEditable: PropTypes.bool,
-  showTimezone: PropTypes.bool,
-  handleHourChange: PropTypes.func,
-  handleMinuteChange: PropTypes.func,
-  handleMeridiemChange: PropTypes.func,
-  handleTimezoneChange: PropTypes.func,
   handleEditTimezoneChange: PropTypes.func,
-  handleShowTimezoneChange: PropTypes.func
+  handleHourChange: PropTypes.func,
+  handleMeridiemChange: PropTypes.func,
+  handleMinuteChange: PropTypes.func,
+  handleShowTimezoneChange: PropTypes.func,
+  handleTimezoneChange: PropTypes.func,
+  hour: PropTypes.string,
+  localMessages: PropTypes.shape({
+    am: PropTypes.string,
+    cancel: PropTypes.string,
+    close: PropTypes.string,
+    confirm: PropTypes.string,
+    pm: PropTypes.string
+  }),
+  meridiem: PropTypes.string,
+  minute: PropTypes.string,
+  showTimezone: PropTypes.bool,
+  timeMode: PropTypes.number,
+  timezone: PropTypes.string,
+  timezoneIsEditable: PropTypes.bool
 };
 
 const defaultProps = {
-  hour: '00',
-  minute: '00',
-  timeMode: 24,
   autoMode: true,
-  meridiem: 'AM',
-  timezone: timeHelper.guessUserTz(),
-  showTimezone: false,
-  timezoneIsEditable: false,
-  handleHourChange: () => {},
-  handleMinuteChange: () => {},
-  handleMeridiemChange: () => {},
-  handleTimezoneChange: () => {},
+  clearFocus: () => {},
+  draggable: true,
   handleEditTimezoneChange: () => {},
-  handleShowTimezoneChange: () => {}
+  handleHourChange: () => {},
+  handleMeridiemChange: () => {},
+  handleMinuteChange: () => {},
+  handleShowTimezoneChange: () => {},
+  handleTimezoneChange: () => {},
+  hour: '00',
+  localMessages: languageHelper.get(),
+  meridiem: 'AM',
+  minute: '00',
+  showTimezone: false,
+  timeMode: 24,
+  timezone: timeHelper.guessUserTz().zoneName,
+  timezoneIsEditable: false
 };
 
 class MaterialTheme extends React.PureComponent {
@@ -86,7 +92,7 @@ class MaterialTheme extends React.PureComponent {
     const {
       hour,
       minute,
-      language,
+      localMessages,
       draggable,
       clearFocus,
       meridiem,
@@ -106,7 +112,7 @@ class MaterialTheme extends React.PureComponent {
         hour={hour}
         minute={minute}
         draggable={draggable}
-        language={language}
+        language={localMessages}
         clearFocus={clearFocus}
         meridiem={meridiem}
         timezone={timezone}
@@ -123,7 +129,7 @@ class MaterialTheme extends React.PureComponent {
   }
 
   render() {
-    const { timeMode } = this.props;
+    const {timeMode} = this.props;
     return (
       <div>
         {parseInt(timeMode) === 24

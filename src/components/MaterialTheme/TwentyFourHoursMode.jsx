@@ -17,11 +17,7 @@ const propTypes = {
   hour: PropTypes.string,
   autoMode: PropTypes.bool,
   minute: PropTypes.string,
-  timezone: PropTypes.shape({
-    city: PropTypes.string,
-    zoneAbbr: PropTypes.string,
-    zoneName: PropTypes.string
-  }),
+  timezone: PropTypes.string,
   showTimezone: PropTypes.bool,
   timezoneIsEditable: PropTypes.bool,
   handleHourChange: PropTypes.func,
@@ -37,7 +33,7 @@ const defaultProps = {
   hour: '00',
   minute: '00',
   autoMode: true,
-  timezone: timeHelper.guessUserTz(),
+  timezone: timeHelper.guessUserTz().zoneName,
   showTimezone: false,
   timezoneIsEditable: false,
   handleHourChange: () => {},

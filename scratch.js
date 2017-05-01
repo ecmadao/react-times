@@ -6,4 +6,4 @@ const timeIn12Hour = timeHelper.time(time, 12);
 const timeIn24Hour = timeHelper.time(defaultTime);
 
 const [hour, minute] = timeIn24Hour;
-const quantum = timeIn12Hour[2]; // AM or PM
+const meridiem = timeIn12Hour[2]; // AM or PM

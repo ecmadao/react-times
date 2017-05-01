@@ -16,16 +16,10 @@ storiesOf('TwelveHoursMode', module)
       timeMode="12"
     />
   ))
-  .addWithInfo('focused at setup', () => (
+  .addWithInfo('focused at setup, no icon', () => (
     <TimePickerWrapper
-      timeMode="12"
-      focused={true}
-    />
-  ))
-  .addWithInfo('focused at setup', () => (
-    <TimePickerWrapper
-      timeMode="12"
       withoutIcon={true}
+      timeMode="12"
       focused={true}
     />
   ));

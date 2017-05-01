@@ -10,21 +10,27 @@ import React, {PropTypes} from 'react';
 
 import Button from '../Common/Button';
 import PickerDragHandler from '../Picker/PickerDragHandler';
-import language from '../../utils/language';
+import languageHelper from '../../utils/language';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';
 import timeHelper from '../../utils/time';
 
+const TIME = timeHelper.time();
+TIME.current = timeHelper.current();
+TIME.tz = timeHelper.guessUserTz().zoneName;
+
 const propTypes = {
-  language: PropTypes.object,
+  localMessages: PropTypes.shape({
+    am: PropTypes.string,
+    cancel: PropTypes.string,
+    close: PropTypes.string,
+    confirm: PropTypes.string,
+    pm: PropTypes.string
+  }),
   hour: PropTypes.string,
   minute: PropTypes.string,
   draggable: PropTypes.bool,
   meridiem: PropTypes.string,
-  timezone: PropTypes.shape({
-    city: PropTypes.string,
-    zoneAbbr: PropTypes.string,
-    zoneName: PropTypes.string
-  }),
+  timezone: PropTypes.string,
   showTimezone: PropTypes.bool,
   timezoneIsEditable: PropTypes.bool,
   handleHourChange: PropTypes.func,
@@ -35,12 +41,12 @@ const propTypes = {
 };
 
 const defaultProps = {
-  language: language.get(),
-  hour: '00',
-  minute: '00',
+  localMessages: languageHelper.get(),
+  hour: TIME.hour12,
+  minute: TIME.minute,
   draggable: false,
-  meridiem: 'AM',
-  timezone: timeHelper.guessUserTz(),
+  meridiem: TIME.meridiem,
+  timezone: TIME.tz,
   showTimezone: false,
   timezoneIsEditable: false,
   handleHourChange: () => {},
@@ -146,7 +152,7 @@ class TwelveHoursMode extends React.PureComponent {
   render() {
     let {hour, minute, meridiem} = this.props;
     const {
-      language,
+      localMessages,
       draggable,
       clearFocus,
       timezone,
@@ -191,7 +197,7 @@ class TwelveHoursMode extends React.PureComponent {
             className='time_picker_header active'>{hour}:{minute}</span>&nbsp;
           <span
             onClick={handleQuantumChange}
-            className='time_picker_header quantum'>{meridiem}</span>
+            className='time_picker_header meridiem'>{meridiem}</span>
         </div>
         <div className='picker_container'>
           <HourPickerPointGenerator
@@ -218,7 +224,7 @@ class TwelveHoursMode extends React.PureComponent {
         <div className='buttons_wrapper'>
           <Button
             onClick={clearFocus}
-            text={language.close}
+            text={localMessages.close}
           />
         </div>
       </div>

@@ -17,8 +17,8 @@ describe('TwelveHoursMode', () => {
     );
     it('should render component correctly', () => {
       expect(wrapper.is('.time_picker_modal_container')).to.equal(true);
-      expect(wrapper.find('.quantum')).to.have.lengthOf(1);
-      expect(wrapper.find('.quantum').html()).to.equal(`<span class="time_picker_header quantum">AM</span>`);
+      expect(wrapper.find('.meridiem')).to.have.lengthOf(1);
+      expect(wrapper.find('.meridiem').html()).to.equal(`<span class="time_picker_header meridiem">AM</span>`);
     });
 
     it('should render PickerDragHandler component', () => {
@@ -45,8 +45,8 @@ describe('TwelveHoursMode', () => {
 
       it('should render component correctly', () => {
         expect(wrapper.is('.time_picker_modal_container')).to.equal(true);
-        expect(wrapper.find('.quantum')).to.have.lengthOf(1);
-        expect(wrapper.find('.quantum').html()).to.equal(`<span class="time_picker_header quantum">PM</span>`);
+        expect(wrapper.find('.meridiem')).to.have.lengthOf(1);
+        expect(wrapper.find('.meridiem').html()).to.equal(`<span class="time_picker_header meridiem">PM</span>`);
       });
 
       it('should render PickerDragHandler component', () => {

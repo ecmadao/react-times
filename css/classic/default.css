@@ -48,7 +48,7 @@
   -webkit-transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-.classic_theme_container .classic_time .quantum {
+.classic_theme_container .classic_time .meridiem {
   font-size: 0.8em;
   opacity: 0.7;
 }
