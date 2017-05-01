@@ -6,7 +6,7 @@ import {
   POINTER_RADIUS,
   TWELVE_HOURS,
 } from '../../utils/const_value.js';
-import React, { PropTypes } from 'react';
+import React, {PropTypes} from 'react';
 
 import Button from '../Common/Button';
 import PickerDragHandler from '../Picker/PickerDragHandler';
@@ -102,19 +102,19 @@ class TwelveHoursMode extends React.PureComponent {
 
   handleMeridiemChange(meridiem) {
     if (meridiem !== this.props.meridiem) {
-      const { handleMeridiemChange } = this.props;
+      const {handleMeridiemChange} = this.props;
       handleMeridiemChange && handleMeridiemChange(meridiem);
     }
   }
 
   handleHourPointerClick(time, hourPointerRotate) {
     this.handleHourChange(time);
-    this.handleDegreeChange({ hourPointerRotate });
+    this.handleDegreeChange({hourPointerRotate});
   }
 
   handleMinutePointerClick(time, minutePointerRotate) {
     this.handleMinuteChange(time);
-    this.handleDegreeChange({ minutePointerRotate });
+    this.handleDegreeChange({minutePointerRotate});
   }
 
   handleDegreeChange(pointerRotate) {
@@ -123,28 +123,28 @@ class TwelveHoursMode extends React.PureComponent {
 
   handleHourChange(time) {
     const hour = parseInt(time);
-    const { handleHourChange } = this.props;
+    const {handleHourChange} = this.props;
     handleHourChange && handleHourChange(hour);
   }
 
   handleMinuteChange(time) {
     const minute = parseInt(time);
-    const { handleMinuteChange } = this.props;
+    const {handleMinuteChange} = this.props;
     handleMinuteChange && handleMinuteChange(minute);
   }
 
   renderTimezone() {
-    const { timezone, timezoneIsEditable } = this.props;
+    const {timezone, timezoneIsEditable} = this.props;
 
     return (
       <div className='time_picker_modal_footer'>
         <span className='time_picker_modal_footer_timezone'>{timezone.zoneName} - {timezone.zoneAbbr}</span>
       </div>
     )
-  };
+  }
 
   render() {
-    let { hour, minute, meridiem } = this.props;
+    let {hour, minute, meridiem} = this.props;
     const {
       language,
       draggable,
@@ -154,11 +154,14 @@ class TwelveHoursMode extends React.PureComponent {
       timezoneIsEditable
     } = this.props;
 
-    // Since someone might pass us a time in 24h format, we need to pass it through
-    // timeHelper.time() to 'translate' it into 12h format, including its accurate quantum
-    [ hour, minute, meridiem ] = timeHelper.time([hour, minute].join(':'), 12);
+    // Since someone might pass a time in 24h format, etc., we need to pass it through
+    // timeHelper.time() to 'translate' it into 12h format, including its accurate meridiem
+    const time = timeHelper.time([hour, minute].join(':'), 12);
+    hour = time.hour12;
+    minute = time.minute;
+    meridiem = time.meridiem;
 
-    const { hourPointerRotate, minutePointerRotate } = this.state;
+    const {hourPointerRotate, minutePointerRotate} = this.state;
 
     const [top, height] = this.getHourTopAndHeight();
     const hourRotateState = {

@@ -104,6 +104,12 @@ const getValidTimeString = (time, meridiem) => {
   return time;
 };
 
+/**
+ * Given a meridiem, try to ensure that it's formatted for use with moment
+ * @function getValidMeridiem
+ * @param  {string} meridiem
+ * @return {string}
+ */
 const getValidMeridiem = (meridiem) => {
   if (typeof meridiem === 'string') {
     return (meridiem && meridiem.match(/am|pm/i)) ? meridiem.toLowerCase() : null;
@@ -112,6 +118,23 @@ const getValidMeridiem = (meridiem) => {
   return meridiem;
 };
 
+/**
+ * Ensure that a meridiem passed as a prop has a valid value
+ * @function getValidateMeridiem
+ * @param  {string} time
+ * @param  {string|Number} timeMode
+ * @return {string|null}
+ */
+const getValidateMeridiem = (time, timeMode) => {
+  if (!time) time = getCurrentTime();
+  const mode = parseInt(timeMode);
+  let [hour, _] = time.split(/:/);
+  hour = getValidateIntTime(hour);
+
+  if (mode === 12) return (hour > 12) ? 'PM' : 'AM';
+
+  return null;
+}
 /**
  * Validate and set a sensible default for time modes.
  * @function getValidateTimeMode
@@ -206,6 +229,7 @@ export default {
   time: getValidTimeData,
   validate: getValidateTime,
   validateInt: getValidateIntTime,
+  validateMeridiem: getValidateMeridiem,
   validateTimeMode: getValidateTimeMode,
   tzForCity: getTzForCity,
   guessUserTz,
