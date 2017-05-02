@@ -1,43 +1,66 @@
-import React, { PropTypes } from 'react';
 import {
-  TWELVE_HOURS,
-  MINUTES,
-  POINTER_RADIUS,
-  PICKER_RADIUS,
   MAX_ABSOLUTE_POSITION,
-  MIN_ABSOLUTE_POSITION
-} from '../../ConstValue.js';
-import language from '../../language';
+  MINUTES,
+  MIN_ABSOLUTE_POSITION,
+  PICKER_RADIUS,
+  POINTER_RADIUS,
+  TWELVE_HOURS,
+} from '../../utils/const_value.js';
+import React, {PropTypes} from 'react';
+
+import Button from '../Common/Button';
+import PickerDragHandler from '../Picker/PickerDragHandler';
+import languageHelper from '../../utils/language';
+import pickerPointGenerator from '../Picker/PickerPointGenerator';
+import timeHelper from '../../utils/time';
+
+const TIME = timeHelper.time();
+TIME.current = timeHelper.current();
+TIME.tz = timeHelper.guessUserTz();
 
 const propTypes = {
-  language: PropTypes.object,
   hour: PropTypes.string,
+  language: PropTypes.string,
   minute: PropTypes.string,
+  draggable: PropTypes.bool,
+  meridiem: PropTypes.string,
+  showTimezone: PropTypes.bool,
+  timezone: PropTypes.shape({
+    city: PropTypes.string,
+    zoneAbbr: PropTypes.string,
+    zoneName: PropTypes.string
+  }),
   handleHourChange: PropTypes.func,
-  handleMinuteChange: PropTypes.func
+  handleMinuteChange: PropTypes.func,
+  handleTimezoneChange: PropTypes.func,
+  handleEditTimezoneChange: PropTypes.func,
+  handleShowTimezoneChange: PropTypes.func,
 };
 
 const defaultProps = {
-  language: language.get(),
-  hour: '00',
-  minute: '00',
+  hour: TIME.hour12,
+  language: 'en',
+  minute: TIME.minute,
+  draggable: false,
+  meridiem: TIME.meridiem,
+  showTimezone: false,
+  timezone: TIME.tz,
   handleHourChange: () => {},
-  handleMinuteChange: () => {}
+  handleMinuteChange: () => {},
+  handleTimezoneChange: () => {},
+  handleEditTimezoneChange: () => {},
+  handleShowTimezoneChange: () => {}
 };
 
-import Button from '../Common/Button';
-import PickerDargHandler from '../Picker/PickerDargHandler';
-import pickerPointGenerator from '../Picker/PickerPointGenerator';
-
-class TwelveHoursMode extends React.Component {
+class TwelveHoursMode extends React.PureComponent {
   constructor(props) {
     super(props);
-    let hourPointerRotate = this.resetHourDegree();
-    let minutePointerRotate = this.resetMinuteDegree();
+    const hourPointerRotate = this.resetHourDegree();
+    const minutePointerRotate = this.resetMinuteDegree();
     this.state = {
       hourPointerRotate,
       minutePointerRotate
-    }
+    };
     this.handleHourChange = this.handleHourChange.bind(this);
     this.handleMinuteChange = this.handleMinuteChange.bind(this);
     this.handleDegreeChange = this.handleDegreeChange.bind(this);
@@ -79,21 +102,26 @@ class TwelveHoursMode extends React.Component {
     return [top, height];
   }
 
-  handleTimeQuantumChange(timeQuantum) {
-    if (timeQuantum !== this.props.timeQuantum) {
-      const { handleTimeQuantumChange } = this.props;
-      handleTimeQuantumChange && handleTimeQuantumChange(timeQuantum);
+  languageData() {
+    const {language} = this.props;
+    return languageHelper.get(language);
+  }
+
+  handleMeridiemChange(meridiem) {
+    if (meridiem !== this.props.meridiem) {
+      const {handleMeridiemChange} = this.props;
+      handleMeridiemChange && handleMeridiemChange(meridiem);
     }
   }
 
   handleHourPointerClick(time, hourPointerRotate) {
     this.handleHourChange(time);
-    this.handleDegreeChange({ hourPointerRotate });
+    this.handleDegreeChange({hourPointerRotate});
   }
 
   handleMinutePointerClick(time, minutePointerRotate) {
     this.handleMinuteChange(time);
-    this.handleDegreeChange({ minutePointerRotate });
+    this.handleDegreeChange({minutePointerRotate});
   }
 
   handleDegreeChange(pointerRotate) {
@@ -102,27 +130,37 @@ class TwelveHoursMode extends React.Component {
 
   handleHourChange(time) {
     const hour = parseInt(time);
-    const { handleHourChange } = this.props;
+    const {handleHourChange} = this.props;
     handleHourChange && handleHourChange(hour);
   }
 
   handleMinuteChange(time) {
     const minute = parseInt(time);
-    const { handleMinuteChange } = this.props;
+    const {handleMinuteChange} = this.props;
     handleMinuteChange && handleMinuteChange(minute);
+  }
+
+  renderTimezone() {
+    const {timezone} = this.props;
+
+    return (
+      <div className='time_picker_modal_footer'>
+        <span className='time_picker_modal_footer_timezone'>{timezone.zoneName} {timezone.zoneAbbr}</span>
+      </div>
+    )
   }
 
   render() {
     const {
       hour,
       minute,
-      language,
-      dragable,
-      clearFoucs,
-      timeQuantum
+      meridiem,
+      draggable,
+      clearFocus,
+      showTimezone,
     } = this.props;
 
-    const { hourPointerRotate, minutePointerRotate } = this.state;
+    const {hourPointerRotate, minutePointerRotate} = this.state;
 
     const [top, height] = this.getHourTopAndHeight();
     const hourRotateState = {
@@ -139,50 +177,54 @@ class TwelveHoursMode extends React.Component {
 
     const HourPickerPointGenerator = pickerPointGenerator('hour', 12);
     const MinutePickerPointGenerator = pickerPointGenerator('minute', 12);
+    const localMessages = this.languageData();
+    const newMeridiem = (meridiem === 'AM' || meridiem === localMessages['am'])
+      ? localMessages['pm'] : localMessages['am'];
 
-    const handleQuantumChange = this.handleTimeQuantumChange.bind(
+    const handleMeridiemChange = this.handleMeridiemChange.bind(
       this,
-      timeQuantum === "AM" ? "PM" : "AM"
+      newMeridiem
     );
 
     return (
-      <div className="time_picker_modal_container">
-        <div className="time_picker_modal_header">
+      <div className='time_picker_modal_container'>
+        <div className='time_picker_modal_header'>
           <span
-            className="time_picker_header active">{hour}:{minute}</span>&nbsp;
+            className='time_picker_header active'>{hour}:{minute}</span>&nbsp;
           <span
-            onClick={handleQuantumChange}
-            className="time_picker_header quantum">{timeQuantum}</span>
+            onClick={handleMeridiemChange}
+            className='time_picker_header meridiem'>{meridiem}</span>
         </div>
-        <div className="picker_container">
+        <div className='picker_container'>
           <HourPickerPointGenerator
             handleTimePointerClick={this.handleHourPointerClick}
           />
           <MinutePickerPointGenerator
             handleTimePointerClick={this.handleMinutePointerClick}
           />
-          <PickerDargHandler
+          <PickerDragHandler
             step={0}
             rotateState={hourRotateState}
             time={parseInt(hour)}
             maxLength={MIN_ABSOLUTE_POSITION}
-            dragable={dragable}
+            draggable={draggable}
             handleTimePointerClick={this.handleHourPointerClick} />
-          <PickerDargHandler
+          <PickerDragHandler
             step={1}
             rotateState={minuteRotateState}
             time={parseInt(minute)}
             minLength={MAX_ABSOLUTE_POSITION}
             handleTimePointerClick={this.handleMinutePointerClick} />
         </div>
-        <div className="buttons_wrapper">
+        {showTimezone ? this.renderTimezone() : ''}
+        <div className='buttons_wrapper'>
           <Button
-            onClick={clearFoucs}
-            text={language.close}
+            onClick={clearFocus}
+            text={localMessages.close}
           />
         </div>
       </div>
-    )
+    );
   }
 }
 

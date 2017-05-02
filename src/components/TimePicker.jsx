@@ -1,188 +1,220 @@
-import React, { PropTypes } from 'react';
+import React, {PropTypes} from 'react';
 
 import OutsideClickHandler from './OutsideClickHandler';
 import MaterialTheme from './MaterialTheme';
 import ClassicTheme from './ClassicTheme';
-import {
-  initialTime,
-  getValidateTime,
-  getValidateTimeMode,
-  getValidateTimeQuantum
-} from '../utils.js';
-import timeHelper from '../time.js';
-import ICONS from '../icons';
-import language from '../language';
+import timeHelper from '../utils/time.js';
+import languageHelper from '../utils/language';
+import ICONS from '../utils/icons';
 
-let LANGUAGE = language.get();
+// aliases for defaultProps readability
+const TIME = timeHelper.time();
+TIME.current = timeHelper.current();
+TIME.timezone = timeHelper.guessUserTz().zoneName;
 
 const propTypes = {
-  time: PropTypes.string,
-  timeQuantum: PropTypes.string,
-  focused: PropTypes.bool,
   autoMode: PropTypes.bool,
-  dragable: PropTypes.bool,
-  placeholder: PropTypes.string,
   colorPalette: PropTypes.string,
+  draggable: PropTypes.bool,
+  focused: PropTypes.bool,
+  language: PropTypes.string,
+  meridiem: PropTypes.string,
+  onFocusChange: PropTypes.func,
+  onHourChange: PropTypes.func,
+  onMeridiemChange: PropTypes.func,
+  onMinuteChange: PropTypes.func,
+  onTimeChange: PropTypes.func,
+  placeholder: PropTypes.string,
+  showTimezone: PropTypes.bool,
   theme: PropTypes.string,
+  time: PropTypes.string,
   timeMode: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number
   ]),
-  withoutIcon: PropTypes.bool,
-  onFocusChange: PropTypes.func,
-  onHourChange: PropTypes.func,
-  onMinuteChange: PropTypes.func,
-  onTimeChange: PropTypes.func,
-  onTimeQuantumChange: PropTypes.func,
+  timezone: PropTypes.string,
   trigger: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.object,
-    PropTypes.instanceOf(React.Component)
+    PropTypes.instanceOf(React.Component),
+    PropTypes.instanceOf(React.PureComponent)
   ]),
-  language: PropTypes.string
+  withoutIcon: PropTypes.bool
 };
 
 const defaultProps = {
-  time: timeHelper.current(),
-  timeQuantum: 'AM',
-  focused: false,
   autoMode: true,
-  dragable: true,
-  placeholder: '',
   colorPalette: 'light',
-  timeMode: 24,
-  theme: 'material',
-  withoutIcon: false,
+  draggable: true,
+  focused: false,
+  language: 'en',
+  meridiem: TIME.meridiem,
   onFocusChange: () => {},
   onHourChange: () => {},
+  onMeridiemChange: () => {},
   onMinuteChange: () => {},
   onTimeChange: () => {},
-  onTimeQuantumChange: () => {},
+  placeholder: '',
+  showTimezone: false,
+  theme: 'material',
+  time: TIME.current,
+  timeMode: TIME.mode,
+  timezone: TIME.timezone,
   trigger: null,
-  language: 'en'
+  withoutIcon: false
 };
 
-class TimePicker extends React.Component {
+class TimePicker extends React.PureComponent {
   constructor(props) {
     super(props);
-    const { focused } = props;
-    this.state = { focused };
-    LANGUAGE = language.get(props.language);
+    const {focused} = props;
 
-    this.onFocus = this.onFocus.bind(this);
-    this.onClearFocus = this.onClearFocus.bind(this);
-    this.handleHourChange = this.handleHourChange.bind(this);
-    this.handleMinuteChange = this.handleMinuteChange.bind(this);
-    this.handleTimeQuantumChange = this.handleTimeQuantumChange.bind(this);
+    this.state = {focused};
+
     this.handleHourAndMinuteChange = this.handleHourAndMinuteChange.bind(this);
+    this.handleHourChange = this.handleHourChange.bind(this);
+    this.handleMeridiemChange = this.handleMeridiemChange.bind(this);
+    this.handleMinuteChange = this.handleMinuteChange.bind(this);
+    this.onClearFocus = this.onClearFocus.bind(this);
+    this.onFocus = this.onFocus.bind(this);
+  }
+
+  timeData() {
+    const {meridiem, time, timeMode, timezone} = this.props;
+    const timeData = timeHelper.time(time, meridiem, timeMode, timezone);
+
+    return timeData;
+  }
+
+  timezoneData() {
+    const timeData = this.timeData();
+    return timeHelper.tzForName(timeData.timezone);
+  }
+
+  languageData() {
+    const {language} = this.props;
+    return languageHelper.get(language);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const {focused} = nextProps;
+    if (focused !== this.state.focused) {
+      this.setState({focused});
+    }
   }
 
   onFocus() {
-    this.setState({ focused: true });
-    const { onFocusChange } = this.props;
+    this.setState({focused: true});
+    const {onFocusChange} = this.props;
     onFocusChange && onFocusChange(true);
   }
 
   getHourAndMinute() {
-    const { time } = this.props;
-    if(!time) {
-      return timeHelper.current().split(':');
-    }
-    return time.split(':');
+    const {timeMode} = this.props;
+    const timeData = this.timeData();
+    // Since someone might pass a time in 24h format, etc., we need to get it from
+    // timeData to 'translate' it into the local format, including its accurate meridiem
+    const hour = (parseInt(timeMode) === 12) ? timeData.hour12 : timeData.hour24;
+    const minute = timeData.minute;
+    return [hour, minute];
   }
 
   onClearFocus() {
-    this.setState({ focused: false });
-    const { onFocusChange } = this.props;
+    this.setState({focused: false});
+    const {onFocusChange} = this.props;
     onFocusChange && onFocusChange(false);
   }
 
   handleHourChange(hour) {
-    hour = getValidateTime(hour);
-    const { onHourChange } = this.props;
-    const [ _, minute ] = this.getHourAndMinute();
+    hour = timeHelper.validate(hour);
+    const {onHourChange} = this.props;
+    const [_, minute] = this.getHourAndMinute();
     onHourChange && onHourChange(hour);
     this.handleTimeChange(`${hour}:${minute}`);
   }
 
   handleMinuteChange(minute) {
-    minute = getValidateTime(minute);
-    const { onMinuteChange } = this.props;
-    const [ hour, _ ] = this.getHourAndMinute();
+    minute = timeHelper.validate(minute);
+    const {onMinuteChange} = this.props;
+    const [hour, _] = this.getHourAndMinute();
     onMinuteChange && onMinuteChange(minute);
     this.handleTimeChange(`${hour}:${minute}`);
   }
 
-  handleTimeQuantumChange(timeQuantum) {
-    const { onTimeQuantumChange } = this.props;
-    onTimeQuantumChange && onTimeQuantumChange(timeQuantum);
+  handleMeridiemChange(meridiem) {
+    const {onMeridiemChange} = this.props;
+    onMeridiemChange && onMeridiemChange(meridiem);
   }
 
   handleTimeChange(time) {
-    const { onTimeChange } = this.props;
+    const {onTimeChange} = this.props;
     onTimeChange && onTimeChange(time);
   }
 
   handleHourAndMinuteChange(time) {
-    const { onTimeChange, autoMode } = this.props;
+    const {onTimeChange, autoMode} = this.props;
     if (autoMode) {
       this.onClearFocus();
     }
     return onTimeChange && onTimeChange(time);
   }
 
-  get timeQuantum() {
-    const { timeQuantum, time, timeMode } = this.props;
-    return timeQuantum || getValidateTimeQuantum(time, timeMode)
+  get meridiem() {
+    const {meridiem, time, timeMode} = this.props;
+
+    const timeData = this.timeData();
+    const localMessages = this.languageData();
+    // eslint-disable-next-line no-unneeded-ternary
+    const m = (meridiem) ? meridiem : timeData.meridiem;
+    // eslint-disable-next-line no-extra-boolean-cast
+    const localMeridiem = !!(m.match(/^am|pm/i)) ? localMessages[m.toLowerCase()] : m;
+
+    return localMeridiem;
   }
 
   renderMaterialTheme() {
-    const { timeMode, autoMode, dragable } = this.props;
-    const [ hour, minute ] = this.getHourAndMinute();
+    const {timeMode, timezone, showTimezone, autoMode, draggable, language} = this.props;
+    const [hour, minute] = this.getHourAndMinute();
+    const timezoneData = this.timezoneData();
 
     return (
       <MaterialTheme
-        hour={hour}
-        minute={minute}
         autoMode={autoMode}
-        language={LANGUAGE}
-        timeMode={parseInt(timeMode)}
-        clearFoucs={this.onClearFocus}
+        clearFocus={this.onClearFocus}
+        draggable={draggable}
         handleHourChange={this.handleHourChange}
+        handleMeridiemChange={this.handleMeridiemChange}
         handleMinuteChange={this.handleMinuteChange}
-        handleTimeQuantumChange={this.handleTimeQuantumChange}
-        timeQuantum={this.timeQuantum}
-        dragable={dragable}
+        hour={hour}
+        language={language}
+        meridiem={this.meridiem}
+        minute={minute}
+        showTimezone={showTimezone}
+        timeMode={parseInt(timeMode)}
+        timezone={timezoneData}
       />
-    )
+    );
   }
 
   renderClassicTheme() {
-    const { timeMode, colorPalette } = this.props;
-    const [ hour, minute ] = this.getHourAndMinute();
+    const {timeMode, colorPalette} = this.props;
+    const [hour, minute] = this.getHourAndMinute();
+
     return (
       <ClassicTheme
-        hour={hour}
-        minute={minute}
         colorPalette={colorPalette}
-        timeMode={parseInt(timeMode)}
-        timeQuantum={this.timeQuantum}
+        handleMeridiemChange={this.handleMeridiemChange}
         handleTimeChange={this.handleHourAndMinuteChange}
-        handleTimeQuantumChange={this.handleTimeQuantumChange}
+        hour={hour}
+        meridiem={this.meridiem}
+        minute={minute}
+        timeMode={parseInt(timeMode)}
       />
-    )
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { focused } = nextProps;
-    if (focused !== this.state.focused) {
-      this.setState({ focused });
-    }
+    );
   }
 
   render() {
     const {
-      time,
       theme,
       trigger,
       timeMode,
@@ -191,22 +223,26 @@ class TimePicker extends React.Component {
       colorPalette
     } = this.props;
 
-    const { focused } = this.state;
+    const {focused} = this.state;
     const [hour, minute] = this.getHourAndMinute();
-    const validateTimeMode = getValidateTimeMode(timeMode);
-    const quantum = LANGUAGE[this.timeQuantum.toLowerCase()] || this.timeQuantum;
+    const validTimeMode = timeHelper.validateTimeMode(timeMode);
 
-    let times = `${hour} : ${minute}`;
-    if (validateTimeMode === 12) {
-      times = `${times} ${quantum}`;
-    }
-    const pickerPreviewClass = focused ? "time_picker_preview active" : "time_picker_preview";
-    const containerClass = colorPalette === 'dark' ? "time_picker_container dark" : "time_picker_container";
-    const previewContainerClass = withoutIcon ? "preview_container without_icon" : "preview_container";
+    const times = (validTimeMode === 12)
+      ? `${hour} : ${minute} ${this.meridiem}`
+      : `${hour} : ${minute}`;
+    const pickerPreviewClass = focused
+      ? 'time_picker_preview active'
+      : 'time_picker_preview';
+    const containerClass = colorPalette === 'dark'
+      ? 'time_picker_container dark'
+      : 'time_picker_container';
+    const previewContainerClass = withoutIcon
+      ? 'preview_container without_icon'
+      : 'preview_container';
 
     return (
       <div className={containerClass}>
-        { trigger ? trigger : (
+        { trigger || (
           <div
             onClick={this.onFocus}
             className={pickerPreviewClass}>
@@ -219,10 +255,12 @@ class TimePicker extends React.Component {
         <OutsideClickHandler
           onOutsideClick={this.onClearFocus}
           focused={focused}>
-          {theme === 'material' ? this.renderMaterialTheme() : this.renderClassicTheme()}
+          {theme === 'material'
+            ? this.renderMaterialTheme()
+            : this.renderClassicTheme()}
         </OutsideClickHandler>
       </div>
-    )
+    );
   }
 }
 

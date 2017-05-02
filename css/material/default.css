@@ -14,7 +14,8 @@
   background-color: #4a4a4a;
 }
 
-.dark .time_picker_modal_header {
+.dark .time_picker_modal_header,
+.dark .time_picker_modal_footer {
   background-color: #343434;
 }
 

@@ -1,91 +1,134 @@
 import React, { PropTypes } from 'react';
+
 import TwelveHoursMode from './TwelveHoursMode';
 import TwentyFourHoursMode from './TwentyFourHoursMode';
-import language from '../../language';
+import languageHelper from '../../utils/language';
+import timeHelper from '../../utils/time';
 
 const propTypes = {
-  hour: PropTypes.string,
-  minute: PropTypes.string,
-  timeMode: PropTypes.number,
   autoMode: PropTypes.bool,
-  dragable: PropTypes.bool,
-  language: PropTypes.object,
-  timeQuantum: PropTypes.string,
+  clearFocus: PropTypes.func,
+  draggable: PropTypes.bool,
+  handleEditTimezoneChange: PropTypes.func,
   handleHourChange: PropTypes.func,
+  handleMeridiemChange: PropTypes.func,
   handleMinuteChange: PropTypes.func,
-  handleTimeQuantumChange: PropTypes.func
+  handleShowTimezoneChange: PropTypes.func,
+  handleTimezoneChange: PropTypes.func,
+  hour: PropTypes.string,
+  language: PropTypes.string,
+  meridiem: PropTypes.string,
+  minute: PropTypes.string,
+  showTimezone: PropTypes.bool,
+  timeMode: PropTypes.number,
+  timezone: PropTypes.shape({
+    city: PropTypes.string,
+    zoneAbbr: PropTypes.string,
+    zoneName: PropTypes.string
+  })
 };
 
 const defaultProps = {
-  hour: '00',
-  minute: '00',
-  timeMode: 24,
   autoMode: true,
-  timeQuantum: 'AM',
+  clearFocus: () => {},
+  draggable: true,
+  handleEditTimezoneChange: () => {},
   handleHourChange: () => {},
+  handleMeridiemChange: () => {},
   handleMinuteChange: () => {},
-  handleTimeQuantumChange: () => {}
+  handleShowTimezoneChange: () => {},
+  handleTimezoneChange: () => {},
+  hour: '00',
+  language: 'en',
+  meridiem: 'AM',
+  minute: '00',
+  showTimezone: false,
+  timeMode: 24,
+  timezone: timeHelper.time().timezone
 };
 
-class MaterialTheme extends React.Component {
+class MaterialTheme extends React.PureComponent {
   renderTwentyFourHoursMode() {
     const {
+      autoMode,
+      clearFocus,
+      draggable,
+      handleEditTimezoneChange,
+      handleHourChange,
+      handleMinuteChange,
+      handleShowTimezoneChange,
+      handleTimezoneChange,
       hour,
       minute,
-      autoMode,
-      dragable,
-      clearFoucs,
-      handleHourChange,
-      handleMinuteChange
+      showTimezone,
+      timezone
     } = this.props;
+
     return (
       <TwentyFourHoursMode
-        hour={hour}
-        minute={minute}
-        dragable={dragable}
         autoMode={autoMode}
+        clearFocus={clearFocus}
+        draggable={draggable}
+        handleEditTimezoneChange={handleEditTimezoneChange}
         handleHourChange={handleHourChange}
         handleMinuteChange={handleMinuteChange}
-        clearFoucs={clearFoucs}
+        handleShowTimezoneChange={handleShowTimezoneChange}
+        handleTimezoneChange={handleTimezoneChange}
+        hour={hour}
+        minute={minute}
+        showTimezone={showTimezone}
+        timezone={timezone}
       />
     )
   }
 
   renderTwelveHoursMode() {
     const {
-      hour,
-      minute,
-      language,
-      dragable,
-      clearFoucs,
-      timeQuantum,
+      clearFocus,
+      draggable,
+      handleEditTimezoneChange,
       handleHourChange,
+      handleMeridiemChange,
       handleMinuteChange,
-      handleTimeQuantumChange
+      handleShowTimezoneChange,
+      handleTimezoneChange,
+      hour,
+      language,
+      meridiem,
+      minute,
+      showTimezone,
+      timezone
     } = this.props;
 
     return (
       <TwelveHoursMode
-        hour={hour}
-        minute={minute}
-        dragable={dragable}
-        language={language}
-        clearFoucs={clearFoucs}
-        timeQuantum={timeQuantum}
+        clearFocus={clearFocus}
+        draggable={draggable}
+        handleEditTimezoneChange={handleEditTimezoneChange}
         handleHourChange={handleHourChange}
+        handleMeridiemChange={handleMeridiemChange}
         handleMinuteChange={handleMinuteChange}
-        handleTimeQuantumChange={handleTimeQuantumChange}
+        handleShowTimezoneChange={handleShowTimezoneChange}
+        handleTimezoneChange={handleTimezoneChange}
+        hour={hour}
+        language={language}
+        meridiem={meridiem}
+        minute={minute}
+        showTimezone={showTimezone}
+        timezone={timezone}
       />
     )
   }
 
   render() {
-    const { timeMode } = this.props;
+    const {timeMode} = this.props;
     return (
       <div>
-        {parseInt(timeMode) === 24 ? this.renderTwentyFourHoursMode() : this.renderTwelveHoursMode()}
+        {parseInt(timeMode) === 24
+          ? this.renderTwentyFourHoursMode()
+          : this.renderTwelveHoursMode()}
       </div>
-    )
+    );
   }
 }
 

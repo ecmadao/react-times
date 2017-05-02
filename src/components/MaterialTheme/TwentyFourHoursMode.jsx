@@ -1,21 +1,38 @@
-import React, { PropTypes } from 'react';
 import {
   HOURS,
-  MINUTES,
-  POINTER_RADIUS,
-  PICKER_RADIUS,
   MAX_ABSOLUTE_POSITION,
-  MIN_ABSOLUTE_POSITION
-} from '../../ConstValue.js';
+  MINUTES,
+  MIN_ABSOLUTE_POSITION,
+  PICKER_RADIUS,
+  POINTER_RADIUS,
+} from '../../utils/const_value.js';
+import React, {PropTypes} from 'react';
+
+import PickerDragHandler from '../Picker/PickerDragHandler';
+import pickerPointGenerator from '../Picker/PickerPointGenerator';
+import timeHelper from '../../utils/time';
+
+const TIME = timeHelper.time();
+TIME.current = timeHelper.current();
+TIME.tz = timeHelper.guessUserTz();
 
 const propTypes = {
   step: PropTypes.number,
   hour: PropTypes.string,
   autoMode: PropTypes.bool,
   minute: PropTypes.string,
+  showTimezone: PropTypes.bool,
+  timezone: PropTypes.shape({
+    city: PropTypes.string,
+    zoneAbbr: PropTypes.string,
+    zoneName: PropTypes.string
+  }),
   handleHourChange: PropTypes.func,
   handleMinuteChange: PropTypes.func,
-  clearFoucs: PropTypes.func
+  handleTimezoneChange: PropTypes.func,
+  handleEditTimezoneChange: PropTypes.func,
+  handleShowTimezoneChange: PropTypes.func,
+  clearFocus: PropTypes.func
 };
 
 const defaultProps = {
@@ -23,19 +40,22 @@ const defaultProps = {
   hour: '00',
   minute: '00',
   autoMode: true,
+  showTimezone: false,
+  timezone: TIME.tz,
+  timezoneIsEditable: false,
   handleHourChange: () => {},
   handleMinuteChange: () => {},
-  clearFoucs: () => {}
+  clearFocus: () => {},
+  handleTimezoneChange: () => {},
+  handleEditTimezoneChange: () => {},
+  handleShowTimezoneChange: () => {}
 };
 
-import PickerDargHandler from '../Picker/PickerDargHandler';
-import pickerPointGenerator from '../Picker/PickerPointGenerator';
-
-class TwentyFourHoursMode extends React.Component {
+class TwentyFourHoursMode extends React.PureComponent {
   constructor(props) {
     super(props);
     const pointerRotate = this.resetHourDegree();
-    const { step } = props;
+    const {step} = props;
     this.state = {
       step,
       pointerRotate
@@ -64,18 +84,18 @@ class TwentyFourHoursMode extends React.Component {
   }
 
   handleTimePointerClick(time, pointerRotate) {
-    this.setState({ pointerRotate });
+    this.setState({pointerRotate});
     this.handleTimeChange(time);
   }
 
   handleTimeChange(time) {
     time = parseInt(time);
-    const { step } = this.state;
+    const {step} = this.state;
     const {
       handleHourChange,
       handleMinuteChange,
       autoMode,
-      clearFoucs
+      clearFocus
     } = this.props;
     if (step === 0) {
       handleHourChange && handleHourChange(time);
@@ -86,7 +106,7 @@ class TwentyFourHoursMode extends React.Component {
     if (step === 0) {
       this.handleStepChange(1);
     } else {
-      clearFoucs();
+      clearFocus();
       this.setStep(0);
     }
   }
@@ -114,27 +134,47 @@ class TwentyFourHoursMode extends React.Component {
   }
 
   getTopAndHeight() {
-    let { step } = this.state;
-    let { hour, minute } = this.props;
+    let {step} = this.state;
+    let {hour, minute} = this.props;
     let time = step === 0 ? hour : minute;
     let splitNum = step === 0 ? 12 : 60;
     let minLength = step === 0 ? MIN_ABSOLUTE_POSITION : MAX_ABSOLUTE_POSITION;
-    let height = time < splitNum ? minLength - POINTER_RADIUS : MAX_ABSOLUTE_POSITION - POINTER_RADIUS;
-    let top = time < splitNum ? PICKER_RADIUS - minLength + POINTER_RADIUS : PICKER_RADIUS - MAX_ABSOLUTE_POSITION + POINTER_RADIUS;
+    let height = time < splitNum
+      ? minLength - POINTER_RADIUS
+      : MAX_ABSOLUTE_POSITION - POINTER_RADIUS;
+    let top = time < splitNum
+      ? PICKER_RADIUS - minLength + POINTER_RADIUS
+      : PICKER_RADIUS - MAX_ABSOLUTE_POSITION + POINTER_RADIUS;
     return [top, height];
+  }
+
+  renderTimezone() {
+    const {timezone, timezoneIsEditable} = this.props;
+
+    return (
+      <div className='time_picker_modal_footer'>
+        <span className='time_picker_modal_footer_timezone'>{timezone.zoneName} {timezone.zoneAbbr}</span>
+      </div>
+    )
   }
 
   render() {
     const {
       hour,
       minute,
-      dragable
+      draggable,
+      showTimezone
     } = this.props;
-    const { step, pointerRotate } = this.state;
 
-    const activeHourClass = step === 0 ? "time_picker_header active" : "time_picker_header";
-    const activeMinuteClass = step === 1 ? "time_picker_header active" : "time_picker_header";
-    const [ top, height ] = this.getTopAndHeight();
+    const {step, pointerRotate} = this.state;
+
+    const activeHourClass = step === 0
+      ? 'time_picker_header active'
+      : 'time_picker_header';
+    const activeMinuteClass = step === 1
+      ? 'time_picker_header active'
+      : 'time_picker_header';
+    const [top, height] = this.getTopAndHeight();
     const rotateState = {
       top,
       height,
@@ -144,30 +184,31 @@ class TwentyFourHoursMode extends React.Component {
     const PickerPointGenerator = pickerPointGenerator(type);
 
     return (
-      <div className="time_picker_modal_container">
-        <div className="time_picker_modal_header">
+      <div className='time_picker_modal_container'>
+        <div className='time_picker_modal_header'>
           <span
             className={activeHourClass}
             onClick={this.handleStepChange.bind(this, 0)}>{hour}</span>
-          <span className="time_picker_header_delivery">:</span>
+          <span className='time_picker_header_delivery'>:</span>
           <span className={activeMinuteClass}
             onClick={this.handleStepChange.bind(this, 1)}>{minute}</span>
         </div>
-        <div className="picker_container">
+        <div className='picker_container'>
           <PickerPointGenerator
             ref={ref => this.pickerPointerContainer = ref}
             handleTimePointerClick={this.handleTimePointerClick}
           />
-          <PickerDargHandler
+          <PickerDragHandler
             step={step}
-            dragable={dragable}
+            draggable={draggable}
             rotateState={rotateState}
             time={step === 0 ? parseInt(hour) : parseInt(minute)}
             minLength={step === 0 ? MIN_ABSOLUTE_POSITION : MAX_ABSOLUTE_POSITION}
             handleTimePointerClick={this.handleTimePointerClick} />
         </div>
+        {showTimezone ? this.renderTimezone() : ''}
       </div>
-    )
+    );
   }
 }
 

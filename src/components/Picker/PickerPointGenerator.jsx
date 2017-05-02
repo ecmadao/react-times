@@ -4,22 +4,22 @@ import {
   MINUTES,
   HOURS,
   TWELVE_HOURS
-} from '../../ConstValue.js';
+} from '../../utils/const_value.js';
 import PickerPoint from './PickerPoint';
 
 const pickerPointGenerator = (type = "hour", mode = 24) => {
-  return class PickerPointGenerator extends React.Component {
+  return class PickerPointGenerator extends React.PureComponent {
     constructor(props) {
       super(props);
       this.handleTimePointerClick = props.handleTimePointerClick.bind(this);
     }
 
     addAnimation() {
-      ReactDOM.findDOMNode(this.pickerPointerContainer).className = "animation";
+      ReactDOM.findDOMNode(this.pickerPointerContainer).className = 'animation';
     }
 
     removeAnimation() {
-      ReactDOM.findDOMNode(this.pickerPointerContainer).className = "";
+      ReactDOM.findDOMNode(this.pickerPointerContainer).className = '';
     }
 
     renderMinutePointes() {
@@ -33,7 +33,7 @@ const pickerPointGenerator = (type = "hour", mode = 24) => {
               angle={angle}
               handleTimeChange={this.handleTimePointerClick}
             />
-          )
+          );
         }
       });
     }
@@ -41,7 +41,7 @@ const pickerPointGenerator = (type = "hour", mode = 24) => {
     renderHourPointes() {
       const hours = parseInt(mode) === 24 ? HOURS : TWELVE_HOURS;
       return hours.map((h, index) => {
-        const pointClass = index < 12 ? "picker_point point_inner" : "picker_point point_outter";
+        const pointClass = index < 12 ? 'picker_point point_inner' : 'picker_point point_outter';
         const angle = index < 12 ? 360 * (index) / 12 : 360 * (index - 12) / 12;
         return (
           <PickerPoint
@@ -51,7 +51,7 @@ const pickerPointGenerator = (type = "hour", mode = 24) => {
             pointClass={pointClass}
             handleTimeChange={this.handleTimePointerClick}
           />
-        )
+        );
       });
     }
 
@@ -59,10 +59,10 @@ const pickerPointGenerator = (type = "hour", mode = 24) => {
       return (
         <div
           ref={ref => this.pickerPointerContainer = ref}
-          id="picker_pointer_container">
-          {type === "hour" ? this.renderHourPointes() : this.renderMinutePointes()}
+          id='picker_pointer_container'>
+          {type === 'hour' ? this.renderHourPointes() : this.renderMinutePointes()}
         </div>
-      )
+      );
     }
   }
 };
