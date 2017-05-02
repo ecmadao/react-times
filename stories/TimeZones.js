@@ -7,7 +7,6 @@ import TimePickerWrapper from '../examples/TimePickerWrapper';
 import { storiesOf } from '@kadira/storybook';
 import timeHelper from '../src/utils/time.js';
 
-
 const tzForCity = timeHelper.tzForCity('Kuala Lumpur');
 
 storiesOf('TimeZones', module)
@@ -18,17 +17,17 @@ storiesOf('TimeZones', module)
   ))
   .addWithInfo('with default (custom) timezone', () => (
     <TimePickerWrapper
-      timezone={tzForCity}
+      timezone={tzForCity.zoneName}
       showTimezone={true} />
   ))
-  .addWithInfo('with timezone search', () => {
-    return (
-      <TimePickerWrapper
-        showTimezone={true}
-        timezoneIsEditable={true}
-      />
-    )
-  })
+  // .addWithInfo('with timezone search', () => {
+  //   return (
+  //     <TimePickerWrapper
+  //       showTimezone={true}
+  //       timezoneIsEditable={true}
+  //     />
+  //   )
+  // })
   .addWithInfo('with 12 hour (custom) time', () => {
     return (
       <TimePickerWrapper
@@ -48,4 +47,3 @@ storiesOf('TimeZones', module)
       />
     )
   });
-

@@ -16,19 +16,16 @@ const propTypes = {
   handleShowTimezoneChange: PropTypes.func,
   handleTimezoneChange: PropTypes.func,
   hour: PropTypes.string,
-  localMessages: PropTypes.shape({
-    am: PropTypes.string,
-    cancel: PropTypes.string,
-    close: PropTypes.string,
-    confirm: PropTypes.string,
-    pm: PropTypes.string
-  }),
+  language: PropTypes.string,
   meridiem: PropTypes.string,
   minute: PropTypes.string,
   showTimezone: PropTypes.bool,
   timeMode: PropTypes.number,
-  timezone: PropTypes.string,
-  timezoneIsEditable: PropTypes.bool
+  timezone: PropTypes.shape({
+    city: PropTypes.string,
+    zoneAbbr: PropTypes.string,
+    zoneName: PropTypes.string
+  })
 };
 
 const defaultProps = {
@@ -42,88 +39,83 @@ const defaultProps = {
   handleShowTimezoneChange: () => {},
   handleTimezoneChange: () => {},
   hour: '00',
-  localMessages: languageHelper.get(),
+  language: 'en',
   meridiem: 'AM',
   minute: '00',
   showTimezone: false,
   timeMode: 24,
-  timezone: timeHelper.guessUserTz().zoneName,
-  timezoneIsEditable: false
+  timezone: timeHelper.time().timezone
 };
 
 class MaterialTheme extends React.PureComponent {
   renderTwentyFourHoursMode() {
     const {
-      hour,
-      minute,
       autoMode,
-      draggable,
       clearFocus,
-      timezone,
-      timezoneIsEditable,
-      showTimezone,
+      draggable,
+      handleEditTimezoneChange,
       handleHourChange,
       handleMinuteChange,
+      handleShowTimezoneChange,
       handleTimezoneChange,
-      handleEditTimezoneChange,
-      handleShowTimezoneChange
+      hour,
+      minute,
+      showTimezone,
+      timezone
     } = this.props;
 
     return (
       <TwentyFourHoursMode
-        hour={hour}
-        minute={minute}
-        draggable={draggable}
         autoMode={autoMode}
+        clearFocus={clearFocus}
+        draggable={draggable}
+        handleEditTimezoneChange={handleEditTimezoneChange}
         handleHourChange={handleHourChange}
         handleMinuteChange={handleMinuteChange}
-        handleTimezoneChange={handleTimezoneChange}
-        handleEditTimezoneChange={handleEditTimezoneChange}
         handleShowTimezoneChange={handleShowTimezoneChange}
-        clearFocus={clearFocus}
-        timezone={timezone}
-        timezoneIsEditable={timezoneIsEditable}
+        handleTimezoneChange={handleTimezoneChange}
+        hour={hour}
+        minute={minute}
         showTimezone={showTimezone}
+        timezone={timezone}
       />
     )
   }
 
   renderTwelveHoursMode() {
     const {
-      hour,
-      minute,
-      localMessages,
-      draggable,
       clearFocus,
-      meridiem,
-      timezone,
-      timezoneIsEditable,
-      showTimezone,
-      handleHourChange,
-      handleMinuteChange,
-      handleMeridiemChange,
-      handleTimezoneChange,
+      draggable,
       handleEditTimezoneChange,
-      handleShowTimezoneChange
+      handleHourChange,
+      handleMeridiemChange,
+      handleMinuteChange,
+      handleShowTimezoneChange,
+      handleTimezoneChange,
+      hour,
+      language,
+      meridiem,
+      minute,
+      showTimezone,
+      timezone
     } = this.props;
 
     return (
       <TwelveHoursMode
-        hour={hour}
-        minute={minute}
-        draggable={draggable}
-        language={localMessages}
         clearFocus={clearFocus}
-        meridiem={meridiem}
-        timezone={timezone}
-        timezoneIsEditable={timezoneIsEditable}
-        showTimezone={showTimezone}
-        handleHourChange={handleHourChange}
-        handleMinuteChange={handleMinuteChange}
-        handleMeridiemChange={handleMeridiemChange}
-        handleTimezoneChange={handleTimezoneChange}
+        draggable={draggable}
         handleEditTimezoneChange={handleEditTimezoneChange}
+        handleHourChange={handleHourChange}
+        handleMeridiemChange={handleMeridiemChange}
+        handleMinuteChange={handleMinuteChange}
         handleShowTimezoneChange={handleShowTimezoneChange}
+        handleTimezoneChange={handleTimezoneChange}
+        hour={hour}
+        language={language}
+        meridiem={meridiem}
+        minute={minute}
+        showTimezone={showTimezone}
+        timezone={timezone}
       />
     )
   }

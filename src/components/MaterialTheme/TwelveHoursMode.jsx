@@ -16,23 +16,20 @@ import timeHelper from '../../utils/time';
 
 const TIME = timeHelper.time();
 TIME.current = timeHelper.current();
-TIME.tz = timeHelper.guessUserTz().zoneName;
+TIME.tz = timeHelper.guessUserTz();
 
 const propTypes = {
-  localMessages: PropTypes.shape({
-    am: PropTypes.string,
-    cancel: PropTypes.string,
-    close: PropTypes.string,
-    confirm: PropTypes.string,
-    pm: PropTypes.string
-  }),
   hour: PropTypes.string,
+  language: PropTypes.string,
   minute: PropTypes.string,
   draggable: PropTypes.bool,
   meridiem: PropTypes.string,
-  timezone: PropTypes.string,
   showTimezone: PropTypes.bool,
-  timezoneIsEditable: PropTypes.bool,
+  timezone: PropTypes.shape({
+    city: PropTypes.string,
+    zoneAbbr: PropTypes.string,
+    zoneName: PropTypes.string
+  }),
   handleHourChange: PropTypes.func,
   handleMinuteChange: PropTypes.func,
   handleTimezoneChange: PropTypes.func,
@@ -41,14 +38,13 @@ const propTypes = {
 };
 
 const defaultProps = {
-  localMessages: languageHelper.get(),
   hour: TIME.hour12,
+  language: 'en',
   minute: TIME.minute,
   draggable: false,
   meridiem: TIME.meridiem,
-  timezone: TIME.tz,
   showTimezone: false,
-  timezoneIsEditable: false,
+  timezone: TIME.tz,
   handleHourChange: () => {},
   handleMinuteChange: () => {},
   handleTimezoneChange: () => {},
@@ -106,6 +102,11 @@ class TwelveHoursMode extends React.PureComponent {
     return [top, height];
   }
 
+  languageData() {
+    const {language} = this.props;
+    return languageHelper.get(language);
+  }
+
   handleMeridiemChange(meridiem) {
     if (meridiem !== this.props.meridiem) {
       const {handleMeridiemChange} = this.props;
@@ -140,32 +141,24 @@ class TwelveHoursMode extends React.PureComponent {
   }
 
   renderTimezone() {
-    const {timezone, timezoneIsEditable} = this.props;
+    const {timezone} = this.props;
 
     return (
       <div className='time_picker_modal_footer'>
-        <span className='time_picker_modal_footer_timezone'>{timezone.zoneName} - {timezone.zoneAbbr}</span>
+        <span className='time_picker_modal_footer_timezone'>{timezone.zoneName} {timezone.zoneAbbr}</span>
       </div>
     )
   }
 
   render() {
-    let {hour, minute, meridiem} = this.props;
     const {
-      localMessages,
+      hour,
+      minute,
+      meridiem,
       draggable,
       clearFocus,
-      timezone,
       showTimezone,
-      timezoneIsEditable
     } = this.props;
-
-    // Since someone might pass a time in 24h format, etc., we need to pass it through
-    // timeHelper.time() to 'translate' it into 12h format, including its accurate meridiem
-    const time = timeHelper.time([hour, minute].join(':'), 12);
-    hour = time.hour12;
-    minute = time.minute;
-    meridiem = time.meridiem;
 
     const {hourPointerRotate, minutePointerRotate} = this.state;
 
@@ -184,10 +177,13 @@ class TwelveHoursMode extends React.PureComponent {
 
     const HourPickerPointGenerator = pickerPointGenerator('hour', 12);
     const MinutePickerPointGenerator = pickerPointGenerator('minute', 12);
+    const localMessages = this.languageData();
+    const newMeridiem = (meridiem === 'AM' || meridiem === localMessages['am'])
+      ? localMessages['pm'] : localMessages['am'];
 
-    const handleQuantumChange = this.handleMeridiemChange.bind(
+    const handleMeridiemChange = this.handleMeridiemChange.bind(
       this,
-      meridiem === 'AM' ? 'PM' : 'AM'
+      newMeridiem
     );
 
     return (
@@ -196,7 +192,7 @@ class TwelveHoursMode extends React.PureComponent {
           <span
             className='time_picker_header active'>{hour}:{minute}</span>&nbsp;
           <span
-            onClick={handleQuantumChange}
+            onClick={handleMeridiemChange}
             className='time_picker_header meridiem'>{meridiem}</span>
         </div>
         <div className='picker_container'>

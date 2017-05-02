@@ -6,7 +6,7 @@ import ICONS from '../src/utils/icons';
 class TimePickerWrapper extends React.Component {
   constructor(props) {
     super(props);
-    const {defaultTime, meridiem, focused} = props;
+    const {defaultTime, meridiem, focused, showTimezone, timezone} = props;
     let hour = '', minute = '';
     if (!defaultTime) {
       [hour, minute] = timeHelper.current().split(/:/);
@@ -18,7 +18,9 @@ class TimePickerWrapper extends React.Component {
       hour,
       minute,
       meridiem,
-      focused
+      focused,
+      showTimezone,
+      timezone
     };
 
     this.onFocusChange = this.onFocusChange.bind(this);
@@ -89,7 +91,7 @@ class TimePickerWrapper extends React.Component {
   }
 
   render() {
-    const {hour, minute, meridiem, focused} = this.state;
+    const {hour, minute, meridiem, focused, timezone, showTimezone} = this.state;
 
     return (
       <div className="time_picker_wrapper">
@@ -102,7 +104,9 @@ class TimePickerWrapper extends React.Component {
           onMeridiemChange={this.onMeridiemChange}
           onMinuteChange={this.onMinuteChange}
           onTimeChange={this.onTimeChange}
+          showTimezone={showTimezone}
           time={hour && minute ? `${hour}:${minute}` : null}
+          timezone={timezone}
           trigger={this.trigger}
         />
       </div>
@@ -114,7 +118,8 @@ TimePickerWrapper.defaultProps = {
   customTriggerId: null,
   defaultTime: null,
   focused: false,
-  meridiem: 'AM'
+  meridiem: null,
+  showTimezone: false
 };
 
 export default TimePickerWrapper;

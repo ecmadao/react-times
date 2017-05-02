@@ -47,9 +47,9 @@
     "react-svg-loader": "^1.1.1",
     "rimraf": "^2.6.1",
     "safe-publish-latest": "^1.1.1",
-    "sinon": "^2.1.0",
+    "sinon": "^2.2.0",
     "sinon-sandbox": "^1.0.2",
-    "style-loader": "^0.16.1",
+    "style-loader": "^0.17.0",
     "webpack": "^1.15.0"
   },
   "homepage": "https://github.com/ecmadao/react-times#readme",

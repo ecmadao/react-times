@@ -6,20 +6,27 @@ import {
   PICKER_RADIUS,
   POINTER_RADIUS,
 } from '../../utils/const_value.js';
-import React, { PropTypes } from 'react';
+import React, {PropTypes} from 'react';
 
 import PickerDragHandler from '../Picker/PickerDragHandler';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';
 import timeHelper from '../../utils/time';
+
+const TIME = timeHelper.time();
+TIME.current = timeHelper.current();
+TIME.tz = timeHelper.guessUserTz();
 
 const propTypes = {
   step: PropTypes.number,
   hour: PropTypes.string,
   autoMode: PropTypes.bool,
   minute: PropTypes.string,
-  timezone: PropTypes.string,
   showTimezone: PropTypes.bool,
-  timezoneIsEditable: PropTypes.bool,
+  timezone: PropTypes.shape({
+    city: PropTypes.string,
+    zoneAbbr: PropTypes.string,
+    zoneName: PropTypes.string
+  }),
   handleHourChange: PropTypes.func,
   handleMinuteChange: PropTypes.func,
   handleTimezoneChange: PropTypes.func,
@@ -33,8 +40,8 @@ const defaultProps = {
   hour: '00',
   minute: '00',
   autoMode: true,
-  timezone: timeHelper.guessUserTz().zoneName,
   showTimezone: false,
+  timezone: TIME.tz,
   timezoneIsEditable: false,
   handleHourChange: () => {},
   handleMinuteChange: () => {},
@@ -48,7 +55,7 @@ class TwentyFourHoursMode extends React.PureComponent {
   constructor(props) {
     super(props);
     const pointerRotate = this.resetHourDegree();
-    const { step } = props;
+    const {step} = props;
     this.state = {
       step,
       pointerRotate
@@ -77,13 +84,13 @@ class TwentyFourHoursMode extends React.PureComponent {
   }
 
   handleTimePointerClick(time, pointerRotate) {
-    this.setState({ pointerRotate });
+    this.setState({pointerRotate});
     this.handleTimeChange(time);
   }
 
   handleTimeChange(time) {
     time = parseInt(time);
-    const { step } = this.state;
+    const {step} = this.state;
     const {
       handleHourChange,
       handleMinuteChange,
@@ -127,8 +134,8 @@ class TwentyFourHoursMode extends React.PureComponent {
   }
 
   getTopAndHeight() {
-    let { step } = this.state;
-    let { hour, minute } = this.props;
+    let {step} = this.state;
+    let {hour, minute} = this.props;
     let time = step === 0 ? hour : minute;
     let splitNum = step === 0 ? 12 : 60;
     let minLength = step === 0 ? MIN_ABSOLUTE_POSITION : MAX_ABSOLUTE_POSITION;
@@ -142,11 +149,11 @@ class TwentyFourHoursMode extends React.PureComponent {
   }
 
   renderTimezone() {
-    const { timezone, timezoneIsEditable } = this.props;
+    const {timezone, timezoneIsEditable} = this.props;
 
     return (
       <div className='time_picker_modal_footer'>
-        <span className='time_picker_modal_footer_timezone'>{timezone.zoneName} - {timezone.zoneAbbr}</span>
+        <span className='time_picker_modal_footer_timezone'>{timezone.zoneName} {timezone.zoneAbbr}</span>
       </div>
     )
   }
@@ -159,7 +166,7 @@ class TwentyFourHoursMode extends React.PureComponent {
       showTimezone
     } = this.props;
 
-    const { step, pointerRotate } = this.state;
+    const {step, pointerRotate} = this.state;
 
     const activeHourClass = step === 0
       ? 'time_picker_header active'
@@ -167,7 +174,7 @@ class TwentyFourHoursMode extends React.PureComponent {
     const activeMinuteClass = step === 1
       ? 'time_picker_header active'
       : 'time_picker_header';
-    const [ top, height ] = this.getTopAndHeight();
+    const [top, height] = this.getTopAndHeight();
     const rotateState = {
       top,
       height,
