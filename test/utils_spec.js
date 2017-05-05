@@ -114,7 +114,7 @@ describe('Time utils', () => {
     describe('when passed only a time', () => {
       it('then it should use the specified time, default to 24h format, infer the meridiem, and default to AM', () => {
         times.forEach((time) => {
-          const testTimeData = timeHelper.time(time);
+          const testTimeData = timeHelper.time(time, undefined, undefined, 'America/New_York');
           expect(testTimeData.mode).to.equal(24);
 
           switch (time) {
@@ -152,7 +152,7 @@ describe('Time utils', () => {
       it('then it should default to the current local time and meridiem, with user-specified mode', () => {
         modes.forEach((mode) => {
           meridies.forEach((meridiem) => {
-            const testTimeData = timeHelper.time(undefined, meridiem, mode);
+            const testTimeData = timeHelper.time(undefined, meridiem, mode, 'America/New_York');
             expect(testTimeData.hour24).to.equal(head(time24));
             expect(testTimeData.hour12).to.equal(head(time12).replace(/^0/, ''));
             expect(testTimeData.meridiem).to.equal(last(time24).slice(2));
@@ -166,7 +166,7 @@ describe('Time utils', () => {
       it('then it should use the specified mode and time, infer meridiem, and default to AM', () => {
         times.forEach((time) => {
           modes.forEach((mode) => {
-            const testTimeData = timeHelper.time(time, undefined, mode);
+            const testTimeData = timeHelper.time(time, undefined, mode, 'America/New_York');
             expect(testTimeData.mode).to.equal(mode);
 
             switch (time) {
@@ -205,7 +205,7 @@ describe('Time utils', () => {
       it('then it should use the specified time, use the correct meridiem based on time provided, and use 12h mode', () => {
         times.forEach((time) => {
           meridies.forEach((meridiem) => {
-            const testTimeData = timeHelper.time(time, meridiem);
+            const testTimeData = timeHelper.time(time, meridiem, undefined, 'America/New_York');
             expect(testTimeData.mode).to.equal(12);
 
             switch (time) {
@@ -248,7 +248,7 @@ describe('Time utils', () => {
         times.forEach((time) => {
           meridies.forEach((meridiem) => {
             modes.forEach((mode) => {
-              const testTimeData = timeHelper.time(time, meridiem, mode);
+              const testTimeData = timeHelper.time(time, meridiem, mode, 'America/New_York');
 
               switch (time) {
                 case '6:00':
