@@ -6,7 +6,7 @@ node_js:
 before_script:
   - npm install -g mocha
   - npm install -g eslint
-  - npm i coveralls --save-dev
+  - npm i
 script: npm test
 env:
   - REACT=0.14
