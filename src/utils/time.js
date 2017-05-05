@@ -21,20 +21,24 @@ const getValidTimeData = (time, meridiem, timeMode, tz = guessUserTz().zoneName)
 
   // when we only have a valid meridiem, that implies a 12h mode
   const mode = (validMeridiem && !timeMode) ? 12 : timeMode || 24;
+  const timezone = (tz === undefined) ? 'America/New_York' : tz;
 
   const validMode = getValidateTimeMode(mode);
   const validTime = getValidTimeString(time, validMeridiem);
+  const format12 = 'hh:mmA';
+  const format24 = 'HH:mmA';
+  let time12, time24;
 
   // What format is the hour we provide to moment below in?
-  const hourFormat = (validMode === 12) ? 'hh:mmA' : 'HH:mmA';
+  const hourFormat = (validMode === 12) ? format12 : format24;
 
-  const time24 = ((validTime)
-    ? moment(`1970-01-01 ${validTime}`, `YYYY-MM-DD ${hourFormat}`, 'en').tz(tz).format('HH:mmA')
-    : moment().tz(tz).format('HH:mmA')).split(/:/);
+  time24 = ((validTime)
+    ? moment(`1970-01-01 ${validTime}`, `YYYY-MM-DD ${hourFormat}`, 'en').tz(timezone).format(format24)
+    : moment().tz(timezone).format(format24)).split(/:/);
 
-  const time12 = ((validTime)
-    ? moment(`1970-01-01 ${validTime}`, `YYYY-MM-DD ${hourFormat}`, 'en').tz(tz).format('hh:mmA')
-    : moment().tz(tz).format('hh:mmA')).split(/:/);
+  time12 = ((validTime)
+    ? moment(`1970-01-01 ${validTime}`, `YYYY-MM-DD ${hourFormat}`, 'en').tz(timezone).format(format12)
+    : moment().tz(timezone).format(format12)).split(/:/);
 
   const timeData = {
     hour12: head(time12).replace(/^0/, ''),
@@ -194,13 +198,15 @@ const tzMaps = tzCities.map(city => {
   return tzMap;
 });
 
-const getTzForCity = (city) => tzMaps
-    .filter(tzMap => tzMap['city'] === city)
-    .reduce(tzMap => tzMap);
+const getTzForCity = (city) => {
+  const maps = tzMaps.filter(tzMap => tzMap['city'] === city);
+  return maps;
+};
 
-const getTzForName = (name) => tzMaps
-    .filter(tzMap => tzMap['zoneName'] === name)
-    .reduce(tzMap => tzMap);
+const getTzForName = (name) => {
+  const maps = tzMaps.filter(tzMap => tzMap['zoneName'] === name);
+  return maps;
+};
 
 const guessUserTz = () => {
   // User-Agent sniffing is not always reliable, but is the recommended technique
