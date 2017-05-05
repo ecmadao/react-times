@@ -1,11 +1,7 @@
 {
   "presets": [
-    ["env", {
-      "targets": {
-        "node": 5,
-        "browsers": "last 2 versions"
-      }
-    }],
+    "es2015",
+    "stage-0",
     "react"
   ]
 }

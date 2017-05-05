@@ -91,7 +91,7 @@ const getValidateTime = (time) => {
  */
 const getValidTimeString = (time, meridiem) => {
   if (typeof time === 'string') {
-    let validTime = (time && time.includes(':'))
+    let validTime = (time && time.indexOf(':').length >= 0)
       ? time.split(/:/).map((t) => getValidateTime(t)).join(':')
       : time;
     const hourAsInt = parseInt(head(validTime.split(/:/)));
@@ -165,9 +165,9 @@ const tzNames = (() => {
   const scrubbedSuffixes = ['ACT', 'East', 'Knox_IN', 'LHI', 'North', 'NSW', 'South', 'West'];
 
   const tzNames = moment.tz.names()
-      .filter(name => name.includes('/'))
-      .filter(name => !scrubbedPrefixes.includes(name.split('/')[0]))
-      .filter(name => !scrubbedSuffixes.includes(name.split('/').slice(-1)[0]));
+      .filter(name => name.indexOf('/') >= 0)
+      .filter(name => !scrubbedPrefixes.indexOf(name.split('/')[0]) >= 0)
+      .filter(name => !scrubbedSuffixes.indexOf(name.split('/').slice(-1)[0]) >= 0);
 
   return tzNames;
 })();
@@ -176,7 +176,7 @@ const tzNames = (() => {
 // counting Canada/*, Mexico/*, and US/* allows users to search for
 // things like 'Eastern' or 'Mountain' and get matches back
 const tzCities = tzNames
-    .map(name => (['Canada', 'Mexico', 'US'].includes(name.split('/')[0]))
+    .map(name => (['Canada', 'Mexico', 'US'].indexOf(name.split('/')[0]) >= 0)
       ? name : name.split('/').slice(-1)[0])
     .map(name => name.replace(/_/g, ' '));
 
