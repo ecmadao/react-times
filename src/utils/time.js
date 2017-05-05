@@ -91,7 +91,7 @@ const getValidateTime = (time) => {
  */
 const getValidTimeString = (time, meridiem) => {
   if (typeof time === 'string') {
-    let validTime = (time && time.includes(':'))
+    let validTime = (time && time.indexOf(':') !== -1)
       ? time.split(/:/).map((t) => getValidateTime(t)).join(':')
       : time;
     const hourAsInt = parseInt(head(validTime.split(/:/)));
@@ -166,8 +166,8 @@ const tzNames = (() => {
 
   const tzNames = moment.tz.names()
       .filter(name => name.indexOf('/') !== -1)
-      .filter(name => !scrubbedPrefixes.includes(name.split('/')[0]))
-      .filter(name => !scrubbedSuffixes.includes(name.split('/').slice(-1)[0]));
+      .filter(name => !scrubbedPrefixes.indexOf(name.split('/')[0]) !== -1)
+      .filter(name => !scrubbedSuffixes.indexOf(name.split('/').slice(-1)[0]) !== -1);
 
   return tzNames;
 })();
