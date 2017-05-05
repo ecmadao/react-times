@@ -160,7 +160,7 @@ class TimePicker extends React.PureComponent {
   }
 
   get meridiem() {
-    const {meridiem, time, timeMode} = this.props;
+    const {meridiem} = this.props;
 
     const timeData = this.timeData();
     const localMessages = this.languageData();
@@ -173,7 +173,7 @@ class TimePicker extends React.PureComponent {
   }
 
   renderMaterialTheme() {
-    const {timeMode, timezone, showTimezone, autoMode, draggable, language} = this.props;
+    const {timeMode, showTimezone, autoMode, draggable, language} = this.props;
     const [hour, minute] = this.getHourAndMinute();
     const timezoneData = this.timezoneData();
 

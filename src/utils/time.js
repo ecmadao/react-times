@@ -131,6 +131,7 @@ const getValidMeridiem = (meridiem) => {
 const getValidateMeridiem = (time, timeMode) => {
   if (!time) time = getCurrentTime();
   const mode = parseInt(timeMode);
+  // eslint-disable-next-line no-unused-vars
   let [hour, _] = time.split(/:/);
   hour = getValidateIntTime(hour);
 
