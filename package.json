@@ -9,7 +9,8 @@
   "dependencies": {
     "fuse.js": "^3.0.0",
     "moment": "^2.18.1",
-    "moment-timezone": "^0.5.13"
+    "moment-timezone": "^0.5.13",
+    "react-bootstrap-typeahead": "^1.3.0"
   },
   "devDependencies": {
     "@kadira/react-storybook-addon-info": "^3.4.0",

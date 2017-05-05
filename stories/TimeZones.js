@@ -4,6 +4,7 @@ import { text, withKnobs } from '@kadira/storybook-addon-knobs';
 
 import React from 'react';
 import TimePickerWrapper from '../examples/TimePickerWrapper';
+import TimezonePicker from '../src/components/Timezone/TimezonePicker';
 import { storiesOf } from '@kadira/storybook';
 import timeHelper from '../src/utils/time.js';
 
@@ -45,5 +46,10 @@ storiesOf('TimeZones', module)
         showTimezone={true}
         timezoneIsEditable={true}
       />
+    )
+  })
+  .addWithInfo('with timezone picker', () => {
+    return (
+      <TimezonePicker message="World!" />
     )
   });
