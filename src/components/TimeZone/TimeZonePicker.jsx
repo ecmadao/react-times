@@ -20,7 +20,8 @@ class TimezonePicker extends React.PureComponent {
       }]
     }
 
-    const searcher = new Fuse(timeHelper.tzMaps, abbrOpts);
+    this.searcher = new Fuse(timeHelper.tzMaps, abbrOpts);
+
   }
 
   handleSelection(selection) {
@@ -28,9 +29,8 @@ class TimezonePicker extends React.PureComponent {
   }
 
   search(term) {
-    return Promise(
-
-    )
+    return Promise(this.searcher.search(term))
+      .then();
   }
 
   render() {
