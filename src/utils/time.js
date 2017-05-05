@@ -176,7 +176,7 @@ const tzNames = (() => {
 // counting Canada/*, Mexico/*, and US/* allows users to search for
 // things like 'Eastern' or 'Mountain' and get matches back
 const tzCities = tzNames
-    .map(name => ['Canada', 'Mexico', 'US'].includes(name.split('/')[0])
+    .map(name => (['Canada', 'Mexico', 'US'].indexOf(name.split('/')[0]) !== -1)
       ? name : name.split('/').slice(-1)[0])
     .map(name => name.replace(/_/g, ' '));
 
