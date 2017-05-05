@@ -41,7 +41,7 @@ describe('Functional utils', () => {
 });
 
 // because mocha doesn't play nice with arrow functions 😞
-const tz = timeHelper.guessUserTz();
+const tz = timeHelper.tzForName('America/New_York');
 const time24 = moment().format('HH:mmA').split(/:/);
 const time12 = moment().format('hh:mmA').split(/:/);
 
