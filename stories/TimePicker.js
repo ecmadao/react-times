@@ -1,12 +1,14 @@
-import React from 'react';
-import { storiesOf } from '@kadira/storybook';
-import { withKnobs, text } from '@kadira/storybook-addon-knobs';
-import TimePickerWrapper from '../examples/TimePickerWrapper';
 import '../css/material/default.css';
+
+import { text, withKnobs } from '@kadira/storybook-addon-knobs';
+
+import React from 'react';
+import TimePickerWrapper from '../examples/TimePickerWrapper';
+import { storiesOf } from '@kadira/storybook';
 
 storiesOf('Default TimePicker', module)
   .addDecorator(withKnobs)
-  .addWithInfo('basical', () => (
+  .addWithInfo('basic', () => (
     <TimePickerWrapper />
   ))
   .addWithInfo('with default time', () => {
@@ -22,8 +24,8 @@ storiesOf('Default TimePicker', module)
       focused={true}
     />
   ))
-  .addWithInfo('undragable', () => (
+  .addWithInfo('undraggable', () => (
     <TimePickerWrapper
-      dragable={false}
+      draggable={false}
     />
   ));

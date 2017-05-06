@@ -1,9 +1,8 @@
 import React from 'react';
+import TimePicker from '../../src/components/TimePicker';
 import {expect} from 'chai';
 import {shallow} from 'enzyme';
 import sinon from 'sinon-sandbox';
-
-import TimePicker from '../../src/components/TimePicker';
 
 describe('TimePicker func', () => {
   describe('handle focus change func', () => {
@@ -19,14 +18,14 @@ describe('TimePicker func', () => {
       expect(wrapper.state().focused).to.equal(false);
     });
 
-    it('should callback when focuse', () => {
+    it('should callback when focus', () => {
       const onFocusChangeStub = sinon.stub();
       const wrapper = shallow(<TimePicker onFocusChange={onFocusChangeStub} />);
       wrapper.instance().onFocus();
       expect(onFocusChangeStub.callCount).to.equal(1);
     });
 
-    it('should callback when clear focuse', () => {
+    it('should callback when clear focus', () => {
       const onFocusChangeStub = sinon.stub();
       const wrapper = shallow(<TimePicker onFocusChange={onFocusChangeStub} />);
       wrapper.instance().onClearFocus();

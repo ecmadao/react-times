@@ -6,7 +6,7 @@
 
 README：[中文版](./README_CN.md)
 
-> A time picker react-component, no jquery-rely, writing in es6 standrad style.
+> A time picker react-component, no jquery-rely, writing in es6 standard style.
 
 ![react-times](./intro_src/react-times.gif)
 
@@ -77,7 +77,7 @@ export default class SomeComponent extends React.Component {
     // do something
   }
 
-  onTimeQuantumChange(timeQuantum) {
+  onMeridiemChange(meridiem) {
     // do something
   }
 
@@ -87,7 +87,7 @@ export default class SomeComponent extends React.Component {
       onHourChange={this.onHourChange.bind(this)}
       onMinuteChange={this.onMinuteChange.bind(this)}
       onTimeChange={this.onTimeChange.bind(this)}
-      onTimeQuantumChange={this.onTimeQuantumChange.bind(this)}
+      onMeridiemChange={this.onMeridiemChange.bind(this)}
     />
   }
 }
@@ -107,6 +107,8 @@ render() {
       // or
       // theme="classic"
       timeMode="12" // use 24 or 12 hours mode, default 24
+      showTimezone=true // show the timezone, default false
+      timezone="America/New_York" // what timezone to use, detects the user's local timezone by default
   />
 }
 ```
@@ -212,7 +214,7 @@ timeMode="12"
 timeMode=12
 ```
 
-- `timeQuantum`
+- `meridiem`
 
 > `React.PropTypes.string`, support "PM" or "AM" for 12 hours mode.
 
@@ -232,13 +234,13 @@ timeMode=12
 />
 ```
 
-- `dragable`
+- `draggable`
 
-If you don't want to drag the pointer, then you can set `dragable` props to `false`, then users can only use click to change time. Default `true`
+If you don't want to drag the pointer, then you can set `draggable` props to `false`, then users can only use click to change time. Default `true`
 
 ```
 <TimePicker
-  dragable={true}
+  draggable={true}
 />
 ```
 
@@ -304,11 +306,11 @@ onTimeChange(time) {
 }
 ```
 
-- `onTimeQuantumChange`
+- `onMeridiemChange`
 
 `React.PropTypes.func`
 
-> The callback func when timeQuantum changed.
+> The callback func when meridiem changed.
 
 # Article
 
