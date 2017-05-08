@@ -50,6 +50,6 @@ storiesOf('TimeZones', module)
   })
   .addWithInfo('with timezone picker', () => {
     return (
-      <TimezonePicker message="World!" />
+      <TimezonePicker />
     )
   });
