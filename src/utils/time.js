@@ -5,6 +5,37 @@ import {head, last} from './func';
 // IANA Time Zone Database at https://www.iana.org/time-zones
 moment.tz.load({version: 'latest', zones: [], links: []});
 
+const guessUserTz = () => {
+  // User-Agent sniffing is not always reliable, but is the recommended technique
+  // for determining whether or not we're on a mobile device according to MDN
+  // see https://developer.mozilla.org/en-US/docs/Web/HTTP/Browser_detection_using_the_user_agent#Mobile_Tablet_or_Desktop
+  const isMobile = global.navigator !== undefined
+    ? global.navigator.userAgent.match(/Mobi/)
+    : false;
+
+  const supportsIntl = global.Intl !== undefined;
+
+  let userTz;
+
+  if (isMobile && supportsIntl) {
+    // moment-timezone gives preference to the Intl API regardless of device type,
+    // so unset global.Intl to trick moment-timezone into using its fallback
+    // see https://github.com/moment/moment-timezone/issues/441
+    // TODO: Clean this up when that issue is resolved
+    const globalIntl = global.Intl;
+    global.Intl = undefined;
+    userTz = moment.tz.guess();
+    global.Intl = globalIntl;
+  } else {
+    userTz = moment.tz.guess();
+  }
+
+  // return GMT if we're unable to guess or the system is using UTC
+  if (!userTz || userTz === 'UTC') return getTzForName('Etc/Greenwich');
+
+  return getTzForName(userTz);
+};
+
 /**
  * Create a time data object using moment.
  * If a time is provided, just format it; if not, use the current time.
@@ -13,15 +44,16 @@ moment.tz.load({version: 'latest', zones: [], links: []});
  * @param  {string} time          a time; defaults to now
  * @param  {string} meridiem      AM or PM; defaults to AM via moment
  * @param  {Number} timeMode      12 or 24-hour mode
- * @param  {string} tz            a timezone name; guesses user timezone by default
+ * @param  {string} tz            a timezone name; defaults to guessing a user's tz or GMT
  * @return {Object}               a key-value representation of time data
  */
-const getValidTimeData = (time, meridiem, timeMode, tz = guessUserTz().zoneName) => {
+const getValidTimeData = (time, meridiem, timeMode, tz) => {
   const validMeridiem = getValidMeridiem(meridiem);
 
   // when we only have a valid meridiem, that implies a 12h mode
   const mode = (validMeridiem && !timeMode) ? 12 : timeMode || 24;
-  const timezone = (tz === undefined) ? 'America/New_York' : tz;
+  // eslint-disable-next-line
+  const timezone = (tz) ? tz : guessUserTz().zoneName;
 
   const validMode = getValidateTimeMode(mode);
   const validTime = getValidTimeString(time, validMeridiem);
@@ -46,7 +78,7 @@ const getValidTimeData = (time, meridiem, timeMode, tz = guessUserTz().zoneName)
     minute: last(time24).slice(0, 2),
     meridiem: last(time12).slice(2),
     mode: validMode,
-    timezone: tz
+    timezone: timezone
   };
 
   return timeData;
@@ -165,7 +197,7 @@ const tzNames = (() => {
   //  and to avoid confusing the user. Here, we focus on removing reduntant timezone names
   //  and timezone names for timezones we don't necessarily care about, like Antarctica, and
   //  special timezone names that exist for convenience.
-  const scrubbedPrefixes = ['Antarctica', 'Arctic', 'Chile', 'Etc'];
+  const scrubbedPrefixes = ['Antarctica', 'Arctic', 'Chile'];
   const scrubbedSuffixes = ['ACT', 'East', 'Knox_IN', 'LHI', 'North', 'NSW', 'South', 'West'];
 
   const tzNames = moment.tz.names()
@@ -200,40 +232,12 @@ const tzMaps = tzCities.map(city => {
 
 const getTzForCity = (city) => {
   const maps = tzMaps.filter(tzMap => tzMap['city'] === city);
-  return maps;
+  return head(maps);
 };
 
 const getTzForName = (name) => {
   const maps = tzMaps.filter(tzMap => tzMap['zoneName'] === name);
-  return maps;
-};
-
-const guessUserTz = () => {
-  // User-Agent sniffing is not always reliable, but is the recommended technique
-  // for determining whether or not we're on a mobile device according to MDN
-  // see https://developer.mozilla.org/en-US/docs/Web/HTTP/Browser_detection_using_the_user_agent#Mobile_Tablet_or_Desktop
-  const isMobile = global.navigator !== undefined
-    ? global.navigator.userAgent.match(/Mobi/)
-    : false;
-
-  const supportsIntl = global.Intl !== undefined;
-
-  let userTz;
-
-  if (isMobile && supportsIntl) {
-    // moment-timezone gives preference to the Intl API regardless of device type,
-    // so unset global.Intl to trick moment-timezone into using its fallback
-    // see https://github.com/moment/moment-timezone/issues/441
-    // TODO: Clean this up when that issue is resolved
-    const globalIntl = global.Intl;
-    global.Intl = undefined;
-    userTz = moment.tz.guess();
-    global.Intl = globalIntl;
-  } else {
-    userTz = moment.tz.guess();
-  }
-
-  return getTzForName(userTz);
+  return head(maps);
 };
 
 export default {

@@ -7,6 +7,7 @@ import TimePicker from '../../src/components/TimePicker';
 import {expect} from 'chai';
 import moment from 'moment';
 import {shallow} from 'enzyme';
+import timeHelper from '../../src/utils/time';
 
 describe('TimePicker initial', () => {
   describe('render basic picker', () => {
@@ -59,26 +60,28 @@ describe('TimePicker initial', () => {
 
     it('should render with default time in child props', () => {
       const wrapper = shallow(<TimePicker time="22:23" />);
-      expect(wrapper.find(MaterialTheme).props().hour).to.equal("22");
-      expect(wrapper.find(MaterialTheme).props().minute).to.equal("23");
+      const time = timeHelper.time('22:23');
+      expect(wrapper.find(MaterialTheme).props().hour).to.equal(time.hour24);
+      expect(wrapper.find(MaterialTheme).props().minute).to.equal(time.minute);
     });
 
     it('should render with default time in DOM', () => {
       const wrapper = shallow(<TimePicker time="22:23" withoutIcon={true} />);
-      expect(wrapper.find('.preview_container').text()).to.equal("22 : 23");
+      const time = timeHelper.time('22:23');
+      expect(wrapper.find('.preview_container').text()).to.equal(`${time.hour24} : ${time.minute}`);
     });
 
     it('should render with current time in child props', () => {
       const wrapper = shallow(<TimePicker />);
-      const [hour, minute] = moment().format("HH:mm").split(':');
-      expect(wrapper.find(MaterialTheme).props().hour).to.equal(hour);
-      expect(wrapper.find(MaterialTheme).props().minute).to.equal(minute);
+      const time = timeHelper.time();
+      expect(wrapper.find(MaterialTheme).props().hour).to.equal(time.hour24);
+      expect(wrapper.find(MaterialTheme).props().minute).to.equal(time.minute);
     });
 
     it('should render with current time in DOM', () => {
       const wrapper = shallow(<TimePicker withoutIcon={true} />);
-      const [hour, minute] = moment().format("HH:mm").split(':');
-      expect(wrapper.find('.preview_container').text()).to.equal(`${hour} : ${minute}`);
+      const time = timeHelper.time();
+      expect(wrapper.find('.preview_container').text()).to.equal(`${time.hour24} : ${time.minute}`);
     });
   });
 });
