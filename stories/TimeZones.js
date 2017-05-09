@@ -1,11 +1,11 @@
 import '../css/material/default.css';
 
-import { text, withKnobs } from '@kadira/storybook-addon-knobs';
+import {text, withKnobs} from '@kadira/storybook-addon-knobs';
 
 import React from 'react';
 import TimePickerWrapper from '../examples/TimePickerWrapper';
 import TimezonePicker from '../src/components/Timezone/TimezonePicker';
-import { storiesOf } from '@kadira/storybook';
+import {storiesOf} from '@kadira/storybook';
 import timeHelper from '../src/utils/time.js';
 
 const tzForCity = timeHelper.tzForCity('Kuala Lumpur');

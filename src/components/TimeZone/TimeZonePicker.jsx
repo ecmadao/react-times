@@ -11,26 +11,22 @@ class TimezonePicker extends React.PureComponent {
   }
 
   handleSelection(selection) {
-    this.setState({selection: selection[0].zoneName});
+    const zoneObject = selection[0];
+    if (zoneObject) this.setState({selection: zoneObject.zoneName});
   }
 
   render() {
     return (
-      <div className='time_picker_modal_container'>
-        <div className='time_picker_modal_header'>
-          <p>Holla</p>
-        </div>
-        <div className='picker_container'>
-          <Typeahead
-            onChange={this.handleSelection}
-            labelKey={option => `Closest City: ${option.city}, Timezone: ${option.zoneAbbr}`}
-            options={timeHelper.tzMaps}
-            maxResults={5}
-            minLength={3}
-          />
+      <div>
+        <Typeahead
+          onChange={this.handleSelection}
+          labelKey={option => `Closest City: ${option.city}, Timezone: ${option.zoneAbbr}`}
+          options={timeHelper.tzMaps}
+          maxResults={5}
+          minLength={3}
+        />
         <h3>{this.state.selection}</h3>
       </div>
-    </div>
     )
   }
 }

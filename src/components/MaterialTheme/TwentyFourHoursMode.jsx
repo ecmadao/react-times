@@ -7,7 +7,9 @@ import {
   POINTER_RADIUS,
 } from '../../utils/const_value.js';
 import React, {PropTypes} from 'react';
+import CSSTransitionGroup from 'react-transition-group';
 
+import TimezonePicker from '../Timezone/TimezonePicker';
 import PickerDragHandler from '../Picker/PickerDragHandler';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';
 import timeHelper from '../../utils/time';
