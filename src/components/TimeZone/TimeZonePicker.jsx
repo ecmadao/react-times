@@ -1,6 +1,6 @@
 import {Typeahead} from 'react-bootstrap-typeahead';
 import React, {PropTypes} from 'react';
-import timeHelper from '../../utils/time'
+import timeHelper from '../../utils/time';
 
 class TimezonePicker extends React.PureComponent {
   constructor(props) {
