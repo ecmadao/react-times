@@ -1,64 +1,113 @@
-import moment from 'moment';
-import { expect } from 'chai';
+import moment from 'moment-timezone';
+import {expect} from 'chai';
 import timeHelper from '../src/utils/time';
 import drag from '../src/utils/drag';
 import {
   MAX_ABSOLUTE_POSITION,
   MIN_ABSOLUTE_POSITION
 } from '../src/utils/const_value';
+import {isSeq, head, tail, last} from '../src/utils/func';
 
-describe('Utils Test', () => {
-  describe('Test initialTime func with 24h mode', () => {
-    it('should get current time', () => {
-      let times = moment().format("HH:mm").split(':');
-      expect([...times, null]).to.deep.equal(timeHelper.initial(false));
-    });
-
-    it('should get default time', () => {
-      let times = ["11", "12", null];
-      expect(times).to.deep.equal(timeHelper.initial("11:12"));
-    });
-
-    it('should get validate default time', () => {
-      let times = ["01", "02", null];
-      expect(times).to.deep.equal(timeHelper.initial("1:2"));
-    });
-
-    it('should get validate default time', () => {
-      let times = ["01", "00", null];
-      expect(times).to.deep.equal(timeHelper.initial("1:"));
-    });
-
-    it('should get validate default time', () => {
-      let times = ["00", "01", null];
-      expect(times).to.deep.equal(timeHelper.initial("abc:1"));
+describe('Functional utils', () => {
+  describe('isSeq', () => {
+    it('should correctly detect a sequence', () => {
+      const isSequence = [isSeq('foo'), isSeq('foo'.split())].every((e) => e === true);
+      const isNotSequence = [isSeq({message: 'foo'}), isSeq(8), isSeq(true)].every((e) => e === false);
+      expect(isSequence).to.equal(true);
+      expect(isNotSequence).to.equal(true);
     });
   });
 
-  describe('Test initialTime func with 12h mode', () => {
-    it('should get default time', () => {
-      let times = ["11", "12", "AM"];
-      expect(times).to.deep.equal(timeHelper.initial("11:12", 12));
+  describe('head', () => {
+    it('should return the first element of a sequence', () => {
+      expect(head('foo')).to.equal('f');
+      expect(head('foo'.split(''))).to.equal('f');
+    });
+  });
+
+  describe('tail', () => {
+    it('should return the last elements of a sequence', () => {
+      expect(tail('foo')).to.equal('oo');
+      expect(tail('foo'.split(''))).to.deep.equal(['o', 'o']);
+    });
+  });
+
+  describe('last', () => {
+    it('should return the last element of a sequence', () => {
+      expect(last('foo')).to.equal('o');
+      expect(last('foo'.split(''))).to.equal('o');
+    });
+  });
+});
+
+// because mocha doesn't play nice with arrow functions 😞
+const tz = timeHelper.guessUserTz();
+const time24 = moment().tz(tz.zoneName).format('HH:mmA').split(/:/);
+const time12 = moment().tz(tz.zoneName).format('hh:mmA').split(/:/);
+
+const modes = [24, 12];
+const meridies = ['AM', 'PM']; // yes, this is the correct plural 😜
+
+describe('Time utils', () => {
+  describe('getCurrentTime()', () => {
+    it('should return the current time as a string in 24h format', () => {
+      const timeString = timeHelper.current();
+      expect(timeString).to.equal(time24.join(':').slice(0, 5));
+    });
+  });
+
+  describe('given a call to getValidTimeData()', () => {
+    describe('when passed no arguments', () => {
+      it('then it should default to the current local time in 24h mode', () => {
+        const testTimeData = timeHelper.time();
+
+        const timeData = {
+          hour12: head(time12).replace(/^0/, ''),
+          hour24: head(time24),
+          minute: last(time24).slice(0, 2),
+          meridiem: last(time12).slice(2),
+          mode: 24,
+          timezone: tz.zoneName
+        };
+
+        expect(testTimeData).to.deep.equal(timeData);
+      });
     });
 
-    it('should get default time', () => {
-      let times = ["01", "12", "PM"];
-      expect(times).to.deep.equal(timeHelper.initial("13:12", 12));
+    describe('when passed only a mode', () => {
+      it('then it should default to the current local time, with user-specified mode', () => {
+        modes.forEach((mode) => {
+          const testTimeData = timeHelper.time(undefined, undefined, mode);
+          const timeData = {
+            hour12: head(time12).replace(/^0/, ''),
+            hour24: head(time24),
+            minute: last(time24).slice(0, 2),
+            meridiem: last(time12).slice(2),
+            mode: mode,
+            timezone: tz.zoneName
+          };
+
+          expect(testTimeData).to.deep.equal(timeData);
+        });
+      });
     });
 
-    it('should get validate default time', () => {
-      let times = ["01", "02", "AM"];
-      expect(times).to.deep.equal(timeHelper.initial("1:2", 12));
-    });
+    describe('when we passed only a meridiem', () => {
+      it('then it should default to the current local time, in 12h mode, ignoring meridiem', () => {
+        meridies.forEach((meridiem) => {
+          const testTimeData = timeHelper.time(undefined, meridiem);
+          const timeData = {
+            hour12: head(time12).replace(/^0/, ''),
+            hour24: head(time24),
+            minute: last(time24).slice(0, 2),
+            meridiem: last(time12).slice(2),
+            mode: 12,
+            timezone: tz.zoneName
+          };
 
-    it('should get validate default time', () => {
-      let times = ["01", "00", "AM"];
-      expect(times).to.deep.equal(timeHelper.initial("1:", 12));
-    });
-
-    it('should get validate default time', () => {
-      let times = ["00", "01", "AM"];
-      expect(times).to.deep.equal(timeHelper.initial("abc:1", 12));
+          expect(testTimeData).to.deep.equal(timeData);
+        });
+      });
     });
   });
 

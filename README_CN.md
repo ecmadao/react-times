@@ -77,7 +77,7 @@ export default class SomeComponent extends React.Component {
     // do something
   }
 
-  onTimeQuantumChange(timeQuantum) {
+  onMeridiemChange(meridiem) {
     // do something
   }
 
@@ -87,7 +87,7 @@ export default class SomeComponent extends React.Component {
       onHourChange={this.onHourChange.bind(this)}
       onMinuteChange={this.onMinuteChange.bind(this)}
       onTimeChange={this.onTimeChange.bind(this)}
-      onTimeQuantumChange={this.onTimeQuantumChange.bind(this)}
+      onMeridiemChange={this.onMeridiemChange.bind(this)}
       // 确定主题，不填该 props 则默认为 material
       theme="material"
         // or
@@ -215,7 +215,7 @@ timeMode="12"
 timeMode=12
 ```
 
-- `timeQuantum`
+- `meridiem`
 
 > 上下午，在 12 小时制里为 "AM" 或 "PM"
 
@@ -235,13 +235,13 @@ timeMode=12
 />
 ```
 
-- `dragable`
+- `draggable`
 
-如果想禁用拖拽，则可以设置 `dragable` 为 `false`，那样的话用户只能通过点击来改变时间。默认为 `true`
+如果想禁用拖拽，则可以设置 `draggable` 为 `false`，那样的话用户只能通过点击来改变时间。默认为 `true`
 
 ```
 <TimePicker
-  dragable={true}
+  draggable={true}
 />
 ```
 
@@ -307,7 +307,7 @@ onTimeChange(time) {
 }
 ```
 
-- `onTimeQuantumChange`
+- `onMeridiemChange`
 
 `React.PropTypes.func`
 

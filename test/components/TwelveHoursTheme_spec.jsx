@@ -4,10 +4,10 @@ import {shallow} from 'enzyme';
 import sinon from 'sinon-sandbox';
 
 import TwelveHoursMode from '../../src/components/MaterialTheme/TwelveHoursMode';
-import PickerDargHandler from '../../src/components/Picker/PickerDargHandler';
+import PickerDragHandler from '../../src/components/Picker/PickerDragHandler';
 
 describe('TwelveHoursMode', () => {
-  describe('TwelveHoursMode Init', () => {
+  describe('TwelveHoursMode init with defaultTime', () => {
     const wrapper = shallow(
       <TwelveHoursMode
         hour={'01'}
@@ -17,13 +17,14 @@ describe('TwelveHoursMode', () => {
     );
     it('should render component correctly', () => {
       expect(wrapper.is('.time_picker_modal_container')).to.equal(true);
+      expect(wrapper.find('.meridiem')).to.have.lengthOf(1);
     });
 
-    it('should render PickerDargHandler component', () => {
-      expect(wrapper.find(PickerDargHandler)).to.have.lengthOf(2);
+    it('should render PickerDragHandler component', () => {
+      expect(wrapper.find(PickerDragHandler)).to.have.lengthOf(2);
     });
 
-    it('should init currect state', () => {
+    it('should init correct state', () => {
       expect(wrapper.state()).to.deep.equal({
         hourPointerRotate: 30,
         minutePointerRotate: 270
@@ -34,16 +35,16 @@ describe('TwelveHoursMode', () => {
   describe('TwelveHoursMode Func', () => {
     const handleHourChange = sinon.stub();
     const handleMinuteChange = sinon.stub();
-    const handleTimeQuantumChange = sinon.stub();
+    const handleMeridiemChange = sinon.stub();
     const wrapper = shallow(
       <TwelveHoursMode
         hour={'01'}
         minute={'45'}
         focused={true}
-        timeQuantum={'AM'}
+        meridiem={'AM'}
         handleHourChange={handleHourChange}
         handleMinuteChange={handleMinuteChange}
-        handleTimeQuantumChange={handleTimeQuantumChange}
+        handleMeridiemChange={handleMeridiemChange}
       />
     );
     it('should handleHourPointerClick', () => {
@@ -58,11 +59,11 @@ describe('TwelveHoursMode', () => {
       expect(handleMinuteChange.callCount).to.equal(1);
     });
 
-    it('should handleTimeQuantumChange', () => {
-      wrapper.instance().handleTimeQuantumChange('AM');
-      expect(handleTimeQuantumChange.callCount).to.equal(0);
-      wrapper.instance().handleTimeQuantumChange('PM');
-      expect(handleTimeQuantumChange.callCount).to.equal(1);
+    it('should handleMeridiemChange', () => {
+      wrapper.instance().handleMeridiemChange('AM');
+      expect(handleMeridiemChange.callCount).to.equal(0);
+      wrapper.instance().handleMeridiemChange('PM');
+      expect(handleMeridiemChange.callCount).to.equal(1);
     });
   });
 });
