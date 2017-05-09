@@ -8,6 +8,8 @@ README：[English Version](./README.md)
 
 > 一个 React 时间选择器组件，使用 ES6 标准语法编写，没有 jQuery 依赖
 
+**注: 2.0.0 新版已发布，戳 [这里](./CHANGELOG.md) 查看更改/新增的 props。**
+
 ![react-times](./intro_src/react-times.gif)
 
 # 线上 demo
@@ -142,6 +144,14 @@ render() {
 
 ![DarkColor](./intro_src/DarkColor.png)
 
+- 24 小时制，展示用户当前时区。（除此以外，可以通过 `timezone` props 来手动改变时区）
+
+```javascript
+<TimePicker showTimezone={true}/>
+```
+
+![showTimezone](./intro_src/24HoursMode-showTimezone.png)
+
 - 24 小时制，亮色调的经典主题
 
 ```javascript
@@ -217,7 +227,15 @@ timeMode=12
 
 - `meridiem`
 
-> 上下午，在 12 小时制里为 "AM" 或 "PM"
+> 上下午，在 12 小时制里为 "AM" 或 "PM"。默认为 `AM`
+
+- `showTimezone`
+
+> `React.PropTypes.bool`，代表是否展示用户的时区。默认为 `false`
+
+- `timezone`
+
+> `React.PropTypes.string`，可以通过该 props 改变用户所处的时区。默认为用户当前本地时区。
 
 - `trigger`
 
@@ -352,6 +370,14 @@ onTimeChange(time) {
 # 致谢
 
 感谢 Airbnb 的 [react-dates](https://github.com/airbnb/react-dates) 组件，没有它我也不会想着写一个小时选择组件
+
+# 核心贡献者 🎉
+
+- **[carlodicelico](https://github.com/carlodicelico)**
+
+- **[thg303](https://github.com/thg303)**
+
+- **[naseeihity](https://github.com/naseeihity)**
 
 # 版权
 
