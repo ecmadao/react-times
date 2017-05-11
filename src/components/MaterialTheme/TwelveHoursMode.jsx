@@ -168,7 +168,7 @@ class TwelveHoursMode extends React.PureComponent {
       height,
       pointerRotate: hourPointerRotate
     };
-    const [minuteTop, minuteHeight] = this.getMinuteTopAndHeight()
+    const [minuteTop, minuteHeight] = this.getMinuteTopAndHeight();
     const minuteRotateState = {
       top: minuteTop,
       height: minuteHeight,

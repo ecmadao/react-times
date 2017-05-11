@@ -194,6 +194,16 @@
   cursor: move;
 }
 
+.timezone_picker_modal_container {
+  opacity: 0;
+  z-index: -1;
+}
+
+.timezone_picker_modal_container.active {
+  opacity: 1;
+  z-index: 3;
+}
+
 .buttons_wrapper {
   float: right;
   margin-top: 5px;
