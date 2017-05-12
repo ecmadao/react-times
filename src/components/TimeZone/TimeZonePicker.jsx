@@ -22,25 +22,33 @@ class TimeZonePicker extends React.PureComponent {
   }
 
   render() {
-    const { focused, onClearFocus } = this.props;
+    const { focused, phrases, onClearFocus } = this.props;
     const modalClass = focused
         ? 'timezone_picker_modal_container active'
         : 'timezone_picker_modal_container';
     return (
       <div className={modalClass}>
-        <div className="timezone_picker_header">
+        <div className="timezone_picker_modal_header">
+          <span onClick={onClearFocus}>
+            {ICONS.chevronLeft}
+          </span>
+          <span className="timezone_picker_header_title">
+            {phrases.timezonePickerTitle}
+          </span>
         </div>
-        <Typeahead
-          onChange={this.handleTimezoneChange}
-          labelKey={option => `Closest City: ${option.city}, Timezone: ${option.zoneAbbr}`}
-          options={timeHelper.tzMaps}
-          maxResults={5}
-          minLength={3}
-        />
+        <div className="timezone_picker_container">
+          <Typeahead
+            onChange={this.handleTimezoneChange}
+            labelKey={option => `Closest City: ${option.city}, Timezone: ${option.zoneAbbr}`}
+            options={timeHelper.tzMaps}
+            maxResults={5}
+            minLength={3}
+          />
+        </div>
         <div className='buttons_wrapper'>
           <Button
-              onClick={onClearFocus}
-              text='close' // TODO: change to use languageHelper
+            onClick={onClearFocus}
+            text={phrases.closeTimePicker}
           />
         </div>
       </div>
@@ -49,12 +57,17 @@ class TimeZonePicker extends React.PureComponent {
 }
 
 TimeZonePicker.propTypes = {
-  focused: PropTypes.boolean,
+  focused: PropTypes.bool,
+  phrases: PropTypes.object,
   onClearFocus: PropTypes.func,
   handleTimezoneChange: PropTypes.func
 };
 TimeZonePicker.defaultProps = {
   focused: false,
+  phrases: {
+    closeTimePicker: 'close',
+    timezonePickerTitle: 'Pick a TimeZone'
+  },
   onClearFocus: () => {},
   handleTimezoneChange: () => {}
 };
