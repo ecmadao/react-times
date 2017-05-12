@@ -48,12 +48,12 @@ class TimeZonePickerWrapper extends React.Component {
               <span className='time_picker_modal_footer_timezone'>{timezone.zoneName} {timezone.zoneAbbr}</span>
             </div>
           </div>
+          <TimeZonePicker
+            focused={focused}
+            onClearFocus={this.onClearFocus}
+            handleTimezoneChange={this.handleTimezoneChange}
+          />
         </div>
-        <TimeZonePicker
-          focused={focused}
-          onClearFocus={this.onClearFocus}
-          handleTimezoneChange={this.handleTimezoneChange}
-        />
       </div>
     )
   }
