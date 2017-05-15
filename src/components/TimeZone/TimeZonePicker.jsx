@@ -41,8 +41,7 @@ class TimeZonePicker extends React.PureComponent {
             <label>{phrases.timezonePickerLabel}</label>
             <Typeahead
               onChange={this.handleTimezoneChange}
-              // TODO: Remove labels 'Closest City' and 'Timezone' as they're being matched in the search
-              labelKey={option => `Closest City: ${option.city}, Timezone: ${option.zoneAbbr}`}
+              labelKey={option => `${option.city} - ${option.zoneAbbr}`}
               options={timeHelper.tzMaps}
               maxResults={5}
               minLength={3}
