@@ -36,4 +36,24 @@ storiesOf('Different Languages', module)
       timeMode="12"
       language="ja"
     />
-  ));
+  ))
+  .addWithInfo('custom phrases', () => {
+    const confirm = text('confirm', 'okey dokey');
+    const cancel = text('cancel', 'hold it there!');
+    const close = text('close', 'DONE');
+    const am = text('am', 'Ante');
+    const pm = text('pm', 'Post');
+
+    return (
+      <TimePickerWrapper
+        timeMode="12"
+        language="en"
+        phrases={{
+          confirm,
+          cancel,
+          close,
+          am,
+          pm
+        }}
+    />);
+  });
