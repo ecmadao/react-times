@@ -1,4 +1,6 @@
 @import "../base.css";
+@import "../../node_modules/react-bootstrap-typeahead/css/Typeahead.css";
+@import "../../node_modules/react-bootstrap-typeahead/css/Loader.css";
 
 .time_picker_modal_container,
 .timezone_picker_modal_container {
@@ -220,10 +222,49 @@
 }
 
 .timezone_picker_container {
-  width: 260px;
-  height: 260px;
+  min-width: 260px;
+  min-height: 260px;
+  display: flex;
 }
 
+.timezone_picker_search {
+  padding: 0 10px;
+  position: relative;
+  width: 100%;
+}
+
+/*.timezone_picker_search label {
+  color: #525252;
+  display: block;
+  font-size: 0.8rem;
+  font-weight: inherit;
+  line-height: 2;
+  text-transform: inherit;
+}*/
+
+/*.timezone_picker_search input {
+  background-color: #fff;
+  border: 1px solid #dbdbdb;
+
+  font-weight: 200;
+  font-size: 18px;
+  line-height: 24px;
+  color: #757575;
+
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.timezone_picker_search input:focus {
+  background: #99ede6;
+  border-color: #99ede6;
+  border-radius: 3px;
+  color: #007a87;
+}
+*/
 .buttons_wrapper {
   float: right;
   margin-top: 5px;

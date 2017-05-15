@@ -37,13 +37,17 @@ class TimeZonePicker extends React.PureComponent {
           </span>
         </div>
         <div className="timezone_picker_container">
-          <Typeahead
-            onChange={this.handleTimezoneChange}
-            labelKey={option => `Closest City: ${option.city}, Timezone: ${option.zoneAbbr}`}
-            options={timeHelper.tzMaps}
-            maxResults={5}
-            minLength={3}
-          />
+          <div className="timezone_picker_search">
+            <label>{phrases.timezonePickerLabel}</label>
+            <Typeahead
+              onChange={this.handleTimezoneChange}
+              // TODO: Remove labels 'Closest City' and 'Timezone' as they're being matched in the search
+              labelKey={option => `Closest City: ${option.city}, Timezone: ${option.zoneAbbr}`}
+              options={timeHelper.tzMaps}
+              maxResults={5}
+              minLength={3}
+            />
+          </div>
         </div>
         <div className='buttons_wrapper'>
           <Button
@@ -66,7 +70,8 @@ TimeZonePicker.defaultProps = {
   focused: false,
   phrases: {
     closeTimePicker: 'close',
-    timezonePickerTitle: 'Pick a TimeZone'
+    timezonePickerTitle: 'Pick a TimeZone',
+    timezonePickerLabel: 'Closest City or TimeZone'
   },
   onClearFocus: () => {},
   handleTimezoneChange: () => {}
