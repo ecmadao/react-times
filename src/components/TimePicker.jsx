@@ -24,6 +24,7 @@ const propTypes = {
   onMeridiemChange: PropTypes.func,
   onMinuteChange: PropTypes.func,
   onTimeChange: PropTypes.func,
+  phrases: PropTypes.object,
   placeholder: PropTypes.string,
   showTimezone: PropTypes.bool,
   theme: PropTypes.string,
@@ -92,8 +93,8 @@ class TimePicker extends React.PureComponent {
   }
 
   languageData() {
-    const {language} = this.props;
-    return languageHelper.get(language);
+    const {language, phrases = {}} = this.props;
+    return Object.assign({}, languageHelper.get(language), phrases);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -189,6 +190,7 @@ class TimePicker extends React.PureComponent {
         language={language}
         meridiem={this.meridiem}
         minute={minute}
+        phrases={this.languageData()}
         showTimezone={showTimezone}
         timeMode={parseInt(timeMode)}
         timezone={timezoneData}
