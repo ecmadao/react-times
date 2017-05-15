@@ -2,7 +2,7 @@ import {Typeahead} from 'react-bootstrap-typeahead';
 import React, {PropTypes} from 'react';
 import timeHelper from '../../utils/time';
 
-class TimezonePicker extends React.PureComponent {
+class TimeZonePicker extends React.PureComponent {
   constructor(props) {
     super(props);
     const {selection} = props;
@@ -31,11 +31,11 @@ class TimezonePicker extends React.PureComponent {
   }
 }
 
-TimezonePicker.propTypes = {
+TimeZonePicker.propTypes = {
   selection: PropTypes.string
 };
-TimezonePicker.defaultProps = {
+TimeZonePicker.defaultProps = {
   selection: 'No selection yet...'
 };
 
-export default TimezonePicker;
+export default TimeZonePicker;
