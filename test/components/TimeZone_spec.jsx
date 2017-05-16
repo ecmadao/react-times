@@ -1,7 +1,6 @@
 import React from 'react';
 import {expect} from 'chai';
 import {shallow} from 'enzyme';
-import sinon from 'sinon-sandbox';
 
 import TimeZone from '../../src/components/TimeZone';
 import languageHelper from '../../src/utils/language';
@@ -103,6 +102,20 @@ describe('TimeZone', () => {
       wrapper.state().focused = false;
       wrapper.find('.time_picker_modal_footer').simulate('click');
       expect(wrapper.state().focused).to.equal(true);
+    });
+  });
+
+  describe('handleTimezoneChange Func', () => {
+    it('should set the timezone', () => {
+      const wrapper = shallow(
+        <TimeZone
+          phrases={phrases}
+          timezone={{}}
+        />
+      );
+
+      wrapper.instance().handleTimezoneChange(mockTimezone);
+      expect(wrapper.state().timezone).to.equal(mockTimezone);
     });
   });
 });

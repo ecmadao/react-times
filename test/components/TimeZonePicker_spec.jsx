@@ -7,6 +7,10 @@ import TimeZonePicker from '../../src/components/TimeZone/TimeZonePicker';
 import languageHelper from '../../src/utils/language';
 
 const phrases = languageHelper.get('en');
+const mockTimezone = {
+  zoneName: 'Some Zone',
+  zoneAbbr: 'SZ'
+};
 
 describe('TimeZonePicker', () => {
   describe('TimeZonePicker render', () => {
@@ -33,7 +37,7 @@ describe('TimeZonePicker', () => {
     });
   });
 
-  describe('TimeZonePicker props', () => {
+  describe('props', () => {
     describe('when focused is true', () => {
       const wrapper = shallow(
         <TimeZonePicker
@@ -83,6 +87,33 @@ describe('TimeZonePicker', () => {
         );
         wrapper.find('Button').simulate('click');
         expect(onFocusChangeStub.callCount).to.equal(1);
+      });
+
+      it('should callback when timezone change', () => {
+        const onFocusChangeStub = sinon.stub();
+        const wrapper = shallow(
+          <TimeZonePicker
+            phrases={phrases}
+            onClearFocus={onFocusChangeStub}
+          />
+        );
+        wrapper.instance().handleTimezoneChange([mockTimezone]);
+        expect(onFocusChangeStub.callCount).to.equal(1);
+      });
+    });
+
+    describe('handle timezone change func', () => {
+      it('should callback when timezone change', () => {
+        const onTimezoneChangeStub = sinon.stub();
+        const wrapper = shallow(
+          <TimeZonePicker
+            phrases={phrases}
+            handleTimezoneChange={onTimezoneChangeStub}
+          />
+        );
+        wrapper.instance().handleTimezoneChange([mockTimezone]);
+        expect(onTimezoneChangeStub.callCount).to.equal(1);
+        expect(onTimezoneChangeStub.calledWith(mockTimezone));
       });
     });
   });

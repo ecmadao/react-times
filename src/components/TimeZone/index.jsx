@@ -19,6 +19,7 @@ class TimeZone extends React.PureComponent {
 
     this.onClearFocus = this.onClearFocus.bind(this);
     this.handleFocusedChange = this.handleFocusedChange.bind(this);
+    this.handleTimezoneChange = this.handleTimezoneChange.bind(this);
   }
 
   onClearFocus() {
@@ -30,6 +31,10 @@ class TimeZone extends React.PureComponent {
 
     const {focused} = this.state;
     this.setState({focused: !focused});
+  }
+
+  handleTimezoneChange(timezone) {
+    this.setState({timezone});
   }
 
   render() {
@@ -49,6 +54,7 @@ class TimeZone extends React.PureComponent {
               phrases={phrases}
               focused={focused}
               onClearFocus={this.onClearFocus}
+              handleTimezoneChange={this.handleTimezoneChange}
             />
           : ''
         }
