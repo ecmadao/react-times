@@ -8,10 +8,12 @@ import {
 } from '../../utils/const_value.js';
 import React, {PropTypes} from 'react';
 
+import timeHelper from '../../utils/time';
+
 import Button from '../Common/Button';
 import PickerDragHandler from '../Picker/PickerDragHandler';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';
-import timeHelper from '../../utils/time';
+import TimeZone from '../TimeZone';
 
 const TIME = timeHelper.time();
 TIME.current = timeHelper.current();
@@ -135,16 +137,6 @@ class TwelveHoursMode extends React.PureComponent {
     handleMinuteChange && handleMinuteChange(minute);
   }
 
-  renderTimezone() {
-    const {timezone} = this.props;
-
-    return (
-      <div className='time_picker_modal_footer'>
-        <span className='time_picker_modal_footer_timezone'>{timezone.zoneName} {timezone.zoneAbbr}</span>
-      </div>
-    )
-  }
-
   render() {
     const {
       hour,
@@ -154,6 +146,7 @@ class TwelveHoursMode extends React.PureComponent {
       clearFocus,
       phrases,
       showTimezone,
+      timezone
     } = this.props;
 
     const {hourPointerRotate, minutePointerRotate} = this.state;
@@ -211,7 +204,13 @@ class TwelveHoursMode extends React.PureComponent {
             minLength={MAX_ABSOLUTE_POSITION}
             handleTimePointerClick={this.handleMinutePointerClick} />
         </div>
-        {showTimezone ? this.renderTimezone() : ''}
+        {showTimezone
+          ? <TimeZone
+            phrases={phrases}
+            timezone={timezone}
+          />
+          : ''
+        }
         <div className='buttons_wrapper'>
           <Button
             onClick={clearFocus}
