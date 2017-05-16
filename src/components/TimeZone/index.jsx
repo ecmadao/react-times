@@ -26,6 +26,8 @@ class TimeZone extends React.PureComponent {
   }
 
   handleFocusedChange() {
+    if (!this.props.timezoneIsEditable) return;
+
     const {focused} = this.state;
     this.setState({focused: !focused});
   }
@@ -39,7 +41,7 @@ class TimeZone extends React.PureComponent {
 
     return (
       <div>
-        <div className={footerClass}>
+        <div className={footerClass} onClick={this.handleFocusedChange}>
           <span className='time_picker_modal_footer_timezone'>{timezone.zoneName} {timezone.zoneAbbr}</span>
         </div>
         {timezoneIsEditable

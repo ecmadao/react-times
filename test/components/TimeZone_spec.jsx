@@ -1,6 +1,7 @@
 import React from 'react';
 import {expect} from 'chai';
 import {shallow} from 'enzyme';
+import sinon from 'sinon-sandbox';
 
 import TimeZone from '../../src/components/TimeZone';
 import languageHelper from '../../src/utils/language';
@@ -66,8 +67,8 @@ describe('TimeZone', () => {
     });
   });
 
-  describe('TimeZone Func', () => {
-    it('should clear focused onClearFocus', () => {
+  describe('onClearFocus Func', () => {
+    it('should clear focused', () => {
       const wrapper = shallow(
         <TimeZone
           phrases={phrases}
@@ -78,19 +79,29 @@ describe('TimeZone', () => {
       wrapper.instance().onClearFocus();
       expect(wrapper.state().focused).to.equal(false);
     });
+  });
 
-    it('should handleFocusedChange', () => {
-      const wrapper = shallow(
-        <TimeZone
-          phrases={phrases}
-        />
-      );
+  describe('handleFocusedChange Func', () => {
+    const wrapper = shallow(
+      <TimeZone
+        phrases={phrases}
+        timezoneIsEditable={true}
+      />
+    );
+
+    it('should toggle focused', () => {
       wrapper.state().focused = true;
 
       wrapper.instance().handleFocusedChange();
       expect(wrapper.state().focused).to.equal(false);
 
       wrapper.instance().handleFocusedChange();
+      expect(wrapper.state().focused).to.equal(true);
+    });
+
+    it('should toggle focused onClick of modal footer', () => {
+      wrapper.state().focused = false;
+      wrapper.find('.time_picker_modal_footer').simulate('click');
       expect(wrapper.state().focused).to.equal(true);
     });
   });
