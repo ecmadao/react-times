@@ -5,6 +5,10 @@ import sinon from 'sinon-sandbox';
 
 import TwelveHoursMode from '../../src/components/MaterialTheme/TwelveHoursMode';
 import PickerDragHandler from '../../src/components/Picker/PickerDragHandler';
+import languageHelper from '../../src/utils/language';
+
+
+const phrases = languageHelper.get('en');
 
 describe('TwelveHoursMode', () => {
   describe('TwelveHoursMode init with defaultTime', () => {
@@ -13,6 +17,7 @@ describe('TwelveHoursMode', () => {
         hour={'01'}
         minute={'45'}
         focused={true}
+        phrases={phrases}
       />
     );
     it('should render component correctly', () => {
@@ -42,6 +47,7 @@ describe('TwelveHoursMode', () => {
         minute={'45'}
         focused={true}
         meridiem={'AM'}
+        phrases={phrases}
         handleHourChange={handleHourChange}
         handleMinuteChange={handleMinuteChange}
         handleMeridiemChange={handleMeridiemChange}

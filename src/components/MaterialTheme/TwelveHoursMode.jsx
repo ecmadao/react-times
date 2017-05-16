@@ -10,7 +10,6 @@ import React, {PropTypes} from 'react';
 
 import Button from '../Common/Button';
 import PickerDragHandler from '../Picker/PickerDragHandler';
-import languageHelper from '../../utils/language';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';
 import timeHelper from '../../utils/time';
 
@@ -24,6 +23,7 @@ const propTypes = {
   minute: PropTypes.string,
   draggable: PropTypes.bool,
   meridiem: PropTypes.string,
+  phrases: PropTypes.object,
   showTimezone: PropTypes.bool,
   timezone: PropTypes.shape({
     city: PropTypes.string,
@@ -102,11 +102,6 @@ class TwelveHoursMode extends React.PureComponent {
     return [top, height];
   }
 
-  languageData() {
-    const {language} = this.props;
-    return languageHelper.get(language);
-  }
-
   handleMeridiemChange(meridiem) {
     if (meridiem !== this.props.meridiem) {
       const {handleMeridiemChange} = this.props;
@@ -157,6 +152,7 @@ class TwelveHoursMode extends React.PureComponent {
       meridiem,
       draggable,
       clearFocus,
+      phrases,
       showTimezone,
     } = this.props;
 
@@ -177,9 +173,8 @@ class TwelveHoursMode extends React.PureComponent {
 
     const HourPickerPointGenerator = pickerPointGenerator('hour', 12);
     const MinutePickerPointGenerator = pickerPointGenerator('minute', 12);
-    const localMessages = this.languageData();
-    const newMeridiem = (meridiem === 'AM' || meridiem === localMessages['am'])
-      ? localMessages['pm'] : localMessages['am'];
+    const newMeridiem = (meridiem === 'AM' || meridiem === phrases['am'])
+      ? phrases['pm'] : phrases['am'];
 
     const handleMeridiemChange = this.handleMeridiemChange.bind(
       this,
@@ -220,7 +215,7 @@ class TwelveHoursMode extends React.PureComponent {
         <div className='buttons_wrapper'>
           <Button
             onClick={clearFocus}
-            text={localMessages.close}
+            text={phrases.close}
           />
         </div>
       </div>
