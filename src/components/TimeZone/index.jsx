@@ -13,12 +13,25 @@ class TimeZone extends React.PureComponent {
     const {timezone} = this.props;
 
     this.state = {
+      focused: false,
       timezone
     };
+
+    this.onClearFocus = this.onClearFocus.bind(this);
+    this.handleFocusedChange = this.handleFocusedChange.bind(this);
+  }
+
+  onClearFocus() {
+    this.setState({focused: false});
+  }
+
+  handleFocusedChange() {
+    const {focused} = this.state;
+    this.setState({focused: !focused});
   }
 
   render() {
-    const {timezone} = this.state;
+    const {focused, timezone} = this.state;
     const {phrases, timezoneIsEditable} = this.props;
 
     return (
@@ -29,6 +42,8 @@ class TimeZone extends React.PureComponent {
         {timezoneIsEditable
           ? <TimeZonePicker
               phrases={phrases}
+              focused={focused}
+              onClearFocus={this.onClearFocus}
             />
           : ''
         }

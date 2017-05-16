@@ -1,6 +1,7 @@
 import React from 'react';
 import {expect} from 'chai';
 import {shallow} from 'enzyme';
+import sinon from 'sinon-sandbox';
 
 import TimeZone from '../../src/components/TimeZone';
 import languageHelper from '../../src/utils/language';
@@ -35,7 +36,6 @@ describe('TimeZone', () => {
       const wrapper = shallow(
         <TimeZone
           phrases={phrases}
-          timezone={mockTimezone}
           timezoneIsEditable={true}
         />
       );
@@ -49,7 +49,6 @@ describe('TimeZone', () => {
       const wrapper = shallow(
         <TimeZone
           phrases={phrases}
-          timezone={mockTimezone}
           timezoneIsEditable={false}
         />
       );
@@ -57,6 +56,35 @@ describe('TimeZone', () => {
       it('should not render the TimeZonePicker', () => {
         expect(wrapper.find('TimeZonePicker')).to.have.lengthOf(0);
       });
+    });
+  });
+
+  describe('TimeZone Func', () => {
+    it('should clear focused onClearFocus', () => {
+      const wrapper = shallow(
+        <TimeZone
+          phrases={phrases}
+        />
+      );
+      wrapper.state().focused = true;
+
+      wrapper.instance().onClearFocus();
+      expect(wrapper.state().focused).to.equal(false);
+    });
+
+    it('should handleFocusedChange', () => {
+      const wrapper = shallow(
+        <TimeZone
+          phrases={phrases}
+        />
+      );
+      wrapper.state().focused = true;
+
+      wrapper.instance().handleFocusedChange();
+      expect(wrapper.state().focused).to.equal(false);
+
+      wrapper.instance().handleFocusedChange();
+      expect(wrapper.state().focused).to.equal(true);
     });
   });
 });
