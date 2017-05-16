@@ -62,7 +62,8 @@ class MaterialTheme extends React.PureComponent {
       minute,
       phrases,
       showTimezone,
-      timezone
+      timezone,
+      timezoneIsEditable
     } = this.props;
 
     return (
@@ -80,6 +81,7 @@ class MaterialTheme extends React.PureComponent {
         phrases={phrases}
         showTimezone={showTimezone}
         timezone={timezone}
+        timezoneIsEditable={timezoneIsEditable}
       />
     )
   }
@@ -100,7 +102,8 @@ class MaterialTheme extends React.PureComponent {
       minute,
       phrases,
       showTimezone,
-      timezone
+      timezone,
+      timezoneIsEditable
     } = this.props;
 
     return (
@@ -120,6 +123,7 @@ class MaterialTheme extends React.PureComponent {
         phrases={phrases}
         showTimezone={showTimezone}
         timezone={timezone}
+        timezoneIsEditable={timezoneIsEditable}
       />
     )
   }

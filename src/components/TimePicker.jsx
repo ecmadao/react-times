@@ -173,7 +173,7 @@ class TimePicker extends React.PureComponent {
   }
 
   renderMaterialTheme() {
-    const {timeMode, showTimezone, autoMode, draggable, language} = this.props;
+    const {timeMode, showTimezone, timezoneIsEditable, autoMode, draggable, language} = this.props;
     const [hour, minute] = this.getHourAndMinute();
     const timezoneData = this.timezoneData();
 
@@ -193,6 +193,7 @@ class TimePicker extends React.PureComponent {
         showTimezone={showTimezone}
         timeMode={parseInt(timeMode)}
         timezone={timezoneData}
+        timezoneIsEditable={timezoneIsEditable}
       />
     );
   }

@@ -144,7 +144,8 @@ class TwelveHoursMode extends React.PureComponent {
       clearFocus,
       phrases,
       showTimezone,
-      timezone
+      timezone,
+      timezoneIsEditable
     } = this.props;
 
     const {hourPointerRotate, minutePointerRotate} = this.state;
@@ -206,6 +207,7 @@ class TwelveHoursMode extends React.PureComponent {
           ? <TimeZone
             phrases={phrases}
             timezone={timezone}
+            timezoneIsEditable={timezoneIsEditable}
           />
           : ''
         }

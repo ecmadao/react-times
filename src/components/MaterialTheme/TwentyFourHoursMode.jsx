@@ -150,7 +150,8 @@ class TwentyFourHoursMode extends React.PureComponent {
       draggable,
       phrases,
       showTimezone,
-      timezone
+      timezone,
+      timezoneIsEditable
     } = this.props;
 
     const {step, pointerRotate} = this.state;
@@ -197,6 +198,7 @@ class TwentyFourHoursMode extends React.PureComponent {
           ? <TimeZone
             phrases={phrases}
             timezone={timezone}
+            timezoneIsEditable={timezoneIsEditable}
           />
           : ''
         }

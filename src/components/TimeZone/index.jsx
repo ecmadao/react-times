@@ -33,10 +33,13 @@ class TimeZone extends React.PureComponent {
   render() {
     const {focused, timezone} = this.state;
     const {phrases, timezoneIsEditable} = this.props;
+    const footerClass = timezoneIsEditable
+      ? 'time_picker_modal_footer clickable'
+      : 'time_picker_modal_footer';
 
     return (
-      <div className='time_picker_modal_container'>
-        <div className='time_picker_modal_footer'>
+      <div>
+        <div className={footerClass}>
           <span className='time_picker_modal_footer_timezone'>{timezone.zoneName} {timezone.zoneAbbr}</span>
         </div>
         {timezoneIsEditable

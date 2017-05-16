@@ -1,7 +1,6 @@
 import React from 'react';
 import {expect} from 'chai';
 import {shallow} from 'enzyme';
-import sinon from 'sinon-sandbox';
 
 import TimeZone from '../../src/components/TimeZone';
 import languageHelper from '../../src/utils/language';
@@ -40,6 +39,10 @@ describe('TimeZone', () => {
         />
       );
 
+      it('should render the Time Picker modal footer clickable', () => {
+        expect(wrapper.find('.time_picker_modal_footer').hasClass('clickable')).to.equal(true);
+      });
+
       it('should render the TimeZonePicker', () => {
         expect(wrapper.find('TimeZonePicker')).to.have.lengthOf(1);
       });
@@ -52,6 +55,10 @@ describe('TimeZone', () => {
           timezoneIsEditable={false}
         />
       );
+
+      it('should not render the Time Picker modal footer clickable', () => {
+        expect(wrapper.find('.time_picker_modal_footer').hasClass('clickable')).to.equal(false);
+      });
 
       it('should not render the TimeZonePicker', () => {
         expect(wrapper.find('TimeZonePicker')).to.have.lengthOf(0);

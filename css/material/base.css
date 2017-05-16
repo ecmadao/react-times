@@ -71,10 +71,10 @@
 
 .time_picker_modal_footer {
   font-size: 1em;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
-.time_picker_modal_footer .time_picker_modal_footer_timezone {
+.time_picker_modal_footer.clickable {
   cursor: pointer;
 }
 
