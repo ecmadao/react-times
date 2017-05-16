@@ -8,15 +8,9 @@ import {
 } from '../../utils/const_value.js';
 import React, {PropTypes} from 'react';
 
-import timeHelper from '../../utils/time';
-
 import PickerDragHandler from '../Picker/PickerDragHandler';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';
 import TimeZone from '../TimeZone';
-
-const TIME = timeHelper.time();
-TIME.current = timeHelper.current();
-TIME.tz = timeHelper.guessUserTz();
 
 const propTypes = {
   step: PropTypes.number,
@@ -29,6 +23,7 @@ const propTypes = {
     zoneAbbr: PropTypes.string,
     zoneName: PropTypes.string
   }),
+  timezoneIsEditable: PropTypes.bool,
   handleHourChange: PropTypes.func,
   handleMinuteChange: PropTypes.func,
   handleTimezoneChange: PropTypes.func,
@@ -43,8 +38,6 @@ const defaultProps = {
   minute: '00',
   autoMode: true,
   showTimezone: false,
-  timezone: TIME.tz,
-  timezoneIsEditable: false,
   handleHourChange: () => {},
   handleMinuteChange: () => {},
   clearFocus: () => {},

@@ -16,8 +16,6 @@ import pickerPointGenerator from '../Picker/PickerPointGenerator';
 import TimeZone from '../TimeZone';
 
 const TIME = timeHelper.time();
-TIME.current = timeHelper.current();
-TIME.tz = timeHelper.guessUserTz();
 
 const propTypes = {
   hour: PropTypes.string,
@@ -32,6 +30,7 @@ const propTypes = {
     zoneAbbr: PropTypes.string,
     zoneName: PropTypes.string
   }),
+  timezoneIsEditable: PropTypes.bool,
   handleHourChange: PropTypes.func,
   handleMinuteChange: PropTypes.func,
   handleTimezoneChange: PropTypes.func,
@@ -46,7 +45,6 @@ const defaultProps = {
   draggable: false,
   meridiem: TIME.meridiem,
   showTimezone: false,
-  timezone: TIME.tz,
   handleHourChange: () => {},
   handleMinuteChange: () => {},
   handleTimezoneChange: () => {},

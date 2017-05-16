@@ -25,7 +25,8 @@ const propTypes = {
     city: PropTypes.string,
     zoneAbbr: PropTypes.string,
     zoneName: PropTypes.string
-  })
+  }),
+  timezoneIsEditable: PropTypes.bool
 };
 
 const defaultProps = {
@@ -43,8 +44,7 @@ const defaultProps = {
   meridiem: 'AM',
   minute: '00',
   showTimezone: false,
-  timeMode: 24,
-  timezone: timeHelper.time().timezone
+  timeMode: 24
 };
 
 class MaterialTheme extends React.PureComponent {
