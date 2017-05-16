@@ -2,6 +2,7 @@ import React from 'react';
 
 import TimeZonePicker from '../src/components/TimeZone/TimeZonePicker';
 import timeHelper from '../src/utils/time';
+import languageHelper from '../src/utils/language';
 
 const TIME = timeHelper.time();
 TIME.current = timeHelper.current();
@@ -20,6 +21,11 @@ class TimeZonePickerWrapper extends React.Component {
     this.onClearFocus = this.onClearFocus.bind(this);
     this.handleFocusedChange = this.handleFocusedChange.bind(this);
     this.handleTimezoneChange = this.handleTimezoneChange.bind(this);
+  }
+
+  languageData() {
+    const {language = 'en', phrases = {}} = this.props;
+    return Object.assign({}, languageHelper.get(language), phrases);
   }
 
   onClearFocus() {
@@ -49,6 +55,8 @@ class TimeZonePickerWrapper extends React.Component {
             </div>
           </div>
           <TimeZonePicker
+            {...this.props}
+            phrases={this.languageData()}
             focused={focused}
             onClearFocus={this.onClearFocus}
             handleTimezoneChange={this.handleTimezoneChange}

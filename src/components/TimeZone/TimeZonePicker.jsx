@@ -51,7 +51,7 @@ class TimeZonePicker extends React.PureComponent {
         <div className='buttons_wrapper'>
           <Button
             onClick={onClearFocus}
-            text={phrases.closeTimePicker}
+            text={phrases.close}
           />
         </div>
       </div>
@@ -67,11 +67,6 @@ TimeZonePicker.propTypes = {
 };
 TimeZonePicker.defaultProps = {
   focused: false,
-  phrases: {
-    closeTimePicker: 'close',
-    timezonePickerTitle: 'Pick a TimeZone',
-    timezonePickerLabel: 'Closest City or TimeZone'
-  },
   onClearFocus: () => {},
   handleTimezoneChange: () => {}
 };

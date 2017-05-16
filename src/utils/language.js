@@ -3,6 +3,8 @@ const LANGUAGES = {
     confirm: 'confirm',
     cancel: 'cancel',
     close: 'close',
+    timezonePickerTitle: 'Pick a TimeZone',
+    timezonePickerLabel: 'Closest City or TimeZone',
     am: 'AM',
     pm: 'PM'
   },
@@ -10,6 +12,9 @@ const LANGUAGES = {
     confirm: '确认',
     cancel: '取消',
     close: '关闭',
+    // TODO: translate
+    timezonePickerTitle: 'Pick a TimeZone',
+    timezonePickerLabel: 'Closest City or TimeZone',
     am: '上午',
     pm: '下午'
   },
@@ -17,6 +22,9 @@ const LANGUAGES = {
     confirm: '確認',
     cancel: '取消',
     close: '關閉',
+    // TODO: translate
+    timezonePickerTitle: 'Pick a TimeZone',
+    timezonePickerLabel: 'Closest City or TimeZone',
     am: '上午',
     pm: '下午'
   },
@@ -24,6 +32,9 @@ const LANGUAGES = {
     confirm: 'Confirmer',
     cancel: 'Annulé',
     close: 'Arrêter',
+    // TODO: translate
+    timezonePickerTitle: 'Pick a TimeZone',
+    timezonePickerLabel: 'Closest City or TimeZone',
     am: 'AM',
     pm: 'PM'
   },
@@ -31,6 +42,9 @@ const LANGUAGES = {
     confirm: '確認します',
     cancel: 'キャンセル',
     close: 'クローズ',
+    // TODO: translate
+    timezonePickerTitle: 'Pick a TimeZone',
+    timezonePickerLabel: 'Closest City or TimeZone',
     am: 'AM',
     pm: 'PM'
   }
