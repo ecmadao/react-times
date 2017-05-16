@@ -1,8 +1,10 @@
 import React from 'react';
-import TimePicker from '../../src/components/TimePicker';
 import {expect} from 'chai';
 import {shallow} from 'enzyme';
 import sinon from 'sinon-sandbox';
+
+import languageHelper from '../../src/utils/language';
+import TimePicker from '../../src/components/TimePicker';
 
 describe('TimePicker func', () => {
   describe('handle focus change func', () => {
@@ -72,6 +74,38 @@ describe('TimePicker func', () => {
       const wrapper = shallow(<TimePicker onMinuteChange={onMinuteChangeStub} />);
       wrapper.instance().handleMinuteChange(1);
       expect(onMinuteChangeStub.callCount).to.equal(1);
+    });
+  });
+
+  describe('languageData func', () => {
+    it('should return the default language messages when no phrases provided', () => {
+      const wrapper = shallow(<TimePicker/>);
+      const messages = wrapper.instance().languageData();
+      expect(messages).to.deep.equal(languageHelper.get('en'));
+    });
+
+    it('should return the phrases when all phrases provided', () => {
+      const phrases = {
+        confirm: 'foo',
+        cancel: 'bar',
+        close: 'baz',
+        am: 'fizz',
+        pm: 'buzz'
+      };
+      const wrapper = shallow(<TimePicker phrases={phrases} />);
+      const messages = wrapper.instance().languageData();
+      expect(messages).to.deep.equal(phrases);
+    });
+
+    it('should return the default language messages for any phrases not provided', () => {
+      const phrases = {
+        cancel: 'bar',
+        close: 'baz'
+      };
+      const expectedMessages = Object.assign({}, languageHelper.get('en'), phrases);
+      const wrapper = shallow(<TimePicker phrases={phrases}/>);
+      const messages = wrapper.instance().languageData();
+      expect(messages).to.deep.equal(expectedMessages);
     });
   });
 });

@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 
 import TwelveHoursMode from './TwelveHoursMode';
 import TwentyFourHoursMode from './TwentyFourHoursMode';
-import languageHelper from '../../utils/language';
 import timeHelper from '../../utils/time';
 
 const propTypes = {
@@ -19,6 +18,7 @@ const propTypes = {
   language: PropTypes.string,
   meridiem: PropTypes.string,
   minute: PropTypes.string,
+  phrases: PropTypes.object,
   showTimezone: PropTypes.bool,
   timeMode: PropTypes.number,
   timezone: PropTypes.shape({
@@ -60,6 +60,7 @@ class MaterialTheme extends React.PureComponent {
       handleTimezoneChange,
       hour,
       minute,
+      phrases,
       showTimezone,
       timezone
     } = this.props;
@@ -76,6 +77,7 @@ class MaterialTheme extends React.PureComponent {
         handleTimezoneChange={handleTimezoneChange}
         hour={hour}
         minute={minute}
+        phrases={phrases}
         showTimezone={showTimezone}
         timezone={timezone}
       />
@@ -96,6 +98,7 @@ class MaterialTheme extends React.PureComponent {
       language,
       meridiem,
       minute,
+      phrases,
       showTimezone,
       timezone
     } = this.props;
@@ -114,6 +117,7 @@ class MaterialTheme extends React.PureComponent {
         language={language}
         meridiem={meridiem}
         minute={minute}
+        phrases={phrases}
         showTimezone={showTimezone}
         timezone={timezone}
       />

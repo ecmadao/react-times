@@ -9,7 +9,7 @@ import {
 import React, {PropTypes} from 'react';
 import CSSTransitionGroup from 'react-transition-group';
 
-import TimezonePicker from '../Timezone/TimezonePicker';
+import TimeZonePicker from '../TimeZone/TimeZonePicker';
 import PickerDragHandler from '../Picker/PickerDragHandler';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';
 import timeHelper from '../../utils/time';
@@ -61,7 +61,7 @@ class TwentyFourHoursMode extends React.PureComponent {
     this.state = {
       step,
       pointerRotate
-    }
+    };
     this.handleTimeChange = this.handleTimeChange.bind(this);
     this.handleTimePointerClick = this.handleTimePointerClick.bind(this);
   }
