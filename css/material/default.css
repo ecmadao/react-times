@@ -1,5 +1,6 @@
 @import "./base.css";
 @import "./button.css";
+@import "./timezone.css";
 
 .dark .time_picker_preview {
 }

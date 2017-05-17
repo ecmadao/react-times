@@ -8,14 +8,14 @@ import {
 } from '../../utils/const_value.js';
 import React, {PropTypes} from 'react';
 
+import timeHelper from '../../utils/time';
+
 import Button from '../Common/Button';
 import PickerDragHandler from '../Picker/PickerDragHandler';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';
-import timeHelper from '../../utils/time';
+import TimeZone from '../TimeZone';
 
 const TIME = timeHelper.time();
-TIME.current = timeHelper.current();
-TIME.tz = timeHelper.guessUserTz();
 
 const propTypes = {
   hour: PropTypes.string,
@@ -30,6 +30,7 @@ const propTypes = {
     zoneAbbr: PropTypes.string,
     zoneName: PropTypes.string
   }),
+  timezoneIsEditable: PropTypes.bool,
   handleHourChange: PropTypes.func,
   handleMinuteChange: PropTypes.func,
   handleTimezoneChange: PropTypes.func,
@@ -44,7 +45,6 @@ const defaultProps = {
   draggable: false,
   meridiem: TIME.meridiem,
   showTimezone: false,
-  timezone: TIME.tz,
   handleHourChange: () => {},
   handleMinuteChange: () => {},
   handleTimezoneChange: () => {},
@@ -135,16 +135,6 @@ class TwelveHoursMode extends React.PureComponent {
     handleMinuteChange && handleMinuteChange(minute);
   }
 
-  renderTimezone() {
-    const {timezone} = this.props;
-
-    return (
-      <div className='time_picker_modal_footer'>
-        <span className='time_picker_modal_footer_timezone'>{timezone.zoneName} {timezone.zoneAbbr}</span>
-      </div>
-    )
-  }
-
   render() {
     const {
       hour,
@@ -154,6 +144,8 @@ class TwelveHoursMode extends React.PureComponent {
       clearFocus,
       phrases,
       showTimezone,
+      timezone,
+      timezoneIsEditable
     } = this.props;
 
     const {hourPointerRotate, minutePointerRotate} = this.state;
@@ -164,7 +156,7 @@ class TwelveHoursMode extends React.PureComponent {
       height,
       pointerRotate: hourPointerRotate
     };
-    const [minuteTop, minuteHeight] = this.getMinuteTopAndHeight()
+    const [minuteTop, minuteHeight] = this.getMinuteTopAndHeight();
     const minuteRotateState = {
       top: minuteTop,
       height: minuteHeight,
@@ -211,7 +203,14 @@ class TwelveHoursMode extends React.PureComponent {
             minLength={MAX_ABSOLUTE_POSITION}
             handleTimePointerClick={this.handleMinutePointerClick} />
         </div>
-        {showTimezone ? this.renderTimezone() : ''}
+        {showTimezone
+          ? <TimeZone
+            phrases={phrases}
+            timezone={timezone}
+            timezoneIsEditable={timezoneIsEditable}
+          />
+          : ''
+        }
         <div className='buttons_wrapper'>
           <Button
             onClick={clearFocus}

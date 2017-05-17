@@ -89,6 +89,8 @@ describe('TimePicker func', () => {
         confirm: 'foo',
         cancel: 'bar',
         close: 'baz',
+        timezonePickerLabel: 'This is a Label',
+        timezonePickerTitle: 'This is a Title',
         am: 'fizz',
         pm: 'buzz'
       };

@@ -25,7 +25,8 @@ const propTypes = {
     city: PropTypes.string,
     zoneAbbr: PropTypes.string,
     zoneName: PropTypes.string
-  })
+  }),
+  timezoneIsEditable: PropTypes.bool
 };
 
 const defaultProps = {
@@ -43,8 +44,7 @@ const defaultProps = {
   meridiem: 'AM',
   minute: '00',
   showTimezone: false,
-  timeMode: 24,
-  timezone: timeHelper.time().timezone
+  timeMode: 24
 };
 
 class MaterialTheme extends React.PureComponent {
@@ -62,7 +62,8 @@ class MaterialTheme extends React.PureComponent {
       minute,
       phrases,
       showTimezone,
-      timezone
+      timezone,
+      timezoneIsEditable
     } = this.props;
 
     return (
@@ -80,6 +81,7 @@ class MaterialTheme extends React.PureComponent {
         phrases={phrases}
         showTimezone={showTimezone}
         timezone={timezone}
+        timezoneIsEditable={timezoneIsEditable}
       />
     )
   }
@@ -100,7 +102,8 @@ class MaterialTheme extends React.PureComponent {
       minute,
       phrases,
       showTimezone,
-      timezone
+      timezone,
+      timezoneIsEditable
     } = this.props;
 
     return (
@@ -120,6 +123,7 @@ class MaterialTheme extends React.PureComponent {
         phrases={phrases}
         showTimezone={showTimezone}
         timezone={timezone}
+        timezoneIsEditable={timezoneIsEditable}
       />
     )
   }

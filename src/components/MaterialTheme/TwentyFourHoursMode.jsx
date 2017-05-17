@@ -7,16 +7,10 @@ import {
   POINTER_RADIUS,
 } from '../../utils/const_value.js';
 import React, {PropTypes} from 'react';
-import CSSTransitionGroup from 'react-transition-group';
 
-import TimeZonePicker from '../TimeZone/TimeZonePicker';
 import PickerDragHandler from '../Picker/PickerDragHandler';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';
-import timeHelper from '../../utils/time';
-
-const TIME = timeHelper.time();
-TIME.current = timeHelper.current();
-TIME.tz = timeHelper.guessUserTz();
+import TimeZone from '../TimeZone';
 
 const propTypes = {
   step: PropTypes.number,
@@ -29,6 +23,7 @@ const propTypes = {
     zoneAbbr: PropTypes.string,
     zoneName: PropTypes.string
   }),
+  timezoneIsEditable: PropTypes.bool,
   handleHourChange: PropTypes.func,
   handleMinuteChange: PropTypes.func,
   handleTimezoneChange: PropTypes.func,
@@ -43,8 +38,6 @@ const defaultProps = {
   minute: '00',
   autoMode: true,
   showTimezone: false,
-  timezone: TIME.tz,
-  timezoneIsEditable: false,
   handleHourChange: () => {},
   handleMinuteChange: () => {},
   clearFocus: () => {},
@@ -150,22 +143,15 @@ class TwentyFourHoursMode extends React.PureComponent {
     return [top, height];
   }
 
-  renderTimezone() {
-    const {timezone, timezoneIsEditable} = this.props;
-
-    return (
-      <div className='time_picker_modal_footer'>
-        <span className='time_picker_modal_footer_timezone'>{timezone.zoneName} {timezone.zoneAbbr}</span>
-      </div>
-    )
-  }
-
   render() {
     const {
       hour,
       minute,
       draggable,
-      showTimezone
+      phrases,
+      showTimezone,
+      timezone,
+      timezoneIsEditable
     } = this.props;
 
     const {step, pointerRotate} = this.state;
@@ -208,7 +194,14 @@ class TwentyFourHoursMode extends React.PureComponent {
             minLength={step === 0 ? MIN_ABSOLUTE_POSITION : MAX_ABSOLUTE_POSITION}
             handleTimePointerClick={this.handleTimePointerClick} />
         </div>
-        {showTimezone ? this.renderTimezone() : ''}
+        {showTimezone
+          ? <TimeZone
+            phrases={phrases}
+            timezone={timezone}
+            timezoneIsEditable={timezoneIsEditable}
+          />
+          : ''
+        }
       </div>
     );
   }

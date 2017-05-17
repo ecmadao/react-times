@@ -7,7 +7,6 @@ import TwelveHoursMode from '../../src/components/MaterialTheme/TwelveHoursMode'
 import PickerDragHandler from '../../src/components/Picker/PickerDragHandler';
 import languageHelper from '../../src/utils/language';
 
-
 const phrases = languageHelper.get('en');
 
 describe('TwelveHoursMode', () => {
@@ -70,6 +69,45 @@ describe('TwelveHoursMode', () => {
       expect(handleMeridiemChange.callCount).to.equal(0);
       wrapper.instance().handleMeridiemChange('PM');
       expect(handleMeridiemChange.callCount).to.equal(1);
+    });
+  });
+
+  describe('TimeZone handling', () => {
+    describe('when showTimezone is true', () => {
+      const mockTimezone = {
+        zoneName: 'Some Zone',
+        zoneAbbr: 'SZ'
+      };
+      const wrapper = shallow(
+        <TwelveHoursMode
+          hour={'01'}
+          minute={'45'}
+          focused={true}
+          phrases={phrases}
+          timezone={mockTimezone}
+          showTimezone={true}
+        />
+      );
+
+      it('should render the TimeZone footer', () => {
+        expect(wrapper.find('TimeZone')).to.have.lengthOf(1);
+      });
+    });
+
+    describe('when showTimezone is false', () => {
+      const wrapper = shallow(
+        <TwelveHoursMode
+          hour={'01'}
+          minute={'45'}
+          focused={true}
+          phrases={phrases}
+          showTimezone={false}
+        />
+      );
+
+      it('should not render the TimeZone footer', () => {
+        expect(wrapper.find('TimeZone')).to.have.lengthOf(0);
+      });
     });
   });
 });
