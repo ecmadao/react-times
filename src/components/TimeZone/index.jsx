@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 import timeHelper from '../../utils/time';
 
@@ -44,20 +45,30 @@ class TimeZone extends React.PureComponent {
       ? 'time_picker_modal_footer clickable'
       : 'time_picker_modal_footer';
 
+    const timeZonePicker = () => {
+      if (!timezoneIsEditable || !focused) return '';
+
+      return (
+        <TimeZonePicker
+          key="timezonePicker"
+          phrases={phrases}
+          onClearFocus={this.onClearFocus}
+          handleTimezoneChange={this.handleTimezoneChange}
+        />
+      );
+    };
+
     return (
       <div>
         <div className={footerClass} onClick={this.handleFocusedChange}>
           <span className='time_picker_modal_footer_timezone'>{timezone.zoneName} {timezone.zoneAbbr}</span>
         </div>
-        {timezoneIsEditable
-          ? <TimeZonePicker
-              phrases={phrases}
-              focused={focused}
-              onClearFocus={this.onClearFocus}
-              handleTimezoneChange={this.handleTimezoneChange}
-            />
-          : ''
-        }
+        <CSSTransitionGroup
+          transitionName="timezone_picker_modal_container"
+          transitionEnterTimeout={400}
+          transitionLeaveTimeout={400}>
+          {timeZonePicker()}
+        </CSSTransitionGroup>
       </div>
     );
   }

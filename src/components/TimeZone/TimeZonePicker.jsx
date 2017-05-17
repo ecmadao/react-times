@@ -22,12 +22,9 @@ class TimeZonePicker extends React.PureComponent {
   }
 
   render() {
-    const { focused, phrases, onClearFocus } = this.props;
-    const modalClass = focused
-        ? 'timezone_picker_modal_container active'
-        : 'timezone_picker_modal_container';
+    const { phrases, onClearFocus } = this.props;
     return (
-      <div className={modalClass}>
+      <div className="timezone_picker_modal_container">
         <div className="timezone_picker_modal_header">
           <span onClick={onClearFocus}>
             {ICONS.chevronLeft}
@@ -60,13 +57,11 @@ class TimeZonePicker extends React.PureComponent {
 }
 
 TimeZonePicker.propTypes = {
-  focused: PropTypes.bool,
   phrases: PropTypes.object,
   onClearFocus: PropTypes.func,
   handleTimezoneChange: PropTypes.func
 };
 TimeZonePicker.defaultProps = {
-  focused: false,
   onClearFocus: () => {},
   handleTimezoneChange: () => {}
 };

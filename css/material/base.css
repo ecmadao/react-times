@@ -6,6 +6,7 @@
   user-select: none;
   cursor: default;
   position: absolute;
+  overflow: hidden;
   opacity: 0;
   z-index: -1;
   transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);

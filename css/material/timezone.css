@@ -2,20 +2,33 @@
   user-select: none;
   cursor: default;
   position: absolute;
-  opacity: 0;
-  z-index: -1;
+  opacity: 1;
+  z-index: 3;
   background-color: #fff;
   border-radius: 2px;
   top: 0;
-  left: 0;
+  right: 0;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.12), 0 0 4px 0 rgba(0, 0, 0, 0.08);
   -moz-box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.12), 0 0 4px 0 rgba(0, 0, 0, 0.08);
   -webkit-box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.12), 0 0 4px 0 rgba(0, 0, 0, 0.08);
 }
 
-.outside_container.active .timezone_picker_modal_container.active {
-  opacity: 1;
-  z-index: 3;
+.timezone_picker_modal_container-enter {
+  width: 0;
+}
+
+.timezone_picker_modal_container-enter.timezone_picker_modal_container-enter-active {
+  width: 100%;
+  transition: width 400ms ease-out;
+}
+
+.timezone_picker_modal_container-leave {
+  width: 100%;
+}
+
+.timezone_picker_modal_container-leave.timezone_picker_modal_container-leave-active {
+  width: 0;
+  transition: width 400ms ease-in;
 }
 
 .timezone_picker_modal_header {
