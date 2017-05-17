@@ -10,7 +10,6 @@ import ICONS from '../utils/icons';
 // aliases for defaultProps readability
 const TIME = timeHelper.time();
 TIME.current = timeHelper.current();
-TIME.timezone = timeHelper.guessUserTz().zoneName;
 
 const propTypes = {
   autoMode: PropTypes.bool,
@@ -24,6 +23,7 @@ const propTypes = {
   onMeridiemChange: PropTypes.func,
   onMinuteChange: PropTypes.func,
   onTimeChange: PropTypes.func,
+  phrases: PropTypes.object,
   placeholder: PropTypes.string,
   showTimezone: PropTypes.bool,
   theme: PropTypes.string,
@@ -33,6 +33,7 @@ const propTypes = {
     PropTypes.number
   ]),
   timezone: PropTypes.string,
+  timezoneIsEditable: PropTypes.bool,
   trigger: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.object,
@@ -59,7 +60,6 @@ const defaultProps = {
   theme: 'material',
   time: TIME.current,
   timeMode: TIME.mode,
-  timezone: TIME.timezone,
   trigger: null,
   withoutIcon: false
 };
@@ -92,8 +92,8 @@ class TimePicker extends React.PureComponent {
   }
 
   languageData() {
-    const {language} = this.props;
-    return languageHelper.get(language);
+    const {language, phrases = {}} = this.props;
+    return Object.assign({}, languageHelper.get(language), phrases);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -173,7 +173,7 @@ class TimePicker extends React.PureComponent {
   }
 
   renderMaterialTheme() {
-    const {timeMode, showTimezone, autoMode, draggable, language} = this.props;
+    const {timeMode, showTimezone, timezoneIsEditable, autoMode, draggable, language} = this.props;
     const [hour, minute] = this.getHourAndMinute();
     const timezoneData = this.timezoneData();
 
@@ -189,9 +189,11 @@ class TimePicker extends React.PureComponent {
         language={language}
         meridiem={this.meridiem}
         minute={minute}
+        phrases={this.languageData()}
         showTimezone={showTimezone}
         timeMode={parseInt(timeMode)}
         timezone={timezoneData}
+        timezoneIsEditable={timezoneIsEditable}
       />
     );
   }

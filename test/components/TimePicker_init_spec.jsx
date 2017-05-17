@@ -5,7 +5,6 @@ import PickerDragHandler from '../../src/components/Picker/PickerDragHandler';
 import React from 'react';
 import TimePicker from '../../src/components/TimePicker';
 import {expect} from 'chai';
-import moment from 'moment';
 import {shallow} from 'enzyme';
 import timeHelper from '../../src/utils/time';
 

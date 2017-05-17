@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 
 import TwelveHoursMode from './TwelveHoursMode';
 import TwentyFourHoursMode from './TwentyFourHoursMode';
-import languageHelper from '../../utils/language';
 import timeHelper from '../../utils/time';
 
 const propTypes = {
@@ -19,13 +18,15 @@ const propTypes = {
   language: PropTypes.string,
   meridiem: PropTypes.string,
   minute: PropTypes.string,
+  phrases: PropTypes.object,
   showTimezone: PropTypes.bool,
   timeMode: PropTypes.number,
   timezone: PropTypes.shape({
     city: PropTypes.string,
     zoneAbbr: PropTypes.string,
     zoneName: PropTypes.string
-  })
+  }),
+  timezoneIsEditable: PropTypes.bool
 };
 
 const defaultProps = {
@@ -43,8 +44,7 @@ const defaultProps = {
   meridiem: 'AM',
   minute: '00',
   showTimezone: false,
-  timeMode: 24,
-  timezone: timeHelper.time().timezone
+  timeMode: 24
 };
 
 class MaterialTheme extends React.PureComponent {
@@ -60,8 +60,10 @@ class MaterialTheme extends React.PureComponent {
       handleTimezoneChange,
       hour,
       minute,
+      phrases,
       showTimezone,
-      timezone
+      timezone,
+      timezoneIsEditable
     } = this.props;
 
     return (
@@ -76,8 +78,10 @@ class MaterialTheme extends React.PureComponent {
         handleTimezoneChange={handleTimezoneChange}
         hour={hour}
         minute={minute}
+        phrases={phrases}
         showTimezone={showTimezone}
         timezone={timezone}
+        timezoneIsEditable={timezoneIsEditable}
       />
     )
   }
@@ -96,8 +100,10 @@ class MaterialTheme extends React.PureComponent {
       language,
       meridiem,
       minute,
+      phrases,
       showTimezone,
-      timezone
+      timezone,
+      timezoneIsEditable
     } = this.props;
 
     return (
@@ -114,8 +120,10 @@ class MaterialTheme extends React.PureComponent {
         language={language}
         meridiem={meridiem}
         minute={minute}
+        phrases={phrases}
         showTimezone={showTimezone}
         timezone={timezone}
+        timezoneIsEditable={timezoneIsEditable}
       />
     )
   }
