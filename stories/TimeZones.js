@@ -4,13 +4,13 @@ import {text, withKnobs} from '@kadira/storybook-addon-knobs';
 
 import React from 'react';
 import TimePickerWrapper from '../examples/TimePickerWrapper';
-import TimeZonePickerWrapper from '../examples/TimeZonePickerWrapper';
+import TimezonePickerWrapper from '../examples/TimezonePickerWrapper';
 import {storiesOf} from '@kadira/storybook';
 import timeHelper from '../src/utils/time.js';
 
 const tzForCity = timeHelper.tzForCity('Kuala Lumpur');
 
-storiesOf('TimeZones', module)
+storiesOf('Timezones', module)
   .addDecorator(withKnobs)
   .addWithInfo('with default (detected) timezone', () => (
     <TimePickerWrapper
@@ -50,6 +50,6 @@ storiesOf('TimeZones', module)
   })
   .addWithInfo('with timezone picker', () => {
     return (
-      <TimeZonePickerWrapper />
+      <TimezonePickerWrapper />
     )
   });

@@ -72,7 +72,7 @@ describe('TwelveHoursMode', () => {
     });
   });
 
-  describe('TimeZone handling', () => {
+  describe('Timezone handling', () => {
     describe('when showTimezone is true', () => {
       const mockTimezone = {
         zoneName: 'Some Zone',
@@ -89,8 +89,8 @@ describe('TwelveHoursMode', () => {
         />
       );
 
-      it('should render the TimeZone footer', () => {
-        expect(wrapper.find('TimeZone')).to.have.lengthOf(1);
+      it('should render the Timezone footer', () => {
+        expect(wrapper.find('Timezone')).to.have.lengthOf(1);
       });
     });
 
@@ -105,8 +105,8 @@ describe('TwelveHoursMode', () => {
         />
       );
 
-      it('should not render the TimeZone footer', () => {
-        expect(wrapper.find('TimeZone')).to.have.lengthOf(0);
+      it('should not render the Timezone footer', () => {
+        expect(wrapper.find('Timezone')).to.have.lengthOf(0);
       });
     });
   });

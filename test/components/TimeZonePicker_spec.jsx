@@ -3,7 +3,7 @@ import {expect} from 'chai';
 import {shallow} from 'enzyme';
 import sinon from 'sinon-sandbox';
 
-import TimeZonePicker from '../../src/components/TimeZone/TimeZonePicker';
+import TimezonePicker from '../../src/components/Timezone/TimezonePicker';
 import languageHelper from '../../src/utils/language';
 
 const phrases = languageHelper.get('en');
@@ -12,10 +12,10 @@ const mockTimezone = {
   zoneAbbr: 'SZ'
 };
 
-describe('TimeZonePicker', () => {
-  describe('TimeZonePicker render', () => {
+describe('TimezonePicker', () => {
+  describe('TimezonePicker render', () => {
     const wrapper = shallow(
-      <TimeZonePicker
+      <TimezonePicker
         phrases={phrases}
       />
     );
@@ -41,7 +41,7 @@ describe('TimeZonePicker', () => {
     it('should callback when onClick header "back" icon', () => {
       const onFocusChangeStub = sinon.stub();
       const wrapper = shallow(
-        <TimeZonePicker
+        <TimezonePicker
           phrases={phrases}
           onClearFocus={onFocusChangeStub}
         />
@@ -53,7 +53,7 @@ describe('TimeZonePicker', () => {
     it('should callback when onClick Button', () => {
       const onFocusChangeStub = sinon.stub();
       const wrapper = shallow(
-        <TimeZonePicker
+        <TimezonePicker
           phrases={phrases}
           onClearFocus={onFocusChangeStub}
         />
@@ -65,7 +65,7 @@ describe('TimeZonePicker', () => {
     it('should callback when timezone change', () => {
       const onFocusChangeStub = sinon.stub();
       const wrapper = shallow(
-        <TimeZonePicker
+        <TimezonePicker
           phrases={phrases}
           onClearFocus={onFocusChangeStub}
         />
@@ -79,7 +79,7 @@ describe('TimeZonePicker', () => {
     it('should callback when timezone change', () => {
       const onTimezoneChangeStub = sinon.stub();
       const wrapper = shallow(
-        <TimeZonePicker
+        <TimezonePicker
           phrases={phrases}
           handleTimezoneChange={onTimezoneChangeStub}
         />

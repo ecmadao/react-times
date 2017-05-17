@@ -5,7 +5,7 @@ import timeHelper from '../../utils/time';
 import ICONS from '../../utils/icons';
 import Button from '../Common/Button';
 
-class TimeZonePicker extends React.PureComponent {
+class TimezonePicker extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -56,14 +56,14 @@ class TimeZonePicker extends React.PureComponent {
   }
 }
 
-TimeZonePicker.propTypes = {
+TimezonePicker.propTypes = {
   phrases: PropTypes.object,
   onClearFocus: PropTypes.func,
   handleTimezoneChange: PropTypes.func
 };
-TimeZonePicker.defaultProps = {
+TimezonePicker.defaultProps = {
   onClearFocus: () => {},
   handleTimezoneChange: () => {}
 };
 
-export default TimeZonePicker;
+export default TimezonePicker;

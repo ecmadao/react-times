@@ -3,8 +3,8 @@ const LANGUAGES = {
     confirm: 'confirm',
     cancel: 'cancel',
     close: 'close',
-    timezonePickerTitle: 'Pick a TimeZone',
-    timezonePickerLabel: 'Closest City or TimeZone',
+    timezonePickerTitle: 'Pick a Timezone',
+    timezonePickerLabel: 'Closest City or Timezone',
     am: 'AM',
     pm: 'PM'
   },
@@ -30,8 +30,8 @@ const LANGUAGES = {
     confirm: 'Confirmer',
     cancel: 'Annulé',
     close: 'Arrêter',
-    timezonePickerTitle: 'Choisissez un TimeZone',
-    timezonePickerLabel: 'Ville la plus proche ou TimeZone',
+    timezonePickerTitle: 'Choisissez un Timezone',
+    timezonePickerLabel: 'Ville la plus proche ou Timezone',
     am: 'AM',
     pm: 'PM'
   },
@@ -40,7 +40,7 @@ const LANGUAGES = {
     cancel: 'キャンセル',
     close: 'クローズ',
     timezonePickerTitle: 'タイムゾーンを選択する',
-    timezonePickerLabel: '最も近い都市またはTimeZone',
+    timezonePickerLabel: '最も近い都市またはTimezone',
     am: 'AM',
     pm: 'PM'
   }

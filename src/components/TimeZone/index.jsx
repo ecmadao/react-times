@@ -3,12 +3,12 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 import timeHelper from '../../utils/time';
 
-import TimeZonePicker from './TimeZonePicker';
+import TimezonePicker from './TimezonePicker';
 
 const TIME = timeHelper.time();
 TIME.tz = timeHelper.guessUserTz();
 
-class TimeZone extends React.PureComponent {
+class Timezone extends React.PureComponent {
   constructor(props) {
     super(props);
     const {timezone} = this.props;
@@ -49,7 +49,7 @@ class TimeZone extends React.PureComponent {
       if (!timezoneIsEditable || !focused) return '';
 
       return (
-        <TimeZonePicker
+        <TimezonePicker
           key="timezonePicker"
           phrases={phrases}
           onClearFocus={this.onClearFocus}
@@ -74,7 +74,7 @@ class TimeZone extends React.PureComponent {
   }
 }
 
-TimeZone.propTypes = {
+Timezone.propTypes = {
   phrases: PropTypes.object,
   timezone: PropTypes.shape({
     city: PropTypes.string,
@@ -83,9 +83,9 @@ TimeZone.propTypes = {
   }),
   timezoneIsEditable: PropTypes.bool
 };
-TimeZone.defaultProps = {
+Timezone.defaultProps = {
   timezone: TIME.tz,
   timezoneIsEditable: false
 };
 
-export default TimeZone;
+export default Timezone;

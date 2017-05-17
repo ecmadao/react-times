@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TimeZone from '../src/components/TimeZone';
+import Timezone from '../src/components/Timezone';
 import timeHelper from '../src/utils/time';
 import languageHelper from '../src/utils/language';
 
@@ -8,7 +8,7 @@ const TIME = timeHelper.time();
 TIME.current = timeHelper.current();
 TIME.tz = timeHelper.guessUserTz();
 
-class TimeZonePickerWrapper extends React.Component {
+class TimezonePickerWrapper extends React.Component {
   constructor(props) {
     super(props);
     const {timezone} = this.props;
@@ -30,7 +30,7 @@ class TimeZonePickerWrapper extends React.Component {
       <div>
         <div className="outside_container active">
           <div className='time_picker_modal_container'>
-            <TimeZone
+            <Timezone
               phrases={this.languageData()}
               timezone={timezone}
               timezoneIsEditable={true}
@@ -42,8 +42,8 @@ class TimeZonePickerWrapper extends React.Component {
   }
 }
 
-TimeZonePickerWrapper.defaultProps = {
+TimezonePickerWrapper.defaultProps = {
   timezone: TIME.tz
 };
 
-export default TimeZonePickerWrapper;
+export default TimezonePickerWrapper;

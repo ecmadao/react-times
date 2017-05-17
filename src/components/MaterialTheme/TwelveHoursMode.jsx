@@ -13,7 +13,7 @@ import timeHelper from '../../utils/time';
 import Button from '../Common/Button';
 import PickerDragHandler from '../Picker/PickerDragHandler';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';
-import TimeZone from '../TimeZone';
+import Timezone from '../Timezone';
 
 const TIME = timeHelper.time();
 
@@ -204,7 +204,7 @@ class TwelveHoursMode extends React.PureComponent {
             handleTimePointerClick={this.handleMinutePointerClick} />
         </div>
         {showTimezone
-          ? <TimeZone
+          ? <Timezone
             phrases={phrases}
             timezone={timezone}
             timezoneIsEditable={timezoneIsEditable}

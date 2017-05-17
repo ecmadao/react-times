@@ -2,7 +2,7 @@ import React from 'react';
 import {expect} from 'chai';
 import {shallow} from 'enzyme';
 
-import TimeZone from '../../src/components/TimeZone';
+import Timezone from '../../src/components/Timezone';
 import languageHelper from '../../src/utils/language';
 
 const phrases = languageHelper.get('en');
@@ -11,20 +11,20 @@ const mockTimezone = {
   zoneAbbr: 'SZ'
 };
 
-describe('TimeZone', () => {
-  describe('TimeZone render', () => {
+describe('Timezone', () => {
+  describe('Timezone render', () => {
     const wrapper = shallow(
-      <TimeZone
+      <Timezone
         phrases={phrases}
         timezone={mockTimezone}
       />
     );
 
-    it('should render the TimeZone footer', () => {
+    it('should render the Timezone footer', () => {
       expect(wrapper.find('.time_picker_modal_footer_timezone')).to.have.lengthOf(1);
     });
 
-    it('should render the TimeZone Name and Abbreviation', () => {
+    it('should render the Timezone Name and Abbreviation', () => {
       expect(wrapper.find('.time_picker_modal_footer_timezone').text())
         .to.equal(`${mockTimezone.zoneName} ${mockTimezone.zoneAbbr}`);
     });
@@ -34,7 +34,7 @@ describe('TimeZone', () => {
     describe('when timezoneIsEditable is true', () => {
       it('should render the Time Picker modal footer clickable', () => {
         const wrapper = shallow(
-          <TimeZone
+          <Timezone
             phrases={phrases}
             timezoneIsEditable={true}
           />
@@ -44,30 +44,30 @@ describe('TimeZone', () => {
       });
 
       describe('when focused is true', () => {
-        it('should render the TimeZonePicker', () => {
+        it('should render the TimezonePicker', () => {
           const wrapper = shallow(
-            <TimeZone
+            <Timezone
               phrases={phrases}
               timezoneIsEditable={true}
             />
           );
           wrapper.setState({ focused: true });
 
-          expect(wrapper.find('TimeZonePicker')).to.have.lengthOf(1);
+          expect(wrapper.find('TimezonePicker')).to.have.lengthOf(1);
         });
       });
 
       describe('when focused is false', () => {
-        it('should not render the TimeZonePicker', () => {
+        it('should not render the TimezonePicker', () => {
           const wrapper = shallow(
-            <TimeZone
+            <Timezone
               phrases={phrases}
               timezoneIsEditable={true}
             />
           );
           wrapper.setState({ focused: false });
 
-          expect(wrapper.find('TimeZonePicker')).to.have.lengthOf(0);
+          expect(wrapper.find('TimezonePicker')).to.have.lengthOf(0);
         });
       });
     });
@@ -75,7 +75,7 @@ describe('TimeZone', () => {
     describe('when timezoneIsEditable is false', () => {
       it('should not render the Time Picker modal footer clickable', () => {
         const wrapper = shallow(
-          <TimeZone
+          <Timezone
             phrases={phrases}
             timezoneIsEditable={false}
           />
@@ -85,30 +85,30 @@ describe('TimeZone', () => {
       });
 
       describe('when focused is true', () => {
-        it('should not render the TimeZonePicker', () => {
+        it('should not render the TimezonePicker', () => {
           const wrapper = shallow(
-            <TimeZone
+            <Timezone
               phrases={phrases}
               timezoneIsEditable={false}
             />
           );
           wrapper.setState({ focused: true });
 
-          expect(wrapper.find('TimeZonePicker')).to.have.lengthOf(0);
+          expect(wrapper.find('TimezonePicker')).to.have.lengthOf(0);
         });
       });
 
       describe('when focused is false', () => {
-        it('should not render the TimeZonePicker', () => {
+        it('should not render the TimezonePicker', () => {
           const wrapper = shallow(
-            <TimeZone
+            <Timezone
               phrases={phrases}
               timezoneIsEditable={false}
             />
           );
           wrapper.setState({ focused: false });
 
-          expect(wrapper.find('TimeZonePicker')).to.have.lengthOf(0);
+          expect(wrapper.find('TimezonePicker')).to.have.lengthOf(0);
         });
       });
     });
@@ -117,7 +117,7 @@ describe('TimeZone', () => {
   describe('onClearFocus Func', () => {
     it('should clear focused', () => {
       const wrapper = shallow(
-        <TimeZone
+        <Timezone
           phrases={phrases}
         />
       );
@@ -130,7 +130,7 @@ describe('TimeZone', () => {
 
   describe('handleFocusedChange Func', () => {
     const wrapper = shallow(
-      <TimeZone
+      <Timezone
         phrases={phrases}
         timezoneIsEditable={true}
       />
@@ -156,7 +156,7 @@ describe('TimeZone', () => {
   describe('handleTimezoneChange Func', () => {
     it('should set the timezone', () => {
       const wrapper = shallow(
-        <TimeZone
+        <Timezone
           phrases={phrases}
           timezone={{}}
         />

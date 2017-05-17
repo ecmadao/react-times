@@ -10,7 +10,7 @@ import React, {PropTypes} from 'react';
 
 import PickerDragHandler from '../Picker/PickerDragHandler';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';
-import TimeZone from '../TimeZone';
+import Timezone from '../Timezone';
 
 const propTypes = {
   step: PropTypes.number,
@@ -195,7 +195,7 @@ class TwentyFourHoursMode extends React.PureComponent {
             handleTimePointerClick={this.handleTimePointerClick} />
         </div>
         {showTimezone
-          ? <TimeZone
+          ? <Timezone
             phrases={phrases}
             timezone={timezone}
             timezoneIsEditable={timezoneIsEditable}
