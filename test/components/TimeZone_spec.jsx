@@ -30,38 +30,86 @@ describe('TimeZone', () => {
     });
   });
 
-  describe('TimeZone props', () => {
+  describe('props', () => {
     describe('when timezoneIsEditable is true', () => {
-      const wrapper = shallow(
-        <TimeZone
-          phrases={phrases}
-          timezoneIsEditable={true}
-        />
-      );
-
       it('should render the Time Picker modal footer clickable', () => {
+        const wrapper = shallow(
+          <TimeZone
+            phrases={phrases}
+            timezoneIsEditable={true}
+          />
+        );
+
         expect(wrapper.find('.time_picker_modal_footer').hasClass('clickable')).to.equal(true);
       });
 
-      it('should render the TimeZonePicker', () => {
-        expect(wrapper.find('TimeZonePicker')).to.have.lengthOf(1);
+      describe('when focused is true', () => {
+        it('should render the TimeZonePicker', () => {
+          const wrapper = shallow(
+            <TimeZone
+              phrases={phrases}
+              timezoneIsEditable={true}
+            />
+          );
+          wrapper.setState({ focused: true });
+
+          expect(wrapper.find('TimeZonePicker')).to.have.lengthOf(1);
+        });
+      });
+
+      describe('when focused is false', () => {
+        it('should not render the TimeZonePicker', () => {
+          const wrapper = shallow(
+            <TimeZone
+              phrases={phrases}
+              timezoneIsEditable={true}
+            />
+          );
+          wrapper.setState({ focused: false });
+
+          expect(wrapper.find('TimeZonePicker')).to.have.lengthOf(0);
+        });
       });
     });
 
     describe('when timezoneIsEditable is false', () => {
-      const wrapper = shallow(
-        <TimeZone
-          phrases={phrases}
-          timezoneIsEditable={false}
-        />
-      );
-
       it('should not render the Time Picker modal footer clickable', () => {
+        const wrapper = shallow(
+          <TimeZone
+            phrases={phrases}
+            timezoneIsEditable={false}
+          />
+        );
+
         expect(wrapper.find('.time_picker_modal_footer').hasClass('clickable')).to.equal(false);
       });
 
-      it('should not render the TimeZonePicker', () => {
-        expect(wrapper.find('TimeZonePicker')).to.have.lengthOf(0);
+      describe('when focused is true', () => {
+        it('should not render the TimeZonePicker', () => {
+          const wrapper = shallow(
+            <TimeZone
+              phrases={phrases}
+              timezoneIsEditable={false}
+            />
+          );
+          wrapper.setState({ focused: true });
+
+          expect(wrapper.find('TimeZonePicker')).to.have.lengthOf(0);
+        });
+      });
+
+      describe('when focused is false', () => {
+        it('should not render the TimeZonePicker', () => {
+          const wrapper = shallow(
+            <TimeZone
+              phrases={phrases}
+              timezoneIsEditable={false}
+            />
+          );
+          wrapper.setState({ focused: false });
+
+          expect(wrapper.find('TimeZonePicker')).to.have.lengthOf(0);
+        });
       });
     });
   });
@@ -73,7 +121,7 @@ describe('TimeZone', () => {
           phrases={phrases}
         />
       );
-      wrapper.state().focused = true;
+      wrapper.setState({ focused: true });
 
       wrapper.instance().onClearFocus();
       expect(wrapper.state().focused).to.equal(false);
@@ -89,7 +137,7 @@ describe('TimeZone', () => {
     );
 
     it('should toggle focused', () => {
-      wrapper.state().focused = true;
+      wrapper.setState({ focused: true });
 
       wrapper.instance().handleFocusedChange();
       expect(wrapper.state().focused).to.equal(false);
@@ -99,7 +147,7 @@ describe('TimeZone', () => {
     });
 
     it('should toggle focused onClick of modal footer', () => {
-      wrapper.state().focused = false;
+      wrapper.setState({ focused: false });
       wrapper.find('.time_picker_modal_footer').simulate('click');
       expect(wrapper.state().focused).to.equal(true);
     });

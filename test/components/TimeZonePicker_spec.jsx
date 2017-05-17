@@ -37,84 +37,56 @@ describe('TimeZonePicker', () => {
     });
   });
 
-  describe('props', () => {
-    describe('when focused is true', () => {
+  describe('onClearFocus func', () => {
+    it('should callback when onClick header "back" icon', () => {
+      const onFocusChangeStub = sinon.stub();
       const wrapper = shallow(
         <TimeZonePicker
           phrases={phrases}
-          focused={true}
+          onClearFocus={onFocusChangeStub}
         />
       );
-
-      it('should render the modal container as active', () => {
-        expect(wrapper.find('.timezone_picker_modal_container').hasClass('active')).to.equal(true);
-      });
+      wrapper.find('.timezone_picker_modal_header').find('svg').parent().simulate('click');
+      expect(onFocusChangeStub.callCount).to.equal(1);
     });
 
-    describe('when focused is false', () => {
+    it('should callback when onClick Button', () => {
+      const onFocusChangeStub = sinon.stub();
       const wrapper = shallow(
         <TimeZonePicker
           phrases={phrases}
-          focused={false}
+          onClearFocus={onFocusChangeStub}
         />
       );
-
-      it('should not render the modal container as active', () => {
-        expect(wrapper.find('.timezone_picker_modal_container').hasClass('active')).to.equal(false);
-      });
+      wrapper.find('Button').simulate('click');
+      expect(onFocusChangeStub.callCount).to.equal(1);
     });
 
-    describe('onClearFocus func', () => {
-      it('should callback when onClick header "back" icon', () => {
-        const onFocusChangeStub = sinon.stub();
-        const wrapper = shallow(
-          <TimeZonePicker
-            phrases={phrases}
-            onClearFocus={onFocusChangeStub}
-          />
-        );
-        wrapper.find('.timezone_picker_modal_header').find('svg').parent().simulate('click');
-        expect(onFocusChangeStub.callCount).to.equal(1);
-      });
-
-      it('should callback when onClick Button', () => {
-        const onFocusChangeStub = sinon.stub();
-        const wrapper = shallow(
-          <TimeZonePicker
-            phrases={phrases}
-            onClearFocus={onFocusChangeStub}
-          />
-        );
-        wrapper.find('Button').simulate('click');
-        expect(onFocusChangeStub.callCount).to.equal(1);
-      });
-
-      it('should callback when timezone change', () => {
-        const onFocusChangeStub = sinon.stub();
-        const wrapper = shallow(
-          <TimeZonePicker
-            phrases={phrases}
-            onClearFocus={onFocusChangeStub}
-          />
-        );
-        wrapper.instance().handleTimezoneChange([mockTimezone]);
-        expect(onFocusChangeStub.callCount).to.equal(1);
-      });
+    it('should callback when timezone change', () => {
+      const onFocusChangeStub = sinon.stub();
+      const wrapper = shallow(
+        <TimeZonePicker
+          phrases={phrases}
+          onClearFocus={onFocusChangeStub}
+        />
+      );
+      wrapper.instance().handleTimezoneChange([mockTimezone]);
+      expect(onFocusChangeStub.callCount).to.equal(1);
     });
+  });
 
-    describe('handle timezone change func', () => {
-      it('should callback when timezone change', () => {
-        const onTimezoneChangeStub = sinon.stub();
-        const wrapper = shallow(
-          <TimeZonePicker
-            phrases={phrases}
-            handleTimezoneChange={onTimezoneChangeStub}
-          />
-        );
-        wrapper.instance().handleTimezoneChange([mockTimezone]);
-        expect(onTimezoneChangeStub.callCount).to.equal(1);
-        expect(onTimezoneChangeStub.calledWith(mockTimezone));
-      });
+  describe('handle timezone change func', () => {
+    it('should callback when timezone change', () => {
+      const onTimezoneChangeStub = sinon.stub();
+      const wrapper = shallow(
+        <TimeZonePicker
+          phrases={phrases}
+          handleTimezoneChange={onTimezoneChangeStub}
+        />
+      );
+      wrapper.instance().handleTimezoneChange([mockTimezone]);
+      expect(onTimezoneChangeStub.callCount).to.equal(1);
+      expect(onTimezoneChangeStub.calledWith(mockTimezone));
     });
   });
 });
