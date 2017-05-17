@@ -8,6 +8,8 @@ README：[中文版](./README_CN.md)
 
 > A time picker react-component, no jquery-rely, writing in es6 standard style.
 
+**ATTENTION: new version 2.0.0 published. Check [here](./CHANGELOG.md) to see these changed props.**
+
 ![react-times](./intro_src/react-times.gif)
 
 # Online demo
@@ -141,6 +143,14 @@ render() {
 
 ![DarkColor](./intro_src/DarkColor.png)
 
+- 24 hours mode, showing user current timezone. (Besides, your can use `timezone` props to custom timezone)
+
+```javascript
+<TimePicker showTimezone={true}/>
+```
+
+![showTimezone](./intro_src/24HoursMode-showTimezone.png)
+
 - 24 hours mode with Classic Theme, light color by default
 
 ```javascript
@@ -216,9 +226,17 @@ timeMode=12
 
 - `meridiem`
 
-> `React.PropTypes.string`, support "PM" or "AM" for 12 hours mode.
+> `React.PropTypes.string`, support "PM" or "AM" for 12 hours mode, default `AM`
 
-- `trigger`
+- `showTimezone`
+
+> `React.PropTypes.bool`, whether show user timezone or not, default `false`
+
+- `timezone`
+
+> `React.PropTypes.string`, change user timezone, default user current local timezone.
+
+- trigger`
 
 > `React.component`, means a DOM which can control TimePicker Modal "open" or "close" status.
 
@@ -369,6 +387,14 @@ onTimeChange(time) {
 # Thx
 
 Thanks to the Airbnb's open source project: [react-dates](https://github.com/airbnb/react-dates), I have learn a lot from that. Thanks.
+
+# Core Contributers 🎉
+
+- **[carlodicelico](https://github.com/carlodicelico)**
+
+- **[thg303](https://github.com/thg303)**
+
+- **[naseeihity](https://github.com/naseeihity)**
 
 # License
 
