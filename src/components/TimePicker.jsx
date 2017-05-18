@@ -23,6 +23,7 @@ const propTypes = {
   onMeridiemChange: PropTypes.func,
   onMinuteChange: PropTypes.func,
   onTimeChange: PropTypes.func,
+  onTimezoneChange: PropTypes.func,
   phrases: PropTypes.object,
   placeholder: PropTypes.string,
   showTimezone: PropTypes.bool,
@@ -55,6 +56,7 @@ const defaultProps = {
   onMeridiemChange: () => {},
   onMinuteChange: () => {},
   onTimeChange: () => {},
+  onTimezoneChange: () => {},
   placeholder: '',
   showTimezone: false,
   theme: 'material',
@@ -75,6 +77,7 @@ class TimePicker extends React.PureComponent {
     this.handleHourChange = this.handleHourChange.bind(this);
     this.handleMeridiemChange = this.handleMeridiemChange.bind(this);
     this.handleMinuteChange = this.handleMinuteChange.bind(this);
+    this.handleTimezoneChange = this.handleTimezoneChange.bind(this);
     this.onClearFocus = this.onClearFocus.bind(this);
     this.onFocus = this.onFocus.bind(this);
   }
@@ -151,6 +154,11 @@ class TimePicker extends React.PureComponent {
     onTimeChange && onTimeChange(time);
   }
 
+  handleTimezoneChange(timezone) {
+    const {onTimezoneChange} = this.props;
+    onTimezoneChange && onTimezoneChange(timezone);
+  }
+
   handleHourAndMinuteChange(time) {
     const {onTimeChange, autoMode} = this.props;
     if (autoMode) {
@@ -185,6 +193,7 @@ class TimePicker extends React.PureComponent {
         handleHourChange={this.handleHourChange}
         handleMeridiemChange={this.handleMeridiemChange}
         handleMinuteChange={this.handleMinuteChange}
+        handleTimezoneChange={this.handleTimezoneChange}
         hour={hour}
         language={language}
         meridiem={this.meridiem}
