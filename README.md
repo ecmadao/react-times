@@ -46,7 +46,7 @@ $ npm install react-times --save-dev
 
 # Usage
 
-This component has two themes now: Material Theme by default , or Classic Theme.
+This component has two themes now: Material Theme by default, or Classic Theme.
 
 > Always remember import css file when you use react-times
 
@@ -277,6 +277,24 @@ If you don't want to drag the pointer, then you can set `draggable` props to `fa
  */
 <TimePicker
   language="zh-cn" // 中文简体
+/>
+```
+
+- `phrases`
+
+> `React.object`, specify text values to use for specific messages.  By default, phrases will be set from defaults based on language.
+Specify any of the available phrases you wish to override or all of them if your desired language is not yet supported.
+See [language.js](./src/utils/language.js) for default phrases.
+
+```javascript
+<TimePicker
+  phrases={{
+    confirm: 'Are you sure?',
+    cancel: 'Do you want to cancel?',
+    close: 'DONE',
+    am: 'Ante Meridiem',
+    pm: 'Post Meridiem'
+  }}
 />
 ```
 

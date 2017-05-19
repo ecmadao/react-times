@@ -5,6 +5,9 @@ import sinon from 'sinon-sandbox';
 
 import TwelveHoursMode from '../../src/components/MaterialTheme/TwelveHoursMode';
 import PickerDragHandler from '../../src/components/Picker/PickerDragHandler';
+import languageHelper from '../../src/utils/language';
+
+const phrases = languageHelper.get('en');
 
 describe('TwelveHoursMode', () => {
   describe('TwelveHoursMode init with defaultTime', () => {
@@ -13,6 +16,7 @@ describe('TwelveHoursMode', () => {
         hour={'01'}
         minute={'45'}
         focused={true}
+        phrases={phrases}
       />
     );
     it('should render component correctly', () => {
@@ -42,6 +46,7 @@ describe('TwelveHoursMode', () => {
         minute={'45'}
         focused={true}
         meridiem={'AM'}
+        phrases={phrases}
         handleHourChange={handleHourChange}
         handleMinuteChange={handleMinuteChange}
         handleMeridiemChange={handleMeridiemChange}
@@ -64,6 +69,45 @@ describe('TwelveHoursMode', () => {
       expect(handleMeridiemChange.callCount).to.equal(0);
       wrapper.instance().handleMeridiemChange('PM');
       expect(handleMeridiemChange.callCount).to.equal(1);
+    });
+  });
+
+  describe('Timezone handling', () => {
+    describe('when showTimezone is true', () => {
+      const mockTimezone = {
+        zoneName: 'Some Zone',
+        zoneAbbr: 'SZ'
+      };
+      const wrapper = shallow(
+        <TwelveHoursMode
+          hour={'01'}
+          minute={'45'}
+          focused={true}
+          phrases={phrases}
+          timezone={mockTimezone}
+          showTimezone={true}
+        />
+      );
+
+      it('should render the Timezone footer', () => {
+        expect(wrapper.find('Timezone')).to.have.lengthOf(1);
+      });
+    });
+
+    describe('when showTimezone is false', () => {
+      const wrapper = shallow(
+        <TwelveHoursMode
+          hour={'01'}
+          minute={'45'}
+          focused={true}
+          phrases={phrases}
+          showTimezone={false}
+        />
+      );
+
+      it('should not render the Timezone footer', () => {
+        expect(wrapper.find('Timezone')).to.have.lengthOf(0);
+      });
     });
   });
 });
