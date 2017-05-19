@@ -281,6 +281,22 @@ timeMode=12
 />
 ```
 
+- `phrases`
+
+> `React.object`，用于自定义一些短语。可以在 [language.js](./src/utils/language.js) 查看所有的默认短语
+
+```javascript
+<TimePicker
+  phrases={{
+    confirm: '确认更改？',
+    cancel: '确认取消？',
+    close: 'DONE',
+    am: '上午',
+    pm: '下午'
+  }}
+/>
+```
+
 ## 回调
 
 - `onFocusChange`
@@ -331,6 +347,12 @@ onTimeChange(time) {
 
 > 当 上、下午改变时触发的回调
 
+- `onTimezoneChange`
+
+`React.PropTypes.func`
+
+> 当时区改变时的回调
+
 # 相关文章
 
 - [一言不合造轮子--撸一个ReactTimePicker](https://github.com/ecmadao/Coding-Guide/blob/master/Notes/React/ReactJS/Write%20a%20React%20Timepicker%20Component%20hand%20by%20hand.md)
@@ -374,6 +396,8 @@ onTimeChange(time) {
 # 核心贡献者 🎉
 
 - **[carlodicelico](https://github.com/carlodicelico)**
+
+- **[erin-doyle](https://github.com/erin-doyle)**
 
 - **[thg303](https://github.com/thg303)**
 

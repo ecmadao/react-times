@@ -236,7 +236,7 @@ timeMode=12
 
 > `React.PropTypes.string`, change user timezone, default user current local timezone.
 
-- trigger`
+- `trigger`
 
 > `React.component`, means a DOM which can control TimePicker Modal "open" or "close" status.
 
@@ -283,8 +283,8 @@ If you don't want to drag the pointer, then you can set `draggable` props to `fa
 - `phrases`
 
 > `React.object`, specify text values to use for specific messages.  By default, phrases will be set from defaults based on language.
-Specify any of the available phrases you wish to override or all of them if your desired language is not yet supported.
-See [language.js](./src/utils/language.js) for default phrases.
+> Specify any of the available phrases you wish to override or all of them if your desired language is not yet supported.
+> See [language.js](./src/utils/language.js) for default phrases.
 
 ```javascript
 <TimePicker
@@ -348,6 +348,12 @@ onTimeChange(time) {
 
 > The callback func when meridiem changed.
 
+- `onTimezoneChange`
+
+`React.PropTypes.func`
+
+> The callback func when timezone changed.
+
 # Article
 
 - [一言不合造轮子--撸一个ReactTimePicker](https://github.com/ecmadao/Coding-Guide/blob/master/Notes/React/ReactJS/Write%20a%20React%20Timepicker%20Component%20hand%20by%20hand.md)
@@ -391,9 +397,8 @@ Thanks to the Airbnb's open source project: [react-dates](https://github.com/air
 # Core Contributers 🎉
 
 - **[carlodicelico](https://github.com/carlodicelico)**
-
+- **[erin-doyle](https://github.com/erin-doyle)**
 - **[thg303](https://github.com/thg303)**
-
 - **[naseeihity](https://github.com/naseeihity)**
 
 # License

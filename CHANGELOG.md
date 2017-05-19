@@ -1,5 +1,13 @@
 # CHANGELOG
 
+### v2.1.0
+
+#### new props
+
+- `phrases`: `React.PropTypes.object`
+- `timezone`: `React.PropTypes.string`
+- `onTimezoneChange`: `React.PropTypes.func`
+
 ### v2.0.0
 
 #### changed props
@@ -12,4 +20,3 @@
 
 - `showTimezone`: `React.PropTypes.bool`, default `false`
 - `timezone`:  `React.PropTypes.string`, default user current local timezone
-
