@@ -190,18 +190,19 @@ class TwelveHoursMode extends React.PureComponent {
             handleTimePointerClick={this.handleMinutePointerClick}
           />
           <PickerDragHandler
+            step={1}
+            rotateState={minuteRotateState}
+            time={parseInt(minute)}
+            minLength={MAX_ABSOLUTE_POSITION}
+            draggable={draggable}
+            handleTimePointerClick={this.handleMinutePointerClick} />
+          <PickerDragHandler
             step={0}
             rotateState={hourRotateState}
             time={parseInt(hour)}
             maxLength={MIN_ABSOLUTE_POSITION}
             draggable={draggable}
             handleTimePointerClick={this.handleHourPointerClick} />
-          <PickerDragHandler
-            step={1}
-            rotateState={minuteRotateState}
-            time={parseInt(minute)}
-            minLength={MAX_ABSOLUTE_POSITION}
-            handleTimePointerClick={this.handleMinutePointerClick} />
         </div>
         {showTimezone
           ? <Timezone

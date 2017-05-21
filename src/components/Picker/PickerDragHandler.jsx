@@ -4,7 +4,7 @@ import {
   PICKER_RADIUS,
   POINTER_RADIUS,
 } from '../../utils/const_value.js';
-import React, { PropTypes } from 'react';
+import React, {PropTypes} from 'react';
 
 import ReactDOM from 'react-dom';
 import darg from '../../utils/drag';
@@ -45,6 +45,10 @@ class PickerDragHandler extends React.PureComponent {
     this.startY = 0;
     this.originX = null;
     this.originY = null;
+    this.dragCenterX = null;
+    this.dragCenterY = null;
+    this.offsetDragCenterX = 0;
+    this.offsetDragCenterY = 0;
     this.state = this.initialRotationAndLength();
 
     this.handleMouseDown = this.handleMouseDown.bind(this);
@@ -89,7 +93,7 @@ class PickerDragHandler extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { step, time, rotateState } = this.props;
+    const {step, time, rotateState} = this.props;
     const prevStep = prevProps.step;
     const prevTime = prevProps.time;
     const PrevRotateState = prevProps.rotateState
@@ -99,13 +103,13 @@ class PickerDragHandler extends React.PureComponent {
   }
 
   initialRotationAndLength() {
-    const { rotateState } = this.props;
+    const {rotateState} = this.props;
     const {
       top,
       height,
       pointerRotate
     } = rotateState;
-
+    this.initialHeight = height;
     return {
       top,
       height,
@@ -122,7 +126,19 @@ class PickerDragHandler extends React.PureComponent {
     const centerPoint = ReactDOM.findDOMNode(this.pickerCenter);
     const centerPointPos = centerPoint.getBoundingClientRect();
     this.originX = centerPointPos.left + centerPoint.clientWidth;
-    this.originY = centerPointPos.top + centerPoint.clientWidth;
+    this.originY = centerPointPos.top + centerPoint.clientHeight;
+
+    this.resetDragCenter();
+  }
+
+  resetDragCenter() {
+    this.offsetDragCenterX = 0;
+    this.offsetDragCenterY = 0;
+
+    const dragCenterPoint = ReactDOM.findDOMNode(this.dragCenter);
+    const dragCenterPointPos = dragCenterPoint.getBoundingClientRect();
+    this.dragCenterX = dragCenterPointPos.left + dragCenterPoint.clientWidth;
+    this.dragCenterY = dragCenterPointPos.top + dragCenterPoint.clientHeight / 2;
   }
 
   getRadian(x, y) {
@@ -140,25 +156,30 @@ class PickerDragHandler extends React.PureComponent {
     const event = e || window.event;
     event.preventDefault();
     event.stopPropagation();
-    this.setState({
-      draging: true
-    });
     const pos = darg.mousePosition(event);
     this.startX = pos.x;
     this.startY = pos.y;
+    if (!this.state.draging) {
+      this.resetDragCenter();
+      this.offsetDragCenterX = this.dragCenterX - this.startX;
+      this.offsetDragCenterY = this.dragCenterY - this.startY;
+    }
+    this.setState({
+      draging: true
+    });
   }
 
   handleMouseMove(e) {
     if (this.state.draging) {
-      const { minLength, maxLength } = this.props;
+      const {minLength, maxLength} = this.props;
       const pos = darg.mousePosition(e);
-      const dragX = pos.x;
-      const dragY = pos.y;
+      const dragX = pos.x + this.offsetDragCenterX;
+      const dragY = pos.y + this.offsetDragCenterY;
       if (this.originX !== dragX && this.originY !== dragY) {
         const sRad = this.getRadian(dragX, dragY);
         const pointerRotate = sRad * (360 / (2 * Math.PI));
         let absolutePosition = this.getAbsolutePosition(dragX, dragY);
-        absolutePosition = darg.validatePosition(absolutePosition, minLength / 2, maxLength);
+        absolutePosition = darg.validatePosition(absolutePosition, minLength, maxLength);
         const height = absolutePosition - POINTER_RADIUS;
         const top = PICKER_RADIUS - height;
         this.setState({
@@ -184,8 +205,8 @@ class PickerDragHandler extends React.PureComponent {
       } = this.props;
 
       const pos = darg.mousePosition(e);
-      const endX = pos.x;
-      const endY = pos.y;
+      const endX = pos.x + this.offsetDragCenterX;
+      const endY = pos.y + this.offsetDragCenterY;
 
       const sRad = this.getRadian(endX, endY);
       let degree = sRad * (360 / (2 * Math.PI));
@@ -210,23 +231,25 @@ class PickerDragHandler extends React.PureComponent {
       }
       let time = absolutePosition === minLength ? roundSeg : roundSeg + 12;
       time = step === 0 ? (time === 24 ? 12 : time) : (time * 5 === 60 ? 0 : time * 5);
-      this.setState({ pointerRotate });
+
+      this.setState({pointerRotate});
       handleTimePointerClick && handleTimePointerClick(time, pointerRotate);
     }
   }
 
   render() {
-    const { time, draggable } = this.props;
-    const { draging, height, top, pointerRotate } = this.state;
+    const {time, draggable} = this.props;
+    const {draging, height, top, pointerRotate} = this.state;
     const pickerPointerClass = draging ? "picker_pointer" : "picker_pointer animation";
 
     return (
       <div className="picker_handler">
         <div
-          ref={(d) => this.dragPointer = d}
+          ref={d => this.dragPointer = d}
           className={pickerPointerClass}
           style={darg.initialPointerStyle(height, top, pointerRotate)}>
           <div
+            ref={r => this.dragCenter = r}
             className={`pointer_drag ${draggable ? 'draggable' : ''}`}
             style={darg.rotateStyle(-pointerRotate)}
             onMouseDown={draggable ? this.handleMouseDown : () => {}}
