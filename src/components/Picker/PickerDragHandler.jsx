@@ -46,6 +46,7 @@ class PickerDragHandler extends React.PureComponent {
     this.originX = null;
     this.originY = null;
     this.state = this.initialRotationAndLength();
+    this.inheight = 0;
 
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
@@ -105,10 +106,10 @@ class PickerDragHandler extends React.PureComponent {
       height,
       pointerRotate
     } = rotateState;
-
     return {
       top,
       height,
+      initialHeight: height,
       pointerRotate,
       draging: false
     }
@@ -210,7 +211,13 @@ class PickerDragHandler extends React.PureComponent {
       }
       let time = absolutePosition === minLength ? roundSeg : roundSeg + 12;
       time = step === 0 ? (time === 24 ? 12 : time) : (time * 5 === 60 ? 0 : time * 5);
-      this.setState({ pointerRotate });
+      const height = this.state.initialHeight;
+      const top = PICKER_RADIUS - height;
+      this.setState({
+        pointerRotate,
+        height,
+        top
+      });
       handleTimePointerClick && handleTimePointerClick(time, pointerRotate);
     }
   }
