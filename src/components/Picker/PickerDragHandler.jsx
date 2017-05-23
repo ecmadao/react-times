@@ -96,7 +96,7 @@ class PickerDragHandler extends React.PureComponent {
     const {step, time, rotateState} = this.props;
     const prevStep = prevProps.step;
     const prevTime = prevProps.time;
-    const PrevRotateState = prevProps.rotateState
+    const PrevRotateState = prevProps.rotateState;
     if (step !== prevStep || time !== prevTime || rotateState.pointerRotate !== PrevRotateState.pointerRotate) {
       this.resetState();
     }
@@ -226,7 +226,7 @@ class PickerDragHandler extends React.PureComponent {
           absolutePosition = minLength;
         }
       }
-      if (roundSeg > 12) {
+      while (roundSeg > 12) {
         roundSeg = roundSeg - 12;
       }
       let time = absolutePosition === minLength ? roundSeg : roundSeg + 12;
@@ -259,7 +259,7 @@ class PickerDragHandler extends React.PureComponent {
         </div>
         <div
           className="picker_center"
-          ref={(p) => this.pickerCenter = p}></div>
+          ref={(p) => this.pickerCenter = p}/>
       </div>
     );
   }
