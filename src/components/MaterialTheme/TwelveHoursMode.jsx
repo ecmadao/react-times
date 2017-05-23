@@ -76,7 +76,7 @@ class TwelveHoursMode extends React.PureComponent {
         pointerRotate = 360 * (index + 1) / 12;
       }
     });
-    return pointerRotate
+    return pointerRotate;
   }
 
   resetMinuteDegree() {
