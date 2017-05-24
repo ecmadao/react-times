@@ -60,35 +60,43 @@ class PickerDragHandler extends React.PureComponent {
   componentDidMount() {
     this.resetOrigin();
     if (window.addEventListener) {
-      window.addEventListener('resize', this.resetOrigin, true);
+      window.addEventListener('resize', this.resetOrigin, false);
     } else {
       window.addEventListener('onresize', this.resetOrigin);
     }
     if (document.addEventListener) {
-      document.addEventListener('scroll', this.resetOrigin, true);
-      document.addEventListener('mousemove', this.handleMouseMove, true);
-      document.addEventListener('mouseup', this.handleMouseUp, true);
+      document.addEventListener('scroll', this.resetOrigin, false);
+      document.addEventListener('mousemove', this.handleMouseMove, false);
+      document.addEventListener('mouseup', this.handleMouseUp, false);
+      document.addEventListener('touchmove', this.handleMouseMove, false);
+      document.addEventListener('touchend', this.handleMouseUp, false);
     } else {
       document.addEventListener('onscroll', this.resetOrigin);
       document.attachEvent('onmousemove', this.handleMouseMove);
       document.attachEvent('onmouseup', this.handleMouseUp);
+      document.attachEvent('ontouchmove', this.handleMouseMove);
+      document.attachEvent('ontouchend', this.handleMouseUp);
     }
   }
 
   componentWillUnmount() {
     if (window.addEventListener) {
-      window.removeEventListener('resize', this.resetOrigin, true);
+      window.removeEventListener('resize', this.resetOrigin, false);
     } else {
       window.detachEvent('onresize', this.resetOrigin);
     }
     if (document.removeEventListener) {
-      document.removeEventListener('scroll', this.resetOrigin, true);
-      document.removeEventListener('mousemove', this.handleMouseMove, true);
-      document.removeEventListener('mouseup', this.handleMouseUp, true);
+      document.removeEventListener('scroll', this.resetOrigin, false);
+      document.removeEventListener('mousemove', this.handleMouseMove, false);
+      document.removeEventListener('mouseup', this.handleMouseUp, false);
+      document.removeEventListener('mousemove', this.handleMouseMove, false);
+      document.removeEventListener('mouseend', this.handleMouseUp, false);
     } else {
       document.detachEvent('onscroll', this.resetOrigin);
       document.detachEvent('onmousemove', this.handleMouseMove);
       document.detachEvent('onmouseup', this.handleMouseUp);
+      document.detachEvent('onmousemove', this.handleMouseMove);
+      document.detachEvent('onmouseend', this.handleMouseUp);
     }
   }
 
@@ -253,6 +261,7 @@ class PickerDragHandler extends React.PureComponent {
             className={`pointer_drag ${draggable ? 'draggable' : ''}`}
             style={darg.rotateStyle(-pointerRotate)}
             onMouseDown={draggable ? this.handleMouseDown : () => {}}
+            onTouchStart={draggable ? this.handleMouseDown : () => {}}
           >
             {time}
           </div>
