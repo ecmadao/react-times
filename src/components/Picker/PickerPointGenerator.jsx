@@ -32,6 +32,7 @@ const pickerPointGenerator = (type = "hour", mode = 24) => {
               key={index}
               angle={angle}
               handleTimeChange={this.handleTimePointerClick}
+              rotateState={this.props.rotateState}
             />
           );
         }
@@ -50,6 +51,7 @@ const pickerPointGenerator = (type = "hour", mode = 24) => {
             angle={angle}
             pointClass={pointClass}
             handleTimeChange={this.handleTimePointerClick}
+            rotateState={this.props.rotateState}
           />
         );
       });

@@ -1,6 +1,4 @@
 @import "../base.css";
-@import "../../node_modules/react-bootstrap-typeahead/css/Typeahead.css";
-@import "../../node_modules/react-bootstrap-typeahead/css/Loader.css";
 
 .time_picker_modal_container {
   user-select: none;

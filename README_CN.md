@@ -396,11 +396,9 @@ onTimeChange(time) {
 # 核心贡献者 🎉
 
 - **[carlodicelico](https://github.com/carlodicelico)**
-
 - **[erin-doyle](https://github.com/erin-doyle)**
-
+- **[shianqi](https://github.com/shianqi)**
 - **[thg303](https://github.com/thg303)**
-
 - **[naseeihity](https://github.com/naseeihity)**
 
 # 版权
