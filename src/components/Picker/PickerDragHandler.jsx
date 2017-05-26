@@ -45,10 +45,7 @@ class PickerDragHandler extends React.PureComponent {
     this.startY = 0;
     this.originX = null;
     this.originY = null;
-    this.dragCenterX = null;
-    this.dragCenterY = null;
-    this.offsetDragCenterX = 0;
-    this.offsetDragCenterY = 0;
+
     this.state = this.initialRotationAndLength();
 
     this.handleMouseDown = this.handleMouseDown.bind(this);
@@ -133,25 +130,20 @@ class PickerDragHandler extends React.PureComponent {
   resetOrigin() {
     const centerPoint = ReactDOM.findDOMNode(this.pickerCenter);
     const centerPointPos = centerPoint.getBoundingClientRect();
-    this.originX = centerPointPos.left + centerPoint.clientWidth;
-    this.originY = centerPointPos.top + centerPoint.clientHeight;
-
-    this.resetDragCenter();
-  }
-
-  resetDragCenter() {
-    this.offsetDragCenterX = 0;
-    this.offsetDragCenterY = 0;
-
-    const dragCenterPoint = ReactDOM.findDOMNode(this.dragCenter);
-    const dragCenterPointPos = dragCenterPoint.getBoundingClientRect();
-    this.dragCenterX = dragCenterPointPos.left + dragCenterPoint.clientWidth;
-    this.dragCenterY = dragCenterPointPos.top + dragCenterPoint.clientHeight / 2;
+    this.originX = centerPointPos.left + centerPoint.clientWidth / 2 +
+        Math.max(document.documentElement.scrollLeft, document.body.scrollLeft);
+    this.originY = centerPointPos.top + centerPoint.clientHeight / 2 +
+        Math.max(document.documentElement.scrollTop, document.body.scrollTop);
   }
 
   getRadian(x, y) {
     let sRad = Math.atan2(y - this.originY, x - this.originX);
     sRad -= Math.atan2(this.startY - this.originY, this.startX - this.originX);
+    if (sRad > Math.PI) {
+      sRad -= Math.PI * 2;
+    } else if (sRad < -Math.PI) {
+      sRad += Math.PI * 2;
+    }
     sRad += darg.degree2Radian(this.props.rotateState.pointerRotate);
     return sRad;
   }
@@ -161,18 +153,12 @@ class PickerDragHandler extends React.PureComponent {
   }
 
   handleMouseDown(e) {
-    console.log(1);
     const event = e || window.event;
     event.preventDefault();
     event.stopPropagation();
     const pos = darg.mousePosition(event);
     this.startX = pos.x;
     this.startY = pos.y;
-    if (!this.state.draging) {
-      this.resetDragCenter();
-      this.offsetDragCenterX = this.dragCenterX - this.startX;
-      this.offsetDragCenterY = this.dragCenterY - this.startY;
-    }
     this.setState({
       draging: true
     });
@@ -182,8 +168,8 @@ class PickerDragHandler extends React.PureComponent {
     if (this.state.draging) {
       const {minLength, maxLength} = this.props;
       const pos = darg.mousePosition(e);
-      const dragX = pos.x + this.offsetDragCenterX;
-      const dragY = pos.y + this.offsetDragCenterY;
+      const dragX = pos.x;
+      const dragY = pos.y;
       if (this.originX !== dragX && this.originY !== dragY) {
         const sRad = this.getRadian(dragX, dragY);
         const pointerRotate = sRad * (360 / (2 * Math.PI));
@@ -214,15 +200,11 @@ class PickerDragHandler extends React.PureComponent {
       } = this.props;
 
       const pos = darg.mousePosition(e);
-      const endX = pos.x + this.offsetDragCenterX;
-      const endY = pos.y + this.offsetDragCenterY;
+      const endX = pos.x;
+      const endY = pos.y;
 
       const sRad = this.getRadian(endX, endY);
       let degree = sRad * (360 / (2 * Math.PI));
-
-      if (degree < 0) {
-        degree = 360 + degree;
-      }
       let roundSeg = Math.round(degree / (360 / 12));
       const pointerRotate = roundSeg * (360 / 12);
       let absolutePosition = this.getAbsolutePosition(endX, endY);

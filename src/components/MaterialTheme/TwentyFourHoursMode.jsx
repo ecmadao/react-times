@@ -185,6 +185,7 @@ class TwentyFourHoursMode extends React.PureComponent {
           <PickerPointGenerator
             ref={ref => this.pickerPointerContainer = ref}
             handleTimePointerClick={this.handleTimePointerClick}
+            rotateState={rotateState}
           />
           <PickerDragHandler
             step={step}
