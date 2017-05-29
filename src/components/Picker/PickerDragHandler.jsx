@@ -86,14 +86,14 @@ class PickerDragHandler extends React.PureComponent {
       document.removeEventListener('scroll', this.resetOrigin, true);
       document.removeEventListener('mousemove', this.handleMouseMove, true);
       document.removeEventListener('mouseup', this.handleMouseUp, true);
-      document.removeEventListener('mousemove', this.handleMouseMove, true);
-      document.removeEventListener('mouseend', this.handleMouseUp, true);
+      document.removeEventListener('touchmove', this.handleMouseMove, true);
+      document.removeEventListener('touchend', this.handleMouseUp, true);
     } else {
       document.detachEvent('onscroll', this.resetOrigin);
       document.detachEvent('onmousemove', this.handleMouseMove);
       document.detachEvent('onmouseup', this.handleMouseUp);
-      document.detachEvent('onmousemove', this.handleMouseMove);
-      document.detachEvent('onmouseend', this.handleMouseUp);
+      document.detachEvent('ontouchmove', this.handleMouseMove);
+      document.detachEvent('ontouchend', this.handleMouseUp);
     }
   }
 
