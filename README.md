@@ -352,7 +352,10 @@ onTimeChange(time) {
 
 `React.PropTypes.func`
 
-> The callback func when timezone changed.
+> The callback func when timezone changed.  Receives timezone object as argument with the following properties:
+* city
+* zoneAbbr
+* zoneName
 
 # Article
 

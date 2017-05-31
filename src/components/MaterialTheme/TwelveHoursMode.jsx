@@ -31,9 +31,9 @@ const propTypes = {
     zoneName: PropTypes.string
   }),
   timezoneIsEditable: PropTypes.bool,
+  onTimezoneChange: PropTypes.func,
   handleHourChange: PropTypes.func,
   handleMinuteChange: PropTypes.func,
-  handleTimezoneChange: PropTypes.func,
   handleEditTimezoneChange: PropTypes.func,
   handleShowTimezoneChange: PropTypes.func,
 };
@@ -47,7 +47,6 @@ const defaultProps = {
   showTimezone: false,
   handleHourChange: () => {},
   handleMinuteChange: () => {},
-  handleTimezoneChange: () => {},
   handleEditTimezoneChange: () => {},
   handleShowTimezoneChange: () => {}
 };
@@ -145,7 +144,8 @@ class TwelveHoursMode extends React.PureComponent {
       phrases,
       showTimezone,
       timezone,
-      timezoneIsEditable
+      timezoneIsEditable,
+      onTimezoneChange
     } = this.props;
 
     const {hourPointerRotate, minutePointerRotate} = this.state;
@@ -209,6 +209,7 @@ class TwelveHoursMode extends React.PureComponent {
             phrases={phrases}
             timezone={timezone}
             timezoneIsEditable={timezoneIsEditable}
+            onTimezoneChange={onTimezoneChange}
           />
           : ''
         }

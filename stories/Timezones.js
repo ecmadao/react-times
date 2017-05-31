@@ -22,10 +22,14 @@ storiesOf('Timezones', module)
       showTimezone={true} />
   ))
   .addWithInfo('with timezone search', () => {
+    const logTimezone = (timezone) => {
+      console.dir(timezone);
+    };
     return (
       <TimePickerWrapper
         showTimezone={true}
         timezoneIsEditable={true}
+        onTimezoneChange={logTimezone}
       />
     )
   })

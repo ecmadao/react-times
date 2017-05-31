@@ -36,6 +36,8 @@ class Timezone extends React.PureComponent {
 
   handleTimezoneChange(timezone) {
     this.setState({timezone});
+    const {onTimezoneChange} = this.props;
+    onTimezoneChange && onTimezoneChange(timezone);
   }
 
   render() {
@@ -81,11 +83,13 @@ Timezone.propTypes = {
     zoneAbbr: PropTypes.string,
     zoneName: PropTypes.string
   }),
-  timezoneIsEditable: PropTypes.bool
+  timezoneIsEditable: PropTypes.bool,
+  onTimezoneChange: PropTypes.func,
 };
 Timezone.defaultProps = {
   timezone: TIME.tz,
-  timezoneIsEditable: false
+  timezoneIsEditable: false,
+  onTimezoneChange: () => {}
 };
 
 export default Timezone;
