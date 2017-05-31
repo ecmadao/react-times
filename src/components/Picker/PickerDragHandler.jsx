@@ -205,8 +205,8 @@ class PickerDragHandler extends React.PureComponent {
     if (this.state.draging) {
       const {minLength, maxLength} = this.props;
       const pos = darg.mousePosition(e);
-      const dragX = pos.x;
-      const dragY = pos.y;
+      const dragX = pos.x + this.offsetDragCenterX;
+      const dragY = pos.y + this.offsetDragCenterY;
       if (this.originX !== dragX && this.originY !== dragY) {
         const sRad = this.getRadian(dragX, dragY);
         const pointerRotate = sRad * (360 / (2 * Math.PI));
