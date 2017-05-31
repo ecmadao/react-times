@@ -1,8 +1,7 @@
-import React, { PropTypes } from 'react';
+import React, {PropTypes} from 'react';
 
 import TwelveHoursMode from './TwelveHoursMode';
 import TwentyFourHoursMode from './TwentyFourHoursMode';
-import timeHelper from '../../utils/time';
 
 const propTypes = {
   autoMode: PropTypes.bool,
