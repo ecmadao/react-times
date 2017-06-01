@@ -12,7 +12,7 @@ const propTypes = {
   handleMeridiemChange: PropTypes.func,
   handleMinuteChange: PropTypes.func,
   handleShowTimezoneChange: PropTypes.func,
-  handleTimezoneChange: PropTypes.func,
+  onTimezoneChange: PropTypes.func,
   hour: PropTypes.string,
   language: PropTypes.string,
   meridiem: PropTypes.string,
@@ -37,7 +37,6 @@ const defaultProps = {
   handleMeridiemChange: () => {},
   handleMinuteChange: () => {},
   handleShowTimezoneChange: () => {},
-  handleTimezoneChange: () => {},
   hour: '00',
   language: 'en',
   meridiem: 'AM',
@@ -56,7 +55,7 @@ class MaterialTheme extends React.PureComponent {
       handleHourChange,
       handleMinuteChange,
       handleShowTimezoneChange,
-      handleTimezoneChange,
+      onTimezoneChange,
       hour,
       minute,
       phrases,
@@ -74,7 +73,7 @@ class MaterialTheme extends React.PureComponent {
         handleHourChange={handleHourChange}
         handleMinuteChange={handleMinuteChange}
         handleShowTimezoneChange={handleShowTimezoneChange}
-        handleTimezoneChange={handleTimezoneChange}
+        onTimezoneChange={onTimezoneChange}
         hour={hour}
         minute={minute}
         phrases={phrases}
@@ -94,7 +93,7 @@ class MaterialTheme extends React.PureComponent {
       handleMeridiemChange,
       handleMinuteChange,
       handleShowTimezoneChange,
-      handleTimezoneChange,
+      onTimezoneChange,
       hour,
       language,
       meridiem,
@@ -114,7 +113,7 @@ class MaterialTheme extends React.PureComponent {
         handleMeridiemChange={handleMeridiemChange}
         handleMinuteChange={handleMinuteChange}
         handleShowTimezoneChange={handleShowTimezoneChange}
-        handleTimezoneChange={handleTimezoneChange}
+        onTimezoneChange={onTimezoneChange}
         hour={hour}
         language={language}
         meridiem={meridiem}

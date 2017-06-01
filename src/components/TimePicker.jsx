@@ -69,29 +69,27 @@ const defaultProps = {
 class TimePicker extends React.PureComponent {
   constructor(props) {
     super(props);
-    const {focused} = props;
+    const {focused, meridiem, time, timeMode, timezone, onTimezoneChange} = props;
+    const timeData = timeHelper.time(time, meridiem, timeMode, timezone);
+    const timezoneData = timeHelper.tzForName(timeData.timezone)
 
-    this.state = {focused};
+    this.state = {
+      focused,
+      timeData,
+      timezoneData
+    };
 
     this.handleHourAndMinuteChange = this.handleHourAndMinuteChange.bind(this);
     this.handleHourChange = this.handleHourChange.bind(this);
     this.handleMeridiemChange = this.handleMeridiemChange.bind(this);
     this.handleMinuteChange = this.handleMinuteChange.bind(this);
-    this.handleTimezoneChange = this.handleTimezoneChange.bind(this);
     this.onClearFocus = this.onClearFocus.bind(this);
     this.onFocus = this.onFocus.bind(this);
-  }
 
-  timeData() {
-    const {meridiem, time, timeMode, timezone} = this.props;
-    const timeData = timeHelper.time(time, meridiem, timeMode, timezone);
-
-    return timeData;
-  }
-
-  timezoneData() {
-    const timeData = this.timeData();
-    return timeHelper.tzForName(timeData.timezone);
+    // if a timezone value was not passed in, call the callback with the default value used for timezone
+    if (!timezone) {
+      onTimezoneChange(timezoneData);
+    }
   }
 
   languageData() {
@@ -114,7 +112,7 @@ class TimePicker extends React.PureComponent {
 
   getHourAndMinute() {
     const {timeMode} = this.props;
-    const timeData = this.timeData();
+    const {timeData} = this.state;
     // Since someone might pass a time in 24h format, etc., we need to get it from
     // timeData to 'translate' it into the local format, including its accurate meridiem
     const hour = (parseInt(timeMode) === 12) ? timeData.hour12 : timeData.hour24;
@@ -154,11 +152,6 @@ class TimePicker extends React.PureComponent {
     onTimeChange && onTimeChange(time);
   }
 
-  handleTimezoneChange(timezone) {
-    const {onTimezoneChange} = this.props;
-    onTimezoneChange && onTimezoneChange(timezone);
-  }
-
   handleHourAndMinuteChange(time) {
     const {onTimeChange, autoMode} = this.props;
     if (autoMode) {
@@ -169,21 +162,18 @@ class TimePicker extends React.PureComponent {
 
   get meridiem() {
     const {meridiem} = this.props;
-
-    const timeData = this.timeData();
+    const {timeData} = this.state;
     const localMessages = this.languageData();
     // eslint-disable-next-line no-unneeded-ternary
     const m = (meridiem) ? meridiem : timeData.meridiem;
     // eslint-disable-next-line no-extra-boolean-cast
-    const localMeridiem = !!(m.match(/^am|pm/i)) ? localMessages[m.toLowerCase()] : m;
-
-    return localMeridiem;
+    return !!(m.match(/^am|pm/i)) ? localMessages[m.toLowerCase()] : m;
   }
 
   renderMaterialTheme() {
-    const {timeMode, showTimezone, timezoneIsEditable, autoMode, draggable, language} = this.props;
+    const {timeMode, showTimezone, timezoneIsEditable, autoMode, draggable, language, onTimezoneChange} = this.props;
+    const {timezoneData} = this.state;
     const [hour, minute] = this.getHourAndMinute();
-    const timezoneData = this.timezoneData();
 
     return (
       <MaterialTheme
@@ -193,7 +183,7 @@ class TimePicker extends React.PureComponent {
         handleHourChange={this.handleHourChange}
         handleMeridiemChange={this.handleMeridiemChange}
         handleMinuteChange={this.handleMinuteChange}
-        handleTimezoneChange={this.handleTimezoneChange}
+        onTimezoneChange={onTimezoneChange}
         hour={hour}
         language={language}
         meridiem={this.meridiem}
