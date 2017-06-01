@@ -185,9 +185,11 @@ class TwelveHoursMode extends React.PureComponent {
         <div className='picker_container'>
           <HourPickerPointGenerator
             handleTimePointerClick={this.handleHourPointerClick}
+            rotateState={hourRotateState}
           />
           <MinutePickerPointGenerator
             handleTimePointerClick={this.handleMinutePointerClick}
+            rotateState={minuteRotateState}
           />
           <PickerDragHandler
             step={1}

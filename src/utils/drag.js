@@ -1,13 +1,19 @@
 const mousePosition = (e) => {
   e = e || window.event;
-  const xPos = (e.pageX
+  const xPos = e.pageX
     ? e.pageX
-    : e.clientX + document.body.scrollLeft - document.body.clientLeft) +
-    Math.max(document.documentElement.scrollLeft, document.body.scrollLeft);
-  const yPos = (e.pageY
+    : (e.clientX + document.body.scrollLeft - document.body.clientLeft)
+    ? (e.clientX + document.body.scrollLeft - document.body.clientLeft)
+    : e.touches[0]
+    ? e.touches[0].clientX
+    : e.changedTouches[0].clientX;
+  const yPos = e.pageY
     ? e.pageY
-    : e.clientY + document.body.scrollTop - document.body.clientTop) +
-    Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+    : (e.clientY + document.body.scrollTop - document.body.clientTop)
+    ? (e.clientY + document.body.scrollTop - document.body.clientTop)
+    : e.touches[0]
+    ? e.touches[0].clientY
+    : e.changedTouches[0].clientY;
   return {
     x: xPos,
     y: yPos

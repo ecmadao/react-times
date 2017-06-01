@@ -16,7 +16,7 @@ const defaultProps = {
 };
 
 const PickerPoint = (props) => {
-  const { index, handleTimeChange, pointClass, angle } = props;
+  const {index, handleTimeChange, pointClass, angle, rotateState} = props;
   const inlineStyle = darg.inlineRotateStyle(angle);
   const wrapperStyle = darg.rotateStyle(-angle);
 
@@ -25,7 +25,14 @@ const PickerPoint = (props) => {
       className={pointClass}
       style={inlineStyle}
       onClick={() => {
-        handleTimeChange(index, angle)
+        const {pointerRotate} = rotateState;
+        let relativeRotate = angle - pointerRotate % 360;
+        if (relativeRotate >= 180) {
+          relativeRotate = relativeRotate - 360;
+        } else if (relativeRotate < -180){
+          relativeRotate = relativeRotate + 360;
+        }
+        handleTimeChange(index, relativeRotate + pointerRotate)
       }}
       onMouseDown={darg.disableMouseDown}>
       <div className="point_wrapper" style={wrapperStyle}>
