@@ -1,7 +1,7 @@
 {
   "name": "react-times",
   "description": "A react time-picker component, no jquery-rely",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "author": "ecmadao",
   "bugs": {
     "url": "https://github.com/ecmadao/react-times/issues"
