@@ -15,8 +15,8 @@ const mousePosition = (e) => {
     ? e.touches[0].clientY
     : e.changedTouches[0].clientY;
   return {
-    x: xPos,
-    y: yPos
+    x: xPos + Math.max(document.documentElement.scrollLeft, document.body.scrollLeft),
+    y: yPos + Math.max(document.documentElement.scrollTop, document.body.scrollTop)
   };
 };
 

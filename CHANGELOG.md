@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### v2.1.3
+
+- Bugfixed for drag position offset
+- Add `onTimezoneChange` callback
+
 ### v2.1.0
 
 #### new props
