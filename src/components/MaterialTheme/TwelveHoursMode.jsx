@@ -6,7 +6,8 @@ import {
   POINTER_RADIUS,
   TWELVE_HOURS,
 } from '../../utils/const_value.js';
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import timeHelper from '../../utils/time';
 
