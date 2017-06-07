@@ -176,7 +176,7 @@ render() {
 > Initial time, must be a string, with `${hour}:${minute}` format, default now (by using `moment()`):
 
 ```javascript
-// React.PropTypes.string
+// PropTypes.string
 time="11:11"
 time="11:01"
 time="1:01"
@@ -188,7 +188,7 @@ time="1:1"
 > Whether the timepicker pannel is focused or not when it did mount. Default `false`
 
 ```javascript
-// React.PropTypes.bool
+// PropTypes.bool
 focused={false}
 focused={true}
 ```
@@ -198,7 +198,7 @@ focused={true}
 > Whether the timepicker has a svg icon. Default `false`.
 
 ```javascript
-// React.PropTypes.bool
+// PropTypes.bool
 withoutIcon={true}
 ```
 
@@ -207,7 +207,7 @@ withoutIcon={true}
 > The main color palette of picker pannel. Default `light`.
 
 ```javascript
-// React.PropTypes.string
+// PropTypes.string
 colorPalette="dark"
 colorPalette="light"
 ```
@@ -217,7 +217,7 @@ colorPalette="light"
 > Support "12" or "24" hours mode.
 
 ```javascript
-// React.PropTypes.string or React.PropTypes.number
+// PropTypes.string or PropTypes.number
 timeMode="24"
 timeMode=24
 timeMode="12"
@@ -226,15 +226,15 @@ timeMode=12
 
 - `meridiem`
 
-> `React.PropTypes.string`, support "PM" or "AM" for 12 hours mode, default `AM`
+> `PropTypes.string`, support "PM" or "AM" for 12 hours mode, default `AM`
 
 - `showTimezone`
 
-> `React.PropTypes.bool`, whether show user timezone or not, default `false`
+> `PropTypes.bool`, whether show user timezone or not, default `false`
 
 - `timezone`
 
-> `React.PropTypes.string`, change user timezone, default user current local timezone.
+> `PropTypes.string`, change user timezone, default user current local timezone.
 
 - `trigger`
 
@@ -302,13 +302,13 @@ If you don't want to drag the pointer, then you can set `draggable` props to `fa
 
 - `onFocusChange`
 
-`React.PropTypes.func`
+`PropTypes.func`
 
 > The callback func when component `focused` state is changed.
 
 - `onHourChange`
 
-`React.PropTypes.func`
+`PropTypes.func`
 
 > The callback func when component `hour` state is changed.
 
@@ -320,7 +320,7 @@ onHourChange(hour) {
 
 - `onMinuteChange`
 
-`React.PropTypes.func`
+`PropTypes.func`
 
 > The callback func when component `minute` state is changed.
 
@@ -332,7 +332,7 @@ onMinuteChange(minute) {
 
 - `onTimeChange`
 
-`React.PropTypes.func`
+`PropTypes.func`
 
 > The callback func when component `hour` or `minute` or `AM/PM` state is changed.
 
@@ -344,13 +344,13 @@ onTimeChange(time) {
 
 - `onMeridiemChange`
 
-`React.PropTypes.func`
+`PropTypes.func`
 
 > The callback func when meridiem changed.
 
 - `onTimezoneChange`
 
-`React.PropTypes.func`
+`PropTypes.func`
 
 > The callback func when timezone changed.  Receives timezone object as argument with the following properties:
 * city
