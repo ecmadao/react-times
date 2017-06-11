@@ -4,7 +4,8 @@ import {
   PICKER_RADIUS,
   POINTER_RADIUS,
 } from '../../utils/const_value.js';
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import ReactDOM from 'react-dom';
 import darg from '../../utils/drag';
