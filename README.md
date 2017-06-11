@@ -401,9 +401,10 @@ Thanks to the Airbnb's open source project: [react-dates](https://github.com/air
 
 - **[carlodicelico](https://github.com/carlodicelico)**
 - **[erin-doyle](https://github.com/erin-doyle)**
+- **[MatthieuLemoine](https://github.com/MatthieuLemoine)**
+- **[naseeihity](https://github.com/naseeihity)**
 - **[shianqi](https://github.com/shianqi)**
 - **[thg303](https://github.com/thg303)**
-- **[naseeihity](https://github.com/naseeihity)**
 
 # License
 
