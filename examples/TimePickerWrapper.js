@@ -19,8 +19,8 @@ class TimePickerWrapper extends React.Component {
       minute,
       meridiem,
       focused,
+      timezone,
       showTimezone,
-      timezone
     };
 
     this.onFocusChange = this.onFocusChange.bind(this);

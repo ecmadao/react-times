@@ -49,24 +49,28 @@ const defaultProps = {
 class MaterialTheme extends React.PureComponent {
   renderTwentyFourHoursMode() {
     const {
-      autoMode,
-      clearFocus,
-      draggable,
-      handleEditTimezoneChange,
-      handleHourChange,
-      handleMinuteChange,
-      handleShowTimezoneChange,
-      onTimezoneChange,
       hour,
       minute,
       phrases,
-      showTimezone,
       timezone,
-      timezoneIsEditable
+      autoMode,
+      clearFocus,
+      draggable,
+      limitDrag,
+      minuteStep,
+      showTimezone,
+      onTimezoneChange,
+      timezoneIsEditable,
+      handleHourChange,
+      handleMinuteChange,
+      handleEditTimezoneChange,
+      handleShowTimezoneChange,
     } = this.props;
 
     return (
       <TwentyFourHoursMode
+        limitDrag={limitDrag}
+        minuteStep={minuteStep}
         autoMode={autoMode}
         clearFocus={clearFocus}
         draggable={draggable}
@@ -87,26 +91,30 @@ class MaterialTheme extends React.PureComponent {
 
   renderTwelveHoursMode() {
     const {
-      clearFocus,
-      draggable,
-      handleEditTimezoneChange,
-      handleHourChange,
-      handleMeridiemChange,
-      handleMinuteChange,
-      handleShowTimezoneChange,
-      onTimezoneChange,
       hour,
-      language,
-      meridiem,
       minute,
       phrases,
-      showTimezone,
+      language,
+      meridiem,
       timezone,
-      timezoneIsEditable
+      clearFocus,
+      draggable,
+      limitDrag,
+      minuteStep,
+      showTimezone,
+      onTimezoneChange,
+      timezoneIsEditable,
+      handleHourChange,
+      handleMinuteChange,
+      handleEditTimezoneChange,
+      handleMeridiemChange,
+      handleShowTimezoneChange,
     } = this.props;
 
     return (
       <TwelveHoursMode
+        limitDrag={limitDrag}
+        minuteStep={minuteStep}
         clearFocus={clearFocus}
         draggable={draggable}
         handleEditTimezoneChange={handleEditTimezoneChange}
@@ -124,7 +132,7 @@ class MaterialTheme extends React.PureComponent {
         timezone={timezone}
         timezoneIsEditable={timezoneIsEditable}
       />
-    )
+    );
   }
 
   render() {

@@ -1,6 +1,6 @@
 import '../css/material/default.css';
 
-import {text, withKnobs} from '@kadira/storybook-addon-knobs';
+import {withKnobs} from '@kadira/storybook-addon-knobs';
 
 import React from 'react';
 import TimePickerWrapper from '../examples/TimePickerWrapper';

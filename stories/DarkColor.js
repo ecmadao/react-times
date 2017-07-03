@@ -2,7 +2,7 @@ import '../css/material/default.css';
 
 import React from 'react';
 import TimePickerWrapper from '../examples/TimePickerWrapper';
-import { storiesOf } from '@kadira/storybook';
+import {storiesOf} from '@kadira/storybook';
 
 storiesOf('DarkColor', module)
   .addWithInfo('basic', () => (

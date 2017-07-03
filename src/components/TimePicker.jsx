@@ -42,7 +42,9 @@ const propTypes = {
     PropTypes.instanceOf(React.Component),
     PropTypes.instanceOf(React.PureComponent)
   ]),
-  withoutIcon: PropTypes.bool
+  withoutIcon: PropTypes.bool,
+  minuteStep: PropTypes.number,
+  limitDrag: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -64,7 +66,9 @@ const defaultProps = {
   time: TIME.current,
   timeMode: TIME.mode,
   trigger: null,
-  withoutIcon: false
+  withoutIcon: false,
+  minuteStep: 5,
+  limitDrag: false,
 };
 
 class TimePicker extends React.PureComponent {
@@ -121,7 +125,9 @@ class TimePicker extends React.PureComponent {
     const timeData = this.timeData();
     // Since someone might pass a time in 24h format, etc., we need to get it from
     // timeData to 'translate' it into the local format, including its accurate meridiem
-    const hour = (parseInt(timeMode) === 12) ? timeData.hour12 : timeData.hour24;
+    const hour = (parseInt(timeMode) === 12)
+      ? timeData.hour12
+      : timeData.hour24;
     const minute = timeData.minute;
     return [hour, minute];
   }
@@ -177,12 +183,24 @@ class TimePicker extends React.PureComponent {
   }
 
   renderMaterialTheme() {
-    const {timeMode, showTimezone, timezoneIsEditable, autoMode, draggable, language, onTimezoneChange} = this.props;
+    const {
+      timeMode,
+      autoMode,
+      draggable,
+      language,
+      limitDrag,
+      minuteStep,
+      showTimezone,
+      onTimezoneChange,
+      timezoneIsEditable,
+    } = this.props;
     const {timezoneData} = this.state;
     const [hour, minute] = this.getHourAndMinute();
 
     return (
       <MaterialTheme
+        limitDrag={limitDrag}
+        minuteStep={parseInt(minuteStep, 10)}
         autoMode={autoMode}
         clearFocus={this.onClearFocus}
         draggable={draggable}

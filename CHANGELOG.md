@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### v2.2.0
+
+#### new props
+
+- Add `minuteStep` props
+- Add `limitDrag` props
+
 ### v2.1.3
 
 - Bugfixed for drag position offset

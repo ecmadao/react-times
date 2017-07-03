@@ -297,6 +297,26 @@ timeMode=12
 />
 ```
 
+- `minuteStep`
+
+> `React.number`, 默认为 `5`。该属性代表当分针改变时的最小步长(minute)。可以设置为 1，2，3....
+
+```javascript
+<TimePicker
+  minuteStep={1}
+/>
+```
+
+- `limitDrag`
+
+> `React.bool`, 默认为 `false`. 当设置为 `true` 时，将会限制用户的拖拽（从连续性的拖拽变为间断性拖拽，间隔由 `minuteStep` 确定）
+
+```javascript
+<TimePicker
+  limitDrag
+/>
+```
+
 ## 回调
 
 - `onFocusChange`

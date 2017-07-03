@@ -298,6 +298,26 @@ If you don't want to drag the pointer, then you can set `draggable` props to `fa
 />
 ```
 
+- `minuteStep`
+
+> `React.number`, default `5`. It means the minium minute can change. You can set it to 1, 2, 3...
+
+```javascript
+<TimePicker
+  minuteStep={1}
+/>
+```
+
+- `limitDrag`
+
+> `React.bool`, default `false`. If `true`, it will limite the drag rotation by `minuteStep`
+
+```javascript
+<TimePicker
+  limitDrag
+/>
+```
+
 ## Callback
 
 - `onFocusChange`
