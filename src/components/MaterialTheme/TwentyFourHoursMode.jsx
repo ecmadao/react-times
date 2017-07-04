@@ -80,26 +80,31 @@ class TwentyFourHoursMode extends React.PureComponent {
     });
   }
 
-  handleTimePointerClick(time, pointerRotate = null) {
+  handleTimePointerClick(options) {
+    const {
+      time,
+      autoMode = null,
+      pointerRotate = null,
+    } = options;
     pointerRotate && this.setState({pointerRotate});
-    this.handleTimeChange(time);
+    this.handleTimeChange(time, autoMode);
   }
 
-  handleTimeChange(time) {
+  handleTimeChange(time, autoMode = null) {
     time = parseInt(time);
     const {step} = this.state;
     const {
       handleHourChange,
       handleMinuteChange,
-      autoMode,
       clearFocus
     } = this.props;
+    if (autoMode === null) autoMode = this.props.autoMode;
     if (step === 0) {
       handleHourChange && handleHourChange(time);
     } else {
       handleMinuteChange && handleMinuteChange(time);
     }
-    if (!autoMode) { return }
+    if (!autoMode) { return; }
     if (step === 0) {
       this.handleStepChange(1);
     } else {

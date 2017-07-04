@@ -194,6 +194,7 @@ class TimePicker extends React.PureComponent {
       onTimezoneChange,
       timezoneIsEditable,
     } = this.props;
+
     const {timezoneData} = this.state;
     const [hour, minute] = this.getHourAndMinute();
 

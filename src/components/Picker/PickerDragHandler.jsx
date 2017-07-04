@@ -215,7 +215,8 @@ class PickerDragHandler extends React.PureComponent {
     const {
       dragX,
       dragY,
-      pointerRotate = null
+      pointerRotate = null,
+      autoMode = null,
     } = options;
     const {
       step,
@@ -255,7 +256,11 @@ class PickerDragHandler extends React.PureComponent {
       ? (time === 24 ? 12 : time)
       : (time * minuteStep === 60 ? 0 : time * minuteStep);
 
-    handleTimePointerClick && handleTimePointerClick(time, pointerRotate);
+    handleTimePointerClick && handleTimePointerClick({
+      time,
+      autoMode,
+      pointerRotate
+    });
   }
 
   handleMouseDown(e) {
@@ -305,6 +310,7 @@ class PickerDragHandler extends React.PureComponent {
         this.handleTimePointerChange({
           dragX,
           dragY,
+          autoMode: false
         });
       }
     }
