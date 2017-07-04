@@ -43,7 +43,10 @@ describe('TwentyFourHoursMode', () => {
     );
 
     it('should handleHourChange', () => {
-      wrapper.instance().handleTimePointerClick(6, 180);
+      wrapper.instance().handleTimePointerClick({
+        time: 6,
+        pointerRotate: 180
+      });
       expect(wrapper.state().pointerRotate).to.equal(180);
       expect(handleHourChange.callCount).to.equal(1);
     });
@@ -72,7 +75,10 @@ describe('TwentyFourHoursMode', () => {
           handleMinuteChange={handleMinuteChange}
         />
       );
-      newWrapper.instance().handleTimePointerClick(30, 180);
+      newWrapper.instance().handleTimePointerClick({
+        time: 30,
+        pointerRotate: 180
+      });
       // after click minute, we close the panel & reset step state.
       expect(newWrapper.state().pointerRotate).to.equal(30);
       expect(newWrapper.state().step).to.equal(0);
