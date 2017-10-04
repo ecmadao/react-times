@@ -2,6 +2,7 @@ import React from 'react';
 import TimePicker from '../src/components/TimePicker';
 import timeHelper from '../src/utils/time';
 import ICONS from '../src/utils/icons';
+import moment from 'moment';
 
 class TimePickerWrapper extends React.Component {
   constructor(props) {

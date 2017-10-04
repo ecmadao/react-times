@@ -44,6 +44,32 @@ $ npm install react react-dom --save-dev
 $ npm install react-times --save-dev
 ```
 
+# Config
+
+Cause I'm using `moment-timezone`, you need to be able to parse json file.
+
+Use webpack config as example:
+
+- [How should I use moment-timezone with webpack?](https://stackoverflow.com/questions/29548386/how-should-i-use-moment-timezone-with-webpack)
+
+```bash
+$ npm i json-loader --save
+```
+
+```javascript
+// webpack.config.js
+{
+  module: {
+    loaders: [
+        {include: /\.json$/, loaders: ["json-loader"]}
+    ]
+  },
+  resolve: {
+    extensions: ['', '.json', '.jsx', '.js']
+  }
+}
+```
+
 # Usage
 
 This component has two themes now: Material Theme by default, or Classic Theme.

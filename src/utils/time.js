@@ -236,7 +236,10 @@ const getTzForCity = (city) => {
 };
 
 const getTzForName = (name) => {
-  const maps = tzMaps.filter(tzMap => tzMap['zoneName'] === name);
+  let maps = tzMaps.filter(tzMap => tzMap['zoneName'] === name);
+  if (!maps.length) {
+    maps = tzMaps.filter(tzMap => tzMap['zoneAbbr'] === name);
+  }
   return head(maps);
 };
 
