@@ -1,4 +1,4 @@
-const getArray = (length) => new Array(length).join('0').split('');
+const getArray = length => new Array(length).join('0').split('');
 
 export const HOURS = getArray(24 + 1);
 export const TWELVE_HOURS = getArray(12 + 1);

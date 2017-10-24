@@ -46,9 +46,7 @@ const LANGUAGES = {
   }
 };
 
-const language = (type = 'en') => {
-  return LANGUAGES[type];
-};
+const language = (type = 'en') => LANGUAGES[type];
 
 export default {
   get: language
