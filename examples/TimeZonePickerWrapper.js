@@ -1,5 +1,5 @@
 import React from 'react';
-
+import moment from 'moment';
 import Timezone from '../src/components/Timezone';
 import timeHelper from '../src/utils/time';
 import languageHelper from '../src/utils/language';
@@ -25,6 +25,7 @@ class TimezonePickerWrapper extends React.Component {
 
   render() {
     const {timezone} = this.state;
+    const {onTimezoneChange} = this.props;
 
     return (
       <div>
@@ -34,6 +35,7 @@ class TimezonePickerWrapper extends React.Component {
               phrases={this.languageData()}
               timezone={timezone}
               timezoneIsEditable={true}
+              onTimezoneChange={onTimezoneChange}
             />
           </div>
         </div>
