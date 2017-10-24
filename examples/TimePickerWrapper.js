@@ -2,13 +2,13 @@ import React from 'react';
 import TimePicker from '../src/components/TimePicker';
 import timeHelper from '../src/utils/time';
 import ICONS from '../src/utils/icons';
-import moment from 'moment';
 
 class TimePickerWrapper extends React.Component {
   constructor(props) {
     super(props);
-    const {defaultTime, meridiem, focused, showTimezone, timezone} = props;
-    let hour = '', minute = '';
+    const { defaultTime, meridiem, focused, showTimezone, timezone } = props;
+    let hour = '';
+    let minute = '';
     if (!defaultTime) {
       [hour, minute] = timeHelper.current().split(/:/);
     } else {
@@ -29,62 +29,65 @@ class TimePickerWrapper extends React.Component {
     this.onMeridiemChange = this.onMeridiemChange.bind(this);
     this.onMinuteChange = this.onMinuteChange.bind(this);
     this.onTimeChange = this.onTimeChange.bind(this);
+    this.handleFocusedChange = this.handleFocusedChange.bind(this);
   }
 
   onHourChange(hour) {
-    this.setState({hour});
+    this.setState({ hour });
   }
 
   onMinuteChange(minute) {
-    this.setState({minute});
+    this.setState({ minute });
   }
 
   onTimeChange(time) {
     const [hour, minute] = time.split(':');
-    this.setState({hour, minute});
+    this.setState({ hour, minute });
   }
 
   onMeridiemChange(meridiem) {
-    this.setState({meridiem});
+    this.setState({ meridiem });
   }
 
   onFocusChange(focused) {
-    this.setState({focused});
+    this.setState({ focused });
   }
 
   handleFocusedChange() {
-    const {focused} = this.state;
-    this.setState({focused: !focused});
+    const { focused } = this.state;
+    this.setState({ focused: !focused });
   }
 
   get basicTrigger() {
-    const {hour, minute} = this.state;
+    const { hour, minute } = this.state;
     return (
       <div
-        onClick={this.handleFocusedChange.bind(this)}
-        className="time_picker_trigger">
+        onClick={this.handleFocusedChange}
+        className="time_picker_trigger"
+      >
         <div>
-          Click to open panel<br/>
+          Click to open panel<br />
           {hour}:{minute}
         </div>
       </div>
-    )
+    );
   }
 
   get customTrigger() {
     return (
       <div
-        onClick={this.handleFocusedChange.bind(this)}
-        className="time_picker_trigger">
+        onClick={this.handleFocusedChange}
+        className="time_picker_trigger"
+      >
         {ICONS.time}
       </div>
     );
   }
 
   get trigger() {
-    const {customTriggerId} = this.props;
+    const { customTriggerId } = this.props;
     const triggers = {
-      0: (<div></div>),
+      0: (<div />),
       1: this.basicTrigger,
       2: this.customTrigger
     };
@@ -92,7 +95,14 @@ class TimePickerWrapper extends React.Component {
   }
 
   render() {
-    const {hour, minute, meridiem, focused, timezone, showTimezone} = this.state;
+    const {
+      hour,
+      minute,
+      focused,
+      meridiem,
+      timezone,
+      showTimezone,
+    } = this.state;
 
     return (
       <div className="time_picker_wrapper">
@@ -100,6 +110,8 @@ class TimePickerWrapper extends React.Component {
           {...this.props}
           focused={focused}
           meridiem={meridiem}
+          timezone={timezone}
+          trigger={this.trigger}
           onFocusChange={this.onFocusChange}
           onHourChange={this.onHourChange}
           onMeridiemChange={this.onMeridiemChange}
@@ -107,11 +119,9 @@ class TimePickerWrapper extends React.Component {
           onTimeChange={this.onTimeChange}
           showTimezone={showTimezone}
           time={hour && minute ? `${hour}:${minute}` : null}
-          timezone={timezone}
-          trigger={this.trigger}
         />
       </div>
-    )
+    );
   }
 }
 

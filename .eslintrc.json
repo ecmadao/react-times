@@ -22,7 +22,7 @@
     "no-underscore-dangle": 0,
     "no-multi-spaces": 0,
     "no-param-reassign": ["error", { "props": false }],
-    "no-unused-vars": 1,
+    "no-unused-vars": 2,
     "linebreak-style": 0,
     "react/jsx-equals-spacing": 0,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],

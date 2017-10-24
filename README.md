@@ -203,10 +203,31 @@ render() {
 
 ```javascript
 // PropTypes.string
-time="11:11"
-time="11:01"
-time="1:01"
-time="1:1"
+time='11:11'
+time='11:01'
+time='1:01'
+time='1:1'
+```
+
+- `timeFormat`
+
+> To show the time using custom style
+
+```javascript
+// PropTypes.string
+// HH, MM means 24 hours mode
+// hh, mm means 12 hours mode
+timeFormat='HH:MM'
+timeFormat='hh:mm'
+```
+
+- `timeFormatter`
+
+> To show the time using custom style
+
+```javascript
+// PropTypes.func
+timeFormatter={({ hour, minute, meridiem }) => `${hour} - ${minute}`}
 ```
 
 - `focused`
