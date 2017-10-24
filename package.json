@@ -109,6 +109,6 @@
     "test": "npm run mocha --silent test",
     "test:watch": "npm run mocha test -- --watch",
     "lint": "./node_modules/.bin/eslint src/*",
-    "precommit": "npm run lint"
+    "prepush": "npm run lint && npm test"
   }
 }
