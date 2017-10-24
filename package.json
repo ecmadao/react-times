@@ -7,6 +7,7 @@
     "url": "https://github.com/ecmadao/react-times/issues"
   },
   "dependencies": {
+    "husky": "^0.14.3",
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
     "prop-types": "^15.5.10",
@@ -30,14 +31,12 @@
     "coveralls": "^2.13.1",
     "enzyme": "^2.8.2",
     "eslint": "^3.19.0",
-    "eslint-config-standard": "^10.2.1",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-import-resolver-webpack": "^0.7.0",
     "eslint-loader": "^1.7.1",
-    "eslint-plugin-babel": "^4.1.1",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-node": "^4.2.2",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-react": "^6.10.3",
-    "eslint-plugin-standard": "^3.0.1",
+    "eslint-plugin-import": "^1.16.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.5.0",
     "git-directory-deploy": "^1.5.1",
     "in-publish": "^2.0.0",
     "mocha": "^3.3.0",
@@ -108,6 +107,8 @@
     "storybook-pro": "build-storybook -c .storybook -o .out",
     "tag": "git tag v$npm_package_version",
     "test": "npm run mocha --silent test",
-    "test:watch": "npm run mocha test -- --watch"
+    "test:watch": "npm run mocha test -- --watch",
+    "lint": "./node_modules/.bin/eslint src/*",
+    "precommit": "npm run lint"
   }
 }

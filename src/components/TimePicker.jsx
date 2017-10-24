@@ -45,6 +45,8 @@ const propTypes = {
   withoutIcon: PropTypes.bool,
   minuteStep: PropTypes.number,
   limitDrag: PropTypes.bool,
+  timeFormat: PropTypes.string,
+  timeFormatter: PropTypes.func,
 };
 
 const defaultProps = {
@@ -69,6 +71,8 @@ const defaultProps = {
   withoutIcon: false,
   minuteStep: 5,
   limitDrag: false,
+  timeFormat: '',
+  timeFormatter: null,
 };
 
 class TimePicker extends React.PureComponent {
@@ -244,9 +248,11 @@ class TimePicker extends React.PureComponent {
       theme,
       trigger,
       timeMode,
+      timeFormat,
       placeholder,
       withoutIcon,
-      colorPalette
+      colorPalette,
+      timeFormatter,
     } = this.props;
 
     const {focused} = this.state;
