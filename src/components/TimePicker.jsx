@@ -80,14 +80,16 @@ class TimePicker extends React.PureComponent {
   constructor(props) {
     super(props);
     const { focused, timezone, onTimezoneChange } = props;
-    const timeData = this.timeData();
+    const timeData = this.timeData(false);
     const timezoneData = timeHelper.tzForName(timeData.timezone);
 
     this.state = {
       focused,
-      timezoneData
+      timezoneData,
+      timeChanged: false
     };
 
+    this.timeData = this.timeData.bind(this);
     this.handleHourAndMinuteChange = this.handleHourAndMinuteChange.bind(this);
     this.handleHourChange = this.handleHourChange.bind(this);
     this.handleMeridiemChange = this.handleMeridiemChange.bind(this);
@@ -102,9 +104,14 @@ class TimePicker extends React.PureComponent {
     }
   }
 
-  timeData() {
-    const { meridiem, time, timeMode, timezone } = this.props;
-    const timeData = timeHelper.time(time, meridiem, timeMode, timezone);
+  timeData(timeChanged) {
+    const {
+      time,
+      timeMode,
+      timezone,
+      meridiem,
+    } = this.props;
+    const timeData = timeHelper.time(time, meridiem, timeMode, timezone, !timeChanged);
     return timeData;
   }
 
@@ -130,7 +137,7 @@ class TimePicker extends React.PureComponent {
 
   getHourAndMinute() {
     const { timeMode } = this.props;
-    const timeData = this.timeData();
+    const timeData = this.timeData(this.state.timeChanged);
     // Since someone might pass a time in 24h format, etc., we need to get it from
     // timeData to 'translate' it into the local format, including its accurate meridiem
     const hour = (parseInt(timeMode, 10) === 12)
@@ -159,19 +166,19 @@ class TimePicker extends React.PureComponent {
       });
     } else if (timeFormat && is.string(timeFormat)) {
       times = timeFormat;
-      if (/HH/.test(times) || /MM/.test(times)) {
+      if (/HH?/.test(times) || /MM?/.test(times)) {
         if (validTimeMode === 12) {
           console.warn('It seems you are using 12 hours mode with 24 hours time format. Please check your timeMode and timeFormat props');
         }
-      } else if (/hh/.test(times) || /mm/.test(times)) {
+      } else if (/hh?/.test(times) || /mm?/.test(times)) {
         if (validTimeMode === 12) {
           console.warn('It seems you are using 24 hours mode with 12 hours time format. Please check your timeMode and timeFormat props');
         }
       }
-      times = times.replace(/HH/, hour);
-      times = times.replace(/hh/, hour);
-      times = times.replace(/MM/, minute);
-      times = times.replace(/mm/, minute);
+      times = times.replace(/(HH|hh)/g, hour);
+      times = times.replace(/(MM|mm)/g, minute);
+      times = times.replace(/(H|h)/g, Number(hour));
+      times = times.replace(/(M|m)/g, Number(minute));
     } else {
       times = (validTimeMode === 12)
         ? `${hour} : ${minute} ${this.meridiem}`
@@ -186,6 +193,12 @@ class TimePicker extends React.PureComponent {
     });
     const { onFocusChange } = this.props;
     onFocusChange && onFocusChange(false);
+  }
+
+  onTimeChanged(timeChanged) {
+    this.setState({
+      timeChanged
+    });
   }
 
   handleHourChange(hour) {
@@ -212,9 +225,11 @@ class TimePicker extends React.PureComponent {
   handleTimeChange(time) {
     const { onTimeChange } = this.props;
     onTimeChange && onTimeChange(time);
+    this.onTimeChanged(true);
   }
 
   handleHourAndMinuteChange(time) {
+    this.onTimeChanged(true);
     const { onTimeChange, autoMode } = this.props;
     if (autoMode) {
       this.onClearFocus();
@@ -224,7 +239,7 @@ class TimePicker extends React.PureComponent {
 
   get meridiem() {
     const { meridiem } = this.props;
-    const timeData = this.timeData();
+    const timeData = this.timeData(this.state.timeChanged);
     const localMessages = this.languageData();
     // eslint-disable-next-line no-unneeded-ternary
     const m = (meridiem) ? meridiem : timeData.meridiem;

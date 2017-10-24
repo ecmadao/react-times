@@ -40,12 +40,17 @@ storiesOf('Default TimePicker', module)
       minuteStep={1}
     />
   ))
-  .addWithInfo('custom time format(1)', () => (
+  .addWithInfo('custom HH-MM format', () => (
     <TimePickerWrapper
       timeFormat={'HH-MM'}
     />
   ))
-  .addWithInfo('custom time format(2)', () => (
+  .addWithInfo('custom H-M format', () => (
+    <TimePickerWrapper
+      timeFormat={'H-M'}
+    />
+  ))
+  .addWithInfo('custom time formatter', () => (
     <TimePickerWrapper
       timeFormatter={({ hour, minute }) => `${hour} & ${minute}`}
     />

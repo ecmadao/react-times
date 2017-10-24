@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### v2.2.3
+
+#### new props
+
+- Add `timeFormat` props
+- Add `timeFormatter` props
+
 ### v2.2.0
 
 #### new props

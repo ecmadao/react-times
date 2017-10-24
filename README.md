@@ -219,6 +219,16 @@ time='1:1'
 // hh, mm means 12 hours mode
 timeFormat='HH:MM'
 timeFormat='hh:mm'
+timeFormat='H:M'
+timeFormat='h:m'
+
+// Warning:
+// If you are using 12 hours mode but with hh or mm format,
+// or using 24 hours mode with HH or MM format,
+// you will receive a warning on console, and force to use the timeMode props
+
+// So, if you wanna use hh:mm or h:m, you need to set timeMode props to 12
+// (cause timeMode default is 24)
 ```
 
 - `timeFormatter`
@@ -228,6 +238,9 @@ timeFormat='hh:mm'
 ```javascript
 // PropTypes.func
 timeFormatter={({ hour, minute, meridiem }) => `${hour} - ${minute}`}
+
+// Note:
+// If you both set timeFormat and timeFormatter props (and they all validate), component will use timeFormatter function
 ```
 
 - `focused`

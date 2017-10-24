@@ -184,6 +184,38 @@ time="1:01"
 time="1:1"
 ```
 
+- `timeFormat`
+
+> 自定义时间的格式
+
+```javascript
+// PropTypes.string
+// HH, MM 代表 24 小时制
+// hh, mm 代表 12 小时制
+timeFormat='HH:MM'
+timeFormat='hh:mm'
+
+// Warning:
+// 如果设定 timeMode 为 12 小时制，且 timeFormat 中含有 hh 或者 mm；
+// 或者设定 timeMode 为 24 小时制，且 timeFormat 中含有 HH 或者 MM，
+// 则会在浏览器控制台中输出一条警告，且时间格式会被转换为 timeMode 所设定的格式
+
+// 因此，如果想把 timeFormat 设定为 hh:mm 或者 h:m，则还需要把 timeMode 设置为 12
+// (因为 timeMode 默认为 24)
+```
+
+- `timeFormatter`
+
+> 自定义时间的格式
+
+```javascript
+// PropTypes.func
+timeFormatter={({ hour, minute, meridiem }) => `${hour} - ${minute}`}
+
+// 注:
+// 当同时设定了 timeFormat 和 timeFormatter 时（都合法），会使用 timeFormatter
+```
+
 - `focused`
 
 > 初始化时时间选择器的 modal 是否打开，默认为`false`

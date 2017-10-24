@@ -51,7 +51,7 @@ const guessUserTz = () => {
  * @param  {string} tz            a timezone name; defaults to guessing a user's tz or GMT
  * @return {Object}               a key-value representation of time data
  */
-const getValidTimeData = (time, meridiem, timeMode, tz) => {
+const getValidTimeData = (time, meridiem, timeMode, tz, useTz = true) => {
   const validMeridiem = getValidMeridiem(meridiem);
 
   // when we only have a valid meridiem, that implies a 12h mode
@@ -67,13 +67,25 @@ const getValidTimeData = (time, meridiem, timeMode, tz) => {
   // What format is the hour we provide to moment below in?
   const hourFormat = (validMode === 12) ? format12 : format24;
 
-  const time24 = ((validTime)
-    ? moment(`1970-01-01 ${validTime}`, `YYYY-MM-DD ${hourFormat}`, 'en').tz(timezone).format(format24)
-    : moment().tz(timezone).format(format24)).split(/:/);
+  let time24;
+  let time12;
 
-  const time12 = ((validTime)
-    ? moment(`1970-01-01 ${validTime}`, `YYYY-MM-DD ${hourFormat}`, 'en').tz(timezone).format(format12)
-    : moment().tz(timezone).format(format12)).split(/:/);
+  if (useTz) {
+    time24 = ((validTime)
+      ? moment(`1970-01-01 ${validTime}`, `YYYY-MM-DD ${hourFormat}`, 'en').tz(timezone).format(format24)
+      : moment().tz(timezone).format(format24)).split(/:/);
+
+    time12 = ((validTime)
+      ? moment(`1970-01-01 ${validTime}`, `YYYY-MM-DD ${hourFormat}`, 'en').tz(timezone).format(format12)
+      : moment().tz(timezone).format(format12)).split(/:/);
+  } else {
+    time24 = ((validTime)
+      ? moment(`1970-01-01 ${validTime}`, `YYYY-MM-DD ${hourFormat}`, 'en').format(format24)
+      : moment().format(format24)).split(/:/);
+    time12 = ((validTime)
+      ? moment(`1970-01-01 ${validTime}`, `YYYY-MM-DD ${hourFormat}`, 'en').format(format12)
+      : moment().format(format12)).split(/:/);
+  }
 
   const timeData = {
     hour12: head(time12).replace(/^0/, ''),
