@@ -47,8 +47,8 @@
   },
   "globals": {
     "require": true,
-    "$": true,
     "window": true,
-    "AMap": true
+    "it": true,
+    "describe": true
   }
 }

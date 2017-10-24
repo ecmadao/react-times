@@ -77,13 +77,15 @@ describe('Time utils', () => {
     describe('when passed only a mode', () => {
       it('then it should default to the current local time, with user-specified mode', () => {
         modes.forEach((mode) => {
-          const testTimeData = timeHelper.time(undefined, undefined, mode);
+          const testTimeData = timeHelper.time({
+            timeMode: mode
+          });
           const timeData = {
+            mode,
             hour12: head(time12).replace(/^0/, ''),
             hour24: head(time24),
             minute: last(time24).slice(0, 2),
             meridiem: last(time12).slice(2),
-            mode: mode,
             timezone: tz.zoneName
           };
 
@@ -95,7 +97,7 @@ describe('Time utils', () => {
     describe('when we passed only a meridiem', () => {
       it('then it should default to the current local time, in 12h mode, ignoring meridiem', () => {
         meridies.forEach((meridiem) => {
-          const testTimeData = timeHelper.time(undefined, meridiem);
+          const testTimeData = timeHelper.time({ meridiem });
           const timeData = {
             hour12: head(time12).replace(/^0/, ''),
             hour24: head(time24),

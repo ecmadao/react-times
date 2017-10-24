@@ -1,5 +1,5 @@
 import moment from 'moment-timezone';
-import { head, last } from './func';
+import { head, last, is } from './func';
 
 // loads moment-timezone's timezone data, which comes from the
 // IANA Time Zone Database at https://www.iana.org/time-zones
@@ -51,7 +51,10 @@ const guessUserTz = () => {
  * @param  {string} tz            a timezone name; defaults to guessing a user's tz or GMT
  * @return {Object}               a key-value representation of time data
  */
-const getValidTimeData = (time, meridiem, timeMode, tz, useTz = true) => {
+const getValidTimeData = (options = {}) => {
+  const {
+    time, meridiem, timeMode, tz, useTz = true
+  } = options;
   const validMeridiem = getValidMeridiem(meridiem);
 
   // when we only have a valid meridiem, that implies a 12h mode
@@ -128,10 +131,10 @@ const getValidateIntTime = (time) => {
  */
 const getValidateTime = (time) => {
   let result = time;
-  if (typeof result === 'undefined') { result = '00'; }
+  if (is.undefined(result)) { result = '00'; }
   if (isNaN(parseInt(result, 10))) { result = '00'; }
   if (parseInt(result, 10) < 10) { result = `0${parseInt(result, 10)}`; }
-  return `${time}`;
+  return `${result}`;
 };
 
 /**
@@ -142,7 +145,7 @@ const getValidateTime = (time) => {
  * @return {string}
  */
 const getValidTimeString = (time, meridiem) => {
-  if (typeof time === 'string') {
+  if (is.string(time)) {
     let validTime = (time && time.indexOf(':').length >= 0)
       ? time.split(/:/).map(t => getValidateTime(t)).join(':')
       : time;
@@ -166,7 +169,7 @@ const getValidTimeString = (time, meridiem) => {
  * @return {string}
  */
 const getValidMeridiem = (meridiem) => {
-  if (typeof meridiem === 'string') {
+  if (is.string(meridiem)) {
     return (meridiem && meridiem.match(/am|pm/i)) ? meridiem.toLowerCase() : null;
   }
 

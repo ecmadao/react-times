@@ -7,7 +7,7 @@ import ClassicTheme from './ClassicTheme';
 import timeHelper from '../utils/time.js';
 import languageHelper from '../utils/language';
 import ICONS from '../utils/icons';
-import { is } from '../utils/helper';
+import { is } from '../utils/func';
 
 // aliases for defaultProps readability
 const TIME = timeHelper.time();
@@ -111,7 +111,13 @@ class TimePicker extends React.PureComponent {
       timezone,
       meridiem,
     } = this.props;
-    const timeData = timeHelper.time(time, meridiem, timeMode, timezone, !timeChanged);
+    const timeData = timeHelper.time({
+      time,
+      meridiem,
+      timeMode,
+      tz: timezone,
+      useTz: !timeChanged
+    });
     return timeData;
   }
 
@@ -171,7 +177,7 @@ class TimePicker extends React.PureComponent {
           console.warn('It seems you are using 12 hours mode with 24 hours time format. Please check your timeMode and timeFormat props');
         }
       } else if (/hh?/.test(times) || /mm?/.test(times)) {
-        if (validTimeMode === 12) {
+        if (validTimeMode === 24) {
           console.warn('It seems you are using 24 hours mode with 12 hours time format. Please check your timeMode and timeFormat props');
         }
       }
