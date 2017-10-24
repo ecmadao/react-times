@@ -41,4 +41,9 @@ storiesOf('Default TimePicker', module)
       autoMode={false}
       minuteStep={1}
     />
+  ))
+  .addWithInfo('compact Preview Time', () => (
+    <TimePickerWrapper
+      compactPreviewTime={true}
+    />
   ));

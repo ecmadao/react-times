@@ -45,6 +45,7 @@ const propTypes = {
   withoutIcon: PropTypes.bool,
   minuteStep: PropTypes.number,
   limitDrag: PropTypes.bool,
+  compactPreviewTime: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -69,6 +70,7 @@ const defaultProps = {
   withoutIcon: false,
   minuteStep: 5,
   limitDrag: false,
+  compactPreviewTime: false,
 };
 
 class TimePicker extends React.PureComponent {
@@ -246,16 +248,19 @@ class TimePicker extends React.PureComponent {
       timeMode,
       placeholder,
       withoutIcon,
-      colorPalette
+      colorPalette,
+      compactPreviewTime
     } = this.props;
 
     const {focused} = this.state;
     const [hour, minute] = this.getHourAndMinute();
     const validTimeMode = timeHelper.validateTimeMode(timeMode);
 
+    const hourMinuteDivider = compactPreviewTime?':':' : ';
+
     const times = (validTimeMode === 12)
-      ? `${hour} : ${minute} ${this.meridiem}`
-      : `${hour} : ${minute}`;
+      ? `${hour}${hourMinuteDivider}${minute} ${this.meridiem}`
+      : `${hour}${hourMinuteDivider}${minute}`;
     const pickerPreviewClass = focused
       ? 'time_picker_preview active'
       : 'time_picker_preview';
