@@ -6,8 +6,8 @@
   ],
   "settings": {
     "import/resolver": {
-      "node": {
-        "extensions": [".coffee", ".js", ".jsx"]
+      "webpack": {
+        "config": "webpack.config.js"
       }
     }
   },

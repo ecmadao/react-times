@@ -1,6 +1,6 @@
 import React from 'react';
-import {expect} from 'chai';
-import {shallow} from 'enzyme';
+import { expect } from 'chai';
+import { shallow } from 'enzyme';
 import sinon from 'sinon-sandbox';
 
 import languageHelper from '../../src/utils/language';
@@ -79,7 +79,7 @@ describe('TimePicker func', () => {
 
   describe('languageData func', () => {
     it('should return the default language messages when no phrases provided', () => {
-      const wrapper = shallow(<TimePicker/>);
+      const wrapper = shallow(<TimePicker />);
       const messages = wrapper.instance().languageData();
       expect(messages).to.deep.equal(languageHelper.get('en'));
     });
@@ -105,7 +105,7 @@ describe('TimePicker func', () => {
         close: 'baz'
       };
       const expectedMessages = Object.assign({}, languageHelper.get('en'), phrases);
-      const wrapper = shallow(<TimePicker phrases={phrases}/>);
+      const wrapper = shallow(<TimePicker phrases={phrases} />);
       const messages = wrapper.instance().languageData();
       expect(messages).to.deep.equal(expectedMessages);
     });

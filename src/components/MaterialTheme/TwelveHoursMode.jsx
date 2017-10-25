@@ -1,3 +1,5 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   MAX_ABSOLUTE_POSITION,
   MINUTES,
@@ -6,11 +8,7 @@ import {
   POINTER_RADIUS,
   TWELVE_HOURS,
 } from '../../utils/const_value.js';
-import React from 'react';
-import PropTypes from 'prop-types';
-
 import timeHelper from '../../utils/time';
-
 import Button from '../Common/Button';
 import PickerDragHandler from '../Picker/PickerDragHandler';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';

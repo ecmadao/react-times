@@ -1,6 +1,6 @@
 import React from 'react';
-import {expect} from 'chai';
-import {shallow} from 'enzyme';
+import { expect } from 'chai';
+import { shallow } from 'enzyme';
 import sinon from 'sinon-sandbox';
 
 import TwelveHoursMode from '../../src/components/MaterialTheme/TwelveHoursMode';
@@ -13,9 +13,9 @@ describe('TwelveHoursMode', () => {
   describe('TwelveHoursMode init with defaultTime', () => {
     const wrapper = shallow(
       <TwelveHoursMode
+        focused
         hour={'01'}
         minute={'45'}
-        focused={true}
         phrases={phrases}
       />
     );
@@ -86,12 +86,12 @@ describe('TwelveHoursMode', () => {
       };
       const wrapper = shallow(
         <TwelveHoursMode
+          focused
+          showTimezone
           hour={'01'}
           minute={'45'}
-          focused={true}
           phrases={phrases}
           timezone={mockTimezone}
-          showTimezone={true}
         />
       );
 
@@ -103,9 +103,9 @@ describe('TwelveHoursMode', () => {
     describe('when showTimezone is false', () => {
       const wrapper = shallow(
         <TwelveHoursMode
+          focused
           hour={'01'}
           minute={'45'}
-          focused={true}
           phrases={phrases}
           showTimezone={false}
         />

@@ -1,6 +1,6 @@
-import { Typeahead } from 'react-bootstrap-typeahead';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Typeahead } from 'react-bootstrap-typeahead';
 
 import timeHelper from '../../utils/time';
 import ICONS from '../../utils/icons';

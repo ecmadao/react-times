@@ -1,6 +1,6 @@
 import React from 'react';
-import {expect} from 'chai';
-import {shallow} from 'enzyme';
+import { expect } from 'chai';
+import { shallow } from 'enzyme';
 import sinon from 'sinon-sandbox';
 
 import TimezonePicker from '../../src/components/Timezone/TimezonePicker';

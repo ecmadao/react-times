@@ -1,7 +1,6 @@
 import React from 'react';
-import {expect} from 'chai';
-import {shallow} from 'enzyme';
-import sinon from 'sinon-sandbox';
+import { expect } from 'chai';
+import { shallow } from 'enzyme';
 
 import PickerPoint from '../../src/components/Picker/PickerPoint';
 

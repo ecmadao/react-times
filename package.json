@@ -108,7 +108,7 @@
     "tag": "git tag v$npm_package_version",
     "test": "npm run mocha --silent test",
     "test:watch": "npm run mocha test -- --watch",
-    "lint": "./node_modules/.bin/eslint src/*",
+    "lint": "./node_modules/.bin/eslint ./src && ./node_modules/.bin/eslint ./test && ./node_modules/.bin/eslint ./stories",
     "prepush": "npm run lint && npm test"
   }
 }

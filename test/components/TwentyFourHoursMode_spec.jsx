@@ -1,6 +1,6 @@
 import React from 'react';
-import {expect} from 'chai';
-import {shallow} from 'enzyme';
+import { expect } from 'chai';
+import { shallow } from 'enzyme';
 import sinon from 'sinon-sandbox';
 
 import TwentyFourHoursMode from '../../src/components/MaterialTheme/TwentyFourHoursMode';
@@ -94,12 +94,12 @@ describe('TwentyFourHoursMode', () => {
       };
       const wrapper = shallow(
         <TwentyFourHoursMode
+          focused
+          showTimezone
           hour={'01'}
           minute={'45'}
-          focused={true}
           phrases={phrases}
           timezone={mockTimezone}
-          showTimezone={true}
         />
       );
 
@@ -111,9 +111,9 @@ describe('TwentyFourHoursMode', () => {
     describe('when showTimezone is false', () => {
       const wrapper = shallow(
         <TwentyFourHoursMode
+          focused
           hour={'01'}
           minute={'45'}
-          focused={true}
           phrases={phrases}
           showTimezone={false}
         />

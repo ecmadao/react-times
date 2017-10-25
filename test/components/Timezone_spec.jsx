@@ -1,6 +1,6 @@
 import React from 'react';
-import {expect} from 'chai';
-import {shallow} from 'enzyme';
+import { expect } from 'chai';
+import { shallow } from 'enzyme';
 
 import Timezone from '../../src/components/Timezone';
 import languageHelper from '../../src/utils/language';
@@ -36,7 +36,7 @@ describe('Timezone', () => {
         const wrapper = shallow(
           <Timezone
             phrases={phrases}
-            timezoneIsEditable={true}
+            timezoneIsEditable
           />
         );
 
@@ -48,7 +48,7 @@ describe('Timezone', () => {
           const wrapper = shallow(
             <Timezone
               phrases={phrases}
-              timezoneIsEditable={true}
+              timezoneIsEditable
             />
           );
           wrapper.setState({ focused: true });
@@ -62,7 +62,7 @@ describe('Timezone', () => {
           const wrapper = shallow(
             <Timezone
               phrases={phrases}
-              timezoneIsEditable={true}
+              timezoneIsEditable
             />
           );
           wrapper.setState({ focused: false });
@@ -132,7 +132,7 @@ describe('Timezone', () => {
     const wrapper = shallow(
       <Timezone
         phrases={phrases}
-        timezoneIsEditable={true}
+        timezoneIsEditable
       />
     );
 
