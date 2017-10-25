@@ -2,7 +2,7 @@ import '../css/material/default.css';
 
 import React from 'react';
 import TimePickerWrapper from '../examples/TimePickerWrapper';
-import {storiesOf} from '@kadira/storybook';
+import { storiesOf } from '@kadira/storybook';
 
 storiesOf('TwelveHoursMode', module)
   .addWithInfo('with default time', () => (
@@ -18,9 +18,9 @@ storiesOf('TwelveHoursMode', module)
   ))
   .addWithInfo('focused at setup, no icon', () => (
     <TimePickerWrapper
-      withoutIcon={true}
+      withoutIcon
       timeMode="12"
-      focused={true}
+      focused
     />
   ))
   .addWithInfo('custom minute step', () => (

@@ -12,7 +12,7 @@ const propTypes = {
 const defaultProps = {
   index: 0,
   angle: 0,
-  pointClass: "picker_point point_outter",
+  pointClass: 'picker_point point_outter',
   handleTimeChange: () => {}
 };
 
@@ -20,9 +20,9 @@ const PickerPoint = (props) => {
   const {
     index,
     angle,
-    handleTimeChange,
     pointClass,
-    pointerRotate
+    pointerRotate,
+    handleTimeChange,
   } = props;
   const inlineStyle = darg.inlineRotateStyle(angle);
   const wrapperStyle = darg.rotateStyle(-angle);
@@ -32,11 +32,11 @@ const PickerPoint = (props) => {
       className={pointClass}
       style={inlineStyle}
       onClick={() => {
-        let relativeRotate = angle - pointerRotate % 360;
+        let relativeRotate = angle - (pointerRotate % 360);
         if (relativeRotate >= 180) {
-          relativeRotate = relativeRotate - 360;
+          relativeRotate -= 360;
         } else if (relativeRotate < -180) {
-          relativeRotate = relativeRotate + 360;
+          relativeRotate += 360;
         }
         handleTimeChange && handleTimeChange({
           time: index,
@@ -50,7 +50,7 @@ const PickerPoint = (props) => {
       </div>
     </div>
   );
-}
+};
 
 PickerPoint.propTypes = propTypes;
 PickerPoint.defaultProps = defaultProps;

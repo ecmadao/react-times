@@ -86,7 +86,7 @@ class MaterialTheme extends React.PureComponent {
         timezone={timezone}
         timezoneIsEditable={timezoneIsEditable}
       />
-    )
+    );
   }
 
   renderTwelveHoursMode() {
@@ -136,10 +136,10 @@ class MaterialTheme extends React.PureComponent {
   }
 
   render() {
-    const {timeMode} = this.props;
+    const { timeMode } = this.props;
     return (
       <div>
-        {parseInt(timeMode) === 24
+        {parseInt(timeMode, 10) === 24
           ? this.renderTwentyFourHoursMode()
           : this.renderTwelveHoursMode()}
       </div>

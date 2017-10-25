@@ -12,7 +12,7 @@ TIME.tz = timeHelper.guessUserTz();
 class Timezone extends React.PureComponent {
   constructor(props) {
     super(props);
-    const {timezone} = this.props;
+    const { timezone } = this.props;
 
     this.state = {
       focused: false,
@@ -25,25 +25,25 @@ class Timezone extends React.PureComponent {
   }
 
   onClearFocus() {
-    this.setState({focused: false});
+    this.setState({ focused: false });
   }
 
   handleFocusedChange() {
     if (!this.props.timezoneIsEditable) return;
 
-    const {focused} = this.state;
-    this.setState({focused: !focused});
+    const { focused } = this.state;
+    this.setState({ focused: !focused });
   }
 
   handleTimezoneChange(timezone) {
-    this.setState({timezone});
-    const {onTimezoneChange} = this.props;
+    this.setState({ timezone });
+    const { onTimezoneChange } = this.props;
     onTimezoneChange && onTimezoneChange(timezone);
   }
 
   render() {
-    const {focused, timezone} = this.state;
-    const {phrases, timezoneIsEditable} = this.props;
+    const { focused, timezone } = this.state;
+    const { phrases, timezoneIsEditable } = this.props;
     const footerClass = timezoneIsEditable
       ? 'time_picker_modal_footer clickable'
       : 'time_picker_modal_footer';
@@ -64,12 +64,13 @@ class Timezone extends React.PureComponent {
     return (
       <div>
         <div className={footerClass} onClick={this.handleFocusedChange}>
-          <span className='time_picker_modal_footer_timezone'>{timezone.zoneName} {timezone.zoneAbbr}</span>
+          <span className="time_picker_modal_footer_timezone">{timezone.zoneName} {timezone.zoneAbbr}</span>
         </div>
         <CSSTransitionGroup
           transitionName="timezone_picker_modal_container"
           transitionEnterTimeout={400}
-          transitionLeaveTimeout={400}>
+          transitionLeaveTimeout={400}
+        >
           {timeZonePicker()}
         </CSSTransitionGroup>
       </div>

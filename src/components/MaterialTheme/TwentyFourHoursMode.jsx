@@ -7,7 +7,7 @@ import {
   POINTER_RADIUS,
 } from '../../utils/const_value.js';
 import React from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 import PickerDragHandler from '../Picker/PickerDragHandler';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';
@@ -50,11 +50,12 @@ class TwentyFourHoursMode extends React.PureComponent {
   constructor(props) {
     super(props);
     const pointerRotate = this.resetHourDegree();
-    const {step} = props;
+    const { step } = props;
     this.state = {
       step,
       pointerRotate
     };
+    this.handleStepChange = this.handleStepChange.bind(this);
     this.handleTimeChange = this.handleTimeChange.bind(this);
     this.handleTimePointerClick = this.handleTimePointerClick.bind(this);
   }
@@ -86,25 +87,25 @@ class TwentyFourHoursMode extends React.PureComponent {
       autoMode = null,
       pointerRotate = null,
     } = options;
-    pointerRotate && this.setState({pointerRotate});
+    pointerRotate && this.setState({ pointerRotate });
     this.handleTimeChange(time, autoMode);
   }
 
   handleTimeChange(time, autoMode = null) {
-    time = parseInt(time);
-    const {step} = this.state;
+    const validateTime = parseInt(time, 10);
+    const { step } = this.state;
+    const auto = autoMode === null ? this.props.autoMode : autoMode;
     const {
       handleHourChange,
       handleMinuteChange,
       clearFocus
     } = this.props;
-    if (autoMode === null) autoMode = this.props.autoMode;
     if (step === 0) {
-      handleHourChange && handleHourChange(time);
+      handleHourChange && handleHourChange(validateTime);
     } else {
-      handleMinuteChange && handleMinuteChange(time);
+      handleMinuteChange && handleMinuteChange(validateTime);
     }
-    if (!autoMode) { return; }
+    if (!auto) { return; }
     if (step === 0) {
       this.handleStepChange(1);
     } else {
@@ -114,43 +115,43 @@ class TwentyFourHoursMode extends React.PureComponent {
   }
 
   resetHourDegree() {
-    const hour = parseInt(this.props.hour);
+    const hour = parseInt(this.props.hour, 10);
     let pointerRotate = 0;
     HOURS.forEach((h, index) => {
       if (hour === index + 1) {
         pointerRotate = index < 12
-          ? 360 * (index + 1) / 12
-          : 360 * (index + 1 - 12) / 12;
+          ? (360 * (index + 1)) / 12
+          : (360 * ((index + 1) - 12)) / 12;
       }
     });
     return pointerRotate;
   }
 
   resetMinuteDegree() {
-    const minute = parseInt(this.props.minute);
+    const minute = parseInt(this.props.minute, 10);
     let pointerRotate = 0;
     MINUTES.forEach((m, index) => {
       if (minute === index) {
-        pointerRotate = 360 * index / 60;
+        pointerRotate = (360 * index) / 60;
       }
     });
     return pointerRotate;
   }
 
   getTopAndHeight() {
-    let {step} = this.state;
-    let {hour, minute} = this.props;
-    let time = step === 0 ? hour : minute;
-    let splitNum = step === 0 ? 12 : 60;
-    let minLength = step === 0
+    const { step } = this.state;
+    const { hour, minute } = this.props;
+    const time = step === 0 ? hour : minute;
+    const splitNum = step === 0 ? 12 : 60;
+    const minLength = step === 0
       ? MIN_ABSOLUTE_POSITION
       : MAX_ABSOLUTE_POSITION;
-    let height = time < splitNum
+    const height = time < splitNum
       ? minLength - POINTER_RADIUS
       : MAX_ABSOLUTE_POSITION - POINTER_RADIUS;
-    let top = time < splitNum
-      ? PICKER_RADIUS - minLength + POINTER_RADIUS
-      : PICKER_RADIUS - MAX_ABSOLUTE_POSITION + POINTER_RADIUS;
+    const top = time < splitNum
+      ? (PICKER_RADIUS - minLength) + POINTER_RADIUS
+      : (PICKER_RADIUS - MAX_ABSOLUTE_POSITION) + POINTER_RADIUS;
     return [top, height];
   }
 
@@ -168,7 +169,7 @@ class TwentyFourHoursMode extends React.PureComponent {
       onTimezoneChange,
     } = this.props;
 
-    const {step, pointerRotate} = this.state;
+    const { step, pointerRotate } = this.state;
 
     const activeHourClass = step === 0
       ? 'time_picker_header active'
@@ -186,25 +187,25 @@ class TwentyFourHoursMode extends React.PureComponent {
     const PickerPointGenerator = pickerPointGenerator(type);
 
     return (
-      <div className='time_picker_modal_container'>
-        <div className='time_picker_modal_header'>
+      <div className="time_picker_modal_container">
+        <div className="time_picker_modal_header">
           <span
             className={activeHourClass}
-            onClick={this.handleStepChange.bind(this, 0)}
+            onClick={() => this.handleStepChange(0)}
           >
             {hour}
           </span>
-          <span className='time_picker_header_delivery'>:</span>
+          <span className="time_picker_header_delivery">:</span>
           <span
             className={activeMinuteClass}
-            onClick={this.handleStepChange.bind(this, 1)}
+            onClick={() => this.handleStepChange(1)}
           >
             {minute}
           </span>
         </div>
-        <div className='picker_container'>
+        <div className="picker_container">
           <PickerPointGenerator
-            ref={ref => this.pickerPointerContainer = ref}
+            ref={ref => (this.pickerPointerContainer = ref)}
             handleTimePointerClick={this.handleTimePointerClick}
             pointerRotate={pointerRotate}
           />
@@ -214,7 +215,7 @@ class TwentyFourHoursMode extends React.PureComponent {
             minuteStep={minuteStep}
             draggable={draggable}
             rotateState={rotateState}
-            time={step === 0 ? parseInt(hour) : parseInt(minute)}
+            time={step === 0 ? parseInt(hour, 10) : parseInt(minute, 10)}
             minLength={step === 0
                 ? MIN_ABSOLUTE_POSITION
                 : MAX_ABSOLUTE_POSITION}

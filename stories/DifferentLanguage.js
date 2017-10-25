@@ -1,6 +1,6 @@
 import React from 'react';
-import {storiesOf} from '@kadira/storybook';
-import {withKnobs, text} from '@kadira/storybook-addon-knobs';
+import { storiesOf } from '@kadira/storybook';
+import { withKnobs, text } from '@kadira/storybook-addon-knobs';
 import TimePickerWrapper from '../examples/TimePickerWrapper';
 import '../css/material/default.css';
 
@@ -9,22 +9,18 @@ storiesOf('Different Languages', module)
   .addWithInfo('English (basic)', () => (
     <TimePickerWrapper timeMode="12" />
   ))
-  .addWithInfo('汉语 - 简体', () => {
-    return (
-      <TimePickerWrapper
-        timeMode="12"
-        language="zh-cn"
-      />
-    )
-  })
-  .addWithInfo('汉语 - 繁体', () => {
-    return (
-      <TimePickerWrapper
-        timeMode="12"
-        language="zh-tw"
-      />
-    )
-  })
+  .addWithInfo('汉语 - 简体', () => (
+    <TimePickerWrapper
+      timeMode="12"
+      language="zh-cn"
+    />
+  ))
+  .addWithInfo('汉语 - 繁体', () => (
+    <TimePickerWrapper
+      timeMode="12"
+      language="zh-tw"
+    />
+  ))
   .addWithInfo('Français', () => (
     <TimePickerWrapper
       timeMode="12"
@@ -55,5 +51,6 @@ storiesOf('Different Languages', module)
           am,
           pm
         }}
-    />);
+      />
+    );
   });

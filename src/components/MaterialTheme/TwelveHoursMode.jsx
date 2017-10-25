@@ -61,6 +61,7 @@ class TwelveHoursMode extends React.PureComponent {
       hourPointerRotate,
       minutePointerRotate
     };
+    this.handleMeridiemChange = this.handleMeridiemChange.bind(this);
     this.handleHourChange = this.handleHourChange.bind(this);
     this.handleMinuteChange = this.handleMinuteChange.bind(this);
     this.handleDegreeChange = this.handleDegreeChange.bind(this);
@@ -69,22 +70,22 @@ class TwelveHoursMode extends React.PureComponent {
   }
 
   resetHourDegree() {
-    const hour = parseInt(this.props.hour);
+    const hour = parseInt(this.props.hour, 10);
     let pointerRotate = 0;
-    TWELVE_HOURS.map((h, index) => {
+    TWELVE_HOURS.forEach((h, index) => {
       if (hour === index + 1) {
-        pointerRotate = 360 * (index + 1) / 12;
+        pointerRotate = (360 * (index + 1)) / 12;
       }
     });
     return pointerRotate;
   }
 
   resetMinuteDegree() {
-    const minute = parseInt(this.props.minute);
+    const minute = parseInt(this.props.minute, 10);
     let pointerRotate = 0;
-    MINUTES.map((m, index) => {
+    MINUTES.forEach((m, index) => {
       if (minute === index) {
-        pointerRotate = 360 * index / 60;
+        pointerRotate = (360 * index) / 60;
       }
     });
     return pointerRotate;
@@ -92,31 +93,43 @@ class TwelveHoursMode extends React.PureComponent {
 
   getHourTopAndHeight() {
     const height = MIN_ABSOLUTE_POSITION - POINTER_RADIUS;
-    const top = PICKER_RADIUS - MIN_ABSOLUTE_POSITION + POINTER_RADIUS;
+    const top = (PICKER_RADIUS - MIN_ABSOLUTE_POSITION) + POINTER_RADIUS;
     return [top, height];
   }
 
   getMinuteTopAndHeight() {
     const height = MAX_ABSOLUTE_POSITION - POINTER_RADIUS;
-    const top = PICKER_RADIUS - MAX_ABSOLUTE_POSITION + POINTER_RADIUS;
+    const top = (PICKER_RADIUS - MAX_ABSOLUTE_POSITION) + POINTER_RADIUS;
     return [top, height];
   }
 
-  handleMeridiemChange(meridiem) {
-    if (meridiem !== this.props.meridiem) {
-      const {handleMeridiemChange} = this.props;
-      handleMeridiemChange && handleMeridiemChange(meridiem);
+  handleMeridiemChange() {
+    const { meridiem, phrases } = this.props;
+    const newMeridiem = (meridiem === 'AM' || meridiem === phrases.am)
+      ? phrases.pm
+      : phrases.am;
+    if (newMeridiem !== meridiem) {
+      const { handleMeridiemChange } = this.props;
+      handleMeridiemChange && handleMeridiemChange(newMeridiem);
     }
   }
 
-  handleHourPointerClick(time, hourPointerRotate = null) {
+  handleHourPointerClick(options) {
+    const {
+      time,
+      pointerRotate = null,
+    } = options;
     this.handleHourChange(time);
-    hourPointerRotate && this.handleDegreeChange({hourPointerRotate});
+    pointerRotate !== null && this.handleDegreeChange({ hourPointerRotate: pointerRotate });
   }
 
-  handleMinutePointerClick(time, minutePointerRotate = null) {
+  handleMinutePointerClick(options) {
+    const {
+      time,
+      pointerRotate = null,
+    } = options;
     this.handleMinuteChange(time);
-    minutePointerRotate && this.handleDegreeChange({minutePointerRotate});
+    pointerRotate !== null && this.handleDegreeChange({ minutePointerRotate: pointerRotate });
   }
 
   handleDegreeChange(pointerRotate) {
@@ -124,14 +137,14 @@ class TwelveHoursMode extends React.PureComponent {
   }
 
   handleHourChange(time) {
-    const hour = parseInt(time);
-    const {handleHourChange} = this.props;
+    const hour = parseInt(time, 10);
+    const { handleHourChange } = this.props;
     handleHourChange && handleHourChange(hour);
   }
 
   handleMinuteChange(time) {
-    const minute = parseInt(time);
-    const {handleMinuteChange} = this.props;
+    const minute = parseInt(time, 10);
+    const { handleMinuteChange } = this.props;
     handleMinuteChange && handleMinuteChange(minute);
   }
 
@@ -151,7 +164,7 @@ class TwelveHoursMode extends React.PureComponent {
       onTimezoneChange
     } = this.props;
 
-    const {hourPointerRotate, minutePointerRotate} = this.state;
+    const { hourPointerRotate, minutePointerRotate } = this.state;
 
     const [top, height] = this.getHourTopAndHeight();
     const hourRotateState = {
@@ -168,25 +181,19 @@ class TwelveHoursMode extends React.PureComponent {
 
     const HourPickerPointGenerator = pickerPointGenerator('hour', 12);
     const MinutePickerPointGenerator = pickerPointGenerator('minute', 12);
-    const newMeridiem = (meridiem === 'AM' || meridiem === phrases['am'])
-      ? phrases['pm']
-      : phrases['am'];
-
-    const handleMeridiemChange = this.handleMeridiemChange.bind(
-      this,
-      newMeridiem
-    );
 
     return (
-      <div className='time_picker_modal_container'>
-        <div className='time_picker_modal_header'>
+      <div className="time_picker_modal_container">
+        <div className="time_picker_modal_header">
+          <span className="time_picker_header active">{hour}:{minute}</span>&nbsp;
           <span
-            className='time_picker_header active'>{hour}:{minute}</span>&nbsp;
-          <span
-            onClick={handleMeridiemChange}
-            className='time_picker_header meridiem'>{meridiem}</span>
+            onClick={this.handleMeridiemChange}
+            className="time_picker_header meridiem"
+          >
+            {meridiem}
+          </span>
         </div>
-        <div className='picker_container'>
+        <div className="picker_container">
           <HourPickerPointGenerator
             handleTimePointerClick={this.handleHourPointerClick}
             pointerRotate={hourPointerRotate}
@@ -200,19 +207,21 @@ class TwelveHoursMode extends React.PureComponent {
             limitDrag={limitDrag}
             minuteStep={minuteStep}
             rotateState={minuteRotateState}
-            time={parseInt(minute)}
+            time={parseInt(minute, 10)}
             minLength={MAX_ABSOLUTE_POSITION}
             draggable={draggable}
-            handleTimePointerClick={this.handleMinutePointerClick} />
+            handleTimePointerClick={this.handleMinutePointerClick}
+          />
           <PickerDragHandler
             step={0}
             limitDrag={limitDrag}
             minuteStep={minuteStep}
             rotateState={hourRotateState}
-            time={parseInt(hour)}
+            time={parseInt(hour, 10)}
             maxLength={MIN_ABSOLUTE_POSITION}
             draggable={draggable}
-            handleTimePointerClick={this.handleHourPointerClick} />
+            handleTimePointerClick={this.handleHourPointerClick}
+          />
         </div>
         {showTimezone
           ? <Timezone
@@ -223,7 +232,7 @@ class TwelveHoursMode extends React.PureComponent {
           />
           : ''
         }
-        <div className='buttons_wrapper'>
+        <div className="buttons_wrapper">
           <Button
             onClick={clearFocus}
             text={phrases.close}

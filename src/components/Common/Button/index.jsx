@@ -10,10 +10,11 @@ const Button = (props) => {
   return (
     <div
       className="time_picker_button"
-      onClick={onClick}>
+      onClick={onClick}
+    >
       {text}
     </div>
-  )
+  );
 };
 
 Button.propTypes = {

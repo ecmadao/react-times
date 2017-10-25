@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 
 const propTypes = {
   children: PropTypes.node,
@@ -35,12 +34,12 @@ class OutsideClickHandler extends React.PureComponent {
   }
 
   onOutsideClick(e) {
-    e = e || window.event;
-    const mouseTarget = (typeof e.which !== 'undefined') ? e.which : e.button;
-    const isDescendantOfRoot = ReactDOM.findDOMNode(this.childNode).contains(e.target);
+    const event = e || window.event;
+    const mouseTarget = (typeof event.which !== 'undefined') ? event.which : event.button;
+    const isDescendantOfRoot = this.childNode.contains(event.target);
     if (!isDescendantOfRoot && mouseTarget === 1) {
       const { onOutsideClick } = this.props;
-      onOutsideClick && onOutsideClick(e);
+      onOutsideClick && onOutsideClick(event);
     }
   }
 
@@ -50,7 +49,7 @@ class OutsideClickHandler extends React.PureComponent {
       ? 'outside_container active'
       : 'outside_container';
     return (
-      <div ref={(c) => this.childNode = c} className={outsideClass}>
+      <div ref={c => (this.childNode = c)} className={outsideClass}>
         {this.props.children}
       </div>
     );
