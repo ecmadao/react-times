@@ -1,6 +1,6 @@
 import React from 'react';
-import {expect} from 'chai';
-import {shallow} from 'enzyme';
+import { expect } from 'chai';
+import { shallow } from 'enzyme';
 
 import MaterialTheme from '../../src/components/MaterialTheme';
 import TwelveHoursMode from '../../src/components/MaterialTheme/TwelveHoursMode';

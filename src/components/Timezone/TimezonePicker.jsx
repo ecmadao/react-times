@@ -1,6 +1,6 @@
-import {Typeahead} from 'react-bootstrap-typeahead';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Typeahead } from 'react-bootstrap-typeahead';
 
 import timeHelper from '../../utils/time';
 import ICONS from '../../utils/icons';
@@ -14,7 +14,7 @@ class TimezonePicker extends React.PureComponent {
   }
 
   handleTimezoneChange(selection) {
-    const {handleTimezoneChange, onClearFocus} = this.props;
+    const { handleTimezoneChange, onClearFocus } = this.props;
     const zoneObject = selection[0];
     if (zoneObject) {
       handleTimezoneChange && handleTimezoneChange(zoneObject);
@@ -46,14 +46,14 @@ class TimezonePicker extends React.PureComponent {
             />
           </div>
         </div>
-        <div className='buttons_wrapper'>
+        <div className="buttons_wrapper">
           <Button
             onClick={onClearFocus}
             text={phrases.close}
           />
         </div>
       </div>
-    )
+    );
   }
 }
 

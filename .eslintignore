@@ -1,5 +1,6 @@
 node_modules/
 lib/
+.out.
 .storybook/
 webpack.config.js
 index.js

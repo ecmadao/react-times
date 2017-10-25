@@ -1,18 +1,18 @@
 import moment from 'moment-timezone';
-import {expect} from 'chai';
+import { expect } from 'chai';
 import timeHelper from '../src/utils/time';
 import drag from '../src/utils/drag';
 import {
   MAX_ABSOLUTE_POSITION,
   MIN_ABSOLUTE_POSITION
 } from '../src/utils/const_value';
-import {isSeq, head, tail, last} from '../src/utils/func';
+import { isSeq, head, tail, last } from '../src/utils/func';
 
 describe('Functional utils', () => {
   describe('isSeq', () => {
     it('should correctly detect a sequence', () => {
-      const isSequence = [isSeq('foo'), isSeq('foo'.split())].every((e) => e === true);
-      const isNotSequence = [isSeq({message: 'foo'}), isSeq(8), isSeq(true)].every((e) => e === false);
+      const isSequence = [isSeq('foo'), isSeq('foo'.split())].every(e => e === true);
+      const isNotSequence = [isSeq({ message: 'foo' }), isSeq(8), isSeq(true)].every(e => e === false);
       expect(isSequence).to.equal(true);
       expect(isNotSequence).to.equal(true);
     });
@@ -147,11 +147,19 @@ describe('Time utils', () => {
 
   describe('Test getStandardAbsolutePosition func', () => {
     it('should return the MinPosition', () => {
-      expect(drag.validatePosition(MIN_ABSOLUTE_POSITION - 1, MIN_ABSOLUTE_POSITION, MAX_ABSOLUTE_POSITION)).to.equal(MIN_ABSOLUTE_POSITION);
+      expect(
+        drag.validatePosition(
+          MIN_ABSOLUTE_POSITION - 1, MIN_ABSOLUTE_POSITION, MAX_ABSOLUTE_POSITION
+        )
+      ).to.equal(MIN_ABSOLUTE_POSITION);
     });
 
     it('should return the MaxPosition', () => {
-      expect(drag.validatePosition(MAX_ABSOLUTE_POSITION + 1, MAX_ABSOLUTE_POSITION, MAX_ABSOLUTE_POSITION)).to.equal(MAX_ABSOLUTE_POSITION);
+      expect(
+        drag.validatePosition(
+          MAX_ABSOLUTE_POSITION + 1, MAX_ABSOLUTE_POSITION, MAX_ABSOLUTE_POSITION
+        )
+      ).to.equal(MAX_ABSOLUTE_POSITION);
     });
   });
 });

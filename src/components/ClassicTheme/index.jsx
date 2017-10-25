@@ -35,18 +35,18 @@ class ClassicTheme extends React.PureComponent {
 
   handle12ModeHourChange(time) {
     const [times, meridiem] = time.split(' ');
-    const {handleTimeChange, handleMeridiemChange} = this.props;
+    const { handleTimeChange, handleMeridiemChange } = this.props;
     handleMeridiemChange && handleMeridiemChange(meridiem);
     handleTimeChange && handleTimeChange(times);
   }
 
   handle24ModeHourChange(time) {
-    const {handleTimeChange} = this.props;
+    const { handleTimeChange } = this.props;
     handleTimeChange && handleTimeChange(time);
   }
 
   checkTimeIsActive(time) {
-    const {hour, minute, meridiem} = this.props;
+    const { hour, minute, meridiem } = this.props;
     const [times, rawMeridiem] = time.split(' ');
     const [rawHour, rawMinute] = times.split(':');
     const currentHour = timeHelper.validate(rawHour);
@@ -58,14 +58,14 @@ class ClassicTheme extends React.PureComponent {
     if (meridiem && meridiem !== rawMeridiem) {
       return false;
     }
-    if (Math.abs(parseInt(minute) - parseInt(currentMinute)) < 15) {
+    if (Math.abs(parseInt(minute, 10) - parseInt(currentMinute, 10)) < 15) {
       return true;
     }
     return false;
   }
 
   render12Hours() {
-    const {colorPalette} = this.props;
+    const { colorPalette } = this.props;
     return TIMES_12_MODE.map((hourValue, index) => {
       const timeClass = this.checkTimeIsActive(hourValue)
         ? 'classic_time active'
@@ -77,16 +77,17 @@ class ClassicTheme extends React.PureComponent {
           onClick={() => {
             this.handle12ModeHourChange(hourValue);
           }}
-          className={`${timeClass} ${colorPalette}`}>
+          className={`${timeClass} ${colorPalette}`}
+        >
           {time}&nbsp;
-          <span className='meridiem'>{meridiem}</span>
+          <span className="meridiem">{meridiem}</span>
         </div>
       );
     });
   }
 
   render24Hours() {
-    const {colorPalette} = this.props;
+    const { colorPalette } = this.props;
     return TIMES_24_MODE.map((hourValue, index) => {
       const timeClass = this.checkTimeIsActive(hourValue)
         ? 'classic_time active'
@@ -97,7 +98,8 @@ class ClassicTheme extends React.PureComponent {
           onClick={() => {
             this.handle24ModeHourChange(hourValue);
           }}
-          className={`${timeClass} ${colorPalette}`}>
+          className={`${timeClass} ${colorPalette}`}
+        >
           {hourValue}
         </div>
       );
@@ -105,7 +107,7 @@ class ClassicTheme extends React.PureComponent {
   }
 
   render() {
-    const {timeMode} = this.props;
+    const { timeMode } = this.props;
     return (
       <div className="classic_theme_container">
         {timeMode === 12 ? this.render12Hours() : this.render24Hours()}

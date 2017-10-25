@@ -22,6 +22,11 @@ storiesOf('Default TimePicker', module)
       focused
     />
   ))
+  .addWithInfo('not auto change time panel', () => (
+    <TimePickerWrapper
+      autoMode={false}
+    />
+  ))
   .addWithInfo('undraggable', () => (
     <TimePickerWrapper
       draggable={false}
