@@ -328,13 +328,15 @@ class PickerDragHandler extends React.PureComponent {
       const endX = pos.x + this.offsetDragCenterX;
       const endY = pos.y + this.offsetDragCenterY;
 
-      const pointerRotate = this.getPointerRotate({
+      let pointerRotate = this.getPointerRotate({
         dragX: endX,
         dragY: endY
       });
+      const remainder = pointerRotate % 30;
+      const base = Math.floor(pointerRotate / 30);
+      pointerRotate = (base + (remainder >= 15 ? 1 : 0)) * 30;
 
       this.setState({ pointerRotate });
-
       this.handleTimePointerChange({
         dragX: endX,
         dragY: endY,

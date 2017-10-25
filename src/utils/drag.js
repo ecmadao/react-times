@@ -3,22 +3,22 @@ const mousePosition = (e) => {
   let xPos;
   if (event.pageX) {
     xPos = event.pageX;
-  } else if ((e.clientX + document.body.scrollLeft) - document.body.clientLeft) {
-    xPos = (e.clientX + document.body.scrollLeft) - document.body.clientLeft;
-  } else if (e.touches[0]) {
-    xPos = e.touches[0].clientX;
+  } else if ((event.clientX + document.body.scrollLeft) - document.body.clientLeft) {
+    xPos = (event.clientX + document.body.scrollLeft) - document.body.clientLeft;
+  } else if (event.touches[0]) {
+    xPos = event.touches[0].clientX;
   } else {
-    xPos = e.changedTouches[0].clientX;
+    xPos = event.changedTouches[0].clientX;
   }
   let yPos;
-  if (e.pageY) {
-    yPos = e.pageY;
-  } else if ((e.clientY + document.body.scrollTop) - document.body.clientTop) {
-    yPos = (e.clientY + document.body.scrollTop) - document.body.clientTop;
-  } else if (e.touches[0]) {
-    yPos = e.touches[0].clientY;
+  if (event.pageY) {
+    yPos = event.pageY;
+  } else if ((event.clientY + document.body.scrollTop) - document.body.clientTop) {
+    yPos = (event.clientY + document.body.scrollTop) - document.body.clientTop;
+  } else if (event.touches[0]) {
+    yPos = event.touches[0].clientY;
   } else {
-    yPos = e.changedTouches[0].clientY;
+    yPos = event.changedTouches[0].clientY;
   }
   return {
     x: xPos + Math.max(document.documentElement.scrollLeft, document.body.scrollLeft),
