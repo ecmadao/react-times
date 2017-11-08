@@ -59,8 +59,7 @@ const getValidTimeData = (options = {}) => {
 
   // when we only have a valid meridiem, that implies a 12h mode
   const mode = (validMeridiem && !timeMode) ? 12 : timeMode || 24;
-  // eslint-disable-next-line
-  const timezone = (tz) ? tz : guessUserTz().zoneName;
+  const timezone = tz || guessUserTz().zoneName;
 
   const validMode = getValidateTimeMode(mode);
   const validTime = getValidTimeString(time, validMeridiem);
@@ -73,21 +72,22 @@ const getValidTimeData = (options = {}) => {
   let time24;
   let time12;
 
-  if (useTz) {
+  const formatTime = moment(`1970-01-01 ${validTime}`, `YYYY-MM-DD ${hourFormat}`, 'en');
+  if (time || !useTz) {
     time24 = ((validTime)
-      ? moment(`1970-01-01 ${validTime}`, `YYYY-MM-DD ${hourFormat}`, 'en').tz(timezone).format(format24)
+      ? formatTime.format(format24)
+      : moment().format(format24)).split(/:/);
+    time12 = ((validTime)
+      ? formatTime.format(format12)
+      : moment().format(format12)).split(/:/);
+  } else {
+    time24 = ((validTime)
+      ? formatTime.tz(timezone).format(format24)
       : moment().tz(timezone).format(format24)).split(/:/);
 
     time12 = ((validTime)
-      ? moment(`1970-01-01 ${validTime}`, `YYYY-MM-DD ${hourFormat}`, 'en').tz(timezone).format(format12)
+      ? formatTime.tz(timezone).format(format12)
       : moment().tz(timezone).format(format12)).split(/:/);
-  } else {
-    time24 = ((validTime)
-      ? moment(`1970-01-01 ${validTime}`, `YYYY-MM-DD ${hourFormat}`, 'en').format(format24)
-      : moment().format(format24)).split(/:/);
-    time12 = ((validTime)
-      ? moment(`1970-01-01 ${validTime}`, `YYYY-MM-DD ${hourFormat}`, 'en').format(format12)
-      : moment().format(format12)).split(/:/);
   }
 
   const timeData = {

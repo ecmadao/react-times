@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "husky": "^0.14.3",
-    "moment": "^2.18.1",
-    "moment-timezone": "^0.5.13",
+    "moment": "^2.19.1",
+    "moment-timezone": "^0.5.14",
     "prop-types": "^15.5.10",
     "react-bootstrap-typeahead": "^1.4.0",
     "react-transition-group": "^1.1.3"
