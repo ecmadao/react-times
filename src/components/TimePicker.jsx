@@ -10,7 +10,7 @@ import ICONS from '../utils/icons';
 import { is } from '../utils/func';
 
 // aliases for defaultProps readability
-const TIME = timeHelper.time();
+const TIME = timeHelper.time({ useTz: false });
 TIME.current = timeHelper.current();
 
 const propTypes = {

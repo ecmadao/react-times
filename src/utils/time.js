@@ -71,7 +71,6 @@ const getValidTimeData = (options = {}) => {
 
   let time24;
   let time12;
-
   const formatTime = moment(`1970-01-01 ${validTime}`, `YYYY-MM-DD ${hourFormat}`, 'en');
   if (time || !useTz) {
     time24 = ((validTime)
