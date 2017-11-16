@@ -23,4 +23,10 @@ storiesOf('Classic Theme', module)
       focused
       theme="classic"
     />
-));
+  ))
+  .addWithInfo('Set default time', () => (
+    <TimePickerWrapper
+      theme="classic"
+      defaultTime="12:00"
+    />
+  ));

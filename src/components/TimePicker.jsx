@@ -48,6 +48,7 @@ const propTypes = {
   limitDrag: PropTypes.bool,
   timeFormat: PropTypes.string,
   timeFormatter: PropTypes.func,
+  useTz: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -66,7 +67,7 @@ const defaultProps = {
   placeholder: '',
   showTimezone: false,
   theme: 'material',
-  time: TIME.current,
+  time: '',
   timeMode: TIME.mode,
   trigger: null,
   withoutIcon: false,
@@ -74,6 +75,7 @@ const defaultProps = {
   limitDrag: false,
   timeFormat: '',
   timeFormatter: null,
+  useTz: true,
 };
 
 class TimePicker extends React.PureComponent {
@@ -107,6 +109,7 @@ class TimePicker extends React.PureComponent {
   timeData(timeChanged) {
     const {
       time,
+      useTz,
       timeMode,
       timezone,
       meridiem,
@@ -116,7 +119,7 @@ class TimePicker extends React.PureComponent {
       meridiem,
       timeMode,
       tz: timezone,
-      useTz: !timeChanged
+      useTz: !time && !timeChanged && useTz
     });
     return timeData;
   }
@@ -250,7 +253,7 @@ class TimePicker extends React.PureComponent {
     // eslint-disable-next-line no-unneeded-ternary
     const m = (meridiem) ? meridiem : timeData.meridiem;
     // eslint-disable-next-line no-extra-boolean-cast
-    return !!(m.match(/^am|pm/i)) ? localMessages[m.toLowerCase()] : m;
+    return m && !!(m.match(/^am|pm/i)) ? localMessages[m.toLowerCase()] : m;
   }
 
   renderMaterialTheme() {

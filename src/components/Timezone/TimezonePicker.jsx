@@ -27,7 +27,7 @@ class TimezonePicker extends React.PureComponent {
     return (
       <div className="timezone_picker_modal_container">
         <div className="timezone_picker_modal_header">
-          <span onClick={onClearFocus}>
+          <span onClick={onClearFocus} className="icon">
             {ICONS.chevronLeft}
           </span>
           <span className="timezone_picker_header_title">
@@ -36,13 +36,13 @@ class TimezonePicker extends React.PureComponent {
         </div>
         <div className="timezone_picker_container">
           <div className="timezone_picker_search">
-            <label>{phrases.timezonePickerLabel}</label>
             <Typeahead
               onChange={this.handleTimezoneChange}
               labelKey={option => `${option.city} - ${option.zoneAbbr}`}
               options={timeHelper.tzMaps}
               maxResults={5}
               minLength={3}
+              placeholder={phrases.timezonePickerLabel}
             />
           </div>
         </div>

@@ -53,7 +53,11 @@ const guessUserTz = () => {
  */
 const getValidTimeData = (options = {}) => {
   const {
-    time, meridiem, timeMode, tz, useTz = true
+    tz,
+    time,
+    timeMode,
+    useTz = true,
+    meridiem = null,
   } = options;
   const validMeridiem = getValidMeridiem(meridiem);
 
@@ -63,8 +67,8 @@ const getValidTimeData = (options = {}) => {
 
   const validMode = getValidateTimeMode(mode);
   const validTime = getValidTimeString(time, validMeridiem);
-  const format12 = 'hh:mmA';
-  const format24 = 'HH:mmA';
+  const format12 = 'hh:mm';
+  const format24 = 'HH:mm';
 
   // What format is the hour we provide to moment below in?
   const hourFormat = (validMode === 12) ? format12 : format24;
@@ -93,7 +97,7 @@ const getValidTimeData = (options = {}) => {
     hour12: head(time12).replace(/^0/, ''),
     hour24: head(time24),
     minute: last(time24).slice(0, 2),
-    meridiem: last(time12).slice(2),
+    meridiem: validMeridiem,
     mode: validMode,
     timezone
   };

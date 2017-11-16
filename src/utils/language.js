@@ -3,8 +3,8 @@ const LANGUAGES = {
     confirm: 'confirm',
     cancel: 'cancel',
     close: 'close',
-    timezonePickerTitle: 'Pick a Timezone',
-    timezonePickerLabel: 'Closest City or Timezone',
+    timezonePickerTitle: 'Pick a timezone',
+    timezonePickerLabel: 'Closest city or timezone',
     am: 'AM',
     pm: 'PM'
   },
@@ -30,8 +30,8 @@ const LANGUAGES = {
     confirm: 'Confirmer',
     cancel: 'Annulé',
     close: 'Arrêter',
-    timezonePickerTitle: 'Choisissez un Timezone',
-    timezonePickerLabel: 'Ville la plus proche ou Timezone',
+    timezonePickerTitle: 'Choisissez un timezone',
+    timezonePickerLabel: 'Ville la plus proche ou timezone',
     am: 'AM',
     pm: 'PM'
   },

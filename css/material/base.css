@@ -43,6 +43,11 @@
   font-size: 2.5em;
   border-radius: 2px 2px 0 0;
 }
+
+.timezone_picker_modal_header {
+  line-height: initial;
+}
+
 .time_picker_header_delivery {
   opacity: 0.5;
 }

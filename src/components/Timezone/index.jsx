@@ -67,8 +67,8 @@ class Timezone extends React.PureComponent {
         </div>
         <CSSTransitionGroup
           transitionName="timezone_picker_modal_container"
-          transitionEnterTimeout={400}
-          transitionLeaveTimeout={400}
+          transitionEnterTimeout={200}
+          transitionLeaveTimeout={200}
         >
           {timeZonePicker()}
         </CSSTransitionGroup>

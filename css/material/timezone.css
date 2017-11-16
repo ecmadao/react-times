@@ -2,50 +2,68 @@
   user-select: none;
   cursor: default;
   position: absolute;
-  opacity: 1;
   z-index: 3;
   background-color: #fff;
   border-radius: 2px;
   top: 0;
-  right: 0;
+  width: 100%;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.12), 0 0 4px 0 rgba(0, 0, 0, 0.08);
   -moz-box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.12), 0 0 4px 0 rgba(0, 0, 0, 0.08);
   -webkit-box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.12), 0 0 4px 0 rgba(0, 0, 0, 0.08);
 }
 
 .timezone_picker_modal_container-enter {
-  width: 0;
+  right: -100%;
+  opacity: 0.5;
 }
 
 .timezone_picker_modal_container-enter.timezone_picker_modal_container-enter-active {
-  width: 100%;
-  transition: width 400ms ease-out;
+  right: 0;
+  opacity: 1;
+  transition: right 100ms ease-out, opacity 100ms ease-out;
+  -ms-transition: right 100ms ease-out, opacity 100ms ease-out;
+  -moz-transition: right 100ms ease-out, opacity 100ms ease-out;
+  -o-transition: right 100ms ease-out, opacity 100ms ease-out;
+  -webkit-transition: right 100ms ease-out, opacity 100ms ease-out;
 }
 
 .timezone_picker_modal_container-leave {
-  width: 100%;
+  right: 0;
+  opacity: 1;
 }
 
 .timezone_picker_modal_container-leave.timezone_picker_modal_container-leave-active {
-  width: 0;
-  transition: width 400ms ease-in;
+  right: -100%;
+  opacity: 0.5;
+  transition: right 100ms ease-in, opacity 100ms ease-in;
+  -ms-transition: right 100ms ease-in, opacity 100ms ease-in;
+  -moz-transition: right 100ms ease-in, opacity 100ms ease-in;
+  -o-transition: right 100ms ease-in, opacity 100ms ease-in;
+  -webkit-transition: right 100ms ease-in, opacity 100ms ease-in;
 }
 
 .timezone_picker_modal_header {
   font-size: 1em;
   position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .timezone_picker_header_title {
-  padding-left: 5px;
+  flex: 1;
+  text-align: left;
+}
+
+.timezone_picker_modal_header span.icon {
+  height: 25px;
+  width: 50px;
 }
 
 .timezone_picker_modal_header svg {
   width: 25px;
   height: 25px;
-  position: absolute;
-  left: 0;
-  top: 10px;
   fill: #fff;
   cursor: pointer;
 }
@@ -64,18 +82,7 @@
   width: 100%;
 }
 
-.timezone_picker_search label {
-  color: #525252;
-  display: block;
-  font-size: 0.8rem;
-  font-weight: inherit;
-  line-height: 24px;
-  text-transform: inherit;
-}
-
 .timezone_picker_search input {
-  border-radius: 3px;
-  border: 1px solid;
   box-sizing: border-box;
   margin-bottom: 1%;
   padding: 10px 10px;
@@ -84,16 +91,27 @@
 
   font-size: 0.9rem;
   line-height: 2;
+  border: none;
+  border-bottom: 1px solid #adb5bd;
+  outline: none;
+  border-radius: 2px;
+  transition: border .2s;
+}
+
+.timezone_picker_search input::-webkit-input-placeholder,
+.timezone_picker_search input::-moz-input-placeholder,
+.timezone_picker_search input:-ms-input-placeholder,
+.timezone_picker_search input:-moz-input-placeholder {
+  color: #c6cace;
 }
 
 .timezone_picker_search .bootstrap-typeahead-input-main {
-  border-color: #525252;
   color: #757575;
 }
 
 .timezone_picker_search input:focus {
-  border-color: #4b4b4b;
   color: #4b4b4b;
+  border-bottom: 1px solid #3498db;
 }
 
 /**
