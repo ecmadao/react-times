@@ -65,7 +65,7 @@ describe('Time utils', () => {
           hour12: head(time12).replace(/^0/, ''),
           hour24: head(time24),
           minute: last(time24).slice(0, 2),
-          meridiem: last(time12).slice(2),
+          meridiem: null,
           mode: 24,
           timezone: tz.zoneName
         };
@@ -85,7 +85,7 @@ describe('Time utils', () => {
             hour12: head(time12).replace(/^0/, ''),
             hour24: head(time24),
             minute: last(time24).slice(0, 2),
-            meridiem: last(time12).slice(2),
+            meridiem: mode === 12 ? last(time12).slice(2) : null,
             timezone: tz.zoneName
           };
 

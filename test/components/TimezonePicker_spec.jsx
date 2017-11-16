@@ -24,10 +24,6 @@ describe('TimezonePicker', () => {
       expect(wrapper.find('.timezone_picker_header_title').text()).to.equal(phrases.timezonePickerTitle);
     });
 
-    it('should render a label for the search field', () => {
-      expect(wrapper.find('.timezone_picker_search').find('label').text()).to.equal(phrases.timezonePickerLabel);
-    });
-
     it('should render a Typeahead', () => {
       expect(wrapper.find('OnClickOutside(Typeahead)')).to.have.lengthOf(1);
     });
