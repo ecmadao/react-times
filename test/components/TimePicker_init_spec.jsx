@@ -52,6 +52,13 @@ describe('TimePicker initial', () => {
       expect(wrapper.find(OutsideClickHandler).props().focused).to.equal(true);
     });
 
+    it('should render with no onOutsideClick handler', () => {
+      const wrapper = shallow(<TimePicker focused outsideClick={false} />);
+      expect(wrapper.find(OutsideClickHandler).props().focused).to.equal(true);
+      wrapper.find(OutsideClickHandler).simulate('click');
+      expect(wrapper.find(OutsideClickHandler).props().focused).to.equal(true);
+    });
+
     it('should render without icon', () => {
       const wrapper = shallow(<TimePicker withoutIcon />);
       expect(wrapper.find('.preview_container.without_icon')).to.have.lengthOf(1);
