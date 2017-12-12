@@ -300,6 +300,10 @@ timeMode=12
 
 > `React.component`, means a DOM which can control TimePicker Modal "open" or "close" status.
 
+- `outsideClick`
+
+> `PropTypes.bool`, whether close TimePicker on outside click, default `true`
+
 ```javascript
 <TimePicker
   focused={focused}
