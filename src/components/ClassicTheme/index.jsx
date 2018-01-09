@@ -69,8 +69,19 @@ class ClassicTheme extends React.PureComponent {
   }
 
   render12Hours() {
-    const { colorPalette } = this.props;
-    return TIMES_12_MODE.map((hourValue, index) => {
+    const { colorPalette, from, to } = this.props;
+
+    var filteredTime = TIMES_12_MODE;
+
+    if (from || to) {
+      filteredTime = filteredTime.filter(x => {
+        const TIMES_12 = x.split('\ ');
+        const time = TIMES_12[0];
+        const indic = TIMES_12[1];
+      })
+    }
+
+    return filteredTime.map((hourValue, index) => {
       const timeClass = this.checkTimeIsActive(hourValue)
         ? 'classic_time active'
         : 'classic_time';
@@ -95,7 +106,7 @@ class ClassicTheme extends React.PureComponent {
     var filteredTime = TIMES_24_MODE;
 
     if (from || to) {
-      filteredTime = filteredTime.filter(x => x >= (from || '00:00') && x <= (to || '23:59'));
+      filteredTime = filteredTime.filter(x => x >= (from || '00:00') && x <= (to || '23:30'));
     }
 
     return filteredTime.map((hourValue, index) => {
