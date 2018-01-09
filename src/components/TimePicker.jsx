@@ -49,6 +49,8 @@ const propTypes = {
   timeFormat: PropTypes.string,
   timeFormatter: PropTypes.func,
   useTz: PropTypes.bool,
+  from: PropTypes.string,
+  to: PropTypes.string
 };
 
 const defaultProps = {
@@ -76,6 +78,8 @@ const defaultProps = {
   timeFormat: '',
   timeFormatter: null,
   useTz: true,
+  from: '',
+  to: ''
 };
 
 class TimePicker extends React.PureComponent {
@@ -297,7 +301,7 @@ class TimePicker extends React.PureComponent {
   }
 
   renderClassicTheme() {
-    const { timeMode, colorPalette } = this.props;
+    const { timeMode, colorPalette, from, to } = this.props;
     const [hour, minute] = this.getHourAndMinute();
 
     return (
@@ -308,6 +312,8 @@ class TimePicker extends React.PureComponent {
         hour={hour}
         meridiem={this.meridiem}
         minute={minute}
+        from={from}
+        to={to}
         timeMode={parseInt(timeMode, 10)}
       />
     );

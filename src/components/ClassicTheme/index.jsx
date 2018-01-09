@@ -7,6 +7,8 @@ import {
 import timeHelper from '../../utils/time';
 
 const propTypes = {
+  to: PropTypes.string,
+  from: PropTypes.string,
   hour: PropTypes.string,
   minute: PropTypes.string,
   timeMode: PropTypes.number,
@@ -17,6 +19,8 @@ const propTypes = {
 };
 
 const defaultProps = {
+  to: '',
+  from: '',
   hour: '00',
   minute: '00',
   timeMode: 24,
@@ -79,7 +83,7 @@ class ClassicTheme extends React.PureComponent {
           }}
           className={`${timeClass} ${colorPalette}`}
         >
-          {time}&nbsp;
+           {time}&nbsp; 
           <span className="meridiem">{meridiem}</span>
         </div>
       );
@@ -87,8 +91,14 @@ class ClassicTheme extends React.PureComponent {
   }
 
   render24Hours() {
-    const { colorPalette } = this.props;
-    return TIMES_24_MODE.map((hourValue, index) => {
+    const { colorPalette, from, to } = this.props;
+    var filteredTime = TIMES_24_MODE;
+
+    if (from || to) {
+      filteredTime = filteredTime.filter(x => x >= (from || '00:00') && x <= (to || '23:59'));
+    }
+
+    return filteredTime.map((hourValue, index) => {
       const timeClass = this.checkTimeIsActive(hourValue)
         ? 'classic_time active'
         : 'classic_time';
