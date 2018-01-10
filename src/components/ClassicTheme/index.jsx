@@ -71,14 +71,15 @@ class ClassicTheme extends React.PureComponent {
   render12Hours() {
     const { colorPalette, from, to } = this.props;
 
-    var filteredTime = TIMES_12_MODE;
+    var filteredTime = [...TIMES_12_MODE];
 
     if (from || to) {
-      filteredTime = filteredTime.filter(x => {
-        const TIMES_12 = x.split('\ ');
-        const time = TIMES_12[0];
-        const indic = TIMES_12[1];
-      })
+
+      TIMES_24_MODE.map((x, index) => {
+        if (x < (from || '00:00') || x > (to || '23:30')) {
+          delete filteredTime[index];
+        }
+      });
     }
 
     return filteredTime.map((hourValue, index) => {
@@ -94,7 +95,7 @@ class ClassicTheme extends React.PureComponent {
           }}
           className={`${timeClass} ${colorPalette}`}
         >
-           {time}&nbsp; 
+          {time}&nbsp;
           <span className="meridiem">{meridiem}</span>
         </div>
       );

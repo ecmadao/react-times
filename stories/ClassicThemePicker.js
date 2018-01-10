@@ -33,16 +33,15 @@ storiesOf('Classic Theme', module)
   .addWithInfo('Filter time using "from" and "to"', () => (
     <TimePickerWrapper
       theme="classic"
-      from={'11:36'}
-      to={'22:00'}
+      from="11:30"
+      to="22:00"
     />
   ))
   .addWithInfo('Filter time using "from" and "to" 12hrs', () => (
     <TimePickerWrapper
       theme="classic"
       timeMode="12"
-      defaultTime="10:30"
-      to={'15:00'}
-      from={'22:00'}
+      from="13:00"
+      to="22:00"
     />
   ));
