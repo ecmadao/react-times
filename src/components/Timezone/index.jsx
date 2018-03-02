@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import timeHelper from '../../utils/time';
 import TimezonePicker from './TimezonePicker';
@@ -15,7 +15,7 @@ class Timezone extends React.PureComponent {
 
     this.state = {
       focused: false,
-      timezone
+      timezone,
     };
 
     this.onClearFocus = this.onClearFocus.bind(this);
@@ -51,27 +51,27 @@ class Timezone extends React.PureComponent {
       if (!timezoneIsEditable || !focused) return '';
 
       return (
-        <TimezonePicker
-          key="timezonePicker"
-          phrases={phrases}
-          onClearFocus={this.onClearFocus}
-          handleTimezoneChange={this.handleTimezoneChange}
-        />
+        <CSSTransition
+          classNames="timezone_picker_modal_container"
+          timeout={{ enter: 200, exit: 200 }}>
+          <TimezonePicker
+            key="timezonePicker"
+            phrases={phrases}
+            onClearFocus={this.onClearFocus}
+            handleTimezoneChange={this.handleTimezoneChange}
+          />
+        </CSSTransition>
       );
     };
 
     return (
       <div>
         <div className={footerClass} onClick={this.handleFocusedChange}>
-          <span className="time_picker_modal_footer_timezone">{timezone.zoneName} {timezone.zoneAbbr}</span>
+          <span className="time_picker_modal_footer_timezone">
+            {timezone.zoneName} {timezone.zoneAbbr}
+          </span>
         </div>
-        <CSSTransitionGroup
-          transitionName="timezone_picker_modal_container"
-          transitionEnterTimeout={200}
-          transitionLeaveTimeout={200}
-        >
-          {timeZonePicker()}
-        </CSSTransitionGroup>
+        <TransitionGroup>{timeZonePicker()}</TransitionGroup>
       </div>
     );
   }
@@ -82,7 +82,7 @@ Timezone.propTypes = {
   timezone: PropTypes.shape({
     city: PropTypes.string,
     zoneAbbr: PropTypes.string,
-    zoneName: PropTypes.string
+    zoneName: PropTypes.string,
   }),
   timezoneIsEditable: PropTypes.bool,
   onTimezoneChange: PropTypes.func,
@@ -90,7 +90,7 @@ Timezone.propTypes = {
 Timezone.defaultProps = {
   timezone: TIME.tz,
   timezoneIsEditable: false,
-  onTimezoneChange: () => {}
+  onTimezoneChange: () => {},
 };
 
 export default Timezone;
