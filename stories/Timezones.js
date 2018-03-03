@@ -13,28 +13,14 @@ const tzForCity = timeHelper.tzForCity('Kuala Lumpur');
 storiesOf('Timezones', module)
   .addDecorator(withKnobs)
   .addWithInfo('with default (detected) timezone', () => (
-    <TimePickerWrapper
-      showTimezone
-    />
+    <TimePickerWrapper showTimezone />
   ))
   .addWithInfo('with default (custom) timezone', () => (
-    <TimePickerWrapper
-      timezone={tzForCity.zoneName}
-      showTimezone
-    />
+    <TimePickerWrapper timezone={tzForCity.zoneName} showTimezone />
   ))
-  .addWithInfo('with timezone search', () => {
-    const logTimezone = (timezone) => {
-      console.dir(timezone);
-    };
-    return (
-      <TimePickerWrapper
-        showTimezone
-        timezoneIsEditable
-        onTimezoneChange={logTimezone}
-      />
-    );
-  })
+  .addWithInfo('with timezone search', () => (
+    <TimePickerWrapper showTimezone timezoneIsEditable />
+  ))
   .addWithInfo('with 12 hour (custom) time', () => (
     <TimePickerWrapper
       timeMode="12"
@@ -44,12 +30,6 @@ storiesOf('Timezones', module)
     />
   ))
   .addWithInfo('with dark theme', () => (
-    <TimePickerWrapper
-      colorPalette="dark"
-      showTimezone
-      timezoneIsEditable
-    />
+    <TimePickerWrapper colorPalette="dark" showTimezone timezoneIsEditable />
   ))
-  .addWithInfo('with timezone picker', () => (
-    <TimezonePickerWrapper />
-  ));
+  .addWithInfo('with timezone picker', () => <TimezonePickerWrapper />);
