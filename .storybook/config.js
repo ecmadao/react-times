@@ -1,6 +1,6 @@
-import { addDecorator, configure, setAddon } from '@kadira/storybook';
+import { addDecorator, configure, setAddon } from '@storybook/react';
 
-import infoAddon from '@kadira/react-storybook-addon-info';
+import infoAddon from '@storybook/addon-info';
 import moment from 'moment';
 
 addDecorator((story) => {
@@ -15,7 +15,7 @@ function loadStories() {
   require('../stories/ClassicThemePicker');
   require('../stories/CustomTrigger');
   require('../stories/DifferentLanguage');
-  require('../stories/TimeZones');
+  require('../stories/WithTimeZones');
 }
 
 setAddon(infoAddon);

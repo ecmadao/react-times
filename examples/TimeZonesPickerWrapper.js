@@ -8,7 +8,7 @@ const TIME = timeHelper.time();
 TIME.current = timeHelper.current();
 TIME.tz = timeHelper.guessUserTz();
 
-class TimezonePickerWrapper extends React.Component {
+class TimeZonesPickerWrapper extends React.Component {
   constructor(props) {
     super(props);
     const {timezone} = this.props;
@@ -44,8 +44,8 @@ class TimezonePickerWrapper extends React.Component {
   }
 }
 
-TimezonePickerWrapper.defaultProps = {
+TimeZonesPickerWrapper.defaultProps = {
   timezone: TIME.tz
 };
 
-export default TimezonePickerWrapper;
+export default TimeZonesPickerWrapper;

@@ -2,7 +2,7 @@ import '../css/classic/default.css';
 
 import React from 'react';
 import TimePickerWrapper from '../examples/TimePickerWrapper';
-import { storiesOf } from '@kadira/storybook';
+import { storiesOf } from '@storybook/react';
 
 storiesOf('Classic Theme', module)
   .addWithInfo('basic', () => (

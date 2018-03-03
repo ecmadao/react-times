@@ -1,16 +1,15 @@
 import '../css/material/default.css';
 
-import { withKnobs } from '@kadira/storybook-addon-knobs';
-
+import { withKnobs } from '@storybook/addon-knobs';
 import React from 'react';
 import TimePickerWrapper from '../examples/TimePickerWrapper';
-import TimezonePickerWrapper from '../examples/TimezonePickerWrapper';
-import { storiesOf } from '@kadira/storybook';
+import TimeZonesPickerWrapper from '../examples/TimeZonesPickerWrapper';
+import { storiesOf } from '@storybook/react';
 import timeHelper from '../src/utils/time.js';
 
 const tzForCity = timeHelper.tzForCity('Kuala Lumpur');
 
-storiesOf('Timezones', module)
+storiesOf('TimeZones', module)
   .addDecorator(withKnobs)
   .addWithInfo('with default (detected) timezone', () => (
     <TimePickerWrapper showTimezone />
@@ -32,4 +31,4 @@ storiesOf('Timezones', module)
   .addWithInfo('with dark theme', () => (
     <TimePickerWrapper colorPalette="dark" showTimezone timezoneIsEditable />
   ))
-  .addWithInfo('with timezone picker', () => <TimezonePickerWrapper />);
+  .addWithInfo('with timezone picker', () => <TimeZonesPickerWrapper />);
