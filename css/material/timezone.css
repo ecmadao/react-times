@@ -27,12 +27,12 @@
   -webkit-transition: right 100ms ease-out, opacity 100ms ease-out;
 }
 
-.timezone_picker_modal_container-leave {
+.timezone_picker_modal_container-exit {
   right: 0;
   opacity: 1;
 }
 
-.timezone_picker_modal_container-leave.timezone_picker_modal_container-leave-active {
+.timezone_picker_modal_container-exit.timezone_picker_modal_container-exit-active {
   right: -100%;
   opacity: 0.5;
   transition: right 100ms ease-in, opacity 100ms ease-in;
