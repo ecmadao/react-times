@@ -6,6 +6,8 @@ before_script:
   - npm install -g mocha
   - npm install -g eslint
   - npm i
+  - npm i react
+  - npm i react-dom
 script: npm test
 env:
   - REACT=16
