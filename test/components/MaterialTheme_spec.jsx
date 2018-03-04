@@ -1,10 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-
 import MaterialTheme from '../../src/components/MaterialTheme';
 import TwelveHoursMode from '../../src/components/MaterialTheme/TwelveHoursMode';
 import TwentyFourHoursMode from '../../src/components/MaterialTheme/TwentyFourHoursMode';
+import '../_helpers/adapter';
 
 describe('MaterialTheme', () => {
   describe('MaterialTheme render', () => {

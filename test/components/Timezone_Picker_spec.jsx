@@ -2,9 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon-sandbox';
-
 import TimezonePicker from '../../src/components/Timezone/TimezonePicker';
 import languageHelper from '../../src/utils/language';
+import '../_helpers/adapter';
 
 const phrases = languageHelper.get('en');
 const mockTimezone = {

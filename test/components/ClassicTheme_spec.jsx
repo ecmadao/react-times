@@ -1,6 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
+import '../_helpers/adapter';
+
 
 import ClassicTheme from '../../src/components/ClassicTheme';
 

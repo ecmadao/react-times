@@ -7,6 +7,7 @@ import OutsideClickHandler from '../../src/components/OutsideClickHandler';
 import PickerDragHandler from '../../src/components/Picker/PickerDragHandler';
 import TimePicker from '../../src/components/TimePicker';
 import timeHelper from '../../src/utils/time';
+import '../_helpers/adapter';
 
 describe('TimePicker initial', () => {
   describe('render basic picker', () => {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-
 import Timezone from '../../src/components/Timezone';
 import languageHelper from '../../src/utils/language';
+import '../_helpers/adapter';
 
 const phrases = languageHelper.get('en');
 const mockTimezone = {

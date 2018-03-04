@@ -2,9 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon-sandbox';
-
 import languageHelper from '../../src/utils/language';
 import TimePicker from '../../src/components/TimePicker';
+import '../_helpers/adapter';
 
 describe('TimePicker func', () => {
   describe('handle focus change func', () => {

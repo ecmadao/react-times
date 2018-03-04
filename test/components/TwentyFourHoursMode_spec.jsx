@@ -2,10 +2,10 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon-sandbox';
-
 import TwentyFourHoursMode from '../../src/components/MaterialTheme/TwentyFourHoursMode';
 import PickerDragHandler from '../../src/components/Picker/PickerDragHandler';
 import languageHelper from '../../src/utils/language';
+import '../_helpers/adapter';
 
 const phrases = languageHelper.get('en');
 
