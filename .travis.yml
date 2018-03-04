@@ -8,7 +8,7 @@ before_script:
   - npm i
 script: npm test
 env:
-  - REACT=0.14
+  - REACT=16
 bundler_args: --retry 2
 matrix:
   fast_finish: true
