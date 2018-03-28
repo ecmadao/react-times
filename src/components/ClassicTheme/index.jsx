@@ -7,6 +7,8 @@ import {
 import timeHelper from '../../utils/time';
 
 const propTypes = {
+  to: PropTypes.string,
+  from: PropTypes.string,
   hour: PropTypes.string,
   minute: PropTypes.string,
   timeMode: PropTypes.number,
@@ -66,7 +68,7 @@ class ClassicTheme extends React.PureComponent {
 
   render12Hours() {
     const { colorPalette } = this.props;
-    return TIMES_12_MODE.map((hourValue, index) => {
+    return this.timeRangeChecker(TIMES_12_MODE).map((hourValue, index) => {
       const timeClass = this.checkTimeIsActive(hourValue)
         ? 'classic_time active'
         : 'classic_time';
@@ -88,7 +90,7 @@ class ClassicTheme extends React.PureComponent {
 
   render24Hours() {
     const { colorPalette } = this.props;
-    return TIMES_24_MODE.map((hourValue, index) => {
+    return this.timeRangeChecker(TIMES_24_MODE).map((hourValue, index) => {
       const timeClass = this.checkTimeIsActive(hourValue)
         ? 'classic_time active'
         : 'classic_time';
@@ -104,6 +106,26 @@ class ClassicTheme extends React.PureComponent {
         </div>
       );
     });
+  }
+
+  timeRangeChecker(timeList) {
+    const { from, to } = this.props;
+
+    let start = 0;
+    let finish = timeList.length;
+
+    const toIndex = timeList.map(t => t).indexOf(to);
+    const fromIndex = timeList.map(t => t).indexOf(from);
+
+    if (toIndex !== -1) {
+      finish = toIndex + 1;
+    }
+
+    if (fromIndex !== -1) {
+      start = fromIndex;
+    }
+
+    return timeList.slice(start, finish);
   }
 
   render() {
