@@ -19,8 +19,6 @@ const propTypes = {
 };
 
 const defaultProps = {
-  to: '',
-  from: '',
   hour: '00',
   minute: '00',
   timeMode: 24,
@@ -69,20 +67,8 @@ class ClassicTheme extends React.PureComponent {
   }
 
   render12Hours() {
-    const { colorPalette, from, to } = this.props;
-
-    var filteredTime = [...TIMES_12_MODE];
-
-    if (from || to) {
-
-      TIMES_24_MODE.map((x, index) => {
-        if (x < (from || '00:00') || x > (to || '23:30')) {
-          delete filteredTime[index];
-        }
-      });
-    }
-
-    return filteredTime.map((hourValue, index) => {
+    const { colorPalette } = this.props;
+    return this.timeRangeChecker(TIMES_12_MODE).map((hourValue, index) => {
       const timeClass = this.checkTimeIsActive(hourValue)
         ? 'classic_time active'
         : 'classic_time';
@@ -103,14 +89,8 @@ class ClassicTheme extends React.PureComponent {
   }
 
   render24Hours() {
-    const { colorPalette, from, to } = this.props;
-    var filteredTime = TIMES_24_MODE;
-
-    if (from || to) {
-      filteredTime = filteredTime.filter(x => x >= (from || '00:00') && x <= (to || '23:30'));
-    }
-
-    return filteredTime.map((hourValue, index) => {
+    const { colorPalette } = this.props;
+    return this.timeRangeChecker(TIMES_24_MODE).map((hourValue, index) => {
       const timeClass = this.checkTimeIsActive(hourValue)
         ? 'classic_time active'
         : 'classic_time';
@@ -126,6 +106,26 @@ class ClassicTheme extends React.PureComponent {
         </div>
       );
     });
+  }
+
+  timeRangeChecker(timeList) {
+    const { from, to } = this.props;
+
+    let start = 0;
+    let finish = timeList.length;
+
+    const toIndex = timeList.map(t => t).indexOf(to);
+    const fromIndex = timeList.map(t => t).indexOf(from);
+
+    if (toIndex !== -1) {
+      finish = toIndex + 1;
+    }
+
+    if (fromIndex !== -1) {
+      start = fromIndex;
+    }
+
+    return timeList.slice(start, finish);
   }
 
   render() {

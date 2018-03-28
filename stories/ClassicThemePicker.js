@@ -30,7 +30,7 @@ storiesOf('Classic Theme', module)
       defaultTime="12:00"
     />
   ))
-  .addWithInfo('Filter time using "from" and "to"', () => (
+  .addWithInfo('Filter time using "from" and "to" 24hrs', () => (
     <TimePickerWrapper
       theme="classic"
       from="11:30"

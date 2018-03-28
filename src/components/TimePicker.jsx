@@ -8,6 +8,10 @@ import timeHelper from '../utils/time.js';
 import languageHelper from '../utils/language';
 import ICONS from '../utils/icons';
 import { is } from '../utils/func';
+import {
+  TIMES_12_MODE,
+  TIMES_24_MODE
+} from '../utils/const_value';
 
 // aliases for defaultProps readability
 const TIME = timeHelper.time({ useTz: false });
@@ -110,7 +114,7 @@ class TimePicker extends React.PureComponent {
     }
   }
 
-  timeData(timeChanged) {
+  timeData(timeChanged, setTime, setMeridiem) {
     const {
       time,
       useTz,
@@ -119,8 +123,8 @@ class TimePicker extends React.PureComponent {
       meridiem,
     } = this.props;
     const timeData = timeHelper.time({
-      time,
-      meridiem,
+      time: setTime || time,
+      meridiem: setMeridiem || meridiem,
       timeMode,
       tz: timezone,
       useTz: !time && !timeChanged && useTz
@@ -148,9 +152,9 @@ class TimePicker extends React.PureComponent {
     onFocusChange && onFocusChange(true);
   }
 
-  getHourAndMinute() {
+  getHourAndMinute(setTime, setMeridiem) {
     const { timeMode } = this.props;
-    const timeData = this.timeData(this.state.timeChanged);
+    const timeData = this.timeData(this.state.timeChanged, setTime, setMeridiem);
     // Since someone might pass a time in 24h format, etc., we need to get it from
     // timeData to 'translate' it into the local format, including its accurate meridiem
     const hour = (parseInt(timeMode, 10) === 12)
@@ -160,14 +164,23 @@ class TimePicker extends React.PureComponent {
     return [hour, minute];
   }
 
-  getFormattedTime() {
+  getFormattedTime(setTime) {
     const {
       timeMode,
       timeFormat,
       timeFormatter,
     } = this.props;
 
-    const [hour, minute] = this.getHourAndMinute();
+    let time = '';
+    let meridiem = '';
+
+    if (setTime) {
+      const [hour, minute, setMeridiem] = setTime.split(/:| /);
+      time = `${hour}:${minute}`;
+      meridiem = setMeridiem;
+    }
+
+    const [hour, minute] = this.getHourAndMinute(time, meridiem);
     const validTimeMode = timeHelper.validateTimeMode(timeMode);
 
     let times = '';
@@ -194,8 +207,8 @@ class TimePicker extends React.PureComponent {
       times = times.replace(/(M|m)/g, Number(minute));
     } else {
       times = (validTimeMode === 12)
-        ? `${hour} : ${minute} ${this.meridiem}`
-        : `${hour} : ${minute}`;
+        ? `${hour}:${minute} ${this.meridiem}`
+        : `${hour}:${minute}`;
     }
     return times;
   }
@@ -273,8 +286,18 @@ class TimePicker extends React.PureComponent {
       timezoneIsEditable,
     } = this.props;
 
-    const { timezoneData } = this.state;
+    const { timezoneData, to, from } = this.state;
     const [hour, minute] = this.getHourAndMinute();
+
+    let timeList = timeMode === 12 ? TIMES_12_MODE : TIMES_24_MODE;
+
+    let toTime = !to
+      ? timeList[timeList.length - 1]
+      : this.getFormattedTime(to);
+
+    let fromTime = !from
+      ? timeList[0]
+      : this.getFormattedTime(from);
 
     return (
       <MaterialTheme
@@ -296,13 +319,25 @@ class TimePicker extends React.PureComponent {
         timeMode={parseInt(timeMode, 10)}
         timezone={timezoneData}
         timezoneIsEditable={timezoneIsEditable}
+        to={toTime}
+        from={fromTime}
       />
     );
   }
 
   renderClassicTheme() {
-    const { timeMode, colorPalette, from, to } = this.props;
+    const { timeMode, colorPalette, to, from } = this.props;
     const [hour, minute] = this.getHourAndMinute();
+
+    let timeList = timeMode === 12 ? TIMES_12_MODE : TIMES_24_MODE;
+
+    let toTime = !to
+      ? timeList[timeList.length - 1]
+      : this.getFormattedTime(to);
+
+    let fromTime = !from
+      ? timeList[0]
+      : this.getFormattedTime(from);
 
     return (
       <ClassicTheme
@@ -312,9 +347,9 @@ class TimePicker extends React.PureComponent {
         hour={hour}
         meridiem={this.meridiem}
         minute={minute}
-        from={from}
-        to={to}
         timeMode={parseInt(timeMode, 10)}
+        to={toTime}
+        from={fromTime}
       />
     );
   }
