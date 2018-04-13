@@ -7,13 +7,13 @@
     "url": "https://github.com/ecmadao/react-times/issues"
   },
   "dependencies": {
-    "moment": "^2.19.1",
-    "moment-timezone": "^0.5.14",
     "prop-types": "^15.6.0",
     "react-bootstrap-typeahead": "^2.4.0",
     "react-transition-group": "^2.2.1"
   },
   "peerDependencies": {
+    "moment": "^2.19.1",
+    "moment-timezone": "^0.5.14",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
