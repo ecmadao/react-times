@@ -103,6 +103,7 @@
     "scratch": "test/components/TwelveHoursTheme_spec.jsx",
     "storybook": "start-storybook -p 9001 -c .storybook",
     "storybook-deploy": "npm i && npm run storybook-pro && npm run deploy-storybook",
+    "storybook-pro": "build-storybook -c .storybook -o .out",
     "tag": "git tag v$npm_package_version",
     "test": "npm run mocha --silent test",
     "test:watch": "npm run mocha test -- --watch",
