@@ -253,8 +253,10 @@ class PickerDragHandler extends React.PureComponent {
     let time = absolutePosition === minLength
       ? roundSeg
       : roundSeg + sectionCount;
-    time = time === 24 ? 12 : time;
-    if (!isHour) {
+
+    if (isHour) {
+      time = time === 24 ? 12 : time;
+    } else {
       time = (time * minuteStep === 60 ? 0 : time * minuteStep);
     }
 

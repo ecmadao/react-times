@@ -37,7 +37,12 @@ const guessUserTz = () => {
   // return GMT if we're unable to guess or the system is using UTC
   if (!userTz || userTz === 'UTC') return getTzForName('Etc/Greenwich');
 
-  return getTzForName(userTz);
+  try {
+    return getTzForName(userTz);
+  } catch (e) {
+    console.error(e);
+    return getTzForName('Etc/Greenwich');
+  }
 };
 
 /**
@@ -200,7 +205,6 @@ const getValidateMeridiem = (time, timeMode) => {
 
 /**
  * Validate and set a sensible default for time modes.
- * TODO: this function might not really be necessary, see getValidTimeData() above
  *
  * @function getValidateTimeMode
  * @param  {string|Number} timeMode
@@ -254,14 +258,36 @@ const tzMaps = tzCities.map((city) => {
 });
 
 const getTzForCity = (city) => {
-  const maps = tzMaps.filter(tzMap => tzMap.city === city);
+  const val = city.toLowerCase();
+  const maps = tzMaps.filter(tzMap => tzMap.city.toLowerCase() === val);
   return head(maps);
+};
+
+const getTzCountryAndCity = (name) => {
+  const sections = name.split('/');
+  return {
+    country: sections[0].toLowerCase(),
+    city: sections.slice(-1)[0].toLowerCase()
+  };
+};
+
+const _matchTzByName = (target, name) => {
+  const v1 = getTzCountryAndCity(target);
+  const v2 = getTzCountryAndCity(name);
+
+  return v1.country === v2.country && v1.city === v2.city;
 };
 
 const getTzForName = (name) => {
   let maps = tzMaps.filter(tzMap => tzMap.zoneName === name);
-  if (!maps.length) {
+  if (!maps.length && /\//.test(name)) {
     maps = tzMaps.filter(tzMap => tzMap.zoneAbbr === name);
+  }
+  if (!maps.length) {
+    maps = tzMaps.filter(tzMap => _matchTzByName(tzMap.zoneName, name));
+  }
+  if (!maps.length) {
+    throw new Error(`Can not find target timezone for ${name}`);
   }
   return head(maps);
 };

@@ -162,4 +162,18 @@ describe('Time utils', () => {
       ).to.equal(MAX_ABSOLUTE_POSITION);
     });
   });
+
+  describe('Test timezone utils function', () => {
+    it('should get timezone by name', () => {
+      expect(
+        timeHelper.tzForName('America/Indianapolis').zoneName
+      ).to.equal('America/Indiana/Indianapolis');
+    });
+
+    it('should get timezone by city', () => {
+      expect(
+        timeHelper.tzForCity('shanghai').zoneName
+      ).to.equal('Asia/Shanghai');
+    });
+  });
 });

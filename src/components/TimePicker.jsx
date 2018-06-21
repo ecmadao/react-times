@@ -38,6 +38,9 @@ const propTypes = {
   trigger: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.object,
+    PropTypes.element,
+    PropTypes.array,
+    PropTypes.node,
     PropTypes.instanceOf(React.Component),
     PropTypes.instanceOf(React.PureComponent)
   ]),
