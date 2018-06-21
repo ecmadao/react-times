@@ -96,6 +96,8 @@ class TimePickerWrapper extends React.Component {
       showTimezone,
     } = this.state;
 
+    console.log(`hour: ${hour}`);
+
     return (
       <div className="time_picker_wrapper">
         <TimePicker

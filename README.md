@@ -312,13 +312,23 @@ timeMode=12
 />
 ```
 
+- `closeOnOutsideClick`
+
+> If you don't wanna close panel when outside click, you can use closeOnOutsideClick={false}. Default true
+
+```
+<TimePicker
+  closeOnOutsideClick={false}
+/>
+```
+
 - `draggable`
 
 If you don't want to drag the pointer, then you can set `draggable` props to `false`, then users can only use click to change time. Default `true`
 
 ```
 <TimePicker
-  draggable={true}
+  draggable={false}
 />
 ```
 

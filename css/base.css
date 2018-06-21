@@ -38,6 +38,7 @@
 }
 
 .react_times_button {
+  user-select: none;
   position: relative;
   cursor: pointer;
   color: #343434;

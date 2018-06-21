@@ -32,6 +32,11 @@ storiesOf('Default TimePicker', module)
       draggable={false}
     />
   ))
+  .addWithInfo('disable outside click close', () => (
+    <TimePickerWrapper
+      closeOnOutsideClick={false}
+    />
+  ))
   .addWithInfo('custom minute step', () => (
     <TimePickerWrapper
       autoMode={false}

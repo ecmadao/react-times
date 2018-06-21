@@ -18,18 +18,24 @@ class OutsideClickHandler extends React.PureComponent {
   }
 
   componentDidMount() {
-    if (document.addEventListener) {
-      document.addEventListener('mousedown', this.onOutsideClick, true);
-    } else {
-      document.attachEvent('onmousedown', this.onOutsideClick);
+    const { closeOnOutsideClick } = this.props;
+    if (closeOnOutsideClick) {
+      if (document.addEventListener) {
+        document.addEventListener('mousedown', this.onOutsideClick, true);
+      } else {
+        document.attachEvent('onmousedown', this.onOutsideClick);
+      }
     }
   }
 
   componentWillUnmount() {
-    if (document.removeEventListener) {
-      document.removeEventListener('mousedown', this.onOutsideClick, true);
-    } else {
-      document.detachEvent('onmousedown', this.onOutsideClick);
+    const { closeOnOutsideClick } = this.props;
+    if (closeOnOutsideClick) {
+      if (document.removeEventListener) {
+        document.removeEventListener('mousedown', this.onOutsideClick, true);
+      } else {
+        document.detachEvent('onmousedown', this.onOutsideClick);
+      }
     }
   }
 
