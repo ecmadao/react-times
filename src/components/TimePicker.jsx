@@ -31,10 +31,7 @@ const propTypes = {
   showTimezone: PropTypes.bool,
   theme: PropTypes.string,
   time: PropTypes.string,
-  timeMode: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number
-  ]),
+  timeMode: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   timezone: PropTypes.string,
   timezoneIsEditable: PropTypes.bool,
   trigger: PropTypes.oneOfType([
@@ -49,6 +46,7 @@ const propTypes = {
   timeFormat: PropTypes.string,
   timeFormatter: PropTypes.func,
   useTz: PropTypes.bool,
+  outsideClick: PropTypes.bool
 };
 
 const defaultProps = {
@@ -76,6 +74,7 @@ const defaultProps = {
   timeFormat: '',
   timeFormatter: null,
   useTz: true,
+  outsideClick: true
 };
 
 class TimePicker extends React.PureComponent {
@@ -107,13 +106,7 @@ class TimePicker extends React.PureComponent {
   }
 
   timeData(timeChanged) {
-    const {
-      time,
-      useTz,
-      timeMode,
-      timezone,
-      meridiem,
-    } = this.props;
+    const { time, useTz, timeMode, timezone, meridiem } = this.props;
     const timeData = timeHelper.time({
       time,
       meridiem,
@@ -149,19 +142,13 @@ class TimePicker extends React.PureComponent {
     const timeData = this.timeData(this.state.timeChanged);
     // Since someone might pass a time in 24h format, etc., we need to get it from
     // timeData to 'translate' it into the local format, including its accurate meridiem
-    const hour = (parseInt(timeMode, 10) === 12)
-      ? timeData.hour12
-      : timeData.hour24;
+    const hour = parseInt(timeMode, 10) === 12 ? timeData.hour12 : timeData.hour24;
     const minute = timeData.minute;
     return [hour, minute];
   }
 
   getFormattedTime() {
-    const {
-      timeMode,
-      timeFormat,
-      timeFormatter,
-    } = this.props;
+    const { timeMode, timeFormat, timeFormatter } = this.props;
 
     const [hour, minute] = this.getHourAndMinute();
     const validTimeMode = timeHelper.validateTimeMode(timeMode);
@@ -177,11 +164,15 @@ class TimePicker extends React.PureComponent {
       times = timeFormat;
       if (/HH?/.test(times) || /MM?/.test(times)) {
         if (validTimeMode === 12) {
-          console.warn('It seems you are using 12 hours mode with 24 hours time format. Please check your timeMode and timeFormat props');
+          console.warn(
+            'It seems you are using 12 hours mode with 24 hours time format. Please check your timeMode and timeFormat props'
+          );
         }
       } else if (/hh?/.test(times) || /mm?/.test(times)) {
         if (validTimeMode === 24) {
-          console.warn('It seems you are using 24 hours mode with 12 hours time format. Please check your timeMode and timeFormat props');
+          console.warn(
+            'It seems you are using 24 hours mode with 12 hours time format. Please check your timeMode and timeFormat props'
+          );
         }
       }
       times = times.replace(/(HH|hh)/g, hour);
@@ -189,9 +180,7 @@ class TimePicker extends React.PureComponent {
       times = times.replace(/(H|h)/g, Number(hour));
       times = times.replace(/(M|m)/g, Number(minute));
     } else {
-      times = (validTimeMode === 12)
-        ? `${hour} : ${minute} ${this.meridiem}`
-        : `${hour} : ${minute}`;
+      times = validTimeMode === 12 ? `${hour} : ${minute} ${this.meridiem}` : `${hour} : ${minute}`;
     }
     return times;
   }
@@ -251,9 +240,9 @@ class TimePicker extends React.PureComponent {
     const timeData = this.timeData(this.state.timeChanged);
     const localMessages = this.languageData();
     // eslint-disable-next-line no-unneeded-ternary
-    const m = (meridiem) ? meridiem : timeData.meridiem;
+    const m = meridiem ? meridiem : timeData.meridiem;
     // eslint-disable-next-line no-extra-boolean-cast
-    return m && !!(m.match(/^am|pm/i)) ? localMessages[m.toLowerCase()] : m;
+    return m && !!m.match(/^am|pm/i) ? localMessages[m.toLowerCase()] : m;
   }
 
   renderMaterialTheme() {
@@ -266,7 +255,7 @@ class TimePicker extends React.PureComponent {
       minuteStep,
       showTimezone,
       onTimezoneChange,
-      timezoneIsEditable,
+      timezoneIsEditable
     } = this.props;
 
     const { timezoneData } = this.state;
@@ -314,47 +303,33 @@ class TimePicker extends React.PureComponent {
   }
 
   render() {
-    const {
-      theme,
-      trigger,
-      placeholder,
-      withoutIcon,
-      colorPalette,
-    } = this.props;
+    const { theme, trigger, placeholder, withoutIcon, colorPalette, outsideClick } = this.props;
 
     const { focused } = this.state;
     const times = this.getFormattedTime();
 
-    const pickerPreviewClass = focused
-      ? 'time_picker_preview active'
-      : 'time_picker_preview';
-    const containerClass = colorPalette === 'dark'
-      ? 'time_picker_container dark'
-      : 'time_picker_container';
+    const pickerPreviewClass = focused ? 'time_picker_preview active' : 'time_picker_preview';
+    const containerClass =
+      colorPalette === 'dark' ? 'time_picker_container dark' : 'time_picker_container';
     const previewContainerClass = withoutIcon
       ? 'preview_container without_icon'
       : 'preview_container';
 
     return (
       <div className={containerClass}>
-        { trigger || (
-          <div
-            onClick={this.onFocus}
-            className={pickerPreviewClass}
-          >
+        {trigger || (
+          <div onClick={this.onFocus} className={pickerPreviewClass}>
             <div className={previewContainerClass}>
-              {withoutIcon ? '' : (ICONS.time)}
+              {withoutIcon ? '' : ICONS.time}
               {placeholder || times}
             </div>
           </div>
-        ) }
+        )}
         <OutsideClickHandler
-          onOutsideClick={this.onClearFocus}
+          onOutsideClick={outsideClick ? this.onClearFocus : null}
           focused={focused}
         >
-          {theme === 'material'
-            ? this.renderMaterialTheme()
-            : this.renderClassicTheme()}
+          {theme === 'material' ? this.renderMaterialTheme() : this.renderClassicTheme()}
         </OutsideClickHandler>
       </div>
     );
