@@ -135,7 +135,7 @@ render() {
       // or
       // theme="classic"
       timeMode="12" // use 24 or 12 hours mode, default 24
-      showTimezone=true // show the timezone, default false
+      showTimezone={true} // show the timezone, default false
       timezone="America/New_York" // what timezone to use, detects the user's local timezone by default
   />
 }
