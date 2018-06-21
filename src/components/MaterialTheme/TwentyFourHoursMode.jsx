@@ -216,8 +216,8 @@ class TwentyFourHoursMode extends React.PureComponent {
             rotateState={rotateState}
             time={step === 0 ? parseInt(hour, 10) : parseInt(minute, 10)}
             minLength={step === 0
-                ? MIN_ABSOLUTE_POSITION
-                : MAX_ABSOLUTE_POSITION}
+              ? MIN_ABSOLUTE_POSITION
+              : MAX_ABSOLUTE_POSITION}
             handleTimePointerClick={this.handleTimePointerClick}
           />
         </div>
@@ -228,7 +228,7 @@ class TwentyFourHoursMode extends React.PureComponent {
             timezoneIsEditable={timezoneIsEditable}
             onTimezoneChange={onTimezoneChange}
           />
-          : ''
+          : null
         }
       </div>
     );

@@ -183,7 +183,9 @@ class TwelveHoursMode extends React.PureComponent {
     return (
       <div className="time_picker_modal_container">
         <div className="time_picker_modal_header">
-          <span className="time_picker_header active">{hour}:{minute}</span>&nbsp;
+          <span className="time_picker_header active">
+            {hour}:{minute}
+          </span>&nbsp;
           <span
             onClick={this.handleMeridiemChange}
             className="time_picker_header meridiem"
@@ -233,8 +235,10 @@ class TwelveHoursMode extends React.PureComponent {
         <div className="buttons_wrapper">
           <Button
             onClick={clearFocus}
-            text={phrases.close}
-          />
+            className="time_picker_button"
+          >
+            {phrases.close}
+          </Button>
         </div>
       </div>
     );
