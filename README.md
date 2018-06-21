@@ -88,16 +88,7 @@ import 'react-times/css/material/default.css';
 import 'react-times/css/classic/default.css';
 
 export default class SomeComponent extends React.Component {
-  // do some work
-  onHourChange(hour) {
-    // do something
-  }
-
-  onMinuteChange(minute) {
-    // do something
-  }
-
-  onTimeChange(time) {
+  onTimeChange(options) {
     // do something
   }
 
@@ -105,17 +96,10 @@ export default class SomeComponent extends React.Component {
     // do something
   }
 
-  onMeridiemChange(meridiem) {
-    // do something
-  }
-
   render() {
     <TimePicker
       onFocusChange={this.onFocusChange.bind(this)}
-      onHourChange={this.onHourChange.bind(this)}
-      onMinuteChange={this.onMinuteChange.bind(this)}
       onTimeChange={this.onTimeChange.bind(this)}
-      onMeridiemChange={this.onMeridiemChange.bind(this)}
     />
   }
 }
@@ -127,16 +111,16 @@ export default class SomeComponent extends React.Component {
 // some config example
 render() {
   <TimePicker
-      colorPalette="dark" // main color, default "light"
-      focused={true} // whether to show timepicker modal after rendered. default false
-      withoutIcon={true} // whether to has time icon on button, default false
-      time="13:05" // initial time, default current time
-      theme="material"
-      // or
-      // theme="classic"
-      timeMode="12" // use 24 or 12 hours mode, default 24
-      showTimezone={true} // show the timezone, default false
-      timezone="America/New_York" // what timezone to use, detects the user's local timezone by default
+    showTimezone // show the timezone, default false
+    focused // whether to show timepicker modal after rendered. default false
+    withoutIcon // whether to has time icon on button, default false
+    colorPalette="dark" // main color, default "light"
+    time="13:05" // initial time, default current time
+    theme="material"
+    // or
+    // theme="classic"
+    timeMode="12" // use 24 or 12 hours mode, default 24
+    timezone="America/New_York" // what timezone to use, detects the user's local timezone by default
   />
 }
 ```
@@ -312,13 +296,23 @@ timeMode=12
 />
 ```
 
+- `closeOnOutsideClick`
+
+> If you don't wanna close panel when outside click, you can use closeOnOutsideClick={false}. Default true
+
+```
+<TimePicker
+  closeOnOutsideClick={false}
+/>
+```
+
 - `draggable`
 
 If you don't want to drag the pointer, then you can set `draggable` props to `false`, then users can only use click to change time. Default `true`
 
 ```
 <TimePicker
-  draggable={true}
+  draggable={false}
 />
 ```
 
@@ -386,30 +380,6 @@ If you don't want to drag the pointer, then you can set `draggable` props to `fa
 
 > The callback func when component `focused` state is changed.
 
-- `onHourChange`
-
-`PropTypes.func`
-
-> The callback func when component `hour` state is changed.
-
-```javascript
-onHourChange(hour) {
-  // ...
-}
-```
-
-- `onMinuteChange`
-
-`PropTypes.func`
-
-> The callback func when component `minute` state is changed.
-
-```javascript
-onMinuteChange(minute) {
-  // ...
-}
-```
-
 - `onTimeChange`
 
 `PropTypes.func`
@@ -417,16 +387,15 @@ onMinuteChange(minute) {
 > The callback func when component `hour` or `minute` or `AM/PM` state is changed.
 
 ```javascript
-onTimeChange(time) {
-  // ...
+onTimeChange(options) {
+  // you can get hour, minute and meridiem here
+  const {
+    hour,
+    minute,
+    meridiem
+  } = options;
 }
 ```
-
-- `onMeridiemChange`
-
-`PropTypes.func`
-
-> The callback func when meridiem changed.
 
 - `onTimezoneChange`
 
@@ -451,7 +420,7 @@ onTimeChange(time) {
   - [x] MaterialTheme Component
   - [x] TwelveHoursTheme Component
   - [x] PickerPoint Component
-  - [ ] OutsideClickHandler Component
+  - [x] OutsideClickHandler Component
 
   - [x] utils test
 

@@ -1,5 +1,21 @@
 # CHANGELOG
 
+### v3.1.0
+
+#### remove props
+
+- Remove `onHourChange`
+- Remove `onMinuteChange`
+- Remove `onMeridiemChange`
+
+#### change props
+
+- `onTimeChange` will get a dict now, including `hour`, `minute`, `meridiem`
+
+#### new props
+
+- Add `closeOnOutsideClick`
+
 ### v2.2.3
 
 #### new props

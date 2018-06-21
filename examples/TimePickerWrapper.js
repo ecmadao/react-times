@@ -1,3 +1,4 @@
+
 import React from 'react';
 import TimePicker from '../src/components/TimePicker';
 import timeHelper from '../src/utils/time';
@@ -25,28 +26,19 @@ class TimePickerWrapper extends React.Component {
     };
 
     this.onFocusChange = this.onFocusChange.bind(this);
-    this.onHourChange = this.onHourChange.bind(this);
-    this.onMeridiemChange = this.onMeridiemChange.bind(this);
-    this.onMinuteChange = this.onMinuteChange.bind(this);
     this.onTimeChange = this.onTimeChange.bind(this);
     this.handleFocusedChange = this.handleFocusedChange.bind(this);
   }
 
-  onHourChange(hour) {
-    this.setState({ hour });
-  }
+  onTimeChange(options) {
+    const {
+      hour,
+      minute,
+      meridiem
+    } = options;
 
-  onMinuteChange(minute) {
-    this.setState({ minute });
-  }
-
-  onTimeChange(time) {
-    const [hour, minute] = time.split(':');
-    this.setState({ hour, minute });
-  }
-
-  onMeridiemChange(meridiem) {
-    this.setState({ meridiem });
+    console.log(options);
+    this.setState({ hour, minute, meridiem });
   }
 
   onFocusChange(focused) {
@@ -104,6 +96,8 @@ class TimePickerWrapper extends React.Component {
       showTimezone,
     } = this.state;
 
+    console.log(`hour: ${hour}`);
+
     return (
       <div className="time_picker_wrapper">
         <TimePicker
@@ -113,9 +107,6 @@ class TimePickerWrapper extends React.Component {
           timezone={timezone}
           trigger={this.trigger}
           onFocusChange={this.onFocusChange}
-          onHourChange={this.onHourChange}
-          onMeridiemChange={this.onMeridiemChange}
-          onMinuteChange={this.onMinuteChange}
           onTimeChange={this.onTimeChange}
           showTimezone={showTimezone}
           time={hour && minute ? `${hour}:${minute}` : null}

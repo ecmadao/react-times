@@ -49,8 +49,10 @@ class TimezonePicker extends React.PureComponent {
         <div className="buttons_wrapper">
           <Button
             onClick={onClearFocus}
-            text={phrases.close}
-          />
+            className="time_picker_button"
+          >
+            {phrases.close}
+          </Button>
         </div>
       </div>
     );

@@ -49,10 +49,10 @@ describe('TimePicker func', () => {
     // });
 
     it('should change callback when hour change', () => {
-      const onHourChangeStub = sinon.stub();
-      const wrapper = shallow(<TimePicker onHourChange={onHourChangeStub} />);
+      const onTimeChangeStub = sinon.stub();
+      const wrapper = shallow(<TimePicker onTimeChange={onTimeChangeStub} />);
       wrapper.instance().handleHourChange(1);
-      expect(onHourChangeStub.callCount).to.equal(1);
+      expect(onTimeChangeStub.callCount).to.equal(1);
     });
   });
 
@@ -70,17 +70,17 @@ describe('TimePicker func', () => {
     // });
 
     it('should change callback when minute change', () => {
-      const onMinuteChangeStub = sinon.stub();
-      const wrapper = shallow(<TimePicker onMinuteChange={onMinuteChangeStub} />);
+      const onTimeChangeStub = sinon.stub();
+      const wrapper = shallow(<TimePicker onTimeChange={onTimeChangeStub} />);
       wrapper.instance().handleMinuteChange(1);
-      expect(onMinuteChangeStub.callCount).to.equal(1);
+      expect(onTimeChangeStub.callCount).to.equal(1);
     });
   });
 
   describe('languageData func', () => {
     it('should return the default language messages when no phrases provided', () => {
       const wrapper = shallow(<TimePicker />);
-      const messages = wrapper.instance().languageData();
+      const messages = wrapper.instance().languageData;
       expect(messages).to.deep.equal(languageHelper.get('en'));
     });
 
@@ -95,7 +95,7 @@ describe('TimePicker func', () => {
         pm: 'buzz'
       };
       const wrapper = shallow(<TimePicker phrases={phrases} />);
-      const messages = wrapper.instance().languageData();
+      const messages = wrapper.instance().languageData;
       expect(messages).to.deep.equal(phrases);
     });
 
@@ -106,7 +106,7 @@ describe('TimePicker func', () => {
       };
       const expectedMessages = Object.assign({}, languageHelper.get('en'), phrases);
       const wrapper = shallow(<TimePicker phrases={phrases} />);
-      const messages = wrapper.instance().languageData();
+      const messages = wrapper.instance().languageData;
       expect(messages).to.deep.equal(expectedMessages);
     });
   });

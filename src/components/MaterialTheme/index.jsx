@@ -1,3 +1,4 @@
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -60,8 +61,8 @@ class MaterialTheme extends React.PureComponent {
       minuteStep,
       showTimezone,
       onTimezoneChange,
-      timezoneIsEditable,
       handleHourChange,
+      timezoneIsEditable,
       handleMinuteChange,
       handleEditTimezoneChange,
       handleShowTimezoneChange,
@@ -69,22 +70,22 @@ class MaterialTheme extends React.PureComponent {
 
     return (
       <TwentyFourHoursMode
-        limitDrag={limitDrag}
-        minuteStep={minuteStep}
-        autoMode={autoMode}
-        clearFocus={clearFocus}
-        draggable={draggable}
-        handleEditTimezoneChange={handleEditTimezoneChange}
-        handleHourChange={handleHourChange}
-        handleMinuteChange={handleMinuteChange}
-        handleShowTimezoneChange={handleShowTimezoneChange}
-        onTimezoneChange={onTimezoneChange}
         hour={hour}
         minute={minute}
         phrases={phrases}
-        showTimezone={showTimezone}
         timezone={timezone}
+        autoMode={autoMode}
+        draggable={draggable}
+        limitDrag={limitDrag}
+        clearFocus={clearFocus}
+        minuteStep={minuteStep}
+        showTimezone={showTimezone}
+        handleHourChange={handleHourChange}
+        onTimezoneChange={onTimezoneChange}
+        handleMinuteChange={handleMinuteChange}
         timezoneIsEditable={timezoneIsEditable}
+        handleEditTimezoneChange={handleEditTimezoneChange}
+        handleShowTimezoneChange={handleShowTimezoneChange}
       />
     );
   }
@@ -113,24 +114,24 @@ class MaterialTheme extends React.PureComponent {
 
     return (
       <TwelveHoursMode
+        hour={hour}
+        minute={minute}
+        phrases={phrases}
+        language={language}
+        meridiem={meridiem}
+        timezone={timezone}
         limitDrag={limitDrag}
         minuteStep={minuteStep}
         clearFocus={clearFocus}
         draggable={draggable}
-        handleEditTimezoneChange={handleEditTimezoneChange}
-        handleHourChange={handleHourChange}
-        handleMeridiemChange={handleMeridiemChange}
-        handleMinuteChange={handleMinuteChange}
-        handleShowTimezoneChange={handleShowTimezoneChange}
-        onTimezoneChange={onTimezoneChange}
-        hour={hour}
-        language={language}
-        meridiem={meridiem}
-        minute={minute}
-        phrases={phrases}
         showTimezone={showTimezone}
-        timezone={timezone}
+        handleHourChange={handleHourChange}
+        onTimezoneChange={onTimezoneChange}
         timezoneIsEditable={timezoneIsEditable}
+        handleMinuteChange={handleMinuteChange}
+        handleMeridiemChange={handleMeridiemChange}
+        handleShowTimezoneChange={handleShowTimezoneChange}
+        handleEditTimezoneChange={handleEditTimezoneChange}
       />
     );
   }

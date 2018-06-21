@@ -29,7 +29,7 @@ describe('TimezonePicker', () => {
     });
 
     it('should render a close button', () => {
-      expect(wrapper.find('Button').prop('text')).to.equal(phrases.close);
+      expect(wrapper.find('Button').prop('children')).to.equal(phrases.close);
     });
   });
 
