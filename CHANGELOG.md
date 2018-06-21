@@ -12,6 +12,10 @@
 
 - `onTimeChange` will get a dict now, including `hour`, `minute`, `meridiem`
 
+#### new props
+
+- Add `closeOnOutsideClick`
+
 ### v2.2.3
 
 #### new props
