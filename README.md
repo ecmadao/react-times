@@ -39,7 +39,7 @@ dependencies:
 So generally speaking, you should already have `react` & `react-dom` dependencies in your project. If not:
 
 ```bash
-$ npm install react react-dom --save-dev
+$ npm install react react-dom moment moment-timezone --save-dev
 # and
 $ npm install react-times --save-dev
 ```
