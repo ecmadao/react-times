@@ -3,3 +3,4 @@
 /lib
 /.out
 /node_modules
+/out*

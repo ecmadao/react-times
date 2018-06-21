@@ -1,4 +1,4 @@
-![react-times](./intro_src/react_times.png)
+![react-times](./doc/intro_src/react_times.png)
 
 [![npm version](https://badge.fury.io/js/react-times.svg)](https://badge.fury.io/js/react-times) [![Build Status](https://travis-ci.org/ecmadao/react-times.svg?branch=master)](https://travis-ci.org/ecmadao/react-times) [![Coverage Status](https://coveralls.io/repos/github/ecmadao/react-times/badge.svg?branch=master)](https://coveralls.io/github/ecmadao/react-times?branch=master) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![react-times](http://img.shields.io/npm/dm/react-times.svg)](https://www.npmjs.com/package/react-times) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/ecmadao/react-times/master/LICENSE)
 
@@ -8,9 +8,9 @@ README：[English Version](./README.md)
 
 > 一个 React 时间选择器组件，使用 ES6 标准语法编写，没有 jQuery 依赖
 
-**注: 2.0.0 新版已发布，戳 [这里](./CHANGELOG.md) 查看更改/新增的 props。**
+**戳 [这里](./doc/CHANGELOG.md) 查看新版中更改/新增的 props。**
 
-![react-times](./intro_src/react-times.gif)
+![react-times](./doc/intro_src/react-times.gif)
 
 # 线上 demo
 
@@ -62,16 +62,7 @@ import 'react-times/css/material/default.css';
 import 'react-times/css/classic/default.css';
 
 export default class SomeComponent extends React.Component {
-  // do some work
-  onHourChange(hour) {
-    // do something
-  }
-
-  onMinuteChange(minute) {
-    // do something
-  }
-
-  onTimeChange(time) {
+  onTimeChange(options) {
     // do something
   }
 
@@ -79,21 +70,14 @@ export default class SomeComponent extends React.Component {
     // do something
   }
 
-  onMeridiemChange(meridiem) {
-    // do something
-  }
-
   render() {
     <TimePicker
       onFocusChange={this.onFocusChange.bind(this)}
-      onHourChange={this.onHourChange.bind(this)}
-      onMinuteChange={this.onMinuteChange.bind(this)}
       onTimeChange={this.onTimeChange.bind(this)}
-      onMeridiemChange={this.onMeridiemChange.bind(this)}
       // 确定主题，不填该 props 则默认为 material
       theme="material"
-        // or
-        // theme="classic"
+      // or
+      // theme="classic"
     />
   }
 }
@@ -126,7 +110,7 @@ render() {
 <TimePicker />
 ```
 
-![24HoursMode](./intro_src/24HoursMode.png)
+![24HoursMode](./doc/intro_src/24HoursMode.png)
 
 - 12 小时制，亮色调的 Material 主题
 
@@ -134,7 +118,7 @@ render() {
 <TimePicker timeMode="12"/>
 ```
 
-![12HoursMode](./intro_src/12HoursMode.png)
+![12HoursMode](./doc/intro_src/12HoursMode.png)
 
 - 24 小时制，暗色调的 Material 主题
 
@@ -142,7 +126,7 @@ render() {
 <TimePicker colorPalette="dark"/>
 ```
 
-![DarkColor](./intro_src/DarkColor.png)
+![DarkColor](./doc/intro_src/DarkColor.png)
 
 - 24 小时制，展示用户当前时区。（除此以外，可以通过 `timezone` props 来手动改变时区）
 
@@ -150,7 +134,7 @@ render() {
 <TimePicker showTimezone={true}/>
 ```
 
-![showTimezone](./intro_src/24HoursMode-showTimezone.png)
+![showTimezone](./doc/intro_src/24HoursMode-showTimezone.png)
 
 - 24 小时制，亮色调的经典主题
 
@@ -158,7 +142,7 @@ render() {
 <TimePicker theme="classic"/>
 ```
 
-![24HoursMode-ClassicTheme](./intro_src/24HoursMode-ClassicTheme.png)
+![24HoursMode-ClassicTheme](./doc/intro_src/24HoursMode-ClassicTheme.png)
 
 - 24 小时制，暗色调的经典主题
 
@@ -166,7 +150,7 @@ render() {
 <TimePicker colorPalette="dark" theme="classic"/>
 ```
 
-![24HoursMode-ClassicTheme-dark](./intro_src/24HoursMode-ClassicTheme-dark.png)
+![24HoursMode-ClassicTheme-dark](./doc/intro_src/24HoursMode-ClassicTheme-dark.png)
 
 # APIs
 
@@ -357,47 +341,22 @@ timeMode=12
 
 > 当组件`focused`属性改变，也就是选择器 modal 被打开或关闭时调用
 
-- `onHourChange`
-
-`PropTypes.func`
-
-> 小时`hour`改变时的回调
-
-```javascript
-onHourChange(hour) {
-  // ...
-}
-```
-
-- `onMinuteChange`
-
-`PropTypes.func`
-
-> 分钟`minute`被改变时的回调
-
-```javascript
-onMinuteChange(minute) {
-  // ...
-}
-```
-
 - `onTimeChange`
 
 `PropTypes.func`
 
-> 小时`hour`或者分钟`minute`被改变时的回调
+> 小时`hour`，分钟`minute`或者上下午`meridiem`被改变时的回调
 
 ```javascript
-onTimeChange(time) {
+onTimeChange(options) {
+  const {
+    hour,
+    minute,
+    meridiem
+  } = options;
   // ...
 }
 ```
-
-- `onMeridiemChange`
-
-`PropTypes.func`
-
-> 当 上、下午改变时触发的回调
 
 - `onTimezoneChange`
 
@@ -419,7 +378,7 @@ onTimeChange(time) {
   - [x] MaterialTheme Component
   - [x] TwelveHoursTheme Component
   - [x] PickerPoint Component
-  - [ ] OutsideClickHandler Component
+  - [x] OutsideClickHandler Component
 
   - [x] utils test
 

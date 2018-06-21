@@ -1,16 +1,16 @@
-![react-times](./intro_src/react_times.png)
+![react-times](./doc/intro_src/react_times.png)
 
 [![npm version](https://badge.fury.io/js/react-times.svg)](https://badge.fury.io/js/react-times) [![Build Status](https://travis-ci.org/ecmadao/react-times.svg?branch=master)](https://travis-ci.org/ecmadao/react-times) [![Coverage Status](https://coveralls.io/repos/github/ecmadao/react-times/badge.svg?branch=master)](https://coveralls.io/github/ecmadao/react-times?branch=master) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![react-times](http://img.shields.io/npm/dm/react-times.svg)](https://www.npmjs.com/package/react-times) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/ecmadao/react-times/master/LICENSE)
 
 [![NPM](https://nodei.co/npm/react-times.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/react-times)
 
-README：[中文版](./README_CN.md)
+README：[中文版](./doc/README_CN.md)
 
 > A time picker react-component, no jquery-rely, writing in es6 standard style.
 
-**ATTENTION: new version 2.0.0 published. Check [here](./CHANGELOG.md) to see these changed props.**
+**Check [here](./doc/CHANGELOG.md) to see changed props in new version.**
 
-![react-times](./intro_src/react-times.gif)
+![react-times](./doc/intro_src/react-times.gif)
 
 # Online demo
 
@@ -135,7 +135,7 @@ render() {
 <TimePicker />
 ```
 
-![24HoursMode](./intro_src/24HoursMode.png)
+![24HoursMode](./doc/intro_src/24HoursMode.png)
 
 - 12 hours mode with Material Theme, light color by default
 
@@ -143,7 +143,7 @@ render() {
 <TimePicker timeMode="12"/>
 ```
 
-![12HoursMode](./intro_src/12HoursMode.png)
+![12HoursMode](./doc/intro_src/12HoursMode.png)
 
 - 24 hours mode with Material Theme, dark color
 
@@ -151,7 +151,7 @@ render() {
 <TimePicker colorPalette="dark"/>
 ```
 
-![DarkColor](./intro_src/DarkColor.png)
+![DarkColor](./doc/intro_src/DarkColor.png)
 
 - 24 hours mode, showing user current timezone. (Besides, your can use `timezone` props to custom timezone)
 
@@ -159,7 +159,7 @@ render() {
 <TimePicker showTimezone={true}/>
 ```
 
-![showTimezone](./intro_src/24HoursMode-showTimezone.png)
+![showTimezone](./doc/intro_src/24HoursMode-showTimezone.png)
 
 - 24 hours mode with Classic Theme, light color by default
 
@@ -167,7 +167,7 @@ render() {
 <TimePicker theme="classic"/>
 ```
 
-![24HoursMode-ClassicTheme](./intro_src/24HoursMode-ClassicTheme.png)
+![24HoursMode-ClassicTheme](./doc/intro_src/24HoursMode-ClassicTheme.png)
 
 - 24 hours mode with Classic Theme, dark color
 
@@ -175,7 +175,7 @@ render() {
 <TimePicker colorPalette="dark" theme="classic"/>
 ```
 
-![24HoursMode-ClassicTheme-dark](./intro_src/24HoursMode-ClassicTheme-dark.png)
+![24HoursMode-ClassicTheme-dark](./doc/intro_src/24HoursMode-ClassicTheme-dark.png)
 
 # APIs
 
