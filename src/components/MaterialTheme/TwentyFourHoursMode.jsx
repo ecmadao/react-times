@@ -186,7 +186,7 @@ class TwentyFourHoursMode extends React.PureComponent {
     const PickerPointGenerator = pickerPointGenerator(type);
 
     return (
-      <div className="time_picker_modal_container">
+      <div className="modal_container time_picker_modal_container">
         <div className="time_picker_modal_header">
           <span
             className={activeHourClass}

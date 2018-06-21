@@ -1,36 +1,8 @@
 @import "../base.css";
 
 .classic_theme_container {
-  user-select: none;
-  cursor: default;
-  position: absolute;
-  opacity: 0;
-  z-index: -1;
-  width: 100%;
   height: 250px;
   overflow-y: scroll;
-  transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
-  -ms-transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
-  -moz-transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
-  -o-transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
-  -webkit-transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
-  background-color: #fff;
-  border-radius: 2px;
-  top: 100%;
-  left: 0;
-  transform: translateY(20px);
-  -ms-transform: translateY(20px);
-  -moz-transform: translateY(20px);
-  -o-transform: translateY(20px);
-  -webkit-transform: translateY(20px);
-  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.12), 0 0 4px 0 rgba(0, 0, 0, 0.08);
-  -moz-box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.12), 0 0 4px 0 rgba(0, 0, 0, 0.08);
-  -webkit-box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.12), 0 0 4px 0 rgba(0, 0, 0, 0.08);
-}
-
-.outside_container.active .classic_theme_container {
-  opacity: 1;
-  z-index: 2;
 }
 
 .classic_theme_container .classic_time {

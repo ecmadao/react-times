@@ -93,7 +93,7 @@ class ClassicTheme extends React.PureComponent {
     const { timeMode } = this.props;
     const timeDatas = timeMode === 12 ? TIMES_12_MODE : TIMES_24_MODE;
     return (
-      <div className="classic_theme_container">
+      <div className="modal_container classic_theme_container">
         {this.renderTimes(timeDatas)}
       </div>
     );

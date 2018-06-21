@@ -31,4 +31,4 @@ storiesOf('TimeZones', module)
   .addWithInfo('with dark theme', () => (
     <TimePickerWrapper colorPalette="dark" showTimezone timezoneIsEditable />
   ))
-  .addWithInfo('with timezone picker', () => <TimeZonesPickerWrapper />);
+  .addWithInfo('timezone picker', () => <TimeZonesPickerWrapper />);

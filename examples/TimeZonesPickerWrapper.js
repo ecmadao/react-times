@@ -1,5 +1,5 @@
+
 import React from 'react';
-import moment from 'moment';
 import Timezone from '../src/components/Timezone';
 import timeHelper from '../src/utils/time';
 import languageHelper from '../src/utils/language';
@@ -7,6 +7,14 @@ import languageHelper from '../src/utils/language';
 const TIME = timeHelper.time();
 TIME.current = timeHelper.current();
 TIME.tz = timeHelper.guessUserTz();
+
+const style = {
+  width: '300px',
+  position: 'absolute',
+  left: '50%',
+  top: '100px',
+  transform: 'translateX(-50%)'
+};
 
 class TimeZonesPickerWrapper extends React.Component {
   constructor(props) {
@@ -28,7 +36,7 @@ class TimeZonesPickerWrapper extends React.Component {
     const {onTimezoneChange} = this.props;
 
     return (
-      <div>
+      <div style={style}>
         <div className="outside_container active">
           <div className='time_picker_modal_container'>
             <Timezone

@@ -181,7 +181,7 @@ class TwelveHoursMode extends React.PureComponent {
     const MinutePickerPointGenerator = pickerPointGenerator('minute', 12);
 
     return (
-      <div className="time_picker_modal_container">
+      <div className="modal_container time_picker_modal_container">
         <div className="time_picker_modal_header">
           <span className="time_picker_header active">
             {hour}:{minute}
