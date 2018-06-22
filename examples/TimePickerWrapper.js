@@ -83,7 +83,7 @@ class TimePickerWrapper extends React.Component {
       1: this.basicTrigger,
       2: this.customTrigger
     };
-    return triggers[customTriggerId];
+    return triggers[customTriggerId] || null;
   }
 
   render() {
@@ -99,11 +99,11 @@ class TimePickerWrapper extends React.Component {
     return (
       <div className="time_picker_wrapper">
         <TimePicker
+          trigger={this.trigger}
           {...this.props}
           focused={focused}
           meridiem={meridiem}
           timezone={timezone}
-          trigger={this.trigger}
           onFocusChange={this.onFocusChange}
           onTimeChange={this.onTimeChange}
           showTimezone={showTimezone}

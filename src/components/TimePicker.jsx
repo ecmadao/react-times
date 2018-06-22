@@ -2,13 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import OutsideClickHandler from './OutsideClickHandler';
-import MaterialTheme from './MaterialTheme';
-import ClassicTheme from './ClassicTheme';
 import Button from './Common/Button';
 import timeHelper from '../utils/time.js';
 import languageHelper from '../utils/language';
 import ICONS from '../utils/icons';
 import { is } from '../utils/func';
+import asyncComponent from './Common/AsyncComponent';
+
+const DialPlates = {
+  material: asyncComponent(
+    () => System.import('./MaterialTheme')
+      .then(component => component.default)
+  ),
+  classic: asyncComponent(
+    () => System.import('./ClassicTheme')
+      .then(component => component.default)
+  ),
+};
 
 // aliases for defaultProps readability
 const TIME = timeHelper.time({ useTz: false });
@@ -16,6 +26,7 @@ TIME.current = timeHelper.current();
 
 const propTypes = {
   autoMode: PropTypes.bool,
+  autoClose: PropTypes.bool,
   colorPalette: PropTypes.string,
   draggable: PropTypes.bool,
   focused: PropTypes.bool,
@@ -55,6 +66,7 @@ const propTypes = {
 
 const defaultProps = {
   autoMode: true,
+  autoClose: true,
   colorPalette: 'light',
   draggable: true,
   focused: false,
@@ -255,34 +267,39 @@ class TimePicker extends React.PureComponent {
 
   handleHourAndMinuteChange(time) {
     this.onTimeChanged(true);
-    const { onTimeChange, autoMode } = this.props;
-    if (autoMode) {
-      this.onClearFocus();
-    }
+    const { onTimeChange, autoClose } = this.props;
+    if (autoClose) this.onClearFocus();
     return onTimeChange && onTimeChange(time);
   }
 
-  renderMaterialTheme() {
+  renderDialPlate() {
     const {
+      theme,
       timeMode,
       autoMode,
+      autoClose,
       draggable,
       language,
       limitDrag,
       minuteStep,
+      colorPalette,
       showTimezone,
       onTimezoneChange,
       timezoneIsEditable,
     } = this.props;
 
+    const dialTheme = theme === 'material' ? theme : 'classic';
+    const DialPlate = DialPlates[dialTheme];
+
     const { timezoneData } = this.state;
     const [hour, minute] = this.hourAndMinute;
 
     return (
-      <MaterialTheme
+      <DialPlate
         hour={hour}
         minute={minute}
         autoMode={autoMode}
+        autoClose={autoClose}
         language={language}
         draggable={draggable}
         limitDrag={limitDrag}
@@ -290,38 +307,22 @@ class TimePicker extends React.PureComponent {
         meridiem={this.meridiem}
         showTimezone={showTimezone}
         phrases={this.languageData}
+        colorPalette={colorPalette}
         clearFocus={this.onClearFocus}
         timeMode={parseInt(timeMode, 10)}
         onTimezoneChange={onTimezoneChange}
         minuteStep={parseInt(minuteStep, 10)}
         timezoneIsEditable={timezoneIsEditable}
         handleHourChange={this.handleHourChange}
+        handleTimeChange={this.handleTimeChange}
         handleMinuteChange={this.handleMinuteChange}
         handleMeridiemChange={this.handleMeridiemChange}
       />
     );
   }
 
-  renderClassicTheme() {
-    const { timeMode, colorPalette } = this.props;
-    const [hour, minute] = this.hourAndMinute;
-
-    return (
-      <ClassicTheme
-        hour={hour}
-        minute={minute}
-        meridiem={this.meridiem}
-        colorPalette={colorPalette}
-        clearFocus={this.onClearFocus}
-        timeMode={parseInt(timeMode, 10)}
-        handleTimeChange={this.handleTimeChange}
-      />
-    );
-  }
-
   render() {
     const {
-      theme,
       trigger,
       placeholder,
       withoutIcon,
@@ -363,9 +364,7 @@ class TimePicker extends React.PureComponent {
           onOutsideClick={this.onClearFocus}
           closeOnOutsideClick={closeOnOutsideClick}
         >
-          {theme === 'material'
-            ? this.renderMaterialTheme()
-            : this.renderClassicTheme()}
+          {this.renderDialPlate()}
         </OutsideClickHandler>
       </div>
     );

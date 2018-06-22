@@ -12,7 +12,6 @@ import timeHelper from '../../utils/time';
 import Button from '../Common/Button';
 import PickerDragHandler from '../Picker/PickerDragHandler';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';
-import Timezone from '../Timezone';
 
 const TIME = timeHelper.time();
 
@@ -23,18 +22,8 @@ const propTypes = {
   draggable: PropTypes.bool,
   meridiem: PropTypes.string,
   phrases: PropTypes.object,
-  showTimezone: PropTypes.bool,
-  timezone: PropTypes.shape({
-    city: PropTypes.string,
-    zoneAbbr: PropTypes.string,
-    zoneName: PropTypes.string
-  }),
-  timezoneIsEditable: PropTypes.bool,
-  onTimezoneChange: PropTypes.func,
   handleHourChange: PropTypes.func,
   handleMinuteChange: PropTypes.func,
-  handleEditTimezoneChange: PropTypes.func,
-  handleShowTimezoneChange: PropTypes.func,
 };
 
 const defaultProps = {
@@ -43,11 +32,8 @@ const defaultProps = {
   minute: TIME.minute,
   draggable: false,
   meridiem: TIME.meridiem,
-  showTimezone: false,
   handleHourChange: () => {},
   handleMinuteChange: () => {},
-  handleEditTimezoneChange: () => {},
-  handleShowTimezoneChange: () => {}
 };
 
 class TwelveHoursMode extends React.PureComponent {
@@ -151,15 +137,12 @@ class TwelveHoursMode extends React.PureComponent {
       hour,
       minute,
       phrases,
-      timezone,
       meridiem,
       draggable,
       clearFocus,
       limitDrag,
       minuteStep,
       showTimezone,
-      timezoneIsEditable,
-      onTimezoneChange
     } = this.props;
 
     const { hourPointerRotate, minutePointerRotate } = this.state;
@@ -181,7 +164,7 @@ class TwelveHoursMode extends React.PureComponent {
     const MinutePickerPointGenerator = pickerPointGenerator('minute', 12);
 
     return (
-      <div className="modal_container time_picker_modal_container">
+      <React.Fragment>
         <div className="time_picker_modal_header">
           <span className="time_picker_header active">
             {hour}:{minute}
@@ -223,24 +206,17 @@ class TwelveHoursMode extends React.PureComponent {
             handleTimePointerClick={this.handleHourPointerClick}
           />
         </div>
-        {showTimezone
-          ? <Timezone
-            phrases={phrases}
-            timezone={timezone}
-            timezoneIsEditable={timezoneIsEditable}
-            onTimezoneChange={onTimezoneChange}
-          />
-          : ''
-        }
-        <div className="buttons_wrapper">
-          <Button
-            onClick={clearFocus}
-            className="time_picker_button"
-          >
-            {phrases.close}
-          </Button>
-        </div>
-      </div>
+        {!showTimezone ? (
+          <div className="buttons_wrapper">
+            <Button
+              onClick={clearFocus}
+              className="time_picker_button"
+            >
+              {phrases.close}
+            </Button>
+          </div>
+        ) : null}
+      </React.Fragment>
     );
   }
 }

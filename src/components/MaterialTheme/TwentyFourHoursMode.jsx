@@ -10,25 +10,14 @@ import {
 } from '../../utils/const_value.js';
 import PickerDragHandler from '../Picker/PickerDragHandler';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';
-import Timezone from '../Timezone';
 
 const propTypes = {
   step: PropTypes.number,
   hour: PropTypes.string,
   autoMode: PropTypes.bool,
   minute: PropTypes.string,
-  showTimezone: PropTypes.bool,
-  timezone: PropTypes.shape({
-    city: PropTypes.string,
-    zoneAbbr: PropTypes.string,
-    zoneName: PropTypes.string
-  }),
-  timezoneIsEditable: PropTypes.bool,
-  onTimezoneChange: PropTypes.func,
   handleHourChange: PropTypes.func,
   handleMinuteChange: PropTypes.func,
-  handleEditTimezoneChange: PropTypes.func,
-  handleShowTimezoneChange: PropTypes.func,
   clearFocus: PropTypes.func
 };
 
@@ -37,12 +26,9 @@ const defaultProps = {
   hour: '00',
   minute: '00',
   autoMode: true,
-  showTimezone: false,
   handleHourChange: () => {},
   handleMinuteChange: () => {},
   clearFocus: () => {},
-  handleEditTimezoneChange: () => {},
-  handleShowTimezoneChange: () => {}
 };
 
 class TwentyFourHoursMode extends React.PureComponent {
@@ -80,6 +66,11 @@ class TwentyFourHoursMode extends React.PureComponent {
     });
   }
 
+  clearFocus() {
+    const { autoClose, clearFocus } = this.props;
+    autoClose && clearFocus && clearFocus();
+  }
+
   handleTimePointerClick(options) {
     const {
       time,
@@ -94,21 +85,23 @@ class TwentyFourHoursMode extends React.PureComponent {
     const validateTime = parseInt(time, 10);
     const { step } = this.state;
     const auto = autoMode === null ? this.props.autoMode : autoMode;
+
     const {
       handleHourChange,
       handleMinuteChange,
-      clearFocus
     } = this.props;
+
     if (step === 0) {
       handleHourChange && handleHourChange(validateTime);
     } else {
       handleMinuteChange && handleMinuteChange(validateTime);
     }
-    if (!auto) { return; }
+    if (!auto) return;
+
     if (step === 0) {
       this.handleStepChange(1);
     } else {
-      clearFocus();
+      this.clearFocus();
       this.setStep(0);
     }
   }
@@ -158,14 +151,9 @@ class TwentyFourHoursMode extends React.PureComponent {
     const {
       hour,
       minute,
-      phrases,
-      timezone,
       draggable,
       limitDrag,
       minuteStep,
-      showTimezone,
-      timezoneIsEditable,
-      onTimezoneChange,
     } = this.props;
 
     const { step, pointerRotate } = this.state;
@@ -186,7 +174,7 @@ class TwentyFourHoursMode extends React.PureComponent {
     const PickerPointGenerator = pickerPointGenerator(type);
 
     return (
-      <div className="modal_container time_picker_modal_container">
+      <React.Fragment>
         <div className="time_picker_modal_header">
           <span
             className={activeHourClass}
@@ -221,16 +209,7 @@ class TwentyFourHoursMode extends React.PureComponent {
             handleTimePointerClick={this.handleTimePointerClick}
           />
         </div>
-        {showTimezone
-          ? <Timezone
-            phrases={phrases}
-            timezone={timezone}
-            timezoneIsEditable={timezoneIsEditable}
-            onTimezoneChange={onTimezoneChange}
-          />
-          : null
-        }
-      </div>
+      </React.Fragment>
     );
   }
 }

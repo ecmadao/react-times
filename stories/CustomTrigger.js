@@ -19,6 +19,8 @@ storiesOf('Custom TimePicker Trigger', module)
   .addWithInfo('only render picker modal', () => (
     <TimePickerWrapper
       focused
-      customTriggerId={0}
+      autoClose={false}
+      trigger={<div />}
+      closeOnOutsideClick={false}
     />
   ));
