@@ -26,7 +26,7 @@ const MaterialTheme = (props) => {
 
   const DialPlate = DialPlates[timeMode];
   return (
-    <div className="modal_container time_picker_modal_container">
+    <div className="modal_container time_picker_modal_container" id="MaterialTheme">
       <DialPlate
         {...props}
       />

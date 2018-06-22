@@ -20,7 +20,6 @@ describe('TwelveHoursMode', () => {
       />
     );
     it('should render component correctly', () => {
-      expect(wrapper.is('.time_picker_modal_container')).to.equal(true);
       expect(wrapper.find('.meridiem')).to.have.lengthOf(1);
     });
 
@@ -75,45 +74,6 @@ describe('TwelveHoursMode', () => {
       expect(handleMeridiemChange.callCount).to.equal(1);
       wrapper.instance().handleMeridiemChange();
       expect(handleMeridiemChange.callCount).to.equal(2);
-    });
-  });
-
-  describe('Timezone handling', () => {
-    describe('when showTimezone is true', () => {
-      const mockTimezone = {
-        zoneName: 'Some Zone',
-        zoneAbbr: 'SZ'
-      };
-      const wrapper = shallow(
-        <TwelveHoursMode
-          focused
-          showTimezone
-          hour={'01'}
-          minute={'45'}
-          phrases={phrases}
-          timezone={mockTimezone}
-        />
-      );
-
-      it('should render the Timezone footer', () => {
-        expect(wrapper.find('Timezone')).to.have.lengthOf(1);
-      });
-    });
-
-    describe('when showTimezone is false', () => {
-      const wrapper = shallow(
-        <TwelveHoursMode
-          focused
-          hour={'01'}
-          minute={'45'}
-          phrases={phrases}
-          showTimezone={false}
-        />
-      );
-
-      it('should not render the Timezone footer', () => {
-        expect(wrapper.find('Timezone')).to.have.lengthOf(0);
-      });
     });
   });
 });

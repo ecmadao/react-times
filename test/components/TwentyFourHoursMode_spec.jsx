@@ -14,9 +14,6 @@ describe('TwentyFourHoursMode', () => {
     const wrapper = shallow(
       <TwentyFourHoursMode hour={'03'} />
     );
-    it('should render component correctly', () => {
-      expect(wrapper.is('.time_picker_modal_container')).to.equal(true);
-    });
 
     it('should render PickerDragHandler component', () => {
       expect(wrapper.find(PickerDragHandler)).to.have.lengthOf(1);
@@ -83,45 +80,6 @@ describe('TwentyFourHoursMode', () => {
       expect(newWrapper.state().pointerRotate).to.equal(30);
       expect(newWrapper.state().step).to.equal(0);
       expect(handleMinuteChange.callCount).to.equal(1);
-    });
-  });
-
-  describe('Timezone handling', () => {
-    describe('when showTimezone is true', () => {
-      const mockTimezone = {
-        zoneName: 'Some Zone',
-        zoneAbbr: 'SZ'
-      };
-      const wrapper = shallow(
-        <TwentyFourHoursMode
-          focused
-          showTimezone
-          hour={'01'}
-          minute={'45'}
-          phrases={phrases}
-          timezone={mockTimezone}
-        />
-      );
-
-      it('should render the Timezone footer', () => {
-        expect(wrapper.find('Timezone')).to.have.lengthOf(1);
-      });
-    });
-
-    describe('when showTimezone is false', () => {
-      const wrapper = shallow(
-        <TwentyFourHoursMode
-          focused
-          hour={'01'}
-          minute={'45'}
-          phrases={phrases}
-          showTimezone={false}
-        />
-      );
-
-      it('should not render the Timezone footer', () => {
-        expect(wrapper.find('Timezone')).to.have.lengthOf(0);
-      });
     });
   });
 });
