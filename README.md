@@ -48,7 +48,7 @@ $ npm install react-times --save-dev
 
 Cause I'm using `moment-timezone`, you need to be able to parse json file.
 
-Use webpack config as example:
+Use webpack (version < 2) config as example:
 
 - [How should I use moment-timezone with webpack?](https://stackoverflow.com/questions/29548386/how-should-i-use-moment-timezone-with-webpack)
 
@@ -58,6 +58,9 @@ $ npm i json-loader --save
 
 ```javascript
 // webpack.config.js
+// ATTENTION:
+// webpack >= v2.0.0 has native JSON support.
+// check here: https://github.com/webpack-contrib/json-loader/issues/65 for more information
 {
   module: {
     loaders: [

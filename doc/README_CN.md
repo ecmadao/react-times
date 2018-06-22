@@ -44,6 +44,8 @@ $ npm install react react-dom --save-dev
 $ npm install react-times --save-dev
 ```
 
+注意：因为组件使用了`moment-timezone`，所以你本地需要能够编辑 json 文件。webpack 2 以下的用户可以通过 json-loader 解决该问题。webpack >= 2 后自带 json 解析功能。
+
 # 使用方式
 
 目前组件总共有两种主题：Material 主题和经典主题
