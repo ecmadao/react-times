@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  MAX_ABSOLUTE_POSITION,
   MINUTES,
-  MIN_ABSOLUTE_POSITION,
+  TWELVE_HOURS,
   PICKER_RADIUS,
   POINTER_RADIUS,
-  TWELVE_HOURS,
-} from '../../utils/const_value.js';
+  MAX_ABSOLUTE_POSITION,
+  MIN_ABSOLUTE_POSITION,
+} from '../../utils/constant.js';
 import timeHelper from '../../utils/time';
 import Button from '../Common/Button';
 import PickerDragHandler from '../Picker/PickerDragHandler';

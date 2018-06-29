@@ -292,6 +292,14 @@ const getTzForName = (name) => {
   return head(maps);
 };
 
+const get12ModeTimes = (from, end) => {
+
+};
+
+const get24ModeTimes = (from, end) => {
+
+};
+
 export default {
   current: getCurrentTime,
   time: getValidTimeData,
@@ -302,5 +310,7 @@ export default {
   tzForCity: getTzForCity,
   tzForName: getTzForName,
   guessUserTz,
-  tzMaps
+  tzMaps,
+  get12ModeTimes,
+  get24ModeTimes
 };

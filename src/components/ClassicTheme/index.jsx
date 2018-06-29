@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {
   TIMES_12_MODE,
   TIMES_24_MODE
-} from '../../utils/const_value';
+} from '../../utils/constant';
 import timeHelper from '../../utils/time';
 
 const propTypes = {

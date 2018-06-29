@@ -5,7 +5,7 @@ import drag from '../src/utils/drag';
 import {
   MAX_ABSOLUTE_POSITION,
   MIN_ABSOLUTE_POSITION
-} from '../src/utils/const_value';
+} from '../src/utils/constant';
 import { isSeq, head, tail, last } from '../src/utils/func';
 
 describe('Functional utils', () => {

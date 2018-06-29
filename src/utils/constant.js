@@ -9,6 +9,15 @@ export const MAX_ABSOLUTE_POSITION = 125;
 export const MIN_ABSOLUTE_POSITION = 90;
 export const POINTER_RADIUS = 15;
 
+export const BROWSER_COMPATIBLE = [
+  '',
+  'O',
+  'Moz',
+  'Ms',
+  'ms',
+  'Webkit'
+];
+
 export const TIMES_12_MODE = [
   '12:00 AM',
   '12:30 AM',
