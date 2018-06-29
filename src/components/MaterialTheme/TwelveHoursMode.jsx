@@ -45,10 +45,11 @@ class TwelveHoursMode extends React.PureComponent {
       hourPointerRotate,
       minutePointerRotate
     };
-    this.handleMeridiemChange = this.handleMeridiemChange.bind(this);
+
     this.handleHourChange = this.handleHourChange.bind(this);
     this.handleMinuteChange = this.handleMinuteChange.bind(this);
     this.handleDegreeChange = this.handleDegreeChange.bind(this);
+    this.handleMeridiemChange = this.handleMeridiemChange.bind(this);
     this.handleHourPointerClick = this.handleHourPointerClick.bind(this);
     this.handleMinutePointerClick = this.handleMinutePointerClick.bind(this);
   }

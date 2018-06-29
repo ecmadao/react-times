@@ -55,7 +55,7 @@ const browserStyles = (type, style) => BROWSER_COMPATIBLE.reduce((dict, browser)
     : type;
   dict[key] = style;
   return dict;
-});
+}, {});
 
 const getRotateStyle = degree =>
   browserStyles('transform', `rotate(${degree}deg)`);

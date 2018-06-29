@@ -26,9 +26,9 @@ const defaultProps = {
   hour: '00',
   minute: '00',
   autoMode: true,
+  clearFocus: () => {},
   handleHourChange: () => {},
   handleMinuteChange: () => {},
-  clearFocus: () => {},
 };
 
 class TwentyFourHoursMode extends React.PureComponent {

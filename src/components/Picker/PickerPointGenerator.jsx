@@ -63,8 +63,8 @@ const pickerPointGenerator = (type = 'hour', mode = 24) =>
           id="picker_pointer_container"
         >
           {type === 'hour'
-              ? this.renderHourPointes()
-              : this.renderMinutePointes()}
+            ? this.renderHourPointes()
+            : this.renderMinutePointes()}
         </div>
       );
     }

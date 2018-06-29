@@ -325,6 +325,34 @@ timeMode=12
 />
 ```
 
+- `timeConfig`
+
+> `React.object`, 用于配置 classic theme 时可选的时间范围以及步长
+
+```javascript
+<TimePicker
+  theme="classic"
+  timeMode="12"
+  timeConfig={{
+    from: '08:00 PM',
+    to: '08:00 AM',
+    step: 1,
+    unit: 'hour'
+  }}
+/>
+
+<TimePickerWrapper
+  theme="classic"
+  timeMode="24"
+  timeConfig={{
+    from: 9,
+    to: 19,
+    step: 30,
+    unit: 'minutes'
+  }}
+/>
+```
+
 - `limitDrag`
 
 > `React.bool`, 默认为 `false`. 当设置为 `true` 时，将会限制用户的拖拽（从连续性的拖拽变为间断性拖拽，间隔由 `minuteStep` 确定）

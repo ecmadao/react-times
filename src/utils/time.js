@@ -1,3 +1,4 @@
+
 import moment from 'moment-timezone';
 import { head, last, is } from './func';
 
@@ -292,25 +293,96 @@ const getTzForName = (name) => {
   return head(maps);
 };
 
-const get12ModeTimes = (from, end) => {
+const hourFormatter = (hour, defaultTime = '00:00') => {
+  if (!hour) return defaultTime;
 
+  let [h, m, meridiem] = `${hour}`.split(/[:|\s]/);
+
+  if (meridiem && meridiem.toLowerCase() === 'pm') meridiem = 'PM';
+  if (meridiem && meridiem.toLowerCase() === 'am') meridiem = 'AM';
+  if (meridiem && meridiem !== 'AM' && meridiem !== 'PM') meridiem = 'AM';
+
+  if (!h || isNaN(h)) h = '0';
+  if (!meridiem && Number(h > 24)) h = Number(h) - 24;
+  if (meridiem && Number(h > 12)) h = Number(h) - 12;
+  if (!m || isNaN(m) || Number(m) >= 60) m = '0';
+
+  if (Number(h) < 10) h = `0${Number(h)}`;
+  if (Number(m) < 10) m = `0${Number(m)}`;
+
+  return meridiem ? `${h}:${m} ${meridiem}` : `${h}:${m}`;
 };
 
-const get24ModeTimes = (from, end) => {
+const withoutMeridiem = hour => hour.replace(/\s[P|A]M$/, '');
 
+const getStartAndEnd = (from, to) => {
+  const current = moment();
+  const date = current.format('YYYY-MM-DD');
+  const nextDate = current.add(1, 'day').format('YYYY-MM-DD');
+
+  const f = hourFormatter(from, '00:00');
+  const t = hourFormatter(to, '23:30');
+
+  let start = `${date} ${withoutMeridiem(f)}`;
+  const endTmp = withoutMeridiem(t);
+  let end = moment(`${date} ${endTmp}`) <= moment(start)
+    ? `${nextDate} ${endTmp}`
+    : `${date} ${endTmp}`;
+
+  if (/PM$/.test(f)) start = moment(start).add(12, 'hours').format('YYYY-MM-DD HH:mm');
+  if (/PM$/.test(t)) end = moment(end).add(12, 'hours').format('YYYY-MM-DD HH:mm');
+
+  return {
+    start,
+    end
+  };
+};
+
+const get12ModeTimes = ({ from, to, step = 30, unit = 'minutes' }) => {
+  const {
+    start,
+    end
+  } = getStartAndEnd(from, to);
+
+  const times = [];
+  let time = moment(start);
+  while (time <= moment(end)) {
+    const hour = Number(time.format('HH'));
+    times.push(`${time.format('hh:mm')} ${hour >= 12 ? 'PM' : 'AM'}`);
+    time = time.add(step, unit);
+  }
+  return times;
+};
+
+const get24ModeTimes = ({ from, to, step = 30, unit = 'minutes' }) => {
+  const {
+    start,
+    end
+  } = getStartAndEnd(from, to);
+
+  const times = [];
+  let time = moment(start);
+  while (time <= moment(end)) {
+    times.push(time.format('HH:mm'));
+    time = time.add(step, unit);
+  }
+  return times;
 };
 
 export default {
-  current: getCurrentTime,
+  tzMaps,
+  guessUserTz,
+  hourFormatter,
+  getStartAndEnd,
+  get12ModeTimes,
+  get24ModeTimes,
+  withoutMeridiem,
   time: getValidTimeData,
+  current: getCurrentTime,
+  tzForCity: getTzForCity,
+  tzForName: getTzForName,
   validate: getValidateTime,
   validateInt: getValidateIntTime,
   validateMeridiem: getValidateMeridiem,
   validateTimeMode: getValidateTimeMode,
-  tzForCity: getTzForCity,
-  tzForName: getTzForName,
-  guessUserTz,
-  tzMaps,
-  get12ModeTimes,
-  get24ModeTimes
 };

@@ -216,8 +216,8 @@ class PickerDragHandler extends React.PureComponent {
     const {
       dragX,
       dragY,
-      pointerRotate = null,
       autoMode = null,
+      pointerRotate = null,
     } = options;
     const {
       step,
