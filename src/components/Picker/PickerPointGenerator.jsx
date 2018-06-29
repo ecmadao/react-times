@@ -1,9 +1,9 @@
 import React from 'react';
 import {
-  MINUTES,
   HOURS,
+  MINUTES,
   TWELVE_HOURS
-} from '../../utils/const_value.js';
+} from '../../utils/constant.js';
 import PickerPoint from './PickerPoint';
 
 const pickerPointGenerator = (type = 'hour', mode = 24) =>
@@ -63,8 +63,8 @@ const pickerPointGenerator = (type = 'hour', mode = 24) =>
           id="picker_pointer_container"
         >
           {type === 'hour'
-              ? this.renderHourPointes()
-              : this.renderMinutePointes()}
+            ? this.renderHourPointes()
+            : this.renderMinutePointes()}
         </div>
       );
     }

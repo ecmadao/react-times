@@ -62,6 +62,7 @@ const propTypes = {
   timeFormatter: PropTypes.func,
   useTz: PropTypes.bool,
   closeOnOutsideClick: PropTypes.bool,
+  timeConfig: PropTypes.object,
 };
 
 const defaultProps = {
@@ -88,6 +89,10 @@ const defaultProps = {
   timeFormatter: null,
   useTz: true,
   closeOnOutsideClick: true,
+  timeConfig: {
+    step: 30,
+    unit: 'minutes'
+  }
 };
 
 class TimePicker extends React.PureComponent {
@@ -282,6 +287,7 @@ class TimePicker extends React.PureComponent {
       language,
       limitDrag,
       minuteStep,
+      timeConfig,
       colorPalette,
       showTimezone,
       onTimezoneChange,
@@ -305,6 +311,7 @@ class TimePicker extends React.PureComponent {
         limitDrag={limitDrag}
         timezone={timezoneData}
         meridiem={this.meridiem}
+        timeConfig={timeConfig}
         showTimezone={showTimezone}
         phrases={this.languageData}
         colorPalette={colorPalette}

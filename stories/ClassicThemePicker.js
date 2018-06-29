@@ -18,6 +18,30 @@ storiesOf('Classic Theme', module)
       defaultTime="10:30"
     />
   ))
+  .addWithInfo('limit start, end, step for 12 hours mode', () => (
+    <TimePickerWrapper
+      theme="classic"
+      timeMode="12"
+      timeConfig={{
+        from: '08:00 PM',
+        to: '08:00 AM',
+        step: 1,
+        unit: 'hour'
+      }}
+    />
+  ))
+  .addWithInfo('limit start, end, step for 24 hours mode', () => (
+    <TimePickerWrapper
+      theme="classic"
+      timeMode="24"
+      timeConfig={{
+        from: 9,
+        to: 19,
+        step: 30,
+        unit: 'minutes'
+      }}
+    />
+  ))
   .addWithInfo('focused at setup', () => (
     <TimePickerWrapper
       focused

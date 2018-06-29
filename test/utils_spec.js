@@ -5,7 +5,7 @@ import drag from '../src/utils/drag';
 import {
   MAX_ABSOLUTE_POSITION,
   MIN_ABSOLUTE_POSITION
-} from '../src/utils/const_value';
+} from '../src/utils/constant';
 import { isSeq, head, tail, last } from '../src/utils/func';
 
 describe('Functional utils', () => {
@@ -174,6 +174,85 @@ describe('Time utils', () => {
       expect(
         timeHelper.tzForCity('shanghai').zoneName
       ).to.equal('Asia/Shanghai');
+    });
+  });
+
+  describe('Test time format function', () => {
+    it('should format hour', () => {
+      expect(timeHelper.hourFormatter('8')).to.equal('08:00');
+      expect(timeHelper.hourFormatter('13:1')).to.equal('13:01');
+      expect(timeHelper.hourFormatter('2:60')).to.equal('02:00');
+    });
+
+    it('should format hour with default time', () => {
+      expect(timeHelper.hourFormatter('', '11:11')).to.equal('11:11');
+      expect(timeHelper.hourFormatter()).to.equal('00:00');
+    });
+
+    it('should format hour with meridiem', () => {
+      expect(timeHelper.hourFormatter('2:6 pm')).to.equal('02:06 PM');
+      expect(timeHelper.hourFormatter('2:6 12')).to.equal('02:06 AM');
+      expect(timeHelper.hourFormatter('13:00 pm')).to.equal('01:00 PM');
+    });
+
+    it('should remove meridiem in time', () => {
+      expect(timeHelper.withoutMeridiem('08:00 PM')).to.equal('08:00');
+      expect(timeHelper.withoutMeridiem('08:00 AM')).to.equal('08:00');
+      expect(timeHelper.withoutMeridiem('08:00')).to.equal('08:00');
+    })
+  });
+
+  describe('Test times render function', () => {
+    it('should render full 24 hour times with 30 minutes step', () => {
+      const times = timeHelper.get24ModeTimes({});
+      expect(times.length).to.equal(48);
+      expect(times[0]).to.equal('00:00');
+      expect(times[47]).to.equal('23:30');
+    });
+
+    it('should render full 24 hour times with 1 hour step', () => {
+      const times = timeHelper.get24ModeTimes({ step: 1, unit: 'hour' });
+      expect(times.length).to.equal(24);
+      expect(times[0]).to.equal('00:00');
+      expect(times[23]).to.equal('23:00');
+    });
+
+    it('should render 24 hour times cross one day with 1 hour step', () => {
+      const times = timeHelper.get24ModeTimes({
+        from: '20',
+        to: '8',
+        step: 1,
+        unit: 'hour'
+      });
+      expect(times.length).to.equal(13);
+      expect(times[0]).to.equal('20:00');
+      expect(times[12]).to.equal('08:00');
+    });
+
+    it('should render full 12 hour times with 30 minutes step', () => {
+      const times = timeHelper.get12ModeTimes({});
+      expect(times.length).to.equal(48);
+      expect(times[0]).to.equal('12:00 AM');
+      expect(times[47]).to.equal('11:30 PM');
+    });
+
+    it('should render full 12 hour times with 1 hour step', () => {
+      const times = timeHelper.get12ModeTimes({ step: 1, unit: 'hour' });
+      expect(times.length).to.equal(24);
+      expect(times[0]).to.equal('12:00 AM');
+      expect(times[23]).to.equal('11:00 PM');
+    });
+
+    it('should render 12 hour times cross one day with 1 hour step', () => {
+      const times = timeHelper.get12ModeTimes({
+        from: '08:00 PM',
+        to: '08:00 AM',
+        step: 1,
+        unit: 'hour'
+      });
+      expect(times.length).to.equal(13);
+      expect(times[0]).to.equal('08:00 PM');
+      expect(times[12]).to.equal('08:00 AM');
     });
   });
 });

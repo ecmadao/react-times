@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### v3.1.3
+
+#### new props
+
+- Add `timeConfig` props: to config from, to, step for classic theme panel.
+
 ### v3.1.0
 
 #### remove props

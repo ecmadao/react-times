@@ -1,10 +1,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  TIMES_12_MODE,
-  TIMES_24_MODE
-} from '../../utils/const_value';
 import timeHelper from '../../utils/time';
 
 const propTypes = {
@@ -54,7 +50,7 @@ class ClassicTheme extends React.PureComponent {
     const currentHour = timeHelper.validate(rawHour);
     const currentMinute = timeHelper.validate(rawMinute);
 
-    if (hour !== currentHour) {
+    if (parseInt(hour, 10) !== parseInt(currentHour, 10)) {
       return false;
     }
     if (meridiem && meridiem !== rawMeridiem) {
@@ -90,8 +86,11 @@ class ClassicTheme extends React.PureComponent {
   }
 
   render() {
-    const { timeMode } = this.props;
-    const timeDatas = timeMode === 12 ? TIMES_12_MODE : TIMES_24_MODE;
+    const { timeMode, timeConfig = {} } = this.props;
+    const timeDatas = timeMode === 12
+      ? timeHelper.get12ModeTimes(timeConfig)
+      : timeHelper.get24ModeTimes(timeConfig);
+
     return (
       <div className="modal_container classic_theme_container">
         {this.renderTimes(timeDatas)}

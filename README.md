@@ -365,6 +365,34 @@ If you don't want to drag the pointer, then you can set `draggable` props to `fa
 />
 ```
 
+- `timeConfig`
+
+> `React.object`, to config from, to, step limit for classic theme panel.
+
+```javascript
+<TimePicker
+  theme="classic"
+  timeMode="12"
+  timeConfig={{
+    from: '08:00 PM',
+    to: '08:00 AM',
+    step: 1,
+    unit: 'hour'
+  }}
+/>
+
+<TimePickerWrapper
+  theme="classic"
+  timeMode="24"
+  timeConfig={{
+    from: 9,
+    to: 19,
+    step: 30,
+    unit: 'minutes'
+  }}
+/>
+```
+
 - `limitDrag`
 
 > `React.bool`, default `false`. If `true`, it will limite the drag rotation by `minuteStep`

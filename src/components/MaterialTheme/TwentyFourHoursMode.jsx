@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   HOURS,
-  MAX_ABSOLUTE_POSITION,
   MINUTES,
-  MIN_ABSOLUTE_POSITION,
   PICKER_RADIUS,
   POINTER_RADIUS,
-} from '../../utils/const_value.js';
+  MAX_ABSOLUTE_POSITION,
+  MIN_ABSOLUTE_POSITION,
+} from '../../utils/constant.js';
 import PickerDragHandler from '../Picker/PickerDragHandler';
 import pickerPointGenerator from '../Picker/PickerPointGenerator';
 
@@ -26,9 +26,9 @@ const defaultProps = {
   hour: '00',
   minute: '00',
   autoMode: true,
+  clearFocus: () => {},
   handleHourChange: () => {},
   handleMinuteChange: () => {},
-  clearFocus: () => {},
 };
 
 class TwentyFourHoursMode extends React.PureComponent {

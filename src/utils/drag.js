@@ -1,3 +1,6 @@
+
+import { BROWSER_COMPATIBLE } from './constant';
+
 const getScrollPosition = () => {
   const position = {
     x: document.documentElement.scrollLeft
@@ -46,31 +49,25 @@ const disableMouseDown = (e) => {
   event.stopPropagation();
 };
 
-const getRotateStyle = degree => ({
-  transform: `rotate(${degree}deg)`,
-  OTransform: `rotate(${degree}deg)`,
-  MozTransform: `rotate(${degree}deg)`,
-  mstransform: `rotate(${degree}deg)`,
-  WebkitTransform: `rotate(${degree}deg)`
-});
+const browserStyles = (type, style) => BROWSER_COMPATIBLE.reduce((dict, browser) => {
+  const key = browser
+    ? `${browser}${type[0].toUpperCase()}${type.slice(1)}`
+    : type;
+  dict[key] = style;
+  return dict;
+}, {});
 
-const getInlineRotateStyle = degree => ({
-  transform: `translateX(-50%) rotate(${degree}deg)`,
-  OTransform: `translateX(-50%) rotate(${degree}deg)`,
-  MozTransform: `translateX(-50%) rotate(${degree}deg)`,
-  mstransform: `translateX(-50%) rotate(${degree}deg)`,
-  WebkitTransform: `translateX(-50%) rotate(${degree}deg)`
-});
+const getRotateStyle = degree =>
+  browserStyles('transform', `rotate(${degree}deg)`);
 
-const getInitialPointerStyle = (height, top, degree) => ({
-  height: `${height}px`,
-  top: `${top}px`,
-  transform: `translateX(-50%) rotate(${degree}deg)`,
-  OTransform: `translateX(-50%) rotate(${degree}deg)`,
-  MozTransform: `translateX(-50%) rotate(${degree}deg)`,
-  mstransform: `translateX(-50%) rotate(${degree}deg)`,
-  WebkitTransform: `translateX(-50%) rotate(${degree}deg)`
-});
+const getInlineRotateStyle = degree =>
+  browserStyles('transform', `translateX(-50%) rotate(${degree}deg)`);
+
+const getInitialPointerStyle = (height, top, degree) =>
+  Object.assign({
+    height: `${height}px`,
+    top: `${top}px`,
+  }, browserStyles('transform', `translateX(-50%) rotate(${degree}deg)`));
 
 const getStandardAbsolutePosition = (position, minPosition, maxPosition) => {
   let p = position;

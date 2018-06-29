@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  MAX_ABSOLUTE_POSITION,
-  MIN_ABSOLUTE_POSITION,
   PICKER_RADIUS,
   POINTER_RADIUS,
-} from '../../utils/const_value.js';
+  MAX_ABSOLUTE_POSITION,
+  MIN_ABSOLUTE_POSITION,
+} from '../../utils/constant.js';
 import darg from '../../utils/drag';
 
 const propTypes = {
@@ -216,8 +216,8 @@ class PickerDragHandler extends React.PureComponent {
     const {
       dragX,
       dragY,
-      pointerRotate = null,
       autoMode = null,
+      pointerRotate = null,
     } = options;
     const {
       step,
