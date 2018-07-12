@@ -126,7 +126,7 @@ class TimePicker extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const { focused } = nextProps;
-    if (focused !== this.state.focused) {
+    if (focused !== this.props.focused) {
       this.setState({ focused });
     }
   }

@@ -37,4 +37,10 @@ storiesOf('TwelveHoursMode', module)
       minuteStep={1}
       timeMode="12"
     />
+  ))
+  .addWithInfo('disable outside click close', () => (
+    <TimePickerWrapper
+      timeMode="12"
+      closeOnOutsideClick={false}
+    />
   ));
