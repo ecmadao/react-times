@@ -20,9 +20,9 @@ const defaultProps = {
   timeMode: 24,
   meridiem: 'AM',
   colorPalette: 'light',
-  clearFocus: () => {},
-  handleTimeChange: () => {},
-  handleMeridiemChange: () => {}
+  clearFocus: Function.prototype,
+  handleTimeChange: Function.prototype,
+  handleMeridiemChange: Function.prototype
 };
 
 class ClassicTheme extends React.PureComponent {

@@ -90,7 +90,7 @@ Timezone.propTypes = {
 Timezone.defaultProps = {
   timezone: TIME.tz,
   timezoneIsEditable: false,
-  onTimezoneChange: () => {},
+  onTimezoneChange: Function.prototype,
 };
 
 export default Timezone;

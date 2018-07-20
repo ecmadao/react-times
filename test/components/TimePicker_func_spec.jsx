@@ -26,13 +26,6 @@ describe('TimePicker func', () => {
       wrapper.instance().onFocus();
       expect(onFocusChangeStub.callCount).to.equal(1);
     });
-
-    it('should callback when clear focus', () => {
-      const onFocusChangeStub = sinon.stub();
-      const wrapper = shallow(<TimePicker onFocusChange={onFocusChangeStub} />);
-      wrapper.instance().onClearFocus();
-      expect(onFocusChangeStub.callCount).to.equal(1);
-    });
   });
 
   describe('handle hour change func', () => {

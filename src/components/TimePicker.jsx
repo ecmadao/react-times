@@ -73,9 +73,9 @@ const defaultProps = {
   focused: false,
   language: 'en',
   meridiem: TIME.meridiem,
-  onFocusChange: () => {},
-  onTimeChange: () => {},
-  onTimezoneChange: () => {},
+  onFocusChange: Function.prototype,
+  onTimeChange: Function.prototype,
+  onTimezoneChange: Function.prototype,
   placeholder: '',
   showTimezone: false,
   theme: 'material',
@@ -226,8 +226,6 @@ class TimePicker extends React.PureComponent {
 
   onClearFocus() {
     this.setState({ focused: false });
-    const { onFocusChange } = this.props;
-    onFocusChange && onFocusChange(false);
   }
 
   onTimeChanged(timeChanged) {
@@ -355,7 +353,7 @@ class TimePicker extends React.PureComponent {
 
     return (
       <div className={containerClass}>
-        { trigger || (
+        {trigger || (
           <Button
             onClick={this.onFocus}
             className={pickerPreviewClass}
@@ -365,7 +363,7 @@ class TimePicker extends React.PureComponent {
               {placeholder || times}
             </div>
           </Button>
-        ) }
+        )}
         <OutsideClickHandler
           focused={focused}
           onOutsideClick={this.onClearFocus}

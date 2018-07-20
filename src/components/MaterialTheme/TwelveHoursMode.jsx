@@ -32,8 +32,8 @@ const defaultProps = {
   minute: TIME.minute,
   draggable: false,
   meridiem: TIME.meridiem,
-  handleHourChange: () => {},
-  handleMinuteChange: () => {},
+  handleHourChange: Function.prototype,
+  handleMinuteChange: Function.prototype,
 };
 
 class TwelveHoursMode extends React.PureComponent {

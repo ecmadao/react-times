@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 const propTypes = {
@@ -8,7 +9,7 @@ const propTypes = {
 
 const defaultProps = {
   children: <span />,
-  onOutsideClick: () => {},
+  onOutsideClick: Function.prototype,
 };
 
 class OutsideClickHandler extends React.PureComponent {
@@ -40,9 +41,12 @@ class OutsideClickHandler extends React.PureComponent {
   }
 
   onOutsideClick(e) {
+    console.log('onOutsideClick onOutsideClick onOutsideClick')
     const event = e || window.event;
     const mouseTarget = (typeof event.which !== 'undefined') ? event.which : event.button;
-    const isDescendantOfRoot = this.childNode.contains(event.target);
+    const isDescendantOfRoot = ReactDOM.findDOMNode(this.childNode).contains(event.target);
+
+    console.log(`isDescendantOfRoot: ${isDescendantOfRoot}, mouseTarget: ${mouseTarget}`);
     if (!isDescendantOfRoot && mouseTarget === 1) {
       const { onOutsideClick } = this.props;
       onOutsideClick && onOutsideClick(event);

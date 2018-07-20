@@ -5,40 +5,42 @@ import darg from '../../utils/drag';
 const propTypes = {
   index: PropTypes.number,
   angle: PropTypes.number,
+  onClick: PropTypes.func,
   pointClass: PropTypes.string,
-  handleTimeChange: PropTypes.func
 };
 
 const defaultProps = {
   index: 0,
   angle: 0,
+  onClick: Function.prototype,
   pointClass: 'picker_point point_outter',
-  handleTimeChange: () => {}
 };
 
 const PickerPoint = (props) => {
   const {
     index,
     angle,
+    onClick,
     pointClass,
     pointerRotate,
-    handleTimeChange,
   } = props;
   const inlineStyle = darg.inlineRotateStyle(angle);
   const wrapperStyle = darg.rotateStyle(-angle);
 
   return (
     <div
-      className={pointClass}
       style={inlineStyle}
+      className={pointClass}
       onClick={() => {
+        console.log('PickerPoint clicked');
+        console.log(props);
         let relativeRotate = angle - (pointerRotate % 360);
         if (relativeRotate >= 180) {
           relativeRotate -= 360;
         } else if (relativeRotate < -180) {
           relativeRotate += 360;
         }
-        handleTimeChange && handleTimeChange({
+        onClick && onClick({
           time: index,
           pointerRotate: relativeRotate + pointerRotate
         });

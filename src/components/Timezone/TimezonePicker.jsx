@@ -65,8 +65,8 @@ TimezonePicker.propTypes = {
   handleTimezoneChange: PropTypes.func
 };
 TimezonePicker.defaultProps = {
-  onClearFocus: () => {},
-  handleTimezoneChange: () => {}
+  onClearFocus: Function.prototype,
+  handleTimezoneChange: Function.prototype
 };
 
 export default TimezonePicker;

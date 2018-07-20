@@ -81,7 +81,7 @@ Button.propTypes = {
 
 Button.defaultProps = {
   text: 'button',
-  onClick: () => {},
+  onClick: Function.prototype,
   children: null,
   className: '',
 };

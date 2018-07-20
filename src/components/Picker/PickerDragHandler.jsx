@@ -38,7 +38,7 @@ const defaultProps = {
   maxLength: MAX_ABSOLUTE_POSITION,
   minuteStep: 5,
   limitDrag: false,
-  handleTimePointerClick: () => {}
+  handleTimePointerClick: Function.prototype
 };
 
 class PickerDragHandler extends React.PureComponent {
@@ -364,8 +364,8 @@ class PickerDragHandler extends React.PureComponent {
             ref={r => (this.dragCenter = r)}
             className={`pointer_drag ${draggable ? 'draggable' : ''}`}
             style={darg.rotateStyle(-pointerRotate)}
-            onMouseDown={draggable ? this.handleMouseDown : () => {}}
-            onTouchStart={draggable ? this.handleMouseDown : () => {}}
+            onMouseDown={draggable ? this.handleMouseDown : Function.prototype}
+            onTouchStart={draggable ? this.handleMouseDown : Function.prototype}
           >
             {time}
           </div>
