@@ -108,9 +108,9 @@ class TimePicker extends React.PureComponent {
       timeChanged: false
     };
 
+    this.onBlur = this.onBlur.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.timeData = this.timeData.bind(this);
-    this.onClearFocus = this.onClearFocus.bind(this);
     this.handleTimeChange = this.handleTimeChange.bind(this);
     this.handleHourChange = this.handleHourChange.bind(this);
     this.handleMinuteChange = this.handleMinuteChange.bind(this);
@@ -132,11 +132,23 @@ class TimePicker extends React.PureComponent {
   }
 
   onFocus() {
-    this.setState({
-      focused: true
-    });
+    const { focused } = this.state;
+    if (!focused) {
+      this.onFocusChange(!focused);
+    }
+  }
+
+  onBlur() {
+    const { focused } = this.state;
+    if (focused) {
+      this.onFocusChange(!focused);
+    }
+  }
+
+  onFocusChange(focused) {
+    this.setState({ focused });
     const { onFocusChange } = this.props;
-    onFocusChange && onFocusChange(true);
+    onFocusChange && onFocusChange(focused);
   }
 
   timeData(timeChanged) {
@@ -224,10 +236,6 @@ class TimePicker extends React.PureComponent {
     return m && !!(m.match(/^am|pm/i)) ? localMessages[m.toLowerCase()] : m;
   }
 
-  onClearFocus() {
-    this.setState({ focused: false });
-  }
-
   onTimeChanged(timeChanged) {
     this.setState({ timeChanged });
   }
@@ -271,7 +279,7 @@ class TimePicker extends React.PureComponent {
   handleHourAndMinuteChange(time) {
     this.onTimeChanged(true);
     const { onTimeChange, autoClose } = this.props;
-    if (autoClose) this.onClearFocus();
+    if (autoClose) this.onBlur();
     return onTimeChange && onTimeChange(time);
   }
 
@@ -313,7 +321,7 @@ class TimePicker extends React.PureComponent {
         showTimezone={showTimezone}
         phrases={this.languageData}
         colorPalette={colorPalette}
-        clearFocus={this.onClearFocus}
+        clearFocus={this.onBlur}
         timeMode={parseInt(timeMode, 10)}
         onTimezoneChange={onTimezoneChange}
         minuteStep={parseInt(minuteStep, 10)}
@@ -366,7 +374,7 @@ class TimePicker extends React.PureComponent {
         )}
         <OutsideClickHandler
           focused={focused}
-          onOutsideClick={this.onClearFocus}
+          onOutsideClick={this.onBlur}
           closeOnOutsideClick={closeOnOutsideClick}
         >
           {this.renderDialPlate()}

@@ -37,11 +37,11 @@ class TimePickerWrapper extends React.Component {
       meridiem
     } = options;
 
-    console.log(options);
     this.setState({ hour, minute, meridiem });
   }
 
   onFocusChange(focused) {
+    console.log(`onFocusChange: ${focused}`);
     this.setState({ focused });
   }
 

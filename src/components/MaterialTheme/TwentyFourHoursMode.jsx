@@ -82,8 +82,6 @@ class TwentyFourHoursMode extends React.PureComponent {
   }
 
   handleTimeChange(time, autoMode = null) {
-    console.log(`time: ${time}`);
-    console.log(`autoMode: ${autoMode}`);
     const validateTime = parseInt(time, 10);
     const { step } = this.state;
     const auto = autoMode === null ? this.props.autoMode : autoMode;

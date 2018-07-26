@@ -49,7 +49,6 @@ class TimePickerWrapper extends React.Component {
         meridiem
       } = options;
 
-      console.log(options);
       this.setState({
         [section]: Object.assign({}, this.state[section], {
           hour, minute, meridiem

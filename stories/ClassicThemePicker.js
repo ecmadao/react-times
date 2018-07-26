@@ -8,6 +8,9 @@ storiesOf('Classic Theme', module)
   .addWithInfo('basic', () => (
     <TimePickerWrapper theme="classic" />
   ))
+  .addWithInfo('with default time', () => (
+    <TimePickerWrapper theme="classic" defaultTime="17:00" />
+  ))
   .addWithInfo('dark color', () => (
     <TimePickerWrapper theme="classic" colorPalette="dark" />
   ))

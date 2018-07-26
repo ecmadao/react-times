@@ -16,7 +16,7 @@ describe('TimePicker func', () => {
 
     it('should clear focus', () => {
       const wrapper = shallow(<TimePicker />);
-      wrapper.instance().onClearFocus();
+      wrapper.instance().onBlur();
       expect(wrapper.state().focused).to.equal(false);
     });
 

@@ -32,8 +32,6 @@ const PickerPoint = (props) => {
       style={inlineStyle}
       className={pointClass}
       onClick={() => {
-        console.log('PickerPoint clicked');
-        console.log(props);
         let relativeRotate = angle - (pointerRotate % 360);
         if (relativeRotate >= 180) {
           relativeRotate -= 360;
