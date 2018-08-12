@@ -46,6 +46,13 @@ describe('TimePicker initial', () => {
     it('should render with focused', () => {
       const wrapper = shallow(<TimePicker focused />);
       expect(wrapper.find('.time_picker_preview.active')).to.have.lengthOf(1);
+      expect(wrapper.find(OutsideClickHandler).props().closeOnOutsideClick).to.equal(true);
+    });
+
+    it('should render disabled component', () => {
+      const wrapper = shallow(<TimePicker disabled />);
+      expect(wrapper.find('.time_picker_preview.disabled')).to.have.lengthOf(1);
+      expect(wrapper.find(OutsideClickHandler).props().closeOnOutsideClick).to.equal(false);
     });
 
     it('should render with focused on child', () => {
