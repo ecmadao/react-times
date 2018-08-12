@@ -15,21 +15,37 @@ const defaultProps = {
 class OutsideClickHandler extends React.PureComponent {
   constructor(props) {
     super(props);
+    this.hasAction = false;
     this.onOutsideClick = this.onOutsideClick.bind(this);
   }
 
   componentDidMount() {
+    this.bindActions();
+  }
+
+  componentDidUpdate() {
+    this.bindActions();
+  }
+
+  componentWillUnmount() {
+    this.unbindActions();
+  }
+
+  bindActions() {
     const { closeOnOutsideClick } = this.props;
     if (closeOnOutsideClick) {
+      if (this.hasAction) return;
       if (document.addEventListener) {
         document.addEventListener('mousedown', this.onOutsideClick, true);
       } else {
         document.attachEvent('onmousedown', this.onOutsideClick);
       }
+      this.hasAction = true;
     }
   }
 
-  componentWillUnmount() {
+  unbindActions() {
+    if (!this.hasAction) return;
     const { closeOnOutsideClick } = this.props;
     if (closeOnOutsideClick) {
       if (document.removeEventListener) {
@@ -37,6 +53,7 @@ class OutsideClickHandler extends React.PureComponent {
       } else {
         document.detachEvent('onmousedown', this.onOutsideClick);
       }
+      this.hasAction = false;
     }
   }
 

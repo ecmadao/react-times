@@ -9,6 +9,9 @@ storiesOf('Default TimePicker', module)
   .addWithInfo('basic', () => (
     <TimePickerWrapper />
   ))
+  .addWithInfo('disabled', () => (
+    <TimePickerWrapper disabled />
+  ))
   .addWithInfo('with default time', () => {
     const aDefaultTime = text('set default time', '22:10');
     return (

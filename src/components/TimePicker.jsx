@@ -63,6 +63,7 @@ const propTypes = {
   useTz: PropTypes.bool,
   closeOnOutsideClick: PropTypes.bool,
   timeConfig: PropTypes.object,
+  disabled: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -92,7 +93,8 @@ const defaultProps = {
   timeConfig: {
     step: 30,
     unit: 'minutes'
-  }
+  },
+  disabled: false,
 };
 
 class TimePicker extends React.PureComponent {
@@ -146,6 +148,9 @@ class TimePicker extends React.PureComponent {
   }
 
   onFocusChange(focused) {
+    const { disabled } = this.props;
+    if (disabled) return;
+
     this.setState({ focused });
     const { onFocusChange } = this.props;
     onFocusChange && onFocusChange(focused);
@@ -286,6 +291,7 @@ class TimePicker extends React.PureComponent {
   renderDialPlate() {
     const {
       theme,
+      disabled,
       timeMode,
       autoMode,
       autoClose,
@@ -299,6 +305,8 @@ class TimePicker extends React.PureComponent {
       onTimezoneChange,
       timezoneIsEditable,
     } = this.props;
+
+    if (disabled) return null;
 
     const dialTheme = theme === 'material' ? theme : 'classic';
     const DialPlate = DialPlates[dialTheme];
@@ -337,6 +345,7 @@ class TimePicker extends React.PureComponent {
   render() {
     const {
       trigger,
+      disabled,
       placeholder,
       withoutIcon,
       colorPalette,
@@ -348,7 +357,8 @@ class TimePicker extends React.PureComponent {
 
     const pickerPreviewClass = cx(
       'time_picker_preview',
-      focused && 'active'
+      focused && 'active',
+      disabled && 'disabled'
     );
     const containerClass = cx(
       'time_picker_container',
@@ -375,7 +385,7 @@ class TimePicker extends React.PureComponent {
         <OutsideClickHandler
           focused={focused}
           onOutsideClick={this.onBlur}
-          closeOnOutsideClick={closeOnOutsideClick}
+          closeOnOutsideClick={disabled ? false : closeOnOutsideClick}
         >
           {this.renderDialPlate()}
         </OutsideClickHandler>

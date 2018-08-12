@@ -309,6 +309,16 @@ timeMode=12
 />
 ```
 
+- `disabled`
+
+> Disable component. Default false
+
+```
+<TimePicker
+  disabled={true}
+/>
+```
+
 - `draggable`
 
 If you don't want to drag the pointer, then you can set `draggable` props to `false`, then users can only use click to change time. Default `true`

@@ -6,10 +6,14 @@
   height: 50px;
 }
 
-.time_picker_preview:active {
+.time_picker_preview:not(.disabled):active, .time_picker_preview:not(.disabled).active {
   box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.12), 0 0 8px 0 rgba(0, 0, 0, 0.08);
   -moz-box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.12), 0 0 8px 0 rgba(0, 0, 0, 0.08);
   -webkit-box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.12), 0 0 8px 0 rgba(0, 0, 0, 0.08);
+}
+
+.time_picker_preview.disabled {
+  cursor: not-allowed;
 }
 
 .preview_container {

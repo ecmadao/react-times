@@ -271,6 +271,26 @@ timeMode=12
 />
 ```
 
+- `closeOnOutsideClick`
+
+> 点击 Modal 外部后是否关闭。默认为 true
+
+```
+<TimePicker
+  closeOnOutsideClick={false}
+/>
+```
+
+- `disabled`
+
+> 禁用组件。默认为 false
+
+```
+<TimePicker
+  disabled={true}
+/>
+```
+
 - `draggable`
 
 如果想禁用拖拽，则可以设置 `draggable` 为 `false`，那样的话用户只能通过点击来改变时间。默认为 `true`
