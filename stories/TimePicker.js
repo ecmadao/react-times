@@ -43,7 +43,7 @@ storiesOf('Default TimePicker', module)
   .addWithInfo('custom minute step', () => (
     <TimePickerWrapper
       autoMode={false}
-      minuteStep={1}
+      minuteStep={5}
     />
   ))
   .addWithInfo('limit drag', () => (
