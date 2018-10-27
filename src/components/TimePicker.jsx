@@ -185,8 +185,8 @@ class TimePicker extends React.PureComponent {
     // Since someone might pass a time in 24h format, etc., we need to get it from
     // timeData to 'translate' it into the local format, including its accurate meridiem
     const hour = (parseInt(timeMode, 10) === 12)
-      ? timeData.hour12
-      : timeData.hour24;
+      ? (parseInt(timeData.hour12, 10) === 12 ? '00' : timeData.hour12)
+      : (parseInt(timeData.hour24, 10) === 24 ? '00' : timeData.hour24);
     const minute = timeData.minute;
     return [hour, minute];
   }

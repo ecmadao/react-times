@@ -151,6 +151,7 @@ class TwentyFourHoursMode extends React.PureComponent {
     const {
       hour,
       minute,
+      timeMode,
       draggable,
       limitDrag,
       minuteStep,
@@ -198,6 +199,7 @@ class TwentyFourHoursMode extends React.PureComponent {
           />
           <PickerDragHandler
             step={step}
+            timeMode={timeMode}
             limitDrag={limitDrag}
             minuteStep={minuteStep}
             draggable={draggable}

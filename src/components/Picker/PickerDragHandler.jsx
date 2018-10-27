@@ -143,11 +143,11 @@ class PickerDragHandler extends React.PureComponent {
     this.originX =
       centerPointPos.left +
       (centerPoint.clientWidth / 2) +
-      Math.max(document.documentElement.scrollLeft, document.body.scrollLeft);
+      Math.max(document.documentElement.scrollLeft, document.body.scrollLeft) + POINTER_RADIUS;
     this.originY =
       centerPointPos.top +
       (centerPoint.clientHeight / 2) +
-      Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+      Math.max(document.documentElement.scrollTop, document.body.scrollTop) + POINTER_RADIUS;
 
     this.resetDragCenter();
   }
@@ -221,6 +221,7 @@ class PickerDragHandler extends React.PureComponent {
     } = options;
     const {
       step,
+      timeMode,
       minLength,
       maxLength,
       minuteStep,
@@ -255,9 +256,16 @@ class PickerDragHandler extends React.PureComponent {
       : roundSeg + sectionCount;
 
     if (isHour) {
+      if (absolutePosition === minLength && time < 0) {
+        time += 12;
+      } else if (absolutePosition !== minLength && time < 12) {
+        time = 24 + (time - 12);
+      }
       time = time === 24 ? 12 : time;
+      if (time === 12 && Number(timeMode) === 12) time = 0;
     } else {
       time = (time * minuteStep === 60 ? 0 : time * minuteStep);
+      time = time < 0 ? 60 + time : time;
     }
 
     handleTimePointerClick && handleTimePointerClick({

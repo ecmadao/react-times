@@ -138,6 +138,7 @@ class TwelveHoursMode extends React.PureComponent {
       hour,
       minute,
       phrases,
+      timeMode,
       meridiem,
       draggable,
       clearFocus,
@@ -188,6 +189,7 @@ class TwelveHoursMode extends React.PureComponent {
           />
           <PickerDragHandler
             step={1}
+            timeMode={timeMode}
             limitDrag={limitDrag}
             minuteStep={minuteStep}
             rotateState={minuteRotateState}
@@ -198,6 +200,7 @@ class TwelveHoursMode extends React.PureComponent {
           />
           <PickerDragHandler
             step={0}
+            timeMode={timeMode}
             limitDrag={limitDrag}
             minuteStep={minuteStep}
             rotateState={hourRotateState}

@@ -13,7 +13,7 @@ storiesOf('Default TimePicker', module)
     <TimePickerWrapper disabled />
   ))
   .addWithInfo('with default time', () => {
-    const aDefaultTime = text('set default time', '22:10');
+    const aDefaultTime = text('set default time', '13:20');
     return (
       <TimePickerWrapper
         defaultTime={aDefaultTime}
@@ -44,6 +44,7 @@ storiesOf('Default TimePicker', module)
     <TimePickerWrapper
       autoMode={false}
       minuteStep={5}
+      defaultTime={'22:10'}
     />
   ))
   .addWithInfo('limit drag', () => (

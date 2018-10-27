@@ -112,7 +112,7 @@ describe('TimePicker initial', () => {
     it('should render with current time format hh&mm', () => {
       const wrapper = shallow(<TimePicker time="12:23" timeFormat="hh&mm" timeMode={12} />);
       const time = timeHelper.time({ time: '12:23' });
-      expect(wrapper.find('.preview_container').text()).to.equal(`${time.hour12}&23`);
+      expect(wrapper.find('.preview_container').text()).to.equal('00&23');
     });
   });
 });
