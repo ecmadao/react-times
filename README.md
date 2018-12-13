@@ -487,7 +487,7 @@ onTimeChange(options) {
 
 Thanks to the Airbnb's open source project: [react-dates](https://github.com/airbnb/react-dates), I have learn a lot from that. Thanks.
 
-# Core Contributers 🎉
+# Core Contributors 🎉
 
 - **[carlodicelico](https://github.com/carlodicelico)**
 - **[erin-doyle](https://github.com/erin-doyle)**
