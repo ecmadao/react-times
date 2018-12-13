@@ -77,7 +77,15 @@ class TwentyFourHoursMode extends React.PureComponent {
       autoMode = null,
       pointerRotate = null,
     } = options;
-    Number.isInteger(pointerRotate) && this.setState({ pointerRotate });
+
+    const isInteger = function(num) {
+      return (num ^ 0) === +num;
+    }
+    if (Number.isInteger) {
+      Number.isInteger(pointerRotate) && this.setState({ pointerRotate: pointerRotate });
+    } else {
+      isInteger(pointerRotate) && this.setState({ pointerRotate: pointerRotate });
+    }
     this.handleTimeChange(time, autoMode);
   }
 
