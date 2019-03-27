@@ -11,6 +11,15 @@ storiesOf('Classic Theme', module)
   .addWithInfo('with default time', () => (
     <TimePickerWrapper theme="classic" defaultTime="17:00" />
   ))
+  .addWithInfo('dropdown focus on time/default time', () => (
+    <React.Fragment>
+      <TimePickerWrapper
+        theme="classic"
+        defaultTime="17:00"
+        focusDropdownOnTime
+      />
+    </React.Fragment>
+  ))
   .addWithInfo('dark color', () => (
     <TimePickerWrapper theme="classic" colorPalette="dark" />
   ))

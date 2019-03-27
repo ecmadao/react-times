@@ -11,7 +11,8 @@ const propTypes = {
   clearFocus: PropTypes.func,
   colorPalette: PropTypes.string,
   handleTimeChange: PropTypes.func,
-  handleMeridiemChange: PropTypes.func
+  handleMeridiemChange: PropTypes.func,
+  focusDropdownOnTime: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -22,13 +23,30 @@ const defaultProps = {
   colorPalette: 'light',
   clearFocus: Function.prototype,
   handleTimeChange: Function.prototype,
-  handleMeridiemChange: Function.prototype
+  handleMeridiemChange: Function.prototype,
+  focusDropdownOnTime: false,
 };
 
 class ClassicTheme extends React.PureComponent {
   constructor(props) {
     super(props);
     this.handleTimeChange = this.handleTimeChange.bind(this);
+    this.handleFocusDropdownOnTime = this.handleFocusDropdownOnTime.bind(this);
+    this.dropDown = React.createRef();
+    this.dropDownActiveTime = React.createRef();
+  }
+
+  componentDidMount() {
+    this.handleFocusDropdownOnTime();
+  }
+  componentDidUpdate() {
+    this.handleFocusDropdownOnTime();
+  }
+
+  handleFocusDropdownOnTime() {
+    if (this.props.focusDropdownOnTime) {
+      this.dropDown.current.scrollTop = this.dropDownActiveTime.current.offsetTop;
+    }
   }
 
   handleTimeChange(timeData) {
@@ -63,7 +81,7 @@ class ClassicTheme extends React.PureComponent {
   }
 
   renderTimes(timeDatas) {
-    const { colorPalette } = this.props;
+    const { colorPalette, focusDropdownOnTime } = this.props;
 
     return timeDatas.map((timeData, index) => {
       const timeClass = this.checkTimeIsActive(timeData)
@@ -77,6 +95,7 @@ class ClassicTheme extends React.PureComponent {
             this.handleTimeChange(timeData);
           }}
           className={`${timeClass} ${colorPalette}`}
+          ref={this.checkTimeIsActive(timeData) ? this.dropDownActiveTime : null}
         >
           {time}
           {meridiem ? <span className="meridiem">{meridiem}</span> : null}
@@ -92,7 +111,10 @@ class ClassicTheme extends React.PureComponent {
       : timeHelper.get24ModeTimes(timeConfig);
 
     return (
-      <div className="modal_container classic_theme_container">
+      <div
+        className="modal_container classic_theme_container"
+        ref={this.dropDown}
+      >
         {this.renderTimes(timeDatas)}
       </div>
     );
