@@ -96,7 +96,7 @@ const defaultProps = {
     unit: 'minutes'
   },
   disabled: false,
-  focusDropdownOnTime: false,
+  focusDropdownOnTime: true,
 };
 
 class TimePicker extends React.PureComponent {

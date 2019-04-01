@@ -65,4 +65,11 @@ storiesOf('Classic Theme', module)
       theme="classic"
       defaultTime="12:00"
     />
+  ))
+  .addWithInfo('Focus dropdown on time', () => (
+    <TimePickerWrapper
+      focusDropdownOnTime
+      theme="classic"
+      defaultTime="12:00"
+    />
   ));
