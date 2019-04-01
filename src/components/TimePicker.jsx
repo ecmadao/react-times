@@ -64,6 +64,7 @@ const propTypes = {
   closeOnOutsideClick: PropTypes.bool,
   timeConfig: PropTypes.object,
   disabled: PropTypes.bool,
+  focusDropdownOnTime: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -95,6 +96,7 @@ const defaultProps = {
     unit: 'minutes'
   },
   disabled: false,
+  focusDropdownOnTime: false,
 };
 
 class TimePicker extends React.PureComponent {
@@ -304,6 +306,7 @@ class TimePicker extends React.PureComponent {
       showTimezone,
       onTimezoneChange,
       timezoneIsEditable,
+      focusDropdownOnTime,
     } = this.props;
 
     if (disabled) return null;
@@ -338,6 +341,7 @@ class TimePicker extends React.PureComponent {
         handleTimeChange={this.handleTimeChange}
         handleMinuteChange={this.handleMinuteChange}
         handleMeridiemChange={this.handleMeridiemChange}
+        focusDropdownOnTime={focusDropdownOnTime}
       />
     );
   }
