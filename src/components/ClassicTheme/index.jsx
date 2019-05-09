@@ -45,7 +45,7 @@ class ClassicTheme extends React.PureComponent {
 
   handleFocusDropdownOnTime() {
     if (this.props.focusDropdownOnTime) {
-      this.dropDown.current.scrollTop = this.dropDownActiveTime.current.offsetTop;
+      this.dropDown.current.scrollTop = this.dropDownActiveTime && this.dropDownActiveTime.current && this.dropDownActiveTime.current.offsetTop || 0;
     }
   }
 
