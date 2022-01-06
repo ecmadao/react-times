@@ -74,7 +74,7 @@ class ClassicTheme extends React.PureComponent {
     if (meridiem && meridiem !== rawMeridiem) {
       return false;
     }
-    if (Math.abs(parseInt(minute, 10) - parseInt(currentMinute, 10)) < 15) {
+    if (Math.abs(parseInt(minute, 10) - parseInt(currentMinute, 10)) < 1) {
       return true;
     }
     return false;
